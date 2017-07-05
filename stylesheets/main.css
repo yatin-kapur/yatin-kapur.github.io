@@ -1,0 +1,250 @@
+/* http://meyerweb.com/eric/tools/css/reset/ 2. v2.0 | 20110126
+  License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+    border: 0;
+    font-size: 100%;
+	font: inherit;
+    vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+
+ol,
+ul {
+    list-style: none;
+}
+
+blockquote,
+q {
+    quotes: none;
+}
+
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+	content: '';
+    content: none;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+/* fonts */
+
+@font-face {
+    font-family: 'Lato';
+    src: url('assets/lato-otf/Lato-Regular.otf');
+    src: url('assets/lato-ttf/Lato-Regular.ttf');
+}
+
+/* background */
+
+body {
+    background: #FFF;
+   /* background: -webkit-linear-gradient(to right, #FFF, #BFBFBF 90%);
+    background:    -moz-linear-gradient(to right, #FFF, #BFBFBF 90%);
+    background:         linear-gradient(to right, #FFF, #BFBFBF 90%); */
+}
+
+footer{
+    background: #FFF;
+   /* background: -webkit-linear-gradient(to right, #FFF, #BFBFBF 90%);
+    background:    -moz-linear-gradient(to right, #FFF, #BFBFBF 90%);
+    background:         linear-gradient(to right, #FFF, #BFBFBF 90%); */
+}
+
+.title {
+    font: 300 65px/90px Lato, "Open Sans", "Helevetica Neue", Helevitca, Arial, sans-serif;
+    text-align: center;
+    margin: 2%;
+}
+
+/* navigation */
+
+.selected {
+    text-decoration: underline;
+}
+
+ul {
+    list-style: none;
+    text-align: center;
+}
+.nav li {
+    font: 300 16px/22px "Lato", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+	text-transform: uppercase;
+    display: inline-block;
+    vertical-align: top;
+    margin: 0 1%;
+}
+
+.nav li:last-child {
+    margin-right: 0;
+}
+
+/* links */
+
+.nav a {
+    color: #4c4c4c;
+    text-decoration: none;
+}
+
+.welcome a {
+    color: #648880;
+    text-decoration: none;
+}
+
+.contact a {
+    color: #808080;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* body segregation */
+
+.container {
+    margin: 7% auto;
+	padding-left: 30px;
+	padding-right: 30px;
+    padding-bottom: 40px;
+    box-sizing: border-box;
+}
+
+.col-1-3 {
+    width: 33.33%;
+}
+
+.col-2-3 {
+    width: 66.67%;
+}
+
+.col-1-3,
+.col-2-3 {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+/* clearfix */
+
+.group:before,
+.group:after {
+	content: "";
+	display: table;
+}
+
+.group:after {
+	clear: both;
+}
+
+.group {
+	clear: both;
+	*zoom: 1;
+}
+
+/* contact */
+
+.contact img {
+    height: auto;
+    width: auto;
+    max-height: 15%;
+    max-width: 15%;
+    display: block;
+    margin: 2%;
+}
+
+.contact p {
+    font: 300 16px/22px "Lato", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: #0d0d0d;
+    margin: 1em 1%;
+    text-align: center;
+}
+
+/* body content */
+
+.photo {
+    border-radius: 50%;
+    height: auto;
+    width: auto;
+    max-height: 70%;
+    max-width: 70%;
+    display: block;
+    margin: 0 auto;
+}
+
+h2 {
+    font: 300 18px/22px "Lato", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: #0d0d0d;
+    margin: 1em 1%;
+}
+
+p.welcome {
+    font: 300 16px/22px "Lato", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: #0d0d0d;
+    margin: 1em 1%;
+}
+
+/* writing latex symbol */
+
+.tex sub, .latex sub, .latex sup {
+  text-transform: uppercase;
+}
+
+.tex sub, .latex sub {
+  vertical-align: -0.5ex;
+  margin-left: -0.1667em;
+  margin-right: -0.125em;
+}
+
+.tex, .latex, .tex sub, .latex sub {
+  font-size: 1em;
+}
+
+.latex sup {
+  font-size: 0.85em;
+  vertical-align: 0.15em;
+  margin-left: -0.36em;
+  margin-right: -0.15em;
+}
+
+/* footer */
+
+.footer {
+    font: 300 13px/20px "Lato", "Open Sans", "Helevetica Neue", Helevitca, Arial, sans-serif;
+    text-align: center;
+    color: #595959;
+    position: fixed;
+    padding: 1%;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 40px;
+    border-top: 2px dashed;
+}
+
