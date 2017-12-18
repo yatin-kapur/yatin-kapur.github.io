@@ -97,8 +97,7 @@ video {
 article,
 aside,
 details,
-figcaption,
-figure,
+figcaption, figure,
 footer,
 header,
 hgroup,
@@ -163,6 +162,7 @@ footer {
 
 .title {
     font: 300 6vw Lato, "Open Sans", "Helevetica Neue", Helevitca, Arial, sans-serif;
+    letter-spacing: 0.5px;
     text-align: center;
     margin: 3%;
 }
@@ -247,57 +247,6 @@ p.greet {
     font-weight: bold;
 }
 
-
-/* at smaller size */
-@media all and (max-width: 1400px) and (min-width: 1130px) {
-    .title {
-        font-size: 10vw;
-    }
-    .nav li {
-        font-size: 2.6vw;
-    }
-    .photo {
-        max-height: 50%;
-        max-width: 50%;
-    }
-    p.welcome {
-        font: 300 2vw/1.5em "Lato", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-        margin-right: 5vw;
-        margin-left: 5vw;
-    }
-    p.greet {
-        font-weight: bold;
-    }
-    .footer-text {
-        font: 300 2.3vw "Lato", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-    }
-}
-
-@media all and (max-width: 1130px) and (min-width: 0px) {
-    .title {
-        font-size: 10vw;
-    }
-    .nav li {
-        font-size: 2.6vw;
-    }
-    .photo {
-        max-height: 50%;
-        max-width: 50%;
-    }
-    p.welcome {
-        font: 300 4vw/1.5em "Lato", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-        margin-right: 0vw;
-        margin-left: 0vw;
-    }
-    p.greet {
-        font-weight: bold;
-    }
-    .footer-text {
-        font: 300 2.3vw "Lato", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-    }
-}
-
-
 /* footer */
 
 .line {
@@ -312,3 +261,54 @@ p.greet {
     text-align: center;
     color: #8c8c8c;
 }
+
+/* at smaller size */
+@media all and (max-width: 1400px) and (min-width: 1130px) {
+    .title {
+        font-size: 9vw;
+    }
+    .nav li {
+        font-size: 2.2vw;
+    }
+    .photo {
+        max-height: 60%;
+        max-width: 60%;
+    }
+    p.welcome {
+        font: 300 2vw/1.5em "Lato", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+        margin-right: 5vw;
+        margin-left: 5vw;
+    }
+    p.greet {
+        font-weight: bold;
+    }
+    .footer-text {
+        font: 300 1.7vw "Lato", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    }
+}
+
+@media all and (max-width: 1130px) and (min-width: 0px) {
+    .title {
+        font-size: 12vw;
+    }
+    .nav li {
+        font-size: 2.2vw;
+    }
+    .photo {
+        max-height: 60%;
+        max-width: 60%;
+    }
+    p.welcome {
+        font: 300 4vw/1.5em "Lato", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+        margin-right: 0vw;
+        margin-left: 0vw;
+    }
+    p.greet {
+        font-weight: bold;
+    }
+    .footer-text {
+        font: 300 3vw "Lato", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    }
+}
+
+
