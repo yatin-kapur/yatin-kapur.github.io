@@ -236,7 +236,7 @@ a:hover {
 }
 
 p.welcome {
-    font: 300 1.3vw/1.5em "Lato", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font: 300 1.6vw/1.5em "Lato", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
     color: #0d0d0d;
     margin: 1em 1%;
     margin-left: 10vw;
@@ -285,7 +285,7 @@ p.greet {
         max-width: 50%;
     }
     p.welcome {
-        font: 300 2.5vw/1.5em "Lato", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+        font: 300 4vw/1.5em "Lato", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
         margin-right: 0vw;
         margin-left: 0vw;
     }
