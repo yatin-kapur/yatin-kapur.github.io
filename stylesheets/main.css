@@ -249,8 +249,7 @@ p.greet {
 
 
 /* at smaller size */
-
-@media all and (max-width: 960px) and (min-width: 0px) {
+@media all and (max-width: 1400px) and (min-width: 1130px) {
     .title {
         font-size: 10vw;
     }
@@ -262,9 +261,33 @@ p.greet {
         max-width: 50%;
     }
     p.welcome {
-        font: 300 2.5vw/1.4em "Lato", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-        margin-right: 0;
-        margin-left: 0;
+        font: 300 2vw/1.5em "Lato", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+        margin-right: 5vw;
+        margin-left: 5vw;
+    }
+    p.greet {
+        font-weight: bold;
+    }
+    .footer-text {
+        font: 300 2.3vw "Lato", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    }
+}
+
+@media all and (max-width: 1130px) and (min-width: 0px) {
+    .title {
+        font-size: 10vw;
+    }
+    .nav li {
+        font-size: 2.6vw;
+    }
+    .photo {
+        max-height: 50%;
+        max-width: 50%;
+    }
+    p.welcome {
+        font: 300 2.5vw/1.5em "Lato", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+        margin-right: 0vw;
+        margin-left: 0vw;
     }
     p.greet {
         font-weight: bold;
