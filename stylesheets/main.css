@@ -263,6 +263,8 @@ p.greet {
     }
     p.welcome {
         font: 300 2.5vw/1.4em "Lato", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+        margin-right: 0;
+        margin-left: 0;
     }
     p.greet {
         font-weight: bold;
