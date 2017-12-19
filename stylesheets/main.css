@@ -307,7 +307,7 @@ p.greet {
         font-weight: bold;
     }
     .footer-text {
-        font: 300 3vw "Lato", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+        font: 300 2vw "Lato", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
     }
 }
 
@@ -331,7 +331,7 @@ p.greet {
         font-weight: bold;
     }
     .footer-text {
-        font: 300 3vw "Lato", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+        font: 300 2.5vw "Lato", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
     }
 }
 
