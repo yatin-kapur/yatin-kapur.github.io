@@ -171,7 +171,7 @@ ul {
 
 .nav li {
     font: 300 1.5vw/3vh "Lato", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-    text-transform: uppercase;
+    text-transform: lowercase;
     display: inline-block;
     vertical-align: top;
     margin-bottom: 2%;
@@ -233,15 +233,12 @@ p.welcome {
     margin-right: 10vw;
 }
 
-p.greet {
-    font-weight: bold;
-}
-
 /* footer */
 
 .line {
-    width: 70%;
-    margin: 0 15%;
+    width: 40%;
+    margin-left:30%;
+    margin-right:30%;
     border: solid #f2f2f2 1px;
 }
 
@@ -250,6 +247,10 @@ p.greet {
     margin: 2%;
     text-align: center;
     color: #8c8c8c;
+}
+
+.footer {
+    margin-bottom: 3%;
 }
 
 /* at smaller size */
