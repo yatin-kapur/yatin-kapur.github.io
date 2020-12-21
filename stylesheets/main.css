@@ -1,139 +1,3 @@
-/* http://meyerweb.com/eric/tools/css/reset/ 2. v2.0 | 20110126
-  License: none (public domain)
-*/
-
-html,
-body,
-div,
-span,
-applet,
-object,
-iframe,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p,
-blockquote,
-pre,
-a,
-abbr,
-acronym,
-address,
-big,
-cite,
-code,
-del,
-dfn,
-em,
-img,
-ins,
-kbd,
-q,
-s,
-samp,
-small,
-strike,
-strong,
-sub,
-sup,
-tt,
-var,
-b,
-u,
-i,
-center,
-dl,
-dt,
-dd,
-ol,
-ul,
-li,
-fieldset,
-form,
-label,
-legend,
-table,
-caption,
-tbody,
-tfoot,
-thead,
-tr,
-th,
-td,
-article,
-aside,
-canvas,
-details,
-embed,
-figure,
-figcaption,
-footer,
-header,
-hgroup,
-menu,
-nav,
-output,
-ruby,
-section,
-summary,
-time,
-mark,
-audio,
-video {
-    margin: 0;
-    padding: 0;
-    border: 0;
-    font-size: 100%;
-    font: inherit;
-    vertical-align: baseline;
-}
-
-
-/* HTML5 display-role reset for older browsers */
-
-article,
-aside,
-details,
-figcaption, figure,
-footer,
-header,
-hgroup,
-menu,
-nav,
-section {
-    display: block;
-}
-
-body {
-    line-height: 1;
-}
-
-ol,
-ul {
-    list-style: none;
-}
-
-blockquote,
-q {
-    quotes: none;
-}
-
-blockquote:before,
-blockquote:after,
-q:before,
-q:after {
-    content: '';
-    content: none;
-}
-
-table {
-    border-collapse: collapse;
-    border-spacing: 0;
-}
-
 /* background */
 
 body {
@@ -150,13 +14,16 @@ footer {
     background:         linear-gradient(to right, #FFF, #BFBFBF 90%); */
 }
 
-.title {
-    font: 300 6vw Lato, "Open Sans", "Helevetica Neue", Helevitca, Arial, sans-serif;
-    letter-spacing: 0.5px;
-    text-align: center;
-    margin: 3%;
+.container {
+    margin: 0 auto;
+    width: 40em;
+    max-width: 95%;
 }
 
+h1 {
+    /* font: 300 2vw Lato, "Open Sans", "Helevetica Neue", Helevitca, Arial, sans-serif; */
+    letter-spacing: 0.5px;
+}
 
 /* navigation */
 
@@ -164,166 +31,18 @@ footer {
     text-decoration: underline;
 }
 
-ul {
-    list-style: none;
-    text-align: center;
-}
-
 .nav li {
-    font: 300 1.5vw/3vh "Lato", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font: "Lato", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
     text-transform: lowercase;
-    display: inline-block;
+    /* display: inline-block; */
     vertical-align: top;
-    margin-bottom: 2%;
-    margin-left: 1%;
-    margin-right: 1%;
 }
 
-.nav li:last-child {
-    margin-right: 0;
-}
-
-
-/* links */
-
-.nav a {
+a {
     color: #4c4c4c;
-    text-decoration: none;
-}
-
-.welcome a {
-    color: #81827F;
-    text-align: middle;
+    /* text-decoration: none; */
 }
 
 a:hover {
     text-decoration: underline;
 }
-
-
-/* body segregation */
-
-.container {
-    margin: 1%;
-}
-
-.middle {
-    width: 90%;
-    margin: 1% 5%;
-    display: inline-block;
-    vertical-align: middle;
-}
-
-
-/* body content */
-
-.photo {
-    border-radius: 50%;
-    max-height: 50%;
-    max-width: 50%;
-    display: block;
-    margin: 2% auto;
-}
-
-p.welcome {
-    font: 300 1.6vw/1.5em "Lato", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-    color: #0d0d0d;
-    margin: 1em 1%;
-    margin-left: 10vw;
-    margin-right: 10vw;
-}
-
-/* footer */
-
-.line {
-    width: 40%;
-    margin-left:30%;
-    margin-right:30%;
-    border: solid #f2f2f2 1px;
-}
-
-.footer-text {
-    font: 300 1.2vw/1.4em "Lato", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-    margin: 2%;
-    text-align: center;
-    color: #8c8c8c;
-}
-
-.footer {
-    margin-bottom: 3%;
-}
-
-/* at smaller size */
-@media all and (max-width: 1400px) and (min-width: 1130px) {
-    .title {
-        font-size: 9vw;
-    }
-    .nav li {
-        font-size: 2.2vw;
-    }
-    .photo {
-        max-height: 60%;
-        max-width: 60%;
-    }
-    p.welcome {
-        font: 300 2vw/1.5em "Lato", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-        margin-right: 5vw;
-        margin-left: 5vw;
-    }
-    p.greet {
-        font-weight: bold;
-    }
-    .footer-text {
-        font: 300 1.7vw "Lato", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-    }
-}
-
-@media all and (max-width: 1130px) and (min-width: 400px) {
-    .title {
-        font-size: 10vw;
-    }
-    .nav li {
-        font-size: 2vw;
-    }
-    .photo {
-        max-height: 60%;
-        max-width: 60%;
-    }
-    p.welcome {
-        font: 300 2.6vw/1.5em "Lato", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-        margin-right: 2vw;
-        margin-left: 2vw;
-    }
-    p.greet {
-        font-weight: bold;
-    }
-    .footer-text {
-        font: 300 2vw "Lato", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-    }
-}
-
-@media all and (max-width: 400px) and (min-width: 0px) {
-    .title {
-        font-size: 12vw;
-    }
-    .nav li {
-        font-size: 2.2vw;
-    }
-    .photo {
-        max-height: 60%;
-        max-width: 60%;
-    }
-    p.welcome {
-        font: 300 4vw/1.5em "Lato", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-        margin-right: 0vw;
-        margin-left: 0vw;
-    }
-    p.greet {
-        font-weight: bold;
-    }
-    .footer-text {
-        font: 300 2.5vw "Lato", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-    }
-}
-
-
