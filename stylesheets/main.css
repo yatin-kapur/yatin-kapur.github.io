@@ -1,38 +1,19 @@
-/* background */
-
 body {
     background: #FFF;
-    /* background: -webkit-linear-gradient(to right, #FFF, #BFBFBF 90%);
-    background:    -moz-linear-gradient(to right, #FFF, #BFBFBF 90%);
-    background:         linear-gradient(to right, #FFF, #BFBFBF 90%); */
-}
-
-footer {
-    background: #FFF;
-    /* background: -webkit-linear-gradient(to right, #FFF, #BFBFBF 90%);
-    background:    -moz-linear-gradient(to right, #FFF, #BFBFBF 90%);
-    background:         linear-gradient(to right, #FFF, #BFBFBF 90%); */
 }
 
 .container {
-    margin: 0 auto;
+    margin: auto;
     width: 40em;
     max-width: 95%;
 }
 
 h1 {
-    /* font: 300 2vw Lato, "Open Sans", "Helevetica Neue", Helevitca, Arial, sans-serif; */
+    font-size: 28px;
     letter-spacing: 0.5px;
 }
 
-/* navigation */
-
-.selected {
-    text-decoration: underline;
-}
-
 .nav li {
-    font: "Lato", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
     text-transform: lowercase;
     /* display: inline-block; */
     vertical-align: top;
@@ -41,8 +22,4 @@ h1 {
 a {
     color: #4c4c4c;
     /* text-decoration: none; */
-}
-
-a:hover {
-    text-decoration: underline;
 }
