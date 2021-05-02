@@ -1,3 +1,3 @@
 # yatinkapur.github.io
-personal website at https://yatinkapur.com
+personal website at yatinkapur.com
 
