@@ -1,0 +1,1481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Firms & Markets - Exam 2 Study Hub | NYU Stern B01.1303</title>
+<style>
+:root {
+  --bg: #0f0f13;
+  --surface: #1a1a24;
+  --surface2: #23233a;
+  --border: #2d2d4a;
+  --text: #e4e4ef;
+  --text2: #9999b3;
+  --accent: #6c63ff;
+  --accent2: #a78bfa;
+  --green: #34d399;
+  --red: #f87171;
+  --orange: #fbbf24;
+  --blue: #60a5fa;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+
+/* NAV */
+.topbar { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 24px; display: flex; align-items: center; height: 56px; gap: 16px; }
+.topbar h1 { font-size: 16px; font-weight: 700; white-space: nowrap; }
+.topbar h1 span { color: var(--accent); }
+.nav-links { display: flex; gap: 4px; overflow-x: auto; flex: 1; }
+.nav-links a { padding: 8px 14px; border-radius: 8px; color: var(--text2); text-decoration: none; font-size: 13px; font-weight: 500; white-space: nowrap; transition: all 0.2s; }
+.nav-links a:hover, .nav-links a.active { background: var(--accent); color: #fff; }
+.nav-links a.special { background: var(--green); color: #000; font-weight: 700; }
+
+/* LAYOUT */
+.main { margin-top: 56px; padding: 32px 24px 80px; max-width: 1100px; margin-left: auto; margin-right: auto; }
+.section { display: none; }
+.section.active { display: block; }
+
+/* CARDS */
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 24px; margin-bottom: 20px; }
+.card h2 { font-size: 22px; margin-bottom: 12px; color: var(--accent2); }
+.card h3 { font-size: 16px; margin: 16px 0 8px; color: var(--orange); }
+.card h4 { font-size: 14px; margin: 12px 0 6px; color: var(--blue); }
+.card p, .card li { font-size: 14px; line-height: 1.7; color: var(--text); }
+.card ul, .card ol { padding-left: 20px; margin: 6px 0; }
+.card li { margin-bottom: 4px; }
+
+/* FORMULA BOX */
+.formula-box { background: #1e1e3a; border: 1px solid var(--accent); border-radius: 8px; padding: 14px 18px; margin: 10px 0; font-family: 'JetBrains Mono', 'Fira Code', monospace; font-size: 13px; line-height: 1.8; color: var(--green); white-space: pre-wrap; }
+
+/* KEY TERM */
+.key { color: var(--orange); font-weight: 700; }
+.imp { color: var(--red); font-weight: 700; }
+
+/* MATRIX TABLE */
+.matrix { border-collapse: collapse; margin: 12px 0; font-size: 14px; }
+.matrix td, .matrix th { border: 1px solid var(--border); padding: 8px 14px; text-align: center; }
+.matrix th { background: var(--surface2); color: var(--accent2); font-weight: 600; }
+.matrix .ne { background: rgba(108,99,255,0.2); font-weight: 700; }
+
+/* PROBLEM */
+.problem { background: var(--surface2); border: 1px solid var(--border); border-radius: 12px; padding: 24px; margin-bottom: 20px; }
+.problem .q-num { display: inline-block; background: var(--accent); color: #fff; padding: 2px 10px; border-radius: 20px; font-size: 12px; font-weight: 700; margin-bottom: 10px; }
+.problem .difficulty { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 700; margin-left: 8px; }
+.difficulty.hard { background: var(--red); color: #fff; }
+.difficulty.medium { background: var(--orange); color: #000; }
+.problem h3 { margin-top: 0; color: var(--text); font-size: 16px; }
+.problem p { font-size: 14px; line-height: 1.7; margin: 8px 0; }
+
+/* ANSWER REVEAL */
+.answer-btn { background: var(--accent); color: #fff; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-size: 13px; font-weight: 600; margin-top: 12px; transition: all 0.2s; }
+.answer-btn:hover { background: var(--accent2); }
+.answer { display: none; margin-top: 14px; padding: 16px; background: rgba(52,211,153,0.08); border: 1px solid var(--green); border-radius: 8px; }
+.answer.show { display: block; }
+.answer h4 { color: var(--green); margin-bottom: 8px; }
+
+/* PDF VIEWER */
+.pdf-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; margin: 16px 0; }
+.pdf-card { background: var(--surface2); border: 1px solid var(--border); border-radius: 10px; padding: 18px; cursor: pointer; transition: all 0.2s; }
+.pdf-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+.pdf-card .icon { font-size: 28px; margin-bottom: 8px; }
+.pdf-card .title { font-size: 14px; font-weight: 600; color: var(--text); }
+.pdf-card .desc { font-size: 12px; color: var(--text2); margin-top: 4px; }
+.pdf-viewer { width: 100%; height: 85vh; border: 1px solid var(--border); border-radius: 8px; margin-top: 16px; }
+.pdf-viewer-container { display: none; }
+.pdf-viewer-container.show { display: block; }
+.back-btn { background: var(--surface2); color: var(--text); border: 1px solid var(--border); padding: 8px 16px; border-radius: 8px; cursor: pointer; font-size: 13px; margin-bottom: 12px; }
+.back-btn:hover { border-color: var(--accent); }
+
+/* PROGRESS */
+.progress-bar { width: 100%; background: var(--surface2); border-radius: 20px; height: 8px; margin: 10px 0; overflow: hidden; }
+.progress-fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--green)); border-radius: 20px; transition: width 0.5s; }
+
+/* DASHBOARD GRID */
+.dash-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 16px; margin: 20px 0; }
+.dash-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px; cursor: pointer; transition: all 0.2s; }
+.dash-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+.dash-card .module-num { font-size: 11px; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 1px; }
+.dash-card .module-title { font-size: 18px; font-weight: 700; margin: 6px 0; }
+.dash-card .module-desc { font-size: 13px; color: var(--text2); line-height: 1.5; }
+.dash-card .tag { display: inline-block; padding: 2px 8px; border-radius: 6px; font-size: 11px; margin-top: 8px; margin-right: 4px; }
+.tag.formulas { background: rgba(108,99,255,0.2); color: var(--accent2); }
+.tag.problems { background: rgba(251,191,36,0.2); color: var(--orange); }
+
+/* CHECK/SELF ASSESS */
+.check-item { display: flex; align-items: flex-start; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--border); }
+.check-item input[type="checkbox"] { margin-top: 3px; accent-color: var(--accent); width: 16px; height: 16px; }
+.check-item label { font-size: 14px; cursor: pointer; }
+.check-item.checked label { text-decoration: line-through; color: var(--text2); }
+
+/* SCROLLBAR */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <h1><span>F&M</span> Exam 2 Hub</h1>
+  <div class="nav-links">
+    <a href="#" onclick="showSection('dashboard')" class="active" id="nav-dashboard">Dashboard</a>
+    <a href="#" onclick="showSection('game-theory')" id="nav-game-theory">Game Theory</a>
+    <a href="#" onclick="showSection('price-comp')" id="nav-price-comp">Price Competition</a>
+    <a href="#" onclick="showSection('cooperation')" id="nav-cooperation">Cooperation</a>
+    <a href="#" onclick="showSection('commitment')" id="nav-commitment">Commitment</a>
+    <a href="#" onclick="showSection('asymmetric')" id="nav-asymmetric">Asymmetric Info</a>
+    <a href="#" onclick="showSection('platforms')" id="nav-platforms">Platforms</a>
+    <a href="#" onclick="showSection('problems')" id="nav-problems">Practice Problems</a>
+    <a href="#" onclick="showSection('mock-exam')" id="nav-mock-exam" style="background:var(--red);color:#fff;font-weight:700;">Mock Exam</a>
+    <a href="cheatsheet.html" target="_blank" class="special" id="nav-cheatsheet">Cheat Sheet</a>
+  </div>
+</div>
+
+<div class="main">
+
+<!-- ========== DASHBOARD ========== -->
+<div class="section active" id="sec-dashboard">
+  <div class="card">
+    <h2>Exam 2 Study Dashboard</h2>
+    <p>Covers Modules 8-13 (post-midterm) for Prof. Economides' Firms & Markets (B01.1303) at NYU Stern. The exam is <span class="imp">closed-book, 1-page note sheet, calculator allowed, ~90 minutes, 3-4 quantitative problems</span>. Better exam counts 50%, worse counts 40%.</p>
+    <p style="font-size:13px; color:var(--text2); margin-top:8px;">Notes, formulas, practice problems with solutions, a printable cheat sheet, and a mock exam based on actual exam patterns.</p>
+  </div>
+
+  <div class="dash-grid">
+    <div class="dash-card" onclick="showSection('game-theory')">
+      <div class="module-num">Module 8</div>
+      <div class="module-title">Game Theory</div>
+      <div class="module-desc">Nash equilibrium, dominant/dominated strategies, best responses, simultaneous & sequential games</div>
+      <span class="tag formulas">6 key formulas</span><span class="tag problems">5 problems</span>
+    </div>
+    <div class="dash-card" onclick="showSection('price-comp')">
+      <div class="module-num">Module 9</div>
+      <div class="module-title">Price Competition</div>
+      <div class="module-desc">Bertrand trap, cost leadership, differentiation, capacity limits, price matching</div>
+      <span class="tag formulas">4 key formulas</span><span class="tag problems">3 problems</span>
+    </div>
+    <div class="dash-card" onclick="showSection('cooperation')">
+      <div class="module-num">Module 10</div>
+      <div class="module-title">Cooperation & Collusion</div>
+      <div class="module-desc">Cartels, trigger strategies, repeated games, NPV comparison, antitrust, finite unraveling</div>
+      <span class="tag formulas">5 key formulas</span><span class="tag problems">4 problems</span>
+    </div>
+    <div class="dash-card" onclick="showSection('commitment')">
+      <div class="module-num">Module 11</div>
+      <div class="module-title">Commitment & Entry</div>
+      <div class="module-desc">Backward induction, first-mover advantage, entry deterrence, credible commitment, preemption</div>
+      <span class="tag formulas">2 key formulas</span><span class="tag problems">3 problems</span>
+    </div>
+    <div class="dash-card" onclick="showSection('asymmetric')">
+      <div class="module-num">Module 12</div>
+      <div class="module-title">Asymmetric Information</div>
+      <div class="module-desc">Adverse selection (lemons), moral hazard, signaling, screening, market failure</div>
+      <span class="tag formulas">3 key formulas</span><span class="tag problems">4 problems</span>
+    </div>
+    <div class="dash-card" onclick="showSection('platforms')">
+      <div class="module-num">Module 13</div>
+      <div class="module-title">Platforms & Networks</div>
+      <div class="module-desc">Direct/indirect network effects, two-sided markets, winner-take-most, critical mass, pricing</div>
+      <span class="tag formulas">2 key formulas</span><span class="tag problems">2 problems</span>
+    </div>
+  </div>
+
+</div>
+
+<!-- ========== GAME THEORY ========== -->
+<div class="section" id="sec-game-theory">
+  <div class="card">
+    <h2>Module 8: Game Theory</h2>
+
+    <h3>Core Definitions</h3>
+    <ul>
+      <li><span class="key">Normal (Strategic) Form:</span> Simultaneous games represented as a payoff matrix</li>
+      <li><span class="key">Extensive Form:</span> Sequential games represented as a game tree with decision nodes</li>
+      <li><span class="key">Dominant Strategy:</span> Yields the highest payoff for a player regardless of what the opponent does. If it exists, always play it.</li>
+      <li><span class="key">Dominated Strategy:</span> Always yields a lower payoff than another strategy for every opponent action. Never play it.</li>
+      <li><span class="key">Best Response:</span> The strategy that maximizes a player's payoff given the opponent's strategy. BR<sub>i</sub>(s<sub>-i</sub>) = argmax &pi;<sub>i</sub>(s<sub>i</sub>, s<sub>-i</sub>)</li>
+      <li><span class="key">Nash Equilibrium (NE):</span> A pair of strategies where BOTH players are playing their best responses simultaneously. No player wants to unilaterally deviate. A game can have 0, 1, or multiple NEs.</li>
+    </ul>
+
+    <h3>How to Solve Normal Form Games</h3>
+    <ol>
+      <li><strong>Step 1:</strong> Check for dominant strategies (best regardless of opponent)</li>
+      <li><strong>Step 2:</strong> Eliminate dominated strategies (iterated elimination)</li>
+      <li><strong>Step 3:</strong> Find best responses: for each column, find Row player's max payoff (underline). For each row, find Column player's max payoff (underline).</li>
+      <li><strong>Step 4:</strong> NE = any cell where BOTH payoffs are underlined (both playing best response)</li>
+    </ol>
+
+    <h3>Classic Game Types</h3>
+    <h4>Prisoners' Dilemma</h4>
+    <table class="matrix">
+      <tr><th></th><th>Cooperate</th><th>Defect</th></tr>
+      <tr><th>Cooperate</th><td>(-1, -1)</td><td>(-9, 0)</td></tr>
+      <tr><th>Defect</th><td>(0, -9)</td><td class="ne">(-6, -6) NE</td></tr>
+    </table>
+    <p>Both defect even though mutual cooperation is better. Defect is dominant for both.</p>
+
+    <h4>Battle of the Sexes (Coordination)</h4>
+    <p>Two NEs exist, players prefer different ones. Coordination is the challenge.</p>
+
+    <h4>Matching Pennies</h4>
+    <p>No pure strategy NE exists. Only mixed strategy equilibrium.</p>
+
+    <h3>Sequential Games</h3>
+    <ul>
+      <li>Solve by <span class="key">backward induction</span>: start at terminal nodes, work backward</li>
+      <li>At each node, the player picks the action giving them the highest payoff</li>
+      <li><span class="key">Value of commitment</span> = Payoff in sequential game - Payoff in simultaneous game</li>
+      <li>First mover can manipulate the follower's incentives</li>
+    </ul>
+
+    <h3>Key Formulas</h3>
+    <div class="formula-box">Nash Equilibrium condition:
+  s₁* = BR₁(s₂*) AND s₂* = BR₂(s₁*)
+
+Best Response:
+  BR_i(s_{-i}) = argmax π_i(s_i, s_{-i})
+
+Value of Commitment:
+  V = π_sequential - π_simultaneous</div>
+
+    <h3>Ericsson vs Nokia Example</h3>
+    <p>Price competition between telecom firms:</p>
+    <table class="matrix">
+      <tr><th></th><th>Nokia $100</th><th>Nokia $90</th></tr>
+      <tr><th>Ericsson $100</th><td>(42, 48)</td><td>(55, 24)</td></tr>
+      <tr><th>Ericsson $90</th><td>(42, 40)</td><td class="ne">(45, 30) NE</td></tr>
+    </table>
+    <p>Nokia's dominant strategy is $90. Given that, Ericsson also picks $90. Both worse off than (100,100).</p>
+    <p><strong>With capacity constraint (Nokia limited to 800k at $90):</strong> NE shifts to (100, 100) with profits (42, 48). Capacity limits "soften" competition.</p>
+  </div>
+
+  <!-- GAME THEORY PROBLEMS -->
+  <div class="problem">
+    <span class="q-num">Problem 1</span><span class="difficulty hard">HARD</span>
+    <h3>C&M Electronics vs 8th Street Photo (from Spring 2025 Final)</h3>
+    <p>C&M Electronics and 8th Street Photo compete with Black Friday discounts. Each chooses 10%, 20%, or 30%. Payoffs ($'000s, C&M first):</p>
+    <table class="matrix">
+      <tr><th></th><th>8th St: 10%</th><th>8th St: 20%</th><th>8th St: 30%</th></tr>
+      <tr><th>C&M: 10%</th><td>(50, 35)</td><td>(40, 30)</td><td>(20, 15)</td></tr>
+      <tr><th>C&M: 20%</th><td>(60, 20)</td><td>(45, 25)</td><td>(25, 15)</td></tr>
+      <tr><th>C&M: 30%</th><td>(47, 5)</td><td>(35, 15)</td><td>(30, 10)</td></tr>
+    </table>
+    <p><strong>(a)</strong> Find all dominated strategies.</p>
+    <p><strong>(b)</strong> Find the Nash Equilibrium.</p>
+    <p><strong>(c)</strong> If C&M can commit first (sequential game with backward induction), what is the outcome?</p>
+    <p><strong>(d)</strong> What is the value of commitment (early advertising campaign) for C&M?</p>
+    <button class="answer-btn" onclick="toggleAnswer(this)">Show Solution</button>
+    <div class="answer">
+      <h4>Solution</h4>
+      <p><strong>(a) Dominated strategies:</strong></p>
+      <ul>
+        <li><strong>10% is dominated for C&M</strong> by 20%: (50<60, 40<45, 20<25)</li>
+        <li><strong>30% is dominated for 8th Street</strong> by 20%: (15<20, 15<25, 10<15)... actually by 10%: (15<35, 15<30, 10<15) or by 20%: (15<20, 15<25, 10<15). 30% is dominated by both 10% and 20%.</li>
+      </ul>
+      <p><strong>(b) After eliminating dominated strategies:</strong></p>
+      <table class="matrix">
+        <tr><th></th><th>8th St: 10%</th><th>8th St: 20%</th></tr>
+        <tr><th>C&M: 20%</th><td>(60, 20)</td><td class="ne">(45, 25) NE</td></tr>
+        <tr><th>C&M: 30%</th><td>(47, 5)</td><td>(35, 15)</td></tr>
+      </table>
+      <p>C&M: 20% dominates 30% (60>47, 45>35). 8th Street best responds with 20%.</p>
+      <p><span class="imp">NE: (20%, 20%) with payoffs (45, 25).</span></p>
+      <p><strong>(c) Sequential (C&M first):</strong></p>
+      <ul>
+        <li>If C&M plays 10%: 8th St picks 10% (35 > 30 > 15) → C&M gets 50</li>
+        <li>If C&M plays 20%: 8th St picks 20% (25 > 20 > 15) → C&M gets 45</li>
+        <li>If C&M plays 30%: 8th St picks 20% (15 > 10 > 5) → C&M gets 35</li>
+      </ul>
+      <p>C&M picks 10% (gives 50). <span class="imp">Outcome: (10%, 10%) → (50, 35)</span></p>
+      <p><strong>(d) Value of commitment = 50 - 45 = $5,000</strong></p>
+    </div>
+  </div>
+
+  <div class="problem">
+    <span class="q-num">Problem 2</span><span class="difficulty hard">HARD</span>
+    <h3>Intel vs AMD: Biological Microprocessor</h3>
+    <p>Currently: Intel=$3.2bn, AMD=$500m. If Intel alone goes Bio: Intel=$2.8bn, AMD=$400m. If AMD alone goes Bio: AMD=$1.2bn, Intel=$1.8bn. If both go Bio: Intel=$1.6bn, AMD=$100m.</p>
+    <p><strong>(a)</strong> Set up the payoff matrix. Find the NE for the simultaneous game.</p>
+    <p><strong>(b)</strong> Draw the game tree if Intel moves first. Find the equilibrium using backward induction.</p>
+    <p><strong>(c)</strong> What is the value of commitment for Intel?</p>
+    <button class="answer-btn" onclick="toggleAnswer(this)">Show Solution</button>
+    <div class="answer">
+      <h4>Solution</h4>
+      <table class="matrix">
+        <tr><th></th><th>AMD: Bio</th><th>AMD: Con</th></tr>
+        <tr><th>Intel: Bio</th><td>(1.6, 0.1)</td><td>(2.8, 0.4)</td></tr>
+        <tr><th>Intel: Con</th><td class="ne">(1.8, 1.2) NE</td><td>(3.2, 0.5)</td></tr>
+      </table>
+      <p><strong>(a)</strong> Con is dominant for Intel (3.2>2.8, 1.8>1.6). Given Intel plays Con, AMD plays Bio (1.2>0.5). <span class="imp">NE: (Con, Bio) → (1.8, 1.2)</span></p>
+      <p><strong>(b) Sequential (Intel first):</strong></p>
+      <ul>
+        <li>If Intel Bio: AMD picks Con (0.4 > 0.1) → Intel gets 2.8</li>
+        <li>If Intel Con: AMD picks Bio (1.2 > 0.5) → Intel gets 1.8</li>
+      </ul>
+      <p>Intel picks Bio (2.8 > 1.8). <span class="imp">Equilibrium: Intel Bio, AMD Con → (2.8, 0.4)</span></p>
+      <p><strong>(c)</strong> Value of commitment = 2.8 - 1.8 = <span class="imp">$1.0 billion</span></p>
+    </div>
+  </div>
+
+  <div class="problem">
+    <span class="q-num">Problem 3</span><span class="difficulty hard">HARD</span>
+    <h3>Three-Player Strategy Elimination</h3>
+    <p>Consider this game:</p>
+    <table class="matrix">
+      <tr><th></th><th>L</th><th>C</th><th>R</th></tr>
+      <tr><th>T</th><td>(100, 125)</td><td>(300, 250)</td><td>(200, 100)</td></tr>
+      <tr><th>M</th><td>(250, 0)</td><td>(500, 500)</td><td>(700, 400)</td></tr>
+      <tr><th>B</th><td>(0, -100)</td><td>(400, 300)</td><td>(-100, 370)</td></tr>
+    </table>
+    <p><strong>(a)</strong> Does Player 1 have a dominant strategy? Does Player 2?</p>
+    <p><strong>(b)</strong> Find the Nash Equilibrium using iterated elimination of dominated strategies.</p>
+    <button class="answer-btn" onclick="toggleAnswer(this)">Show Solution</button>
+    <div class="answer">
+      <h4>Solution</h4>
+      <p><strong>(a)</strong> Player 1: M dominates T (250>100, 500>300, 700>200) and M dominates B (250>0, 500>400, 700>-100). <span class="imp">M is dominant for Player 1.</span> Player 2 has no dominant strategy.</p>
+      <p><strong>(b)</strong> Since P1 always plays M, P2 compares: L→0, C→500, R→400. P2 picks C.</p>
+      <p><span class="imp">NE: (M, C) with payoffs (500, 500)</span></p>
+    </div>
+  </div>
+
+  <div class="problem">
+    <span class="q-num">Problem 4</span><span class="difficulty hard">HARD</span>
+    <h3>Retail Location Game</h3>
+    <p>BA Star and KRU must each choose Village or Midtown for a new store:</p>
+    <table class="matrix">
+      <tr><th></th><th>KRU: Village</th><th>KRU: Midtown</th></tr>
+      <tr><th>BA Star: Village</th><td>(10, 10)</td><td>(22, 9)</td></tr>
+      <tr><th>BA Star: Midtown</th><td>(9, 18)</td><td>(19, 21)</td></tr>
+    </table>
+    <p><strong>(a)</strong> Does either player have a dominant strategy?</p>
+    <p><strong>(b)</strong> Find the Nash Equilibrium.</p>
+    <p><strong>(c)</strong> If BA Star commits first (sequential), what happens?</p>
+    <button class="answer-btn" onclick="toggleAnswer(this)">Show Solution</button>
+    <div class="answer">
+      <h4>Solution</h4>
+      <p><strong>(a)</strong> BA Star: Village dominates Midtown (10>9, 22>19). KRU: Midtown dominates Village (9<18... wait: KRU compares Village col vs Midtown col). If BA Star plays Village: KRU gets 10 (Village) vs 9 (Midtown) → Village. If BA Star plays Midtown: KRU gets 18 (Village) vs 21 (Midtown) → Midtown. <span class="imp">KRU has no dominant strategy.</span> BA Star has dominant strategy: Village.</p>
+      <p><strong>(b)</strong> BA Star plays Village (dominant). KRU best responds: Village (10 > 9). <span class="imp">NE: (Village, Village) → (10, 10)</span></p>
+      <p><strong>(c)</strong> Same result — BA Star picks Village, KRU responds Village. No commitment advantage here since BA Star already has a dominant strategy.</p>
+    </div>
+  </div>
+
+  <div class="problem">
+    <span class="q-num">Problem 5</span><span class="difficulty hard">HARD</span>
+    <h3>Design Your Own Payoff Matrix</h3>
+    <p>Two firms choose High or Low price. Fill in payoff matrix values such that:</p>
+    <ul>
+      <li>The game is a Prisoners' Dilemma (both prefer mutual High, but Low is dominant for both)</li>
+      <li>Monopoly profit (both High) = $100 each</li>
+      <li>If one undercuts while other stays High, undercutter gets $150</li>
+    </ul>
+    <p><strong>(a)</strong> What range of values for the (Low, Low) payoff makes this a valid Prisoners' Dilemma?</p>
+    <p><strong>(b)</strong> What is the NE?</p>
+    <button class="answer-btn" onclick="toggleAnswer(this)">Show Solution</button>
+    <div class="answer">
+      <h4>Solution</h4>
+      <table class="matrix">
+        <tr><th></th><th>High</th><th>Low</th></tr>
+        <tr><th>High</th><td>(100, 100)</td><td>(X, 150)</td></tr>
+        <tr><th>Low</th><td>(150, X)</td><td>(Y, Y)</td></tr>
+      </table>
+      <p><strong>(a)</strong> For Low to be dominant: Y > X (Low beats High when opponent plays Low) and 150 > 100 (already satisfied). For PD: need (100, 100) Pareto-dominates (Y, Y), so Y < 100. Also need Y > X. Also for Low to dominate High when opponent plays Low: Y > X. The "sucker" payoff X must be < Y. So we need: <span class="imp">X < Y < 100</span>. Example: X = 20, Y = 60.</p>
+      <p><strong>(b)</strong> NE: (Low, Low) with payoffs (Y, Y) — both playing dominant strategy despite mutual High being better.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ========== PRICE COMPETITION ========== -->
+<div class="section" id="sec-price-comp">
+  <div class="card">
+    <h2>Module 9: Price Competition (Bertrand)</h2>
+
+    <h3>The Bertrand Model</h3>
+    <ul>
+      <li>Firms compete by setting <strong>prices</strong> (not quantities)</li>
+      <li>With <strong>identical goods and identical MC</strong>: any price above MC gets undercut</li>
+      <li><span class="imp">Bertrand Trap: NE is P = MC, profit = 0</span> — even with just 2 firms!</li>
+      <li>This is called the "Bertrand Paradox" — 2 firms produce competitive outcome</li>
+    </ul>
+
+    <h3>Five Ways to Escape the Bertrand Trap</h3>
+    <ol>
+      <li><span class="key">Cost leadership:</span> Lower MC → price just below rival's MC, capture whole market</li>
+      <li><span class="key">Product differentiation:</span> Make goods non-identical in variety or quality. With differentiation, firms have some pricing power (P > MC)</li>
+      <li><span class="key">Limit production capacity:</span> If you can't serve the whole market, rival has no reason to undercut to zero</li>
+      <li><span class="key">Price matching:</span> "We'll match any price" removes incentive to undercut</li>
+      <li><span class="key">Long-term interaction:</span> Repeated game enables tacit cooperation (see Module 10)</li>
+    </ol>
+
+    <h3>Differentiated Bertrand: Solving Best Response</h3>
+    <div class="formula-box">Given demands: q₁ = a - p₁ + b·p₂ and q₂ = a - p₂ + b·p₁
+Marginal cost = c for both firms
+
+Firm 1's profit: π₁ = (p₁ - c)(a - p₁ + b·p₂)
+FOC: dπ₁/dp₁ = (a - p₁ + b·p₂) + (p₁ - c)(-1) = 0
+     a - 2p₁ + b·p₂ + c = 0
+     p₁* = (a + c + b·p₂) / 2    ← Best Response for Firm 1
+
+By symmetry: p₂* = (a + c + b·p₁) / 2
+
+Solving simultaneously:
+p₁* = p₂* = (a + c) / (2 - b)</div>
+
+    <h3>Time vs Newsweek Example</h3>
+    <p>q<sub>T</sub> = 5 - p<sub>T</sub> + 0.5p<sub>N</sub>, MC = $1</p>
+    <div class="formula-box">BR_T: p_T* = 3 + 0.25·p_N
+BR_N: p_N* = 3 + 0.25·p_T
+
+Solving: p_T* = p_N* = $4
+NE prices = $4 each
+
+Compare: Monopolist owning both → p = $5.50 each (higher)</div>
+
+    <h3>Cost Leadership Example: Senstrum</h3>
+    <p>Your MC = $2/dose. Foreign rival MC = $3.02/dose. Demand: Q = 400 - 50P</p>
+    <div class="formula-box">Strategy: Price just below rival's MC → P = $3.02
+Q = 400 - 50(3.02) = 248.95 million doses
+Profit = (3.02 - 2) × 248.95 = $254 million</div>
+  </div>
+
+  <div class="problem">
+    <span class="q-num">Problem 1</span><span class="difficulty hard">HARD</span>
+    <h3>Four-Firm Bertrand with Zero MC</h3>
+    <p>Demand: P = 2000 - Q. Four firms with MC = 0 and FC = 0, selling identical products.</p>
+    <p><strong>(a)</strong> What is the monopoly price, quantity, and profit?</p>
+    <p><strong>(b)</strong> What is the NE in this 4-firm Bertrand game?</p>
+    <p><strong>(c)</strong> Name two ways these firms could escape this outcome.</p>
+    <button class="answer-btn" onclick="toggleAnswer(this)">Show Solution</button>
+    <div class="answer">
+      <h4>Solution</h4>
+      <p><strong>(a)</strong> MR = 2000 - 2Q = MC = 0 → Q<sup>M</sup> = 1000, P<sup>M</sup> = $1000, π<sup>M</sup> = $1,000,000</p>
+      <p><strong>(b)</strong> With identical goods and same MC = 0, Bertrand competition drives price to MC. <span class="imp">NE: P₁ = P₂ = P₃ = P₄ = 0, profit = 0 for all</span>. Any P > 0 gets undercut.</p>
+      <p><strong>(c)</strong> (1) Limit capacity without coordinating with rivals. (2) Product differentiation — make products non-identical. (3) Price matching guarantees.</p>
+    </div>
+  </div>
+
+  <div class="problem">
+    <span class="q-num">Problem 2</span><span class="difficulty hard">HARD</span>
+    <h3>Differentiated Duopoly</h3>
+    <p>Two coffee chains. Demands: q₁ = 100 - 2p₁ + p₂ and q₂ = 100 - 2p₂ + p₁. Both have MC = $10.</p>
+    <p><strong>(a)</strong> Derive each firm's best response function.</p>
+    <p><strong>(b)</strong> Find the Nash Equilibrium prices and quantities.</p>
+    <p><strong>(c)</strong> Calculate each firm's profit at NE. Compare to the monopoly outcome if one firm owned both.</p>
+    <button class="answer-btn" onclick="toggleAnswer(this)">Show Solution</button>
+    <div class="answer">
+      <h4>Solution</h4>
+      <p><strong>(a)</strong> π₁ = (p₁ - 10)(100 - 2p₁ + p₂)</p>
+      <p>dπ₁/dp₁ = (100 - 2p₁ + p₂) + (p₁ - 10)(-2) = 0</p>
+      <p>100 - 2p₁ + p₂ - 2p₁ + 20 = 0 → 120 + p₂ = 4p₁</p>
+      <p><span class="imp">BR₁: p₁ = (120 + p₂)/4 = 30 + p₂/4</span></p>
+      <p>By symmetry: BR₂: p₂ = 30 + p₁/4</p>
+      <p><strong>(b)</strong> p₁ = 30 + (30 + p₁/4)/4 = 30 + 7.5 + p₁/16</p>
+      <p>(15/16)p₁ = 37.5 → <span class="imp">p₁* = p₂* = $40</span></p>
+      <p>q₁ = 100 - 2(40) + 40 = 60</p>
+      <p><strong>(c)</strong> π₁ = (40-10)(60) = <span class="imp">$1,800 each</span></p>
+      <p>Monopolist: max (p-10)(100-2p+p) + (p-10)(100-2p+p) = 2(p-10)(100-p)</p>
+      <p>FOC: 2(100-p) + 2(p-10)(-1) = 0 → 100-p-p+10 = 0 → p = $55</p>
+      <p>q = 100 - 2(55) + 55 = 45 each. π_total = 2(55-10)(45) = $4,050 > $3,600</p>
+    </div>
+  </div>
+
+  <div class="problem">
+    <span class="q-num">Problem 3</span><span class="difficulty hard">HARD</span>
+    <h3>Cost Leadership with Exchange Rate Risk</h3>
+    <p>You sell a drug with MC = $2/dose. Demand: Q = 400 - 50P (millions). A foreign rival has MC = INR 145 with exchange rate ε (INR per USD).</p>
+    <p><strong>(a)</strong> If ε = 48 (INR/USD), what is your Bertrand equilibrium profit?</p>
+    <p><strong>(b)</strong> An $80M ad campaign would increase demand by 40%. Should you do it?</p>
+    <p><strong>(c)</strong> If the rupee appreciates to ε = 40, how does this affect your profit (without the campaign)?</p>
+    <button class="answer-btn" onclick="toggleAnswer(this)">Show Solution</button>
+    <div class="answer">
+      <h4>Solution</h4>
+      <p><strong>(a)</strong> Rival's MC in USD = 145/48 = $3.021. You price just below $3.021.</p>
+      <p>Q = 400 - 50(3.021) = 248.95M. π = (3.021 - 2)(248.95) = <span class="imp">$254M</span></p>
+      <p><strong>(b)</strong> New demand: Q = 1.4(400 - 50P) = 560 - 70P</p>
+      <p>Q = 560 - 70(3.021) = 348.53M. π = (1.021)(348.53) = $355.8M</p>
+      <p>Increase = 355.8 - 254 = $101.8M > $80M cost. <span class="imp">Yes, do the campaign.</span></p>
+      <p><strong>(c)</strong> Rival's MC = 145/40 = $3.625. Higher rival cost → you can charge more.</p>
+      <p>Q = 400 - 50(3.625) = 218.75M. π = (3.625 - 2)(218.75) = <span class="imp">$355.5M</span> (higher!)</p>
+      <p>Rupee appreciation increases your profit because rival becomes more expensive in USD.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ========== COOPERATION ========== -->
+<div class="section" id="sec-cooperation">
+  <div class="card">
+    <h2>Module 10: Cooperation & Collusion</h2>
+
+    <h3>Explicit Collusion (Cartels)</h3>
+    <ul>
+      <li>Firms agree to restrict output to "quotas" → price rises → higher joint profits</li>
+      <li>Result: maximize total profits, like a shared monopoly</li>
+      <li><span class="imp">Cartels are strictly illegal</span> — felonies in US, EU, Japan, Korea, Brazil</li>
+      <li>Each member has incentive to cheat (produce more at the high price)</li>
+      <li>Enforcement: if cheater detected, cartel punishes (price war)</li>
+    </ul>
+
+    <h3>Repeated Games and Trigger Strategies</h3>
+    <p>When the same game is played infinitely, cooperation can be sustained as a Nash Equilibrium:</p>
+    <div class="formula-box">TRIGGER STRATEGY:
+"Play high price as long as all others played high price in all prior periods.
+ Play P = MC forever if anyone ever deviated."
+
+COOPERATION CONDITION (n firms, interest rate r):
+  NPV(cooperate) = π_mono/n + (π_mono/n)/r
+  NPV(deviate)   = π_mono + 0 (punished forever after)
+
+  Cooperate when: π_mono/n + (π_mono/n)/r > π_mono
+  Simplifies to:  r < 1/(n-1)
+
+EXAMPLES:
+  2 firms: r < 1    (almost always cooperate)
+  3 firms: r < 1/2  (cooperate if r < 50%)
+  4 firms: r < 1/3  (cooperate if r < 33%)</div>
+
+    <h3>With Antitrust Enforcement</h3>
+    <div class="formula-box">Detection probability X after period 1, penalty = k × profits so far
+
+E[cartel] = (1-X) × [π_coop + π_coop/r] + X × [π_coop - k×π_coop]
+          = (1-X) × [π_coop(1 + 1/r)] + X × [π_coop(1 - k)]
+
+Compare to: NPV(deviate) = π_mono
+
+Solve for maximum X at which cartel is preferred.</div>
+
+    <h3>Finite Repeated Games</h3>
+    <ul>
+      <li><span class="imp">Cooperation UNRAVELS via backward induction</span></li>
+      <li>Last period: no future punishment → everyone deviates</li>
+      <li>Second-to-last: knowing last period is deviate → deviate now too</li>
+      <li>Result: NE (P = MC) in EVERY period</li>
+    </ul>
+
+    <h3>Tacit Collusion</h3>
+    <ul>
+      <li>No explicit agreement → NOT illegal</li>
+      <li>Firms independently choose trigger strategies → cooperation is NE</li>
+      <li>Easier with: fewer firms, lower interest rates, transparent pricing, repeated interaction</li>
+    </ul>
+  </div>
+
+  <div class="problem">
+    <span class="q-num">Problem 1</span><span class="difficulty hard">HARD</span>
+    <h3>Three-Firm Repeated Bertrand (from Spring 2025 Final)</h3>
+    <p>3 firms, MC = 100, demand Q = 1000 - P, interest rate r = 5%.</p>
+    <p><strong>(a)</strong> What is the one-period NE?</p>
+    <p><strong>(b)</strong> Can cooperation be sustained with trigger strategies in the infinite game? Show NPV calculations.</p>
+    <button class="answer-btn" onclick="toggleAnswer(this)">Show Solution</button>
+    <div class="answer">
+      <h4>Solution</h4>
+      <p><strong>(a)</strong> Bertrand with identical goods → <span class="imp">NE: P = MC = 100, all profits = 0</span></p>
+      <p><strong>(b)</strong> Monopoly: MR = 1000 - 2Q = MC = 100 → Q = 450, P = 550</p>
+      <p>π<sub>mono</sub> = (550-100)(450) = $202,500</p>
+      <p>Each firm's share: 202,500/3 = $67,500</p>
+      <p>NPV(cooperate) = 67,500 + 67,500/0.05 = 67,500 + 1,350,000 = <strong>$1,417,500</strong></p>
+      <p>NPV(deviate) = 202,500 (undercut, grab whole market for 1 period, then 0 forever)</p>
+      <p>1,417,500 >> 202,500. <span class="imp">Yes, cooperation is sustainable.</span></p>
+      <p>Check: r = 5% < 1/(3-1) = 50%. Condition satisfied.</p>
+    </div>
+  </div>
+
+  <div class="problem">
+    <span class="q-num">Problem 2</span><span class="difficulty hard">HARD</span>
+    <h3>Cartel with Antitrust Risk (from Spring 2025 Final)</h3>
+    <p>Same setup: 4 firms, P = 2000 - Q, MC = 0. Monopoly profit = $1,000,000. Interest rate R = 20%. Detection probability X after period 1. If detected: penalty = 3× profits realized, forced to NE forever after.</p>
+    <p><strong>(a)</strong> Without antitrust, for what values of R will firms prefer the cartel?</p>
+    <p><strong>(b)</strong> With antitrust enforcement, for what values of X will firms still participate?</p>
+    <button class="answer-btn" onclick="toggleAnswer(this)">Show Solution</button>
+    <div class="answer">
+      <h4>Solution</h4>
+      <p><strong>(a)</strong> Each firm gets 1,000,000/4 = $250,000 per period in cartel.</p>
+      <p>NPV(cartel) = 250,000 + 250,000/R</p>
+      <p>NPV(deviate) = 1,000,000</p>
+      <p>Cartel when: 250,000 + 250,000/R > 1,000,000 → 250,000/R > 750,000 → <span class="imp">R < 1/3 ≈ 33%</span></p>
+      <p><strong>(b)</strong> At R = 20%:</p>
+      <p>If not detected (prob 1-X): get 250,000 + 250,000/0.20 = 250,000 + 1,250,000 = 1,500,000</p>
+      <p>If detected (prob X): get 250,000 - 3(250,000) + 0 = -500,000</p>
+      <p>E[cartel] = (1-X)(1,500,000) + X(-500,000) = 1,500,000 - 2,000,000X</p>
+      <p>Cartel when: 1,500,000 - 2,000,000X > 1,000,000 → 500,000 > 2,000,000X</p>
+      <p><span class="imp">X < 25%</span></p>
+    </div>
+  </div>
+
+  <div class="problem">
+    <span class="q-num">Problem 3</span><span class="difficulty hard">HARD</span>
+    <h3>Finite Game Unraveling</h3>
+    <p>Same 4 firms (P = 2000 - Q, MC = 0) play the pricing game for exactly 3 periods. Each firm uses the trigger strategy.</p>
+    <p><strong>(a)</strong> What price is charged in period 3?</p>
+    <p><strong>(b)</strong> What price is charged in period 2?</p>
+    <p><strong>(c)</strong> What price is charged in period 1?</p>
+    <p><strong>(d)</strong> What is each firm's total profit across all 3 periods?</p>
+    <button class="answer-btn" onclick="toggleAnswer(this)">Show Solution</button>
+    <div class="answer">
+      <h4>Solution</h4>
+      <p><strong>(a) Period 3:</strong> Last period → no future punishment. All firms undercut. <span class="imp">P₃ = MC = 0</span></p>
+      <p><strong>(b) Period 2:</strong> Period 3 is P=0 regardless, so no future cooperation to protect. <span class="imp">P₂ = MC = 0</span></p>
+      <p><strong>(c) Period 1:</strong> Same logic — periods 2 and 3 are already P=0. <span class="imp">P₁ = MC = 0</span></p>
+      <p><strong>(d)</strong> <span class="imp">Total profit = $0 for every firm in every period.</span></p>
+      <p>Key insight: With finite horizon, trigger strategies collapse via backward induction. The punishment mechanism requires infinite future to work.</p>
+    </div>
+  </div>
+
+  <div class="problem">
+    <span class="q-num">Problem 4</span><span class="difficulty hard">HARD</span>
+    <h3>Duopoly Cooperation with Demand</h3>
+    <p>Two firms, Q = 100 - P, MC = 20, interest rate r = 30%.</p>
+    <p><strong>(a)</strong> Calculate monopoly price, quantity, and profit.</p>
+    <p><strong>(b)</strong> If they split monopoly profits equally, calculate NPV of cooperating vs deviating.</p>
+    <p><strong>(c)</strong> Is cooperation sustainable? Show the condition.</p>
+    <button class="answer-btn" onclick="toggleAnswer(this)">Show Solution</button>
+    <div class="answer">
+      <h4>Solution</h4>
+      <p><strong>(a)</strong> P = 100 - Q, MR = 100 - 2Q = MC = 20 → Q = 40, P = 60</p>
+      <p>π<sub>mono</sub> = (60-20)(40) = <strong>$1,600</strong></p>
+      <p><strong>(b)</strong> Each firm's share: 1,600/2 = $800/period</p>
+      <p>NPV(cooperate) = 800 + 800/0.30 = 800 + 2,667 = <strong>$3,467</strong></p>
+      <p>NPV(deviate) = 1,600 + 0 = <strong>$1,600</strong></p>
+      <p><strong>(c)</strong> 3,467 > 1,600 → <span class="imp">Yes, cooperation is sustainable.</span></p>
+      <p>Check condition: r = 30% < 1/(2-1) = 100%. ✓</p>
+    </div>
+  </div>
+</div>
+
+<!-- ========== COMMITMENT ========== -->
+<div class="section" id="sec-commitment">
+  <div class="card">
+    <h2>Module 11: Commitment & Entry Deterrence</h2>
+
+    <h3>Core Concepts</h3>
+    <ul>
+      <li><span class="key">Commitment:</span> An irreversible action that constrains your future choices to manipulate rival's behavior</li>
+      <li>Must be <strong>visible</strong> (rival sees it), <strong>credible</strong> (in your interest to follow through), and <strong>irreversible</strong></li>
+      <li>Cortés burned his ships → committed to fight → natives surrendered</li>
+      <li>Building excess capacity → signals you'll flood market if rival enters</li>
+    </ul>
+
+    <h3>Entry Deterrence</h3>
+    <ul>
+      <li>Incumbent can invest to make entry unprofitable for rival</li>
+      <li>Key insight: Investment may lower your payoffs in ALL scenarios but changes rival's decision</li>
+      <li>Compare: π(invest, rival stays out) vs π(no invest, rival enters)</li>
+    </ul>
+
+    <h3>Solving Sequential Games</h3>
+    <div class="formula-box">BACKWARD INDUCTION:
+1. Start at terminal decision nodes
+2. At each node, player picks action with highest payoff
+3. Replace node with that payoff
+4. Work backward to root
+
+FIRST-MOVER ADVANTAGE:
+  Exists when sequential payoff > simultaneous payoff
+  Value = π_sequential - π_simultaneous</div>
+
+    <h3>Preemption Strategies</h3>
+    <ul>
+      <li><strong>Predatory pricing:</strong> Price below cost to drive rival out (legally risky)</li>
+      <li><strong>Product proliferation:</strong> Fill product space so rival can't find a niche</li>
+      <li><strong>Excessive capacity:</strong> Signal willingness to flood market</li>
+      <li><strong>Learning curve:</strong> Early production lowers future costs</li>
+    </ul>
+  </div>
+
+  <div class="problem">
+    <span class="q-num">Problem 1</span><span class="difficulty hard">HARD</span>
+    <h3>Computer Chip Capacity Investment (from Practice Problems)</h3>
+    <p>You're the only producer of a specialized chip. A consultant says "don't invest" because payoffs are lower with investment in all scenarios:</p>
+    <table class="matrix">
+      <tr><th></th><th>Rivals Enter</th><th>Rivals Don't Enter</th></tr>
+      <tr><th>No Investment</th><td>($20M, $10M)</td><td>($50M, $0)</td></tr>
+      <tr><th>Investment</th><td>($10M, -$2M)</td><td>($40M, $0)</td></tr>
+    </table>
+    <p><strong>(a)</strong> Draw the game tree (you move first, rivals observe and decide).</p>
+    <p><strong>(b)</strong> Is the consultant right? Use backward induction.</p>
+    <button class="answer-btn" onclick="toggleAnswer(this)">Show Solution</button>
+    <div class="answer">
+      <h4>Solution</h4>
+      <p><strong>Backward induction:</strong></p>
+      <p>If you invest: Rivals compare Enter (-$2M) vs Don't Enter ($0) → <strong>Don't Enter</strong></p>
+      <p>If you don't invest: Rivals compare Enter ($10M) vs Don't Enter ($0) → <strong>Enter</strong></p>
+      <p>You compare: Invest + No Entry ($40M) vs No Invest + Entry ($20M)</p>
+      <p><span class="imp">Invest! You get $40M vs $20M. The consultant is WRONG.</span></p>
+      <p>The investment's value isn't in the direct payoff comparison — it's in deterring entry. Even though payoffs are lower in every scenario, the investment changes which scenario occurs.</p>
+    </div>
+  </div>
+
+  <div class="problem">
+    <span class="q-num">Problem 2</span><span class="difficulty hard">HARD</span>
+    <h3>Giant Corp Expansion Decision</h3>
+    <p>You're a US firm considering expanding into Giant Corp's market. If you don't expand: $2M. If you expand, Giant can cut price or not:</p>
+    <ul>
+      <li>Giant cuts price: You lose $2M, Giant gets $10M</li>
+      <li>Giant doesn't cut: You get $4M, Giant gets $20M</li>
+    </ul>
+    <p><strong>(a)</strong> Draw the game tree and solve by backward induction.</p>
+    <p><strong>(b)</strong> Should you expand?</p>
+    <button class="answer-btn" onclick="toggleAnswer(this)">Show Solution</button>
+    <div class="answer">
+      <h4>Solution</h4>
+      <p><strong>Backward induction:</strong></p>
+      <p>If you expand: Giant compares Cut ($10M) vs No Cut ($20M) → <strong>No Cut</strong> (Giant prefers $20M)</p>
+      <p>You compare: Expand + No Cut ($4M) vs Don't Expand ($2M)</p>
+      <p><span class="imp">Expand! Giant won't cut price because $20M > $10M. You get $4M instead of $2M.</span></p>
+      <p>Key: Giant's threat to cut prices is <strong>not credible</strong> — they'd hurt themselves more.</p>
+    </div>
+  </div>
+
+  <div class="problem">
+    <span class="q-num">Problem 3</span><span class="difficulty hard">HARD</span>
+    <h3>Plant Capacity Race</h3>
+    <p>A US firm moves first choosing capacity (1, 2, or 3 plants). A Brazilian firm then responds. Payoffs (US, Brazil) in $M:</p>
+    <table class="matrix">
+      <tr><th></th><th>Brazil: 1</th><th>Brazil: 2</th><th>Brazil: 3</th></tr>
+      <tr><th>US: 1</th><td>(3.9, 3.9)</td><td>(2.5, 4.8)</td><td>(1.0, 4.2)</td></tr>
+      <tr><th>US: 2</th><td>(4.8, 2.5)</td><td>(3.8, 3.8)</td><td>(2.2, 3.5)</td></tr>
+      <tr><th>US: 3</th><td>(4.2, 1.0)</td><td>(5.7, 2.7)</td><td>(3.0, 3.0)</td></tr>
+    </table>
+    <p><strong>(a)</strong> What is the NE of the simultaneous game?</p>
+    <p><strong>(b)</strong> What is the outcome with US moving first (backward induction)?</p>
+    <p><strong>(c)</strong> Does the US benefit from moving first?</p>
+    <button class="answer-btn" onclick="toggleAnswer(this)">Show Solution</button>
+    <div class="answer">
+      <h4>Solution</h4>
+      <p><strong>(a) Simultaneous:</strong> Check best responses:</p>
+      <ul>
+        <li>If Brazil=1: US picks 2 (4.8). If Brazil=2: US picks 3 (5.7). If Brazil=3: US picks 2 or 3.</li>
+        <li>If US=1: Brazil picks 2 (4.8). If US=2: Brazil picks 2 (3.8). If US=3: Brazil picks 3 (3.0).</li>
+      </ul>
+      <p>NE: (US:2, Brazil:2) → (3.8, 3.8)</p>
+      <p><strong>(b) Sequential:</strong></p>
+      <ul>
+        <li>US=1: Brazil picks 2 → US gets 2.5</li>
+        <li>US=2: Brazil picks 2 → US gets 3.8</li>
+        <li>US=3: Brazil picks 2 → US gets 5.7</li>
+      </ul>
+      <p><span class="imp">US picks 3, Brazil responds 2 → (5.7, 2.7)</span></p>
+      <p><strong>(c)</strong> Yes! US gets 5.7 vs 3.8. Value of first move = $1.9M. Large capacity commitment deters Brazil from matching.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ========== ASYMMETRIC INFO ========== -->
+<div class="section" id="sec-asymmetric">
+  <div class="card">
+    <h2>Module 12: Asymmetric Information</h2>
+
+    <h3>Three Types of Information Problems</h3>
+
+    <h4>1. Adverse Selection (Hidden Type) — BEFORE the transaction</h4>
+    <ul>
+      <li>One party knows their type/quality; the other doesn't</li>
+      <li><span class="key">Market for Lemons (Akerlof):</span></li>
+      <li>Buyer offers price of average quality → high-quality sellers exit → average falls → more exit → <span class="imp">market unravels to only lowest quality</span></li>
+      <li>This is a <strong>market failure</strong> — efficient trades don't happen</li>
+    </ul>
+    <div class="formula-box">LEMONS SPIRAL:
+1. Qualities range from q=0 (bad) to q=1 (good)
+2. Buyer offers price for average quality: p(q̄₁) where q̄₁ = 0.5
+3. Sellers with q > q̄₁ leave (their car is worth more)
+4. Remaining average drops to q̄₂ < q̄₁
+5. More sellers leave...
+6. Market unravels → only q=0 cars remain</div>
+
+    <h4>2. Moral Hazard (Hidden Action) — AFTER the transaction</h4>
+    <ul>
+      <li>One party takes unobservable actions that affect the other</li>
+      <li>Examples: reckless driving after buying insurance, employee shirking, "too big to fail" banks taking excessive risk</li>
+      <li><strong>Remedies:</strong> monitoring, incentive pay (stock options, bonuses), deductibles, no-claim discounts, reputation</li>
+    </ul>
+
+    <h4>3. Signaling vs Screening</h4>
+    <table class="matrix">
+      <tr><th></th><th>Signaling</th><th>Screening</th></tr>
+      <tr><td><strong>Who acts?</strong></td><td>Informed party</td><td>Uninformed party</td></tr>
+      <tr><td><strong>Goal</strong></td><td>Reveal own type</td><td>Sort other's types</td></tr>
+      <tr><td><strong>Examples</strong></td><td>Warranties, education, certifications</td><td>Insurance menus, job tests</td></tr>
+      <tr><td><strong>Key condition</strong></td><td>Signal must be costlier for low type</td><td>Contracts must be incentive-compatible</td></tr>
+    </table>
+
+    <h3>Health Insurance & ACA</h3>
+    <ul>
+      <li>Without mandate: healthy people opt out → pool gets sicker → premiums rise → more opt out → spiral</li>
+      <li>ACA individual mandate forces healthy people into pool, preventing adverse selection spiral</li>
+    </ul>
+  </div>
+
+  <div class="problem">
+    <span class="q-num">Problem 1</span><span class="difficulty hard">HARD</span>
+    <h3>Used Car Market (from Spring 2025 Final)</h3>
+    <p>Explain how adverse selection leads to market failure in the used car market. Include: (a) the mechanism of market unraveling, (b) what the seller can do to fix it.</p>
+    <button class="answer-btn" onclick="toggleAnswer(this)">Show Solution</button>
+    <div class="answer">
+      <h4>Solution</h4>
+      <p><strong>(a) Market unraveling mechanism:</strong></p>
+      <ol>
+        <li>Sellers know their car's quality; buyers don't</li>
+        <li>If quality ranges from q=0 to q=1, buyers offer price for average quality p(0.5)</li>
+        <li>Sellers with q > 0.5 withdraw (their cars are worth more than offered)</li>
+        <li>Remaining cars have average quality < 0.5, say q̄ = 0.25</li>
+        <li>Buyers adjust offer down to p(0.25)</li>
+        <li>More sellers withdraw...</li>
+        <li><span class="imp">Only lowest quality cars (q = 0) remain — market failure</span></li>
+      </ol>
+      <p><strong>(b) Seller solutions:</strong></p>
+      <ul>
+        <li><strong>Warranties/guarantees:</strong> Signal quality (costly for low-quality to mimic)</li>
+        <li><strong>Third-party certifications/inspections</strong></li>
+        <li><strong>Reputation building</strong></li>
+        <li><strong>Money-back guarantees</strong></li>
+        <li><strong>Disclosure of maintenance records</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="problem">
+    <span class="q-num">Problem 2</span><span class="difficulty hard">HARD</span>
+    <h3>Suits R Us — Litigation Finance</h3>
+    <p>SRU (an investment firm) finances lawsuits for a percentage of proceeds. SRU has better information about case quality than the plaintiff.</p>
+    <p><strong>(a)</strong> What type of asymmetric information problem is this? Who is informed?</p>
+    <p><strong>(b)</strong> What should the plaintiff worry about?</p>
+    <p><strong>(c)</strong> Name 3 other markets with similar "hidden type" problems.</p>
+    <button class="answer-btn" onclick="toggleAnswer(this)">Show Solution</button>
+    <div class="answer">
+      <h4>Solution</h4>
+      <p><strong>(a)</strong> <span class="imp">Adverse selection</span>. SRU (informed) knows more about case odds than the plaintiff (uninformed). The asymmetry is based on expertise.</p>
+      <p><strong>(b)</strong> If SRU is willing to take your case and offer favorable terms, they probably think the case is a winner. <span class="imp">Paradox: if SRU wants your case, you're probably better off keeping it yourself!</span> SRU will only take cases they think will pay off, meaning you're giving away a share of likely winnings.</p>
+      <p><strong>(c)</strong> Used cars, health insurance, tickets from scalpers, asset sales, hiring (employee knows own ability).</p>
+    </div>
+  </div>
+
+  <div class="problem">
+    <span class="q-num">Problem 3</span><span class="difficulty hard">HARD</span>
+    <h3>Business Sale with Asymmetric Information</h3>
+    <p>A business seller values the company uniformly between $100M and $190M. A buyer would gain $10M in synergies (so the business is worth seller's value + $10M to the buyer). The buyer must make a take-it-or-leave-it offer.</p>
+    <p>If buyer offers $X, the seller accepts if their value ≤ $X.</p>
+    <p><strong>(a)</strong> If buyer offers $130M, what is the probability of acceptance?</p>
+    <p><strong>(b)</strong> Given acceptance, what is the expected value of the business to the seller (and thus to the buyer with synergies)?</p>
+    <p><strong>(c)</strong> What is the buyer's expected profit from offering $130M?</p>
+    <p><strong>(d)</strong> What is the optimal offer?</p>
+    <button class="answer-btn" onclick="toggleAnswer(this)">Show Solution</button>
+    <div class="answer">
+      <h4>Solution</h4>
+      <p><strong>(a)</strong> Seller values uniformly $100M-$190M. Offer $130M accepted when seller value ≤ $130M.</p>
+      <p>P(accept) = (130-100)/(190-100) = 30/90 = <strong>1/3 ≈ 33%</strong></p>
+      <p><strong>(b)</strong> Given acceptance, seller value is uniform [$100M, $130M]. Expected seller value = (100+130)/2 = $115M.</p>
+      <p>Business worth to buyer = $115M + $10M = $125M</p>
+      <p><strong>(c)</strong> E[profit] = P(accept) × (value to buyer - offer) = (1/3)(125 - 130) = (1/3)(-5) = <span class="imp">-$1.67M (negative!)</span></p>
+      <p>Due to adverse selection: when seller accepts a high offer, it's because the business is worth less.</p>
+      <p><strong>(d)</strong> Trying lower offers: At offer = $110M, P(accept)=10/90=1/9, E[seller value|accept]=$105M, value to buyer=$115M, E[profit]=(1/9)(115-110)=$0.56M. At $100M, P(accept)→0. <span class="imp">Optimal offer is around $100-110M</span> — adverse selection forces very low offers.</p>
+    </div>
+  </div>
+
+  <div class="problem">
+    <span class="q-num">Problem 4</span><span class="difficulty hard">HARD</span>
+    <h3>Moral Hazard Identification</h3>
+    <p>For each scenario, identify whether it's adverse selection, moral hazard, or both. Explain who is informed, what's hidden, and suggest a remedy:</p>
+    <ol>
+      <li>A bank lends to a startup that then gambles with the funds</li>
+      <li>A health insurer can't tell if applicants are healthy or sick</li>
+      <li>A manager gets paid a salary regardless of company performance</li>
+      <li>A "too big to fail" bank takes on excessive derivative positions</li>
+    </ol>
+    <button class="answer-btn" onclick="toggleAnswer(this)">Show Solution</button>
+    <div class="answer">
+      <h4>Solution</h4>
+      <ol>
+        <li><span class="imp">Moral hazard.</span> Bank can't observe startup's actions after lending. Hidden action: risky gambling. Remedy: milestone-based disbursement, monitoring, covenants.</li>
+        <li><span class="imp">Adverse selection.</span> Insurer (uninformed) can't distinguish types. Sick people (informed) more likely to buy. Remedy: screening (deductible menus), mandatory coverage (ACA mandate).</li>
+        <li><span class="imp">Moral hazard.</span> Shareholders can't observe manager's effort. Hidden action: shirking. Remedy: stock options, performance bonuses, board oversight.</li>
+        <li><span class="imp">Moral hazard.</span> Government guarantee removes downside risk. Hidden action: excessive risk-taking. Remedy: regulation, capital requirements, stress tests, limiting bank size.</li>
+      </ol>
+    </div>
+  </div>
+</div>
+
+<!-- ========== PLATFORMS ========== -->
+<div class="section" id="sec-platforms">
+  <div class="card">
+    <h2>Module 13: Platforms & Network Effects</h2>
+
+    <h3>Two Types of Network Effects</h3>
+    <ul>
+      <li><span class="key">Direct (Same-Side):</span> More users of the SAME type increase value for each user. Examples: telephone, Facebook, fax machine</li>
+      <li><span class="key">Indirect (Cross-Side):</span> More users on one SIDE increase value for the OTHER side. Examples: Uber (riders ↔ drivers), Xbox (gamers ↔ developers), AmEx (cardholders ↔ merchants)</li>
+    </ul>
+
+    <h3>Key Formulas</h3>
+    <div class="formula-box">Network connections with n users: n(n-1)/2
+  2 phones: 1 connection
+  5 phones: 10 connections
+  12 phones: 66 connections
+
+Platform pricing (AmEx example):
+  Merchant fee: +3% per transaction
+  Cardholder reward: -1% (cashback)
+  Platform net revenue: 2% per transaction
+
+$100 purchase:
+  Merchant pays: $103
+  Cardholder pays: $99
+  AmEx keeps: $2</div>
+
+    <h3>Winner-Take-Most</h3>
+    <ul>
+      <li>Strong network effects + <strong>incompatibility</strong> → market tips to one platform</li>
+      <li>Why "most" not "all"? Multi-homing possible, niche segments, regulation</li>
+      <li><span class="key">Critical mass:</span> Minimum users needed for platform to be self-sustaining</li>
+      <li>Example: VHS beat Betamax despite arguably lower quality — network effects dominated</li>
+    </ul>
+
+    <h3>Platform Pricing Strategy</h3>
+    <ul>
+      <li><span class="imp">Subsidize the more elastic/harder-to-get side, charge the less elastic side</span></li>
+      <li>Total surplus maximizing price can be <strong>below MC</strong> when network effects exist (subsidy is efficient)</li>
+      <li>Platforms achieve highest market capitalizations because network effects create strong moats</li>
+    </ul>
+
+    <h3>Interoperability</h3>
+    <ul>
+      <li><strong>With interoperability:</strong> Multiple platforms coexist (email: Gmail ↔ Outlook ↔ Yahoo)</li>
+      <li><strong>Without interoperability:</strong> Tipping toward monopoly (Xbox games ≠ PlayStation games)</li>
+      <li>Incumbent typically opposes interoperability; entrant favors it</li>
+    </ul>
+
+    <h3>Privacy Issues</h3>
+    <ul>
+      <li>Platforms collect vast user data → privacy concerns</li>
+      <li>Data is the "price" users pay for free services</li>
+      <li>Network effects lock users in, reducing bargaining power on privacy</li>
+    </ul>
+  </div>
+
+  <div class="problem">
+    <span class="q-num">Problem 1</span><span class="difficulty hard">HARD</span>
+    <h3>Network Effects Analysis (from Spring 2025 Final)</h3>
+    <p><strong>(a)</strong> Define the two kinds of network effects. Give an example of each.</p>
+    <p><strong>(b)</strong> A new social media platform has 10,000 users. A competing platform has 1,000,000 users. Both are incompatible. Explain using network effects theory why the smaller platform is likely to fail.</p>
+    <p><strong>(c)</strong> Would mandating interoperability help or hurt the smaller platform? Explain.</p>
+    <button class="answer-btn" onclick="toggleAnswer(this)">Show Solution</button>
+    <div class="answer">
+      <h4>Solution</h4>
+      <p><strong>(a)</strong></p>
+      <ul>
+        <li><span class="imp">Direct (same-side):</span> User values more users of the same type on the platform. Example: Facebook — you want your friends to be on it too.</li>
+        <li><span class="imp">Indirect (cross-side):</span> User on one side values more users on the other side. Example: Uber — riders want more drivers (shorter wait); drivers want more riders (more business).</li>
+      </ul>
+      <p><strong>(b)</strong> With incompatibility, network effects create a <strong>winner-take-most</strong> dynamic. The larger platform (1M users) has vastly more value per user: connections = n(n-1)/2. For 1M users: ~500 billion connections vs 10K users: ~50 million connections. Users will migrate to the larger network. Advertisers prefer the larger audience. Content creators go where the audience is. The smaller platform fails to reach <strong>critical mass</strong> and collapses.</p>
+      <p><strong>(c)</strong> <span class="imp">Interoperability would HELP the smaller platform.</span> If users on the small platform can connect with users on the large platform, the small platform's users get the benefit of the large network. This eliminates the winner-take-most dynamic and allows both to coexist (like email). The small platform can compete on features/privacy rather than network size.</p>
+    </div>
+  </div>
+
+  <div class="problem">
+    <span class="q-num">Problem 2</span><span class="difficulty hard">HARD</span>
+    <h3>Platform Pricing Strategy</h3>
+    <p>A new ride-sharing platform has these groups: 1 million potential riders (willing to pay $5/ride) and 100,000 potential drivers (need at least $3/ride to participate). Each side's participation depends on the other's.</p>
+    <p><strong>(a)</strong> Which side should the platform subsidize? Why?</p>
+    <p><strong>(b)</strong> Why might the total surplus maximizing price be below marginal cost?</p>
+    <p><strong>(c)</strong> Explain why this platform might adopt a "winner-take-most" strategy despite short-term losses.</p>
+    <button class="answer-btn" onclick="toggleAnswer(this)">Show Solution</button>
+    <div class="answer">
+      <h4>Solution</h4>
+      <p><strong>(a)</strong> <span class="imp">Subsidize drivers</span> (the scarcer/harder-to-get side). Drivers are the bottleneck — there are 10x more potential riders than drivers. More drivers → shorter wait times → more riders join → more business for drivers (cross-side network effects). Charge riders (the less elastic/more abundant side).</p>
+      <p><strong>(b)</strong> With network effects, each additional user creates value for ALL other users (positive externality). The social benefit of adding a user exceeds their private willingness to pay. To maximize total surplus, you subsidize participation below MC because the network externality makes each user more valuable than their individual payment suggests.</p>
+      <p><strong>(c)</strong> Due to network effects and incompatibility, the market tends toward one dominant platform. The platform that reaches <strong>critical mass first</strong> triggers a positive feedback loop: more riders → more drivers → even more riders → market tips in their favor. Short-term losses are an investment in reaching critical mass before competitors. Once dominant, the platform can raise prices (switching costs + network lock-in protect the position).</p>
+    </div>
+  </div>
+</div>
+
+<!-- ========== PRACTICE PROBLEMS ========== -->
+<div class="section" id="sec-problems">
+  <div class="card">
+    <h2>Extra Practice Problems</h2>
+    <p>These are additional challenging problems covering multiple topics. Work through them timed (15-20 minutes each) to simulate exam conditions.</p>
+  </div>
+
+  <div class="problem">
+    <span class="q-num">Comprehensive 1</span><span class="difficulty hard">HARD</span>
+    <h3>Multi-Topic: Duopoly with Collusion and Entry</h3>
+    <p>Two airlines serve a route. Demand: P = 500 - Q. Both have MC = $100, FC = 0.</p>
+    <p><strong>(a)</strong> If both compete Bertrand (identical service), what is the NE price and profit?</p>
+    <p><strong>(b)</strong> They consider tacit collusion with trigger strategies, r = 10%. Calculate NPV of cooperating vs deviating. Is cooperation sustainable?</p>
+    <p><strong>(c)</strong> A third airline considers entering. If it enters, the 3-firm Bertrand outcome occurs. The incumbent can invest $50,000 in a loyalty program that would reduce the entrant's expected profit from $20,000 to -$5,000. Should the incumbent invest? Use backward induction.</p>
+    <button class="answer-btn" onclick="toggleAnswer(this)">Show Solution</button>
+    <div class="answer">
+      <h4>Solution</h4>
+      <p><strong>(a)</strong> Bertrand with identical goods: <span class="imp">P = MC = $100, profit = $0 each</span></p>
+      <p><strong>(b)</strong> Monopoly: MR = 500 - 2Q = 100 → Q = 200, P = 300</p>
+      <p>π<sub>mono</sub> = (300-100)(200) = $40,000. Each gets $20,000/period.</p>
+      <p>NPV(coop) = 20,000 + 20,000/0.10 = 20,000 + 200,000 = $220,000</p>
+      <p>NPV(deviate) = $40,000</p>
+      <p>220,000 >> 40,000. <span class="imp">Yes, cooperation is sustainable.</span> (r=10% < 1/(2-1)=100%)</p>
+      <p><strong>(c)</strong> Backward induction:</p>
+      <ul>
+        <li>If invest: Entrant expects -$5,000 → doesn't enter → incumbent keeps duopoly collusion profits ($220,000) minus $50,000 investment = $170,000</li>
+        <li>If don't invest: Entrant expects $20,000 → enters → 3-firm Bertrand, P = MC = $100, profit = $0 forever = $0</li>
+      </ul>
+      <p><span class="imp">Invest! $170,000 > $0.</span> The loyalty program deters entry.</p>
+    </div>
+  </div>
+
+  <div class="problem">
+    <span class="q-num">Comprehensive 2</span><span class="difficulty hard">HARD</span>
+    <h3>Multi-Topic: Platform with Adverse Selection</h3>
+    <p>An online marketplace connects buyers and sellers of antiques. Sellers know quality (High or Low); buyers don't.</p>
+    <ul>
+      <li>50% of antiques are High quality (worth $1000 to buyer, $800 to seller)</li>
+      <li>50% are Low quality (worth $200 to buyer, $100 to seller)</li>
+    </ul>
+    <p><strong>(a)</strong> If buyers can't distinguish quality, what price do they offer? Which sellers accept? Does the market unravel?</p>
+    <p><strong>(b)</strong> The platform introduces a certification service (costs $50, only profitable for high-quality sellers to use). How does this solve the adverse selection problem?</p>
+    <p><strong>(c)</strong> The platform has direct network effects (buyers value more buyers for price discovery) and indirect network effects (buyers ↔ sellers). Which type of network effect is more important for this marketplace? Why?</p>
+    <button class="answer-btn" onclick="toggleAnswer(this)">Show Solution</button>
+    <div class="answer">
+      <h4>Solution</h4>
+      <p><strong>(a)</strong> Buyers offer E[value] = 0.5(1000) + 0.5(200) = $600.</p>
+      <p>High-quality sellers accept ($600 > $800)? <span class="imp">No! $600 < $800.</span> They withdraw.</p>
+      <p>Only low-quality sellers remain. Buyers know this → offer $200. Only low quality trades. <span class="imp">Market unravels — high-quality antiques never sell.</span></p>
+      <p><strong>(b)</strong> This is a <strong>signaling/screening</strong> mechanism:</p>
+      <ul>
+        <li>High-quality sellers: pay $50 for certification. Buyers trust certified items → pay $1000. Seller profit: $1000 - $800 - $50 = $150 > 0. <strong>Worth it!</strong></li>
+        <li>Low-quality sellers: if they certify, buyers pay $1000 but item is worth $200 → caught, reputation destroyed. Or: certification detects quality. Either way, <strong>not worth faking.</strong></li>
+      </ul>
+      <p>Result: <span class="imp">Separating equilibrium.</span> Certified = high quality ($1000), uncertified = low quality ($200). Both types trade!</p>
+      <p><strong>(c)</strong> <span class="imp">Indirect (cross-side) network effects are more important.</span> Buyers want more sellers (more selection), sellers want more buyers (more demand/better prices). This is the core value proposition. Direct effects (buyer-buyer) are secondary — buyers benefit from other buyers mainly through better price discovery, but the primary draw is having many sellers to choose from.</p>
+    </div>
+  </div>
+
+  <div class="problem">
+    <span class="q-num">Comprehensive 3</span><span class="difficulty hard">HARD</span>
+    <h3>Full Exam-Style Problem: Tech Market</h3>
+    <p>Two tech firms (Alpha and Beta) compete in a market with demand P = 1000 - 2Q. Both have MC = $200.</p>
+    <p><strong>(a)</strong> Calculate monopoly price, quantity, and profit. (5 pts)</p>
+    <p><strong>(b)</strong> In one-shot Bertrand, what is the NE? (5 pts)</p>
+    <p><strong>(c)</strong> They play an infinitely repeated game with r = 25% and use trigger strategies. Is cooperation sustainable? (10 pts)</p>
+    <p><strong>(d)</strong> Now suppose the game is repeated 3 times only. What happens in each period? Explain. (5 pts)</p>
+    <p><strong>(e)</strong> Alpha develops a proprietary platform with network effects. Explain why Alpha might price below MC initially and how this relates to winner-take-most dynamics. (5 pts)</p>
+    <button class="answer-btn" onclick="toggleAnswer(this)">Show Solution</button>
+    <div class="answer">
+      <h4>Solution</h4>
+      <p><strong>(a)</strong> P = 1000 - 2Q, MR = 1000 - 4Q = MC = 200</p>
+      <p>Q<sup>M</sup> = 200, P<sup>M</sup> = 1000 - 400 = $600</p>
+      <p>π<sup>M</sup> = (600-200)(200) = <span class="imp">$80,000</span></p>
+
+      <p><strong>(b)</strong> Identical goods Bertrand: <span class="imp">P = MC = $200, profit = $0</span></p>
+
+      <p><strong>(c)</strong> Each firm's cooperative profit = 80,000/2 = $40,000</p>
+      <p>NPV(coop) = 40,000 + 40,000/0.25 = 40,000 + 160,000 = $200,000</p>
+      <p>NPV(deviate) = 80,000 + 0 = $80,000</p>
+      <p>200,000 > 80,000 → <span class="imp">Yes, sustainable.</span></p>
+      <p>Check: r = 25% < 1/(2-1) = 100% ✓</p>
+
+      <p><strong>(d)</strong> Finite game → backward induction unraveling:</p>
+      <p>Period 3: no future → P = MC = $200. Period 2: period 3 is $200 regardless → P = $200. Period 1: same logic → P = $200.</p>
+      <p><span class="imp">P = MC = $200 in ALL periods, profit = $0.</span></p>
+
+      <p><strong>(e)</strong> With network effects, each user creates positive externalities for others. Pricing below MC subsidizes adoption, helping Alpha reach <strong>critical mass</strong> faster than Beta. Once Alpha dominates:</p>
+      <ul>
+        <li>Users are locked in (switching costs + network value)</li>
+        <li>Developers/partners flock to larger platform (indirect network effects)</li>
+        <li>Winner-take-most: incompatibility means only one platform survives</li>
+        <li>Alpha can then raise prices after dominance is established</li>
+      </ul>
+      <p>The short-term loss is an investment in network dominance. Total surplus maximizing price IS below MC when network effects exist.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ========== MOCK EXAM ========== -->
+<div class="section" id="sec-mock-exam">
+  <div class="card">
+    <h2>Mock Final Exam — Predicted Format</h2>
+    <p>This mock exam mirrors the patterns from Economides' actual 2025 exams. <strong>90 points total, ~90 minutes.</strong> The structure matches how his actual exams differed from the practice materials:</p>
+    <ul>
+      <li><strong>Q1 (20 pts):</strong> Short concept definitions — "free points" if you know them</li>
+      <li><strong>Q2 (30 pts):</strong> Multi-part game theory matrix with parametric questions, elimination, sequential game, value of commitment</li>
+      <li><strong>Q3 (40 pts):</strong> Massive multi-part problem chaining across modules: monopoly → Bertrand → cost leadership → cooperation → antitrust → finite unraveling → entry deterrence → asymmetric info</li>
+    </ul>
+    <p style="margin-top:12px;">
+      <button class="answer-btn" onclick="toggleAllMockSolutions()" id="mock-toggle-all" style="background:var(--red);">Show All Solutions</button>
+      <span style="font-size:12px; color:var(--text2); margin-left:12px;">Try working through the problems first before revealing solutions</span>
+    </p>
+  </div>
+
+  <!-- QUESTION 1 -->
+  <div class="card">
+    <h2 style="color:var(--red);">QUESTION 1 (20 points)</h2>
+
+    <div class="problem">
+      <span class="q-num">Q1(a)</span><span class="difficulty medium">5 PTS</span>
+      <h3>Platform Pricing</h3>
+      <p>What is a "platform"? Explain the difference between a platform's pricing strategy and a traditional firm's pricing strategy. Why might a platform rationally charge one side of the market <em>below</em> marginal cost?</p>
+      <button class="answer-btn mock-solution-btn" onclick="toggleAnswer(this)">Show Solution</button>
+      <div class="answer">
+        <h4>Solution</h4>
+        <p>A <span class="imp">platform</span> is a business that creates value by facilitating interactions between two or more distinct groups of users (e.g., buyers and sellers, riders and drivers).</p>
+        <p><strong>Traditional firm:</strong> Sets P ≥ MC for its product. <strong>Platform:</strong> Sets different prices for each side. The platform <span class="imp">subsidizes the more elastic/harder-to-get side</span> and charges the less elastic side.</p>
+        <p>A platform may rationally charge below MC because of <span class="imp">network externalities</span>: each additional user on the subsidized side creates value for users on the other side (indirect/cross-side network effects). The social benefit of adding that user exceeds their private willingness to pay. The subsidy is recouped from the other side, which values the larger network.</p>
+        <p><strong>Example:</strong> AmEx charges merchants +3% but gives cardholders -1% cashback. The net 2% is AmEx's revenue. Subsidizing cardholders attracts more cardholders, which makes the platform more valuable to merchants.</p>
+      </div>
+    </div>
+
+    <div class="problem">
+      <span class="q-num">Q1(b)</span><span class="difficulty medium">10 PTS</span>
+      <h3>AI Hiring Platform — Network Effects</h3>
+      <p>A startup has developed a new AI-powered hiring tool. Employers pay to use it; job seekers use it for free. The tool works better the more resumes are in the system (employers get better matches), and job seekers prefer platforms with more employers posting jobs.</p>
+      <p>A rival platform with 500,000 users already exists. The startup has 8,000 users. Both platforms are incompatible.</p>
+      <p><strong>(i)</strong> Identify the type(s) of network effects present.</p>
+      <p><strong>(ii)</strong> Using network effects theory, explain the startup's likely fate and what strategic move could change it.</p>
+      <button class="answer-btn mock-solution-btn" onclick="toggleAnswer(this)">Show Solution</button>
+      <div class="answer">
+        <h4>Solution</h4>
+        <p><strong>(i)</strong> <span class="imp">Indirect (cross-side) network effects:</span> Employers want more job seekers (better candidate pool), job seekers want more employers (more opportunities). There may also be <span class="imp">direct (same-side) effects</span> on the employer side if the AI matching improves with more data from all employers.</p>
+        <p><strong>(ii)</strong> With incompatibility and strong network effects, the market exhibits <span class="imp">winner-take-most</span> dynamics. The rival has vastly more connections: 500K users → ~125 billion potential connections vs 8K → ~32 million. The startup has likely failed to reach <span class="imp">critical mass</span> — the minimum users needed for self-sustaining growth. Users will migrate to the larger platform. The startup will collapse.</p>
+        <p><strong>Strategic move:</strong> The startup could push for <span class="imp">interoperability</span> (e.g., let job seekers import profiles from the rival, or let employers cross-post). This eliminates the winner-take-most dynamic and lets the startup compete on features (AI quality) rather than network size. Alternatively, the startup could focus on a <strong>niche segment</strong> (e.g., AI engineers only) where it can reach critical mass in a smaller market.</p>
+      </div>
+    </div>
+
+    <div class="problem">
+      <span class="q-num">Q1(c)</span><span class="difficulty medium">5 PTS</span>
+      <h3>Signaling vs Screening</h3>
+      <p>Distinguish between signaling and screening. For each, state who acts (informed or uninformed party), give one example, and explain the key condition that makes the mechanism work.</p>
+      <button class="answer-btn mock-solution-btn" onclick="toggleAnswer(this)">Show Solution</button>
+      <div class="answer">
+        <h4>Solution</h4>
+        <table class="matrix">
+          <tr><th></th><th>Signaling</th><th>Screening</th></tr>
+          <tr><td><strong>Who acts?</strong></td><td>Informed party</td><td>Uninformed party</td></tr>
+          <tr><td><strong>Example</strong></td><td>Seller offers warranty to signal high quality</td><td>Insurer offers deductible menu to sort risk types</td></tr>
+          <tr><td><strong>Key condition</strong></td><td>Signal must be costlier for low-quality type to mimic (otherwise no separation)</td><td>Contracts must be incentive-compatible: each type self-selects into the "right" option</td></tr>
+        </table>
+        <p><span class="imp">Signaling:</span> educated workers signal ability (costly for low-ability to get degree). <span class="imp">Screening:</span> insurance company offers high-deductible/low-premium vs low-deductible/high-premium; risky people choose low deductible, safe people choose high deductible.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- QUESTION 2 -->
+  <div class="card">
+    <h2 style="color:var(--red);">QUESTION 2 (30 points)</h2>
+    <p>Two competing food delivery apps, <strong>DashDoor</strong> and <strong>GrubRun</strong>, are choosing their New Year's promotion: 15% off, 25% off, or 35% off. They announce promotions simultaneously in their apps. You are advising DashDoor. Expected profits ($millions, DashDoor first):</p>
+    <table class="matrix">
+      <tr><th></th><th>GrubRun: 15%</th><th>GrubRun: 25%</th><th>GrubRun: 35%</th></tr>
+      <tr><th>DashDoor: 15%</th><td>(12, Z)</td><td>(8, 7)</td><td>(4, 3)</td></tr>
+      <tr><th>DashDoor: 25%</th><td>(14, 5)</td><td>(W, 6)</td><td>(6, 3)</td></tr>
+      <tr><th>DashDoor: 35%</th><td>(11, 1)</td><td>(9, 4)</td><td>(7, 2)</td></tr>
+    </table>
+
+    <div class="problem">
+      <span class="q-num">Q2(a)</span><span class="difficulty hard">5 PTS</span>
+      <h3>Parametric NE: Find W</h3>
+      <p>What is the highest value of W such that it is a Nash equilibrium for both firms to choose 25% discounts? (Provide one number; if no such number exists, write "N/A".) Explain.</p>
+      <button class="answer-btn mock-solution-btn" onclick="toggleAnswer(this)">Show Solution</button>
+      <div class="answer">
+        <h4>Solution</h4>
+        <p>For (25%, 25%) to be a NE, both firms must be playing best responses.</p>
+        <p><strong>GrubRun at 25%:</strong> GrubRun gets 6, compared to Z (at 15%) and 3 (at 35%). For 25% to be GrubRun's best response to DashDoor's 25%, we need 6 ≥ 7... wait: GrubRun compares its payoffs <em>in the 25% row for DashDoor</em>: at GR:15% gets 5, at GR:25% gets 6, at GR:35% gets 3. So 6 > 5 and 6 > 3. ✓ GrubRun is already playing best response regardless of W.</p>
+        <p><strong>DashDoor at 25%:</strong> DashDoor gets W, compared to 8 (at DD:15%) and 9 (at DD:35%) — these are the payoffs in the GrubRun:25% column. For DashDoor's 25% to be a best response, we need W ≥ 8 and W ≥ 9.</p>
+        <p>So we need W ≥ 9. But the question asks for the <em>highest</em> value of W for which this <em>is</em> an NE. Any W ≥ 9 works. There's no upper bound from the NE conditions.</p>
+        <p>However — if W is too large, (25%, 25%) is still an NE, but we need to check whether other NEs emerge. The question asks only whether (25%, 25%) is <em>a</em> NE. So the answer depends on the minimum: <span class="imp">W must be at least 9</span>. For any W ≥ 9, (25%, 25%) is a NE. If the question is asking "highest W such that (25%, 25%) is the <em>unique</em> NE," the answer would require further analysis. As stated: <span class="imp">There is no highest value — any W ≥ 9 works. The minimum value is W = 9.</span></p>
+        <p><em>Note: This is a trick — Economides likes to see if you'll recognize when a question's framing doesn't quite work. The key insight is showing the NE conditions: W ≥ 9.</em></p>
+      </div>
+    </div>
+
+    <div class="problem">
+      <span class="q-num">Q2(b)</span><span class="difficulty hard">5 PTS</span>
+      <h3>Parametric NE: Find Z</h3>
+      <p>What is the lowest value of Z such that it is a Nash equilibrium for both firms to choose 15% discounts? (Provide one number; if no such number exists, write "N/A".) Explain.</p>
+      <button class="answer-btn mock-solution-btn" onclick="toggleAnswer(this)">Show Solution</button>
+      <div class="answer">
+        <h4>Solution</h4>
+        <p>For (15%, 15%) to be a NE:</p>
+        <p><strong>DashDoor at 15%:</strong> Gets 12, compared to 14 (at DD:25%) and 11 (at DD:35%) in the GR:15% column. 12 < 14, so DashDoor prefers 25% over 15% when GrubRun plays 15%.</p>
+        <p>Since DashDoor is NOT playing a best response, (15%, 15%) is <span class="imp">never a NE regardless of Z</span>.</p>
+        <p><span class="imp">Answer: N/A</span></p>
+      </div>
+    </div>
+
+    <div class="problem">
+      <span class="q-num">Q2(c)</span><span class="difficulty hard">5 PTS</span>
+      <h3>Dominated Strategies (W = 10, Z = 9)</h3>
+      <p>For parts (c) through (f), assume W = 10 and Z = 9. Does either firm have any dominated strategies? If so, list them. Explain.</p>
+      <table class="matrix">
+        <tr><th></th><th>GR: 15%</th><th>GR: 25%</th><th>GR: 35%</th></tr>
+        <tr><th>DD: 15%</th><td>(12, 9)</td><td>(8, 7)</td><td>(4, 3)</td></tr>
+        <tr><th>DD: 25%</th><td>(14, 5)</td><td>(10, 6)</td><td>(6, 3)</td></tr>
+        <tr><th>DD: 35%</th><td>(11, 1)</td><td>(9, 4)</td><td>(7, 2)</td></tr>
+      </table>
+      <button class="answer-btn mock-solution-btn" onclick="toggleAnswer(this)">Show Solution</button>
+      <div class="answer">
+        <h4>Solution</h4>
+        <p><strong>DashDoor:</strong> Compare 15% vs 25%: (12<14, 8<10, 4<6). <span class="imp">15% is dominated by 25%</span> for DashDoor.</p>
+        <p>Compare 25% vs 35%: (14>11, 10>9, 6<7). Neither dominates the other.</p>
+        <p><strong>GrubRun:</strong> Compare 35% vs 25%: (3<7, 3<6, 2<4). <span class="imp">35% is dominated by 25%</span> for GrubRun.</p>
+        <p>Compare 15% vs 25%: (9>7, 5<6, 3=3). Neither dominates.</p>
+        <p><span class="imp">Dominated strategies: 15% for DashDoor, 35% for GrubRun.</span></p>
+      </div>
+    </div>
+
+    <div class="problem">
+      <span class="q-num">Q2(d)</span><span class="difficulty hard">5 PTS</span>
+      <h3>Nash Equilibrium</h3>
+      <p>Using the information on dominated strategies, find the Nash equilibrium and its payoffs. Explain.</p>
+      <button class="answer-btn mock-solution-btn" onclick="toggleAnswer(this)">Show Solution</button>
+      <div class="answer">
+        <h4>Solution</h4>
+        <p>Eliminate DD:15% and GR:35%:</p>
+        <table class="matrix">
+          <tr><th></th><th>GR: 15%</th><th>GR: 25%</th></tr>
+          <tr><th>DD: 25%</th><td>(14, 5)</td><td class="ne">(10, 6) NE</td></tr>
+          <tr><th>DD: 35%</th><td>(11, 1)</td><td>(9, 4)</td></tr>
+        </table>
+        <p>DashDoor: 25% dominates 35% (14>11, 10>9). So DashDoor plays 25%.</p>
+        <p>GrubRun best responds: 25% (6 > 5).</p>
+        <p><span class="imp">NE: (25%, 25%) with payoffs ($10M, $6M).</span></p>
+      </div>
+    </div>
+
+    <div class="problem">
+      <span class="q-num">Q2(e)</span><span class="difficulty hard">5 PTS</span>
+      <h3>Sequential Game — Super Bowl Ad</h3>
+      <p>DashDoor is considering spending money on an exclusive Super Bowl ad to announce its promotion early (before GrubRun chooses). You have credible intel that GrubRun will not choose 35%. Draw the game tree for this sequential game and find the equilibrium using backward induction.</p>
+      <button class="answer-btn mock-solution-btn" onclick="toggleAnswer(this)">Show Solution</button>
+      <div class="answer">
+        <h4>Solution</h4>
+        <p>DashDoor chooses first; GrubRun responds with 15% or 25% only:</p>
+<div class="tree">DashDoor ─┬─ 15% ── GrubRun ─┬─ 15% → (12, 9) ✓ GR picks 15%
+          │                    └─ 25% → (8, 7)
+          ├─ 25% ── GrubRun ─┬─ 15% → (14, 5)
+          │                    └─ 25% → (10, 6) ✓ GR picks 25%
+          └─ 35% ── GrubRun ─┬─ 15% → (11, 1)
+                              └─ 25% → (9, 4) ✓ GR picks 25%</div>
+        <p><strong>Backward induction:</strong></p>
+        <ul>
+          <li>If DD plays 15%: GR picks 15% (9 > 7) → DD gets <strong>12</strong></li>
+          <li>If DD plays 25%: GR picks 25% (6 > 5) → DD gets 10</li>
+          <li>If DD plays 35%: GR picks 25% (4 > 1) → DD gets 9</li>
+        </ul>
+        <p>DashDoor picks 15% (12 > 10 > 9).</p>
+        <p><span class="imp">Equilibrium: DashDoor 15%, GrubRun 15% → payoffs ($12M, $9M).</span></p>
+        <p>Note: In the sequential game, DashDoor now optimally chooses a strategy (15%) that was <em>dominated</em> in the simultaneous game! Commitment changes the game.</p>
+      </div>
+    </div>
+
+    <div class="problem">
+      <span class="q-num">Q2(f)</span><span class="difficulty hard">5 PTS</span>
+      <h3>Value of Commitment</h3>
+      <p>What is the most DashDoor should be willing to pay for the Super Bowl ad? Explain.</p>
+      <button class="answer-btn mock-solution-btn" onclick="toggleAnswer(this)">Show Solution</button>
+      <div class="answer">
+        <h4>Solution</h4>
+        <p>Value of commitment = π(sequential) - π(simultaneous) = $12M - $10M = <span class="imp">$2 million</span>.</p>
+        <p>DashDoor should pay at most $2M for the Super Bowl ad. This is the value of moving first — it allows DashDoor to commit to the lower discount (15%), which induces GrubRun to also choose 15%, leading to a better outcome for both firms (but especially DashDoor).</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- QUESTION 3 -->
+  <div class="card">
+    <h2 style="color:var(--red);">QUESTION 3 (40 points)</h2>
+    <p>Suppose an industry has demand <strong>P = 1500 - Q</strong>, and all firms have a constant marginal cost of <strong>$300</strong> and zero fixed costs.</p>
+
+    <div class="problem">
+      <span class="q-num">Q3(a)</span><span class="difficulty medium">5 PTS</span>
+      <h3>Monopoly</h3>
+      <p>Find the monopoly price, quantity, and profits.</p>
+      <button class="answer-btn mock-solution-btn" onclick="toggleAnswer(this)">Show Solution</button>
+      <div class="answer">
+        <h4>Solution</h4>
+        <div class="formula-box">P = 1500 - Q → MR = 1500 - 2Q
+MR = MC: 1500 - 2Q = 300 → Q* = 600
+P* = 1500 - 600 = $900
+π = (900 - 300)(600) = $360,000</div>
+      </div>
+    </div>
+
+    <div class="problem">
+      <span class="q-num">Q3(b)</span><span class="difficulty medium">5 PTS</span>
+      <h3>Three-Firm Bertrand</h3>
+      <p>Suppose three firms compete by setting prices in a simultaneous game for this homogeneous good. What prices do the firms set in the Nash equilibrium and why?</p>
+      <button class="answer-btn mock-solution-btn" onclick="toggleAnswer(this)">Show Solution</button>
+      <div class="answer">
+        <h4>Solution</h4>
+        <p>With identical homogeneous goods and identical MC = $300, Bertrand competition drives prices down to marginal cost.</p>
+        <p>Any price P > 300: a rival can undercut by $0.01 and capture the entire market. This undercutting continues until no firm can profitably undercut further.</p>
+        <p><span class="imp">NE: P₁ = P₂ = P₃ = $300, profit = $0 for all firms.</span></p>
+        <p>This is the Bertrand Paradox — just 3 firms produce the perfectly competitive outcome.</p>
+      </div>
+    </div>
+
+    <div class="problem">
+      <span class="q-num">Q3(c)</span><span class="difficulty hard">5 PTS</span>
+      <h3>Cost Leadership Escape</h3>
+      <p>One firm develops a proprietary process that reduces its marginal cost to $200 while the other two firms remain at MC = $300. In the new Bertrand equilibrium, what price does the cost leader charge, what quantity does it sell, and what is its profit?</p>
+      <button class="answer-btn mock-solution-btn" onclick="toggleAnswer(this)">Show Solution</button>
+      <div class="answer">
+        <h4>Solution</h4>
+        <p>The cost leader prices just below the rivals' MC to capture the entire market:</p>
+        <div class="formula-box">P = $300 (just below, effectively $299.99 ≈ $300)
+Q = 1500 - 300 = 1,200
+π = (300 - 200)(1200) = $120,000</div>
+        <p>The rivals cannot profitably match this price (it's at or below their MC). The cost leader captures the entire market and earns <span class="imp">$120,000</span>.</p>
+        <p>Note: The cost leader could earn even more as a monopolist (set MR = MC = 200 → P = $850, Q = 650, π = $422,500), but can't do that because the rivals would undercut at any price above $300.</p>
+      </div>
+    </div>
+
+    <div class="problem">
+      <span class="q-num">Q3(d)</span><span class="difficulty hard">5 PTS</span>
+      <h3>Cartel — Interest Rate Condition</h3>
+      <p>Suppose instead all three firms have MC = $300 again, and they form a cartel, splitting monopoly profits equally. There is no antitrust law. The interest rate is R. For what values of R will each firm prefer to stay in the cartel rather than undercut?</p>
+      <button class="answer-btn mock-solution-btn" onclick="toggleAnswer(this)">Show Solution</button>
+      <div class="answer">
+        <h4>Solution</h4>
+        <div class="formula-box">Monopoly profit = $360,000 (from part a)
+Each firm's cartel share = 360,000/3 = $120,000 per period
+
+NPV(cooperate) = 120,000 + 120,000/R
+NPV(deviate)   = 360,000 + 0 (grab whole market, then punished forever)
+
+Cooperate when: 120,000 + 120,000/R > 360,000
+                120,000/R > 240,000
+                R < 120,000/240,000
+                <strong>R < 1/2 = 50%</strong></div>
+        <p>Check with formula: R < 1/(n-1) = 1/(3-1) = 1/2. ✓</p>
+        <p><span class="imp">Firms prefer the cartel when R < 50%.</span></p>
+      </div>
+    </div>
+
+    <div class="problem">
+      <span class="q-num">Q3(e)</span><span class="difficulty hard">5 PTS</span>
+      <h3>Antitrust Enforcement</h3>
+      <p>Now suppose there IS antitrust enforcement. The probability of detection after the first period is X. If detected, cartel members pay a penalty equal to <strong>twice</strong> the monopoly profits they have realized so far, and are forced to the one-period NE forever after. The interest rate is 10%. For what values of X will firms still participate in the cartel?</p>
+      <button class="answer-btn mock-solution-btn" onclick="toggleAnswer(this)">Show Solution</button>
+      <div class="answer">
+        <h4>Solution</h4>
+        <div class="formula-box">Each firm's cartel share per period = $120,000. R = 10%.
+
+If NOT detected (prob 1-X):
+  Get 120,000 + 120,000/0.10 = 120,000 + 1,200,000 = $1,320,000
+
+If detected (prob X):
+  Get 120,000 - 2×120,000 = 120,000 - 240,000 = -$120,000
+  (plus $0 forever after)
+
+E[cartel] = (1-X)(1,320,000) + X(-120,000)
+          = 1,320,000 - 1,320,000X - 120,000X
+          = 1,320,000 - 1,440,000X
+
+NPV(deviate) = 360,000
+
+Cartel when: 1,320,000 - 1,440,000X > 360,000
+             960,000 > 1,440,000X
+             <strong>X < 960/1440 = 2/3 ≈ 66.7%</strong></div>
+        <p><span class="imp">Firms participate in the cartel when X < 66.7%.</span></p>
+        <p>Note: With only a 2× penalty (vs 3× in the 2025 final), the cartel is more resilient to detection. This shows how penalty severity matters for deterrence.</p>
+      </div>
+    </div>
+
+    <div class="problem">
+      <span class="q-num">Q3(f)</span><span class="difficulty hard">5 PTS</span>
+      <h3>Finite Game Unraveling</h3>
+      <p>Suppose instead the game is played for exactly <strong>four</strong> periods (finite). What is the optimal pricing strategy in period 4? Period 3? Period 1? What are total profits across all four periods?</p>
+      <button class="answer-btn mock-solution-btn" onclick="toggleAnswer(this)">Show Solution</button>
+      <div class="answer">
+        <h4>Solution</h4>
+        <p><strong>Period 4 (last):</strong> No future punishment possible → everyone undercuts → <span class="imp">P = MC = $300, profit = $0</span></p>
+        <p><strong>Period 3:</strong> Everyone knows period 4 is P = $300 regardless. No future cooperation to protect → <span class="imp">P = $300, profit = $0</span></p>
+        <p><strong>Period 2:</strong> Same backward induction. Periods 3 and 4 are $300 regardless → <span class="imp">P = $300, profit = $0</span></p>
+        <p><strong>Period 1:</strong> Same logic → <span class="imp">P = $300, profit = $0</span></p>
+        <p><span class="imp">Total profit = $0 for every firm across all four periods.</span></p>
+        <p>Key insight: With a finite horizon, cooperation unravels completely via backward induction. The trigger strategy requires an infinite future to work — the threat of "punish forever" is meaningless when "forever" has an end date.</p>
+      </div>
+    </div>
+
+    <div class="problem">
+      <span class="q-num">Q3(g)</span><span class="difficulty hard">5 PTS</span>
+      <h3>Entry Deterrence</h3>
+      <p>The cost leader from part (c) (MC = $200) is considering a capacity investment of $50,000 to deter a potential fourth entrant. Without the investment, the entrant expects $15,000 profit. With the investment, the entrant expects -$8,000. The cost leader earns $180,000 without entry and $120,000 with entry, but the investment reduces those payoffs by $50,000 each.</p>
+      <p>Draw the game tree, solve by backward induction, and explain whether the consultant who says "the investment lowers your payoffs in every scenario" is right or wrong.</p>
+      <button class="answer-btn mock-solution-btn" onclick="toggleAnswer(this)">Show Solution</button>
+      <div class="answer">
+        <h4>Solution</h4>
+        <table class="matrix">
+          <tr><th></th><th>Entrant Enters</th><th>Entrant Stays Out</th></tr>
+          <tr><th>No Investment</th><td>($120K, $15K)</td><td>($180K, $0)</td></tr>
+          <tr><th>Investment</th><td>($70K, -$8K)</td><td>($130K, $0)</td></tr>
+        </table>
+<div class="tree">You ─┬─ Invest ─── Entrant ─┬─ Enter    → ($70K, -$8K)
+     │                       └─ Stay Out → <strong>($130K, $0) ✓</strong>
+     └─ Don't ─── Entrant ──┬─ Enter    → <strong>($120K, $15K)</strong> ✓
+                             └─ Stay Out → ($180K, $0)</div>
+        <p><strong>Backward induction:</strong></p>
+        <ul>
+          <li>If Invest: Entrant compares -$8K vs $0 → <strong>Stays Out</strong>. You get $130K.</li>
+          <li>If Don't Invest: Entrant compares $15K vs $0 → <strong>Enters</strong>. You get $120K.</li>
+        </ul>
+        <p>You compare: $130K (invest) vs $120K (don't invest).</p>
+        <p><span class="imp">Invest! You get $130K vs $120K. The consultant is WRONG.</span></p>
+        <p>The consultant is correct that investment lowers payoffs in every scenario ($130K < $180K, $70K < $120K). But the investment <strong>changes which scenario occurs</strong>. Without investment, you're stuck in the bad scenario (entry). With investment, you move to the good scenario (no entry). The value of commitment = $130K - $120K = $10K.</p>
+      </div>
+    </div>
+
+    <div class="problem">
+      <span class="q-num">Q3(h)</span><span class="difficulty hard">5 PTS</span>
+      <h3>Adverse Selection in Hiring</h3>
+      <p>The cost leader also faces an adverse selection problem when hiring engineers: highly skilled engineers (worth $200K/year) and low-skilled ones (worth $80K/year) both apply. The firm can't tell them apart. If the firm offers a salary equal to the expected value (assuming 50/50 mix), explain the market failure that results. Name two mechanisms the firm could use to solve this problem, and identify whether each is signaling or screening.</p>
+      <button class="answer-btn mock-solution-btn" onclick="toggleAnswer(this)">Show Solution</button>
+      <div class="answer">
+        <h4>Solution</h4>
+        <p><strong>Market failure (lemons spiral):</strong></p>
+        <ol>
+          <li>Firm offers average salary: (200K + 80K)/2 = <strong>$140K</strong></li>
+          <li>Highly skilled engineers (worth $200K) won't accept $140K — they can get better offers elsewhere. <span class="imp">They withdraw.</span></li>
+          <li>Only low-skilled engineers (worth $80K) remain in the pool.</li>
+          <li>Firm realizes this and adjusts offer down to $80K.</li>
+          <li>Result: <span class="imp">Only low-skilled engineers get hired — market failure.</span> The firm misses out on high-skilled talent, and high-skilled engineers miss out on the job. Efficient trades don't happen.</li>
+        </ol>
+        <p><strong>Solutions:</strong></p>
+        <ul>
+          <li><strong>Require a certification or degree</strong> (e.g., advanced CS degree, professional credential). This is <span class="imp">signaling</span> — the informed party (engineer) takes a costly action to reveal their type. Works because the credential is harder/costlier for low-skilled engineers to obtain.</li>
+          <li><strong>Offer a menu of contracts</strong>: (a) lower base salary + high performance bonus, (b) higher base salary + no bonus. High-skilled engineers self-select into (a) because they're confident in performance. This is <span class="imp">screening</span> — the uninformed party (firm) designs options that sort types through self-selection. Incentive compatibility ensures each type picks the "right" contract.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</div><!-- end main -->
+
+<script>
+// Navigation
+function showSection(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+  document.getElementById('sec-' + id).classList.add('active');
+  const navEl = document.getElementById('nav-' + id);
+  if (navEl) navEl.classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+// Answer toggle
+function toggleAnswer(btn) {
+  const answer = btn.nextElementSibling;
+  answer.classList.toggle('show');
+  btn.textContent = answer.classList.contains('show') ? 'Hide Solution' : 'Show Solution';
+}
+
+// Mock exam show/hide all solutions
+function toggleAllMockSolutions() {
+  const btn = document.getElementById('mock-toggle-all');
+  const answers = document.querySelectorAll('#sec-mock-exam .answer');
+  const buttons = document.querySelectorAll('#sec-mock-exam .mock-solution-btn');
+  const showing = btn.textContent === 'Hide All Solutions';
+  answers.forEach(a => { if (showing) a.classList.remove('show'); else a.classList.add('show'); });
+  buttons.forEach(b => { b.textContent = showing ? 'Show Solution' : 'Hide Solution'; });
+  btn.textContent = showing ? 'Show All Solutions' : 'Hide All Solutions';
+}
+
+</script>
+</body>
+</html>
