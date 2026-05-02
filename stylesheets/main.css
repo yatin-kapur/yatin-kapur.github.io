@@ -42,3 +42,98 @@ a:hover {
     /* color: #00b300; */
     text-decoration: underline;
 }
+
+/* === Theme toggle button === */
+#theme-toggle {
+    position: fixed;
+    top: 1em;
+    right: 1em;
+    width: 2.2em;
+    height: 2.2em;
+    padding: 0;
+    border-radius: 50%;
+    border: 1px solid #ddd;
+    background: #fff;
+    color: #444;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    font-family: inherit;
+    transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+#theme-toggle:hover { border-color: #ff3333; color: #ff3333; }
+#theme-toggle:focus-visible { outline: 2px solid #ff3333; outline-offset: 2px; }
+@media print { #theme-toggle { display: none !important; } }
+
+/* === Dark mode === */
+html[data-theme="dark"] body { background: #141414; color: #e8e8e8; }
+html[data-theme="dark"] a { color: #ff5a5a; }
+html[data-theme="dark"] a:hover { color: #ff8080; }
+
+html[data-theme="dark"] #theme-toggle { background: #1d1d1d; border-color: #333; color: #e8e8e8; }
+html[data-theme="dark"] #theme-toggle:hover { border-color: #ff5a5a; color: #ff5a5a; }
+
+/* Muted grays (#888 family) */
+html[data-theme="dark"] .meta,
+html[data-theme="dark"] .footer,
+html[data-theme="dark"] .class-meta,
+html[data-theme="dark"] .class-block .label,
+html[data-theme="dark"] .courses .meta,
+html[data-theme="dark"] .modules .num,
+html[data-theme="dark"] .problem .qnum,
+html[data-theme="dark"] .takeaways .source,
+html[data-theme="dark"] .files .ftype,
+html[data-theme="dark"] .files .fnote { color: #9a9a9a; }
+
+/* Mid grays (#444 / #555 / #666) */
+html[data-theme="dark"] .courses .desc,
+html[data-theme="dark"] .modules .desc,
+html[data-theme="dark"] .roles .role-strength { color: #b8b8b8; }
+
+/* Near-text grays (#333) */
+html[data-theme="dark"] h4,
+html[data-theme="dark"] .files .fname,
+html[data-theme="dark"] .roles .role-desc { color: #d8d8d8; }
+
+/* Placeholder rows */
+html[data-theme="dark"] .courses .placeholder .name { color: #777; }
+
+/* Borders (#eee / #f0f0f0) */
+html[data-theme="dark"] h2,
+html[data-theme="dark"] .footer,
+html[data-theme="dark"] .courses li,
+html[data-theme="dark"] .roles li,
+html[data-theme="dark"] .modules li,
+html[data-theme="dark"] .files li,
+html[data-theme="dark"] table th,
+html[data-theme="dark"] table td { border-color: #2a2a2a; }
+html[data-theme="dark"] table th { border-bottom-color: #555; }
+html[data-theme="dark"] h2:first-of-type { border-top: none; }
+
+/* Matrix tables (game-theory cells) */
+html[data-theme="dark"] table.matrix td,
+html[data-theme="dark"] table.matrix th { border-color: #444; }
+html[data-theme="dark"] table.matrix th { background: #222; }
+html[data-theme="dark"] table.matrix td.ne { background: #2b1717; color: #ff8080; }
+
+/* TOC separator */
+html[data-theme="dark"] ul.toc li::after { color: #555; }
+
+/* Blocks: takeaways, problem, tree, formula, callout, mock-q, answer */
+html[data-theme="dark"] .takeaways,
+html[data-theme="dark"] .problem,
+html[data-theme="dark"] .tree { background: #1d1d1d; }
+html[data-theme="dark"] .problem { border-left-color: #444; }
+html[data-theme="dark"] .formula { background: #1d1d1d; color: #e8e8e8; }
+html[data-theme="dark"] .callout { background: #2a2410; border-left-color: #c89a30; }
+html[data-theme="dark"] .callout.contrast { background: #2b1717; border-left-color: #ff5a5a; }
+html[data-theme="dark"] .mock-q { background: #2b1717; border-left-color: #ff5a5a; }
+html[data-theme="dark"] .answer { background: #1a1a1a; border-color: #2a2a2a; border-left-color: #ff5a5a; }
+html[data-theme="dark"] .takeaways .closer { border-top-color: #444; }
+
+/* Accent text + buttons */
+html[data-theme="dark"] .imp { color: #ff5a5a; }
+html[data-theme="dark"] .answer-btn { color: #ff5a5a; border-color: #ff5a5a; background: transparent; }
+html[data-theme="dark"] .answer-btn:hover { background: #ff5a5a; color: #141414; }

@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Strategic Communication — Yatin Kapur</title>
+    <link rel="stylesheet" href="/stylesheets/main.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Thasadith:wght@400;700&display=swap" rel="stylesheet">
+    <script src="/scripts/theme.js"></script>
+    <style>
+        .crumb { font-size: 0.95em; margin-bottom: 1em; }
+        .meta { color: #888; font-size: 0.95em; margin-top: -0.5em; margin-bottom: 1.5em; }
+
+        h2 { font-size: 1.6em; font-weight: 700; margin-top: 2.5em; margin-bottom: 0.6em; padding-top: 0.5em; border-top: 1px solid #eee; }
+        h2:first-of-type { border-top: none; padding-top: 0; }
+        h3 { font-size: 1.2em; font-weight: 700; margin-top: 1.5em; margin-bottom: 0.4em; }
+        h4 { font-size: 1em; font-weight: 700; margin-top: 1.2em; margin-bottom: 0.3em; color: #333; }
+
+        p { line-height: 1.6em; margin-bottom: 0.8em; }
+
+        ul.bullets, ol.numbered { padding-left: 1.5em; margin: 0.5em 0 1em; text-transform: none; list-style-type: disc; }
+        ol.numbered { list-style-type: decimal; }
+        ul.bullets li, ol.numbered li { padding: 0.15em 0; line-height: 1.55em; text-transform: none; }
+
+        ul.toc { padding: 0.5em 0 0; margin: 0; list-style-type: none; text-transform: none; }
+        ul.toc li { display: inline; }
+        ul.toc li::after { content: " · "; color: #ccc; }
+        ul.toc li:last-child::after { content: ""; }
+
+        .key { font-weight: 700; }
+        em { font-style: italic; }
+
+        table { width: 100%; border-collapse: collapse; margin: 1em 0; font-size: 0.95em; }
+        table th, table td { text-align: left; padding: 0.55em 0.7em; border-bottom: 1px solid #eee; vertical-align: top; line-height: 1.5em; }
+        table th { font-weight: 700; border-bottom: 2px solid #333; }
+        table.compact th, table.compact td { padding: 0.4em 0.7em; }
+
+        .takeaways { background: #fafafa; border-left: 3px solid #ff3333; padding: 1.2em 1.5em; margin: 1.5em 0 2em; }
+        .takeaways h2 { border-top: none; padding-top: 0; margin-top: 0; font-size: 1.4em; }
+        .takeaways ol { padding-left: 1.6em; margin: 0.5em 0; list-style-type: decimal; text-transform: none; }
+        .takeaways ol li { padding: 0.2em 0; line-height: 1.55em; text-transform: none; }
+        .takeaways .closer { font-style: italic; margin-top: 1em; padding-top: 0.8em; border-top: 1px dashed #ddd; text-align: center; font-size: 1.05em; }
+        .takeaways .source { font-size: 0.8em; color: #888; text-align: right; margin-top: 0.5em; }
+
+        .callout { background: #fff8e1; border-left: 3px solid #f0c040; padding: 0.9em 1.2em; margin: 1em 0; font-size: 0.95em; line-height: 1.55em; }
+        .callout.contrast { background: #fff5f5; border-left-color: #ff3333; }
+
+        .roles { padding: 0; margin: 1em 0; list-style-type: none; text-transform: none; }
+        .roles li { padding: 0.7em 0; border-bottom: 1px solid #eee; text-transform: none; }
+        .roles li:last-child { border-bottom: none; }
+        .roles .role-name { font-weight: 700; }
+        .roles .role-strength { font-size: 0.9em; color: #555; font-style: italic; margin-left: 0.5em; }
+        .roles .role-desc { display: block; font-size: 0.95em; line-height: 1.5em; margin-top: 0.2em; color: #333; }
+
+        .files { padding: 0; margin: 0.5em 0 1.5em; list-style-type: none; text-transform: none; }
+        .files li { padding: 0.4em 0; border-bottom: 1px solid #f0f0f0; text-transform: none; font-size: 0.95em; }
+        .files li:last-child { border-bottom: none; }
+        .files .ftype { display: inline-block; width: 3em; font-size: 0.75em; font-weight: 700; color: #888; text-transform: uppercase; letter-spacing: 0.5px; }
+        .files .fname { color: #333; }
+        .files .fnote { color: #888; font-size: 0.9em; }
+
+        .footer { font-size: 0.85em; color: #888; margin-top: 3em; padding-top: 1em; border-top: 1px solid #eee; }
+    </style>
+</head>
+
+<body>
+
+<section class="container">
+    <p class="crumb"><a href="../">← mba</a></p>
+
+    <h1>Strategic Communication</h1>
+    <p class="meta">Prof. Jason Turetsky · NYU Stern Section 32 · Spring 2026 (Jan 24 – Feb 1)</p>
+
+    <p>A fast-paced, weeklong intensive on communicating with persuasive intent — to people who fund and follow your leadership. Highly interactive; built around a select company facing reputational risk. Final grade is a mix of class participation and assignments.</p>
+
+    <ul class="toc">
+        <li><a href="#takeaways">11 practices</a></li>
+        <li><a href="#overview">overview</a></li>
+        <li><a href="#taim">t+AIM</a></li>
+        <li><a href="#plain-english">plain english</a></li>
+        <li><a href="#presentations">presentations</a></li>
+        <li><a href="#persuasion">persuasion &amp; q&amp;a</a></li>
+        <li><a href="#belbin">belbin roles</a></li>
+        <li><a href="#sessions">sessions</a></li>
+    </ul>
+
+    <div class="takeaways" id="takeaways">
+        <h2>Effective Business Communication Takes Practice</h2>
+        <ol>
+            <li>Engage best practices. Try! Take? Leave?</li>
+            <li>Be yourself. Trust the process. Less is more.</li>
+            <li>Make small delivery improvements for a big message impact.</li>
+            <li>Take AIM: Analyze audience. Identify intent. Make the most of message.</li>
+            <li>Big Idea Up Front! Don't write/present the way you plan. Use "Readers Logic."</li>
+            <li>"Help me help you!" Brevity is empathy for your audience.</li>
+            <li>Consider communication channel: "The medium is the message."</li>
+            <li>Persuade your audience. Direct structure for most. Indirect structure for some.</li>
+            <li>Logos is the easy part. Don't underestimate Ethos and Pathos.</li>
+            <li>Embrace productive conflict. Diverse teams produce superior results.</li>
+            <li>Leadership is fluid and reflected in all roles.</li>
+        </ol>
+        <div class="closer">Let your voice be heard! Change the world!</div>
+        <div class="source">— Prof. Turetsky's closing slide</div>
+    </div>
+
+    <h2 id="overview">Overview</h2>
+
+    <h3>Why this course exists</h3>
+    <p>You can have the right idea and still fail to move anyone. The course is the discipline of translating ideas so multiple audiences (cultural, intellectual, professional) actually act on them. The mantra is the four S's:</p>
+    <ul class="bullets">
+        <li><span class="key">Strategy</span> — who are you trying to move, to do what?</li>
+        <li><span class="key">Substance</span> — what's the evidence and big idea behind your ask?</li>
+        <li><span class="key">Structure</span> — what order makes the ask irresistible?</li>
+        <li><span class="key">Style</span> — how do tone, pace, and design land for this audience?</li>
+    </ul>
+
+    <h3>Skills the course builds</h3>
+    <ul class="bullets">
+        <li>Develop a communication strategy from scratch</li>
+        <li>Analyze an audience to be appropriately persuasive (not generically loud)</li>
+        <li>Structure a message that holds attention</li>
+        <li>Deliver prepared <em>and</em> impromptu presentations under pressure</li>
+        <li>Write professional documents that pass SEC Plain English guidelines</li>
+        <li>Collaborate as an effective team member, in person and online</li>
+    </ul>
+
+    <h3>How the course was graded</h3>
+    <table class="compact">
+        <tr><th>Assignment</th><th>Indiv.</th><th>Team</th><th>Due</th></tr>
+        <tr><td>Student Information Form</td><td>credit</td><td>—</td><td>Before 1/24</td></tr>
+        <tr><td>Individual Belbin Team Roles</td><td>credit</td><td>—</td><td>Before 1/24</td></tr>
+        <tr><td>A1: Self-Eval of Impromptu Presentation</td><td>credit</td><td>—</td><td>Before 1/25</td></tr>
+        <tr><td>A2: Individual Email to Team</td><td>10</td><td>—</td><td>In class 1/25</td></tr>
+        <tr><td>A3: Team Benchmark Presentation</td><td>10</td><td>10</td><td>In class 1/26</td></tr>
+        <tr><td>A4: Self-Eval of Team Benchmark</td><td>credit</td><td>—</td><td>EOD 1/27</td></tr>
+        <tr><td>A5: Team Persuasive Presentation</td><td>15</td><td>15</td><td>In class 2/1</td></tr>
+        <tr><td>A6: Individual Email to Executive</td><td>15</td><td>—</td><td>EOD 2/3</td></tr>
+        <tr><td>Participation</td><td>25</td><td>—</td><td>Ongoing</td></tr>
+    </table>
+    <p style="font-size:0.9em; color:#666;">Attendance was mandatory: missing 1/5 of sessions = one letter grade off; 2/5+ = course failure. Late assignments handed in within 24h lost a third of a letter; later than that, a full letter. Grading window closed 72h after the final assignment.</p>
+
+    <h2 id="taim">t+AIM — the core planning framework</h2>
+    <p>Used to plan <em>every</em> deliverable in the course: emails, presentations, executive memos. The single most leverage-y idea in the syllabus.</p>
+
+    <table>
+        <tr><th style="width:5em;">Letter</th><th>Question</th><th>Why it comes first</th></tr>
+        <tr><td><span class="key">t</span></td><td><strong>Task</strong> — what is the deliverable, in concrete terms?</td><td>Forces you to name the artifact (a 350-word email, an 18-min pitch) before you start writing into the void.</td></tr>
+        <tr><td><span class="key">A</span></td><td><strong>Audience</strong> — who is reading or listening, and what do they already know, want, fear?</td><td>You write for them, not for yourself. Most "bad" comms are well-written for the wrong audience.</td></tr>
+        <tr><td><span class="key">I</span></td><td><strong>Intent</strong> — what do you want the audience to <em>do, think, or feel</em>?</td><td>Persuasion has a verb. "Inform" is rarely the real intent — usually it's "approve," "fund," "back off," "show up."</td></tr>
+        <tr><td><span class="key">M</span></td><td><strong>Message</strong> — your one big idea, short and memorable.</td><td>If they remember nothing else, what's the line they walk away with? Earn the right to one.</td></tr>
+    </table>
+
+    <div class="callout">
+        <strong>Tested heuristic:</strong> if you can't fill in t+AIM in two minutes for the thing you're writing, you don't yet know what you're writing. Stop, fix the brief, then start.
+    </div>
+
+    <h3>Why it works</h3>
+    <ul class="bullets">
+        <li><span class="key">Audience before content.</span> Most communicators draft slides, then ask "who is this for?" — t+AIM flips that.</li>
+        <li><span class="key">Intent forces a verb.</span> "I want them to fund the pilot" is testable. "I want to share an update" is not.</li>
+        <li><span class="key">Message anchors structure.</span> Every body paragraph or supporting topic should ladder up to the one big idea.</li>
+    </ul>
+
+    <h2 id="plain-english">Plain English (per the SEC Handbook)</h2>
+    <p>The course used SEC's <em>A Plain English Handbook</em> (chapters 1, 3, 4, 5, 6, 7) as the standard for written deliverables. The argument: clear writing isn't a stylistic preference — it's an obligation when busy people are deciding whether to act on what you wrote.</p>
+
+    <h3>Principles</h3>
+    <ul class="bullets">
+        <li><span class="key">Active voice.</span> "We will refund your fee" beats "Your fee will be refunded." Names the actor, takes responsibility, uses fewer words.</li>
+        <li><span class="key">Short sentences.</span> Aim for one idea per sentence. Long sentences are where readers get lost and stop.</li>
+        <li><span class="key">Concrete, everyday language.</span> Cut legalese, jargon, and Latin where a normal English word does the job.</li>
+        <li><span class="key">Tabular when listing.</span> Lists and tables beat dense paragraphs for anything with structure (criteria, options, steps).</li>
+        <li><span class="key">No superfluous words.</span> Cut "in order to" → "to". "At this point in time" → "now". "Due to the fact that" → "because".</li>
+        <li><span class="key">Design as a feature, not a finish.</span> Headings, white space, and visual hierarchy guide the reader; bury the lede in a wall of text and they're gone.</li>
+    </ul>
+
+    <div class="callout contrast">
+        <strong>Before:</strong> "It is recommended by the team that consideration be given to the implementation of a strategy that would address the reputational concerns currently impacting the organization."<br><br>
+        <strong>After:</strong> "We recommend a reputation strategy that fixes three problems: data trust, child safety, and content moderation."
+    </div>
+
+    <h2 id="presentations">Presentation structure</h2>
+    <p>The Presentation Planner: a fill-in template for organizing any talk. Three blocks — Opening, Body, Closing — each with a job to do.</p>
+
+    <h3>Opening</h3>
+    <ul class="bullets">
+        <li><span class="key">Get attention.</span> Open with an image, story, surprising stat, or question.</li>
+        <li><span class="key">Establish purpose.</span> One sentence on why this audience should care.</li>
+        <li><span class="key">Preview.</span> Briefly signal what's coming (an agenda, in plain words).</li>
+    </ul>
+
+    <h3>Body</h3>
+    <ul class="bullets">
+        <li>Three supporting topics is the sweet spot — enough to feel substantive, few enough to remember.</li>
+        <li>Each topic should ladder up to your big idea (the M in t+AIM).</li>
+        <li>Mix evidence types: a statistic, a quote, a chart, a brief story. Single-mode bodies are forgettable.</li>
+        <li>Visual aids exist to support the speaker — at least two charts or graphs for a benchmark talk. Slides aren't a teleprompter.</li>
+    </ul>
+
+    <h3>Closing</h3>
+    <ul class="bullets">
+        <li><span class="key">Recap.</span> Remind the audience of your intent and message.</li>
+        <li><span class="key">Strong closing line.</span> Image, story, or sentence that re-emphasizes the central message.</li>
+        <li><span class="key">Q&amp;A management.</span> Anticipate the top 5 questions in advance and pre-write tight answers.</li>
+        <li><span class="key">Final close.</span> Don't trail off after Q&amp;A — return to the message and end clean.</li>
+    </ul>
+
+    <h3>Delivery techniques</h3>
+    <ul class="bullets">
+        <li><span class="key">Eye contact across the room</span> — not at one friendly face.</li>
+        <li><span class="key">Vary pace and pitch.</span> Monotone is what kills attention, not lack of charisma.</li>
+        <li><span class="key">Pause after key points.</span> Lets the message land. Most presenters under-pause.</li>
+        <li><span class="key">Manage your hands.</span> Don't pin them; don't fidget. Open palms, open ideas.</li>
+        <li><span class="key">Warm up physically and vocally</span> before high-stakes talks.</li>
+    </ul>
+
+    <h3>Reviewing your own video (Schenkler &amp; Russell method)</h3>
+    <p>The course required watching your own presentation video and self-evaluating. The discipline:</p>
+    <ol class="numbered">
+        <li>Watch once for content (did you say what you meant to say?).</li>
+        <li>Watch a second time on mute, looking only at body language.</li>
+        <li>Watch a third time eyes-closed, listening only to pace, energy, filler words.</li>
+        <li>Pick <em>one</em> thing to improve before next time. Just one. Improvement compounds.</li>
+    </ol>
+
+    <h2 id="persuasion">Persuasion &amp; handling Q&amp;A</h2>
+    <p>Session 4 was dedicated to elements of persuasion and Q&amp;A practice. The persuasive presentation (A5) and executive email (A6) operationalize what's here.</p>
+
+    <h3>Elements of a persuasive case</h3>
+    <ul class="bullets">
+        <li><span class="key">Specificity.</span> Vague recommendations get vague responses. Name the strategy, the steps, the scope.</li>
+        <li><span class="key">Benefits — short and long term.</span> Executives want both. Why does this matter this quarter <em>and</em> three years out?</li>
+        <li><span class="key">Feasibility.</span> Is this realistically implementable? What does it cost in money, time, political capital?</li>
+        <li><span class="key">Evidence.</span> What data backs your claims? Any anecdote needs a number; any number needs an anecdote.</li>
+    </ul>
+
+    <h3>Diagnostic questions before you persuade</h3>
+    <ul class="bullets">
+        <li>What are the <span class="key">root causes</span> of the issue (not just the symptoms)?</li>
+        <li>Why is the <span class="key">current approach not enough</span>?</li>
+        <li>How are <span class="key">peer companies</span> handling the same problem? Better or worse?</li>
+        <li>What are <span class="key">industry/academic experts</span> recommending?</li>
+        <li>What's <span class="key">on the minds of the leaders</span> you're addressing? What headwinds will you hit?</li>
+        <li>Reputation depends on <span class="key">doing the right thing AND communicating it the right way</span> — is the company's communication timely, transparent, authentic?</li>
+        <li>The <span class="key">X factor</span> — anything else that matters that you noticed but isn't on this list?</li>
+    </ul>
+
+    <h3>Q&amp;A: responding well under pressure</h3>
+    <ul class="bullets">
+        <li><span class="key">Listen to the whole question.</span> Don't start composing while they're still talking.</li>
+        <li><span class="key">Acknowledge before answering.</span> "Good question" is hollow; "That's the toughest part of the proposal" is real.</li>
+        <li><span class="key">Bridge back to your message.</span> Every answer is another chance to reinforce the M in t+AIM.</li>
+        <li><span class="key">Say "I don't know" when you don't.</span> Then commit to following up. Faking erodes credibility instantly.</li>
+        <li><span class="key">Anticipate.</span> Pre-write answers to your top 5 likely questions. The good speakers aren't quicker — they're more prepared.</li>
+    </ul>
+
+    <h3>The executive email (A6 model)</h3>
+    <p>~350-word business email to a single executive after a team persuasive presentation. Goes <em>beyond</em> reiterating the recommendation — it advances the original argument by addressing what <em>that executive specifically</em> needs to be convinced. Why should they personally support it? What questions did the live presentation leave open that a written follow-up can close?</p>
+    <div class="callout">
+        <strong>Reminders:</strong> tailor message, evidence, structure, and tone to the individual reader. Have a clear intent. Engaging design. Succinct language.
+    </div>
+
+    <h2 id="belbin">Belbin team roles</h2>
+    <p>Meredith Belbin's framework: nine roles people naturally play on a team. Used pre-class to declare your top two preferred roles and bottom one, so teams could be formed with deliberate role mix rather than randomness.</p>
+    <p>Useful as a diagnostic when a team is stuck: are you missing a Plant (no new ideas), a Completer Finisher (drafts never ship), or a Co-ordinator (people rowing in different directions)?</p>
+
+    <ul class="roles">
+        <li>
+            <span class="role-name">Plant (PL)</span><span class="role-strength">— innovative, original, problem-solver; introverted</span>
+            <span class="role-desc">Generates new proposals and solves complex problems. Needed in the initial stages of a project or when one is stalling. Founders and originators.</span>
+        </li>
+        <li>
+            <span class="role-name">Resource Investigator (RI)</span><span class="role-strength">— enthusiastic, networker, negotiator; loses interest quickly</span>
+            <span class="role-desc">Explores opportunities outside the group, develops contacts, picks up others' ideas and runs with them. Best for external negotiations and scouting.</span>
+        </li>
+        <li>
+            <span class="role-name">Monitor Evaluator (ME)</span><span class="role-strength">— shrewd judgment; slow, can read as dry</span>
+            <span class="role-desc">Analyzes problems, weighs pros and cons. Ideal for the small number of crunch decisions where being right matters more than being fast.</span>
+        </li>
+        <li>
+            <span class="role-name">Co-ordinator (CO)</span><span class="role-strength">— mature, confident; can clash with Shapers</span>
+            <span class="role-desc">"Consultation with control." Best with peers of equal rank. Spots talent and uses it. (Called "Chairman" in the original Belbin book.)</span>
+        </li>
+        <li>
+            <span class="role-name">Shaper (SH)</span><span class="role-strength">— driven, action-oriented; argumentative</span>
+            <span class="role-desc">Generates action, sparks teams to life, pushes through political complications. Most competitive role; great for change and unpopular decisions.</span>
+        </li>
+        <li>
+            <span class="role-name">Teamworker (TW)</span><span class="role-strength">— diplomatic, perceptive; indecisive in crunch moments</span>
+            <span class="role-desc">Prevents interpersonal problems; lubricating effect on teams. Especially valuable when Shapers are at risk of running over people.</span>
+        </li>
+        <li>
+            <span class="role-name">Implementer (IMP)</span><span class="role-strength">— reliable, disciplined; can be rigid</span>
+            <span class="role-desc">Tackles problems systematically. Loyal to the company over self-interest. Does what needs to be done — including the parts others avoid.</span>
+        </li>
+        <li>
+            <span class="role-name">Completer Finisher (CF)</span><span class="role-strength">— detail-obsessed; doesn't like to delegate</span>
+            <span class="role-desc">Won't start what they can't finish. Invaluable on tasks that demand precision — the last 10% that ships product instead of leaving it 90% done.</span>
+        </li>
+        <li>
+            <span class="role-name">Specialist (SP)</span><span class="role-strength">— deep expertise; narrow focus</span>
+            <span class="role-desc">The expert. Indispensable when the team's product depends on a specific deep skill. Commands support because they know more than anyone in the room.</span>
+        </li>
+    </ul>
+
+    <div class="callout">
+        <strong>How to use it:</strong> when forming a team, aim for at least one of each function — an ideas role (PL/RI), an action role (SH/IMP), a people role (CO/TW), a thinking role (ME/SP), and a finisher (CF). Too many of the same role causes predictable failure modes (too many Plants = endless competing ideas, no execution).
+    </div>
+
+    <h2 id="sessions">Session-by-session</h2>
+    <p>Five sessions across nine days. Intensive by design — each session built directly on the deliverables from the prior one.</p>
+
+    <h3>Session 1 — Saturday, Jan 24 (9:30am–12:30pm + 2:00pm–5:00pm)</h3>
+    <h4>Before class</h4>
+    <ul class="bullets">
+        <li>Student Information Form</li>
+        <li>Read Belbin "Individual Team Role Description" and declare top 2 / bottom 1 preferred roles in shared sheet</li>
+        <li>Look at all assignments holistically — see how each builds on the last</li>
+    </ul>
+    <h4>In class</h4>
+    <ul class="bullets">
+        <li>Intro to Team Communication</li>
+        <li>t+AIM in presentations</li>
+        <li>In-class individual impromptu presentation (non-graded — for the video)</li>
+        <li>Team formation; pick a company facing reputational risk</li>
+        <li>Delivery techniques and visual aids</li>
+        <li>Teams begin designing presentation slides</li>
+    </ul>
+    <h4>Deliverable</h4>
+    <ul class="bullets">
+        <li><strong>A1:</strong> Self-evaluation of impromptu presentation (after watching your own video, using the Schenkler &amp; Russell method)</li>
+    </ul>
+
+    <h3>Session 2 — Sunday, Jan 25 (10:00am–1:00pm)</h3>
+    <h4>Before class</h4>
+    <ul class="bullets">
+        <li>Read SEC's <em>A Plain English Handbook</em>, chapters 1, 3, 4, 5, 6, 7</li>
+    </ul>
+    <h4>In class</h4>
+    <ul class="bullets">
+        <li>Review t+AIM communication strategy</li>
+        <li>Business writing — t+AIM in writing, structure, document design, Plain English</li>
+        <li>A2 written and discussed in class</li>
+        <li>Presentation structure; teams consolidate individual A2 emails into a team presentation using the Presentation Planner</li>
+    </ul>
+    <h4>Deliverable</h4>
+    <ul class="bullets">
+        <li><strong>A2:</strong> Individual email to team about company status and reputational issue (one page, single-spaced)</li>
+    </ul>
+
+    <h3>Session 3 — Monday, Jan 26 (6:00pm–9:00pm)</h3>
+    <h4>Before class</h4>
+    <ul class="bullets">
+        <li>Complete the Presentation Planner; finalize benchmark presentation content</li>
+        <li>Slides done; ready to rehearse with team</li>
+    </ul>
+    <h4>In class</h4>
+    <ul class="bullets">
+        <li>Teams rehearse and present</li>
+        <li><strong>A3:</strong> Team Benchmark Presentation — 8 minutes plus 4 minutes Q&amp;A</li>
+    </ul>
+    <h4>Deliverable</h4>
+    <ul class="bullets">
+        <li><strong>A4:</strong> Self-evaluation of team benchmark presentation (after watching the video), due EOD 1/27</li>
+    </ul>
+
+    <h3>Session 4 — Wednesday, Jan 28 (6:00pm–9:00pm)</h3>
+    <h4>Before class</h4>
+    <ul class="bullets">
+        <li>Recommended readings on corporate reputation and communication (Brightspace > Session 4)</li>
+    </ul>
+    <h4>In class</h4>
+    <ul class="bullets">
+        <li>Responding to questions and Q&amp;A practice</li>
+        <li>Elements of persuasion</li>
+        <li>Teams meet in breakouts to work on the persuasive presentation (using the Persuasive Presentation Planner)</li>
+    </ul>
+    <h4>Deliverable</h4>
+    <ul class="bullets">
+        <li>Company executive bios (ungraded, one per team) — bios of 5 executives who will be the target audience for the final presentation, so peer teams can role-play them in Q&amp;A</li>
+    </ul>
+
+    <h3>Session 5 — Sunday, Feb 1 (10:00am–1:00pm)</h3>
+    <h4>Before class</h4>
+    <ul class="bullets">
+        <li>Finalize team presentation slides; rehearse</li>
+    </ul>
+    <h4>In class</h4>
+    <ul class="bullets">
+        <li>Teams rehearse and present</li>
+        <li><strong>A5:</strong> Team Persuasive Presentation — 18 minutes including Q&amp;A. Role-played to a peer team playing the executives. Team adopts the position of internal staff ("we" refers to your company).</li>
+        <li>Debrief; discuss final writing assignment</li>
+    </ul>
+    <h4>Deliverable (post-session)</h4>
+    <ul class="bullets">
+        <li><strong>A6:</strong> Individual email to a chosen executive, due EOD 2/3 — ~350 words advancing the team's recommendation by addressing that specific executive's concerns</li>
+    </ul>
+
+    <p class="footer">last updated may 2026 · <a href="../">mba</a> · <a href="/">home</a></p>
+</section>
+
+</body>
+
+</html>

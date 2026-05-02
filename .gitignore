@@ -1,0 +1,8 @@
+# Local dev tooling — not for the public site
+serve.sh
+
+# OS / editor noise
+.DS_Store
+*.swp
+.vscode/
+.idea/

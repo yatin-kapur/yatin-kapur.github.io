@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Leadership in Organizations — Yatin Kapur</title>
+    <link rel="stylesheet" href="/stylesheets/main.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Thasadith:wght@400;700&display=swap" rel="stylesheet">
+    <script src="/scripts/theme.js"></script>
+    <style>
+        .container { width: 48em; }
+        .crumb { font-size: 0.95em; margin-bottom: 1em; }
+        .meta { color: #888; font-size: 0.95em; margin-top: -0.5em; margin-bottom: 1.5em; }
+
+        h2 { font-size: 1.6em; font-weight: 700; margin-top: 2.5em; margin-bottom: 0.6em; padding-top: 0.5em; border-top: 1px solid #eee; }
+        h2:first-of-type { border-top: none; padding-top: 0; }
+        h3 { font-size: 1.2em; font-weight: 700; margin-top: 1.5em; margin-bottom: 0.4em; }
+        h4 { font-size: 1em; font-weight: 700; margin-top: 1.2em; margin-bottom: 0.3em; color: #333; }
+
+        p { line-height: 1.6em; margin-bottom: 0.8em; }
+
+        ul.bullets, ol.numbered { padding-left: 1.5em; margin: 0.5em 0 1em; text-transform: none; list-style-type: disc; }
+        ol.numbered { list-style-type: decimal; }
+        ul.bullets li, ol.numbered li { padding: 0.15em 0; line-height: 1.55em; text-transform: none; }
+
+        ul.toc { padding: 0.5em 0 0; margin: 0; list-style-type: none; text-transform: none; }
+        ul.toc li { display: inline; }
+        ul.toc li::after { content: " · "; color: #ccc; }
+        ul.toc li:last-child::after { content: ""; }
+
+        .key { font-weight: 700; }
+        .imp { color: #ff3333; font-weight: 700; }
+        em { font-style: italic; }
+
+        table { width: 100%; border-collapse: collapse; margin: 1em 0; font-size: 0.95em; }
+        table th, table td { text-align: left; padding: 0.55em 0.7em; border-bottom: 1px solid #eee; vertical-align: top; line-height: 1.5em; }
+        table th { font-weight: 700; border-bottom: 2px solid #333; }
+        table.compact th, table.compact td { padding: 0.4em 0.7em; }
+
+        .takeaways { background: #fafafa; border-left: 3px solid #ff3333; padding: 1.2em 1.5em; margin: 1.5em 0 2em; }
+        .takeaways h2 { border-top: none; padding-top: 0; margin-top: 0; font-size: 1.4em; }
+        .takeaways ol { padding-left: 1.6em; margin: 0.5em 0; list-style-type: decimal; text-transform: none; }
+        .takeaways ol li { padding: 0.2em 0; line-height: 1.55em; text-transform: none; }
+
+        .callout { background: #fff8e1; border-left: 3px solid #f0c040; padding: 0.9em 1.2em; margin: 1em 0; font-size: 0.95em; line-height: 1.55em; }
+        .callout.contrast { background: #fff5f5; border-left-color: #ff3333; }
+
+        .class-block { margin: 1.5em 0; padding: 0.5em 0 0; }
+        .class-block .label { font-size: 0.8em; font-weight: 700; color: #888; text-transform: uppercase; letter-spacing: 0.8px; }
+        .class-block h3 { margin-top: 0.2em; }
+        .class-meta { font-size: 0.9em; color: #888; margin-bottom: 0.6em; }
+
+        .footer { font-size: 0.85em; color: #888; margin-top: 3em; padding-top: 1em; border-top: 1px solid #eee; }
+    </style>
+</head>
+
+<body>
+
+<section class="container">
+    <p class="crumb"><a href="../">← mba</a></p>
+
+    <h1>Leadership in Organizations</h1>
+    <p class="meta">Prof. Mike North · NYU Stern Section 30 · COR1-GB.1302 · Mondays 6–9pm · Feb 2 – May 4, 2026</p>
+
+    <p>Frameworks to <em>analyze</em> leadership behavior in organizations, and tools (and reasons) to <em>act</em> on what you learn. Premise of the course: leadership is a behavior, not a position — and you have to act to learn. Pedagogy is roughly 1/3 application, 1/3 experiential, 1/3 lecture.</p>
+
+    <ul class="toc">
+        <li><a href="#takeaways">recurring themes</a></li>
+        <li><a href="#overview">overview</a></li>
+        <li><a href="#class-1">intro</a></li>
+        <li><a href="#class-2">vision</a></li>
+        <li><a href="#class-3">change</a></li>
+        <li><a href="#class-4">generations</a></li>
+        <li><a href="#class-5">listening</a></li>
+        <li><a href="#class-6">courage</a></li>
+        <li><a href="#class-7">org design</a></li>
+        <li><a href="#class-8">persuasion &amp; decisions</a></li>
+        <li><a href="#class-9">networking</a></li>
+        <li><a href="#class-10">motivation</a></li>
+        <li><a href="#class-11">feedback</a></li>
+        <li><a href="#class-12">values &amp; summary</a></li>
+        <li><a href="#lcp">final LCP</a></li>
+    </ul>
+
+    <div class="takeaways" id="takeaways">
+        <h2>Recurring themes across the course</h2>
+        <ol>
+            <li><strong>Leadership = developing people through work</strong> — not just managing tasks.</li>
+            <li><strong>Status quo is gravity</strong> — change requires overcoming institutional inertia.</li>
+            <li><strong>Leadership = IQ + EQ</strong> — logic alone isn't enough; emotion and connection matter.</li>
+            <li><strong>Know your constituents</strong> — who are you leading <em>for</em>?</li>
+            <li><strong>Past behavior predicts future behavior</strong> — but self-awareness can break the cycle.</li>
+            <li><strong>Descriptive ≠ prescriptive</strong> — understanding how things work doesn't mean endorsing them.</li>
+            <li><strong>Group processes can overcome individual blind spots</strong> — but watch for groupthink, the Abilene paradox, and polarization.</li>
+            <li><strong>Incentive systems are control mechanisms</strong> — align goals, but "not everything that counts can be counted."</li>
+            <li><strong>Fairness is a powerful motivator</strong> — fair process effect: people accept bad outcomes when the process was fair.</li>
+            <li><strong>Feedback is essential but hard</strong> — self-serving bias, sugarcoating, timing, insecurity all undermine it. "Do you want to feel better today or perform better tomorrow?"</li>
+        </ol>
+    </div>
+
+    <h2 id="overview">Overview</h2>
+
+    <h3>Course schedule</h3>
+    <table class="compact">
+        <tr><th>Date</th><th>Class</th><th>Topic</th><th>Due</th></tr>
+        <tr><td>2/2</td><td>1</td><td>Introduction / Alignment</td><td>Mt. Everest case</td></tr>
+        <tr><td>2/9</td><td>2</td><td>Vision &amp; Leading Others</td><td>Vision Workshop (in class)</td></tr>
+        <tr><td>2/16</td><td>—</td><td><em>No class — Presidents' Day</em></td><td>—</td></tr>
+        <tr><td>2/23</td><td>3</td><td>Leading Change</td><td>—</td></tr>
+        <tr><td>3/2</td><td>4</td><td>Leading Generations</td><td>Leadership Lab Reflection #1</td></tr>
+        <tr><td>3/9</td><td>5</td><td>Leading by Listening</td><td>Leadership Lab Reflection #2</td></tr>
+        <tr><td>3/16</td><td>—</td><td><em>No class — Spring Break</em></td><td>—</td></tr>
+        <tr><td>3/23</td><td>6</td><td>Courage for Whom?</td><td>LCP Exercise A</td></tr>
+        <tr><td>3/30</td><td>7</td><td>Organizational Design</td><td>LCP Exercise B</td></tr>
+        <tr><td>4/6</td><td>8</td><td>Persuasion &amp; Decision-Making</td><td>—</td></tr>
+        <tr><td>4/13</td><td>9</td><td>Networking</td><td>LCP Draft</td></tr>
+        <tr><td>4/20</td><td>10</td><td>Motivation / Incentives</td><td>Case Memo 1 (Grunitzky)</td></tr>
+        <tr><td>4/27</td><td>11</td><td>Collaborative Learning (feedback)</td><td>LCP draft feedback to peers</td></tr>
+        <tr><td>5/4</td><td>12</td><td>Values, Norms, Inclusivity / Summary</td><td>Case Memo 2 (Wolfgang Keller)</td></tr>
+        <tr><td>5/10</td><td>—</td><td><em>End of semester</em></td><td>Final LCP &amp; peer eval</td></tr>
+    </table>
+
+    <h3>Grading</h3>
+    <table class="compact">
+        <tr><th>Component</th><th>Weight</th></tr>
+        <tr><td>Contribution to the learning community (instructor evaluation)</td><td>20%</td></tr>
+        <tr><td>Leadership Lab Reflection (1 of 2 options)</td><td>20%</td></tr>
+        <tr><td>Two case memos (Grunitzky, Wolfgang Keller)</td><td>30%</td></tr>
+        <tr><td>Leadership Commitments Plan (LCP) — final + peer eval</td><td>30%</td></tr>
+    </table>
+    <p style="font-size:0.9em; color:#666;">Stern policy caps A/A− grades at ~35%. North's stated philosophy: "Let grades be my headache, and let learning be yours."</p>
+
+    <div class="class-block" id="class-1">
+        <span class="label">Class 1 · Feb 2</span>
+        <h3>Introduction &amp; alignment</h3>
+        <p class="class-meta">Case: Mt. Everest 1996</p>
+
+        <h4>Leadership vs management</h4>
+        <ul class="bullets">
+            <li><span class="key">Leadership</span> = developing <em>people</em> through work.</li>
+            <li><span class="key">Management</span> = developing <em>work</em> through people.</li>
+            <li>Both are needed; this course focuses on the leadership side.</li>
+        </ul>
+
+        <h4>Status quo as gravity</h4>
+        <p>The status quo exerts a gravitational pull — friction forces multiplied by institutional inertia. Past behavior is the best predictor of future behavior. Changing the status quo requires overcoming this force.</p>
+
+        <h4>Two halves of the course</h4>
+        <ol class="numbered">
+            <li><strong>Individual leadership muscles</strong> — vision, change, listening, courage, persuasion.</li>
+            <li><strong>Leading organizations, groups, and individuals</strong> — org design, networking, motivation, norms.</li>
+        </ol>
+    </div>
+
+    <div class="class-block" id="class-2">
+        <span class="label">Class 2 · Feb 9</span>
+        <h3>Vision &amp; leading others</h3>
+        <p class="class-meta">Activity: "Shooting at the Moon" Vision Workshop</p>
+
+        <h4>What makes a vision effective</h4>
+        <p>Vague, laudable visions ("be the best," "deliver excellence") don't motivate. JFK's "man on the moon before the end of the decade" is the gold standard — concrete, time-bound, audacious.</p>
+
+        <h4>Four elements of an effective vision</h4>
+        <ol class="numbered">
+            <li><span class="key">Vivid image-laden portrait of the future</span> — people need to <em>see</em> it.</li>
+            <li><span class="key">Link between vision and daily work</span> — how does my job connect to the vision?</li>
+            <li><span class="key">Shared reference points</span> — common language and touchstones the team can rally around.</li>
+            <li><span class="key">Build leader confidence</span> — the vision must make people believe the leader can get there.</li>
+        </ol>
+
+        <div class="callout"><strong>Moonshot thinking:</strong> aim for 10x, not 10%. Big visions are more motivating than incremental ones.</div>
+    </div>
+
+    <div class="class-block" id="class-3">
+        <span class="label">Class 3 · Feb 23</span>
+        <h3>Leading change</h3>
+        <p class="class-meta">Activity: Change Game (Zoom display name change with stakes)</p>
+
+        <h4>Why change attempts fail</h4>
+        <ul class="bullets">
+            <li>Over-reliance on formal power/authority.</li>
+            <li>Distrust of the change agent.</li>
+            <li>Reluctance to change (status quo gravity).</li>
+            <li>Scarcity of time.</li>
+            <li>Absent vision.</li>
+            <li>Emphasis on the change itself rather than <em>unfreezing</em> first.</li>
+        </ul>
+        <p>Organizations are <em>built</em> to be stable. That's the fundamental challenge of change — you're fighting the system's design.</p>
+
+        <h4>Push + Pull = leadership</h4>
+        <ul class="bullets">
+            <li><span class="key">Push</span> = logic, data, rational arguments (IQ).</li>
+            <li><span class="key">Pull</span> = emotion, inspiration, connection (EQ).</li>
+            <li>Effective change requires <span class="imp">both</span>: <strong>Leadership = Logic + Emotion</strong>.</li>
+        </ul>
+
+        <h4>The 20/60/20 rule</h4>
+        <ul class="bullets">
+            <li><span class="key">Top 20% — Friends:</span> already on your side.</li>
+            <li><span class="key">Middle 60% — Fringe:</span> persuadable, watching to see which way things go.</li>
+            <li><span class="key">Bottom 20% — Foes:</span> actively resistant, unlikely to convert.</li>
+        </ul>
+        <div class="callout contrast"><strong>Key move:</strong> target the <em>fringe</em> first, not the foes. Foes consume disproportionate energy with low ROI. Win the middle.</div>
+
+        <h4>Change through feedback</h4>
+        <ul class="bullets">
+            <li>Gap between how we see ourselves and how others see us.</li>
+            <li>Accuracy in self-assessment is a leadership skill.</li>
+            <li>Change is gradual — must <em>unfreeze</em> before you can move.</li>
+        </ul>
+    </div>
+
+    <div class="class-block" id="class-4">
+        <span class="label">Class 4 · Mar 2</span>
+        <h3>Leading generations</h3>
+        <p class="class-meta">Case: "Pokémon? NO" — generational conflict in the workplace</p>
+
+        <h4>Key takeaways</h4>
+        <ul class="bullets">
+            <li>Work values shift over time across generations.</li>
+            <li><span class="key">Culture add vs culture fit</span> — hiring for "fit" can exclude; hiring for "add" brings new perspectives.</li>
+            <li>Aging population means more multi-generational workplaces than ever.</li>
+        </ul>
+
+        <h4>The "silver tsunami"</h4>
+        <ul class="bullets">
+            <li>US population aging dramatically (1950–2060).</li>
+            <li>Labor force growth increasingly driven by 55+ workers.</li>
+            <li>Wealth gap widening: ages 65–74 saw <strong>+72.4%</strong> net worth growth vs. <strong>−19%</strong> for ages 35–44.</li>
+            <li>Generational tension in politics and economics is downstream of this demographic shift.</li>
+        </ul>
+        <p style="font-size:0.9em; color:#666;">North's research focus is ageism and intergenerational dynamics — this is his core expertise area.</p>
+    </div>
+
+    <div class="class-block" id="class-5">
+        <span class="label">Class 5 · Mar 9</span>
+        <h3>Leading by listening</h3>
+        <p class="class-meta">Case: Naomi Chen at WestWave</p>
+
+        <h4>The Naomi Chen case</h4>
+        <p>WestWave product launch — Naomi sensed fear and sadness in the room during the launch presentation. She made the courageous call to cut things short and delay launch by one week. Result: $30M profit year, the most successful product launch in company history. She got promoted, then left to start her own company.</p>
+        <div class="callout"><strong>Core lesson:</strong> Leadership = "balancing your head and your humanity."</div>
+
+        <h4>Listening defined</h4>
+        <p>Attention + Comprehension + Relation. Non-judgmental, empathic, authentic, respectful.</p>
+
+        <h4>Three rationales for listening</h4>
+        <ol class="numbered">
+            <li><span class="key">Learn</span> from someone — gather information.</li>
+            <li><span class="key">Evaluate</span> someone — assess competence/fit.</li>
+            <li><span class="key">Relate</span> to someone — build connection.</li>
+            <li><em>(Bonus)</em> Give them space to hear themselves.</li>
+        </ol>
+
+        <h4>Six types of non-listeners</h4>
+        <ol class="numbered">
+            <li><strong>Faker</strong> — pretends to listen, checked out.</li>
+            <li><strong>Interpreter</strong> — projects their own meaning onto what you say.</li>
+            <li><strong>Intellectual</strong> — listens only for logic/data, ignores emotion.</li>
+            <li><strong>Fisher</strong> — listens only for what they want to hear.</li>
+            <li><strong>Rebuttal Maker</strong> — listens only to build a counterargument.</li>
+            <li><strong>Advice Giver</strong> — jumps to solutions before understanding the problem.</li>
+        </ol>
+
+        <h4>Why listening matters (the data)</h4>
+        <ul class="bullets">
+            <li>Alters story quality and fluency in the speaker.</li>
+            <li>Shapes self-knowledge.</li>
+            <li>Can "change" personality (Rogers, 1952).</li>
+            <li>Increases psychological safety; decreases negative affect.</li>
+            <li>Meta-analysis: listening positively associated with performance (r = 0.29).</li>
+        </ul>
+    </div>
+
+    <div class="class-block" id="class-6">
+        <span class="label">Class 6 · Mar 23</span>
+        <h3>Courage for whom?</h3>
+        <p class="class-meta">Cases: MBA Hackers + Speed Ventures · Game-of-Thrones-themed slides</p>
+
+        <h4>The MBA Hackers case</h4>
+        <p>MBA applicants hacked into the ApplyYourself admissions system to view their admission status early. School responses ranged from blanket rejection (HBS, MIT, CMU) to individualized review (Stanford, which still admitted none of the 41).</p>
+        <table class="compact">
+            <tr><th>School</th><th># Hacked</th><th>Response</th></tr>
+            <tr><td>Harvard</td><td>119</td><td>All rejected. "Unethical at best."</td></tr>
+            <tr><td>MIT Sloan</td><td>32</td><td>All rejected; reapplication allowed in a year.</td></tr>
+            <tr><td>CMU Tepper</td><td>2</td><td>Both rejected.</td></tr>
+            <tr><td>Stanford GSB</td><td>41</td><td>Individual review; ultimately none admitted.</td></tr>
+        </table>
+
+        <h4>MBA Hackers takeaways</h4>
+        <ol class="numbered">
+            <li><span class="key">Closeness matters.</span> The closer decisions are to you — the more you resonate with the people in question — the harder it is to act on behalf of others.</li>
+            <li><span class="key">For whom are you acting?</span> Leadership is not primarily about who you are acting <em>against</em>, but who you are acting <em>for</em>. Ask: "Who are my current/primary constituents?"</li>
+            <li><span class="key">Inputs should match outputs (congruence).</span> Slippery slope — where does a small transgression end? Leadership is easier when you stick with pre-determined principles vs. enacting them case-by-case.</li>
+        </ol>
+
+        <h4>Speed Ventures takeaways</h4>
+        <ol class="numbered">
+            <li><span class="key">Take calculated risks.</span> Courage matters, but avoid being rash. "Going for it" sounds impressive but risk must be weighed accordingly.</li>
+            <li><span class="key">Avoid sampling on the dependent variable / confirmation bias.</span> Use the entirety of available data, not just data points that confirm existing beliefs.</li>
+            <li><span class="key">Be aware of loss aversion.</span> We're more likely to take risks when faced with a prospect of loss. Consider "we might lose everything" alongside "we might miss out."</li>
+        </ol>
+
+        <h4>The 5 W's for hard decisions</h4>
+        <ul class="bullets">
+            <li><strong>WHO</strong> are my primary (and all) constituents? Not just people who are physically/emotionally close.</li>
+            <li><strong>WHY/WHAT</strong> are my org's core values and their implications for this decision?</li>
+            <li><strong>WHERE</strong> am I focusing my lens? Myself vs. current students vs. former affiliates vs. business schools broadly.</li>
+            <li><strong>WHEN</strong> do I need to respond? How quickly are competitors/comparisons responding?</li>
+            <li><strong>HOW</strong> am I making this decision? Am I using all available evidence? Did I give it enough time?</li>
+        </ul>
+        <div class="callout">Leading often means making courageous decisions. Simplify by sticking to your principles.</div>
+    </div>
+
+    <div class="class-block" id="class-7">
+        <span class="label">Class 7 · Mar 30</span>
+        <h3>Organizational design &amp; structure</h3>
+        <p class="class-meta">Activity: Words-in-Sentences (manufacturing simulation)</p>
+
+        <h4>Words-in-Sentences exercise</h4>
+        <p>Groups "manufacture" sentences using letters from a word as raw material. Two production runs with reorganization opportunity in between. A Quality Review Board (one member from each group) scores all groups' output.</p>
+        <ul class="bullets">
+            <li>Each sentence: 3–6 words.</li>
+            <li>Sentences must make grammatical sense (need not be logical).</li>
+            <li>Letters can be reused between words but not within a single word.</li>
+            <li>Cannot repeat nouns between sentences. Verbs OK to conjugate.</li>
+            <li>Round 1 raw material: <em>LEONARD N STERN</em>. Round 2: <em>WASHINGTON SQUARE PARK</em>.</li>
+            <li>Most groups improve significantly in round 2 after reorganization.</li>
+        </ul>
+
+        <h4>Take-homes</h4>
+        <ol class="numbered">
+            <li><strong>Structure is hard</strong> — and sometimes chaotic.</li>
+            <li><strong>This simulates real-world restructuring.</strong> Assign roles, see what works, change. Restructuring is often necessary, especially in complex/fluid environments.</li>
+            <li><strong>Many regulations</strong> make structure even more difficult.</li>
+        </ol>
+
+        <h4>The lecture's framing questions</h4>
+        <ul class="bullets">
+            <li>What is organizational structure and why does it matter?</li>
+            <li>Why do organizations adopt different structural arrangements?</li>
+            <li>Why do these change over time?</li>
+            <li>How do those changes affect organizational processes and outcomes?</li>
+        </ul>
+    </div>
+
+    <div class="class-block" id="class-8">
+        <span class="label">Class 8 · Apr 6</span>
+        <h3>Persuasion &amp; decision-making</h3>
+        <p class="class-meta">Activity: Survival Exercise (stay vs. walk; rank 13 items)</p>
+
+        <h4>Survival exercise scoring</h4>
+        <ul class="bullets">
+            <li><strong>Individual influence</strong> = |individual ranking − group ranking|</li>
+            <li><strong>Individual expertise</strong> = |individual − expert|</li>
+            <li><strong>Group expertise</strong> = |expert − group|</li>
+        </ul>
+        <p>Expert recommendation: <span class="imp">stay with the wreckage.</span> Key debrief question: was the most influential person also the most expert? (Often: no.)</p>
+
+        <h4>Liking → persuasion</h4>
+        <p>People comply more with requests from people they like. Factors that increase liking: <strong>similarity, familiarity, flattery, cooperation, humor</strong>. We like people who like us.</p>
+        <p>One study: students with high ingratiatory behavior in interviews received <strong>1.45 more offers</strong> and <strong>~$2,650 more in starting salary</strong> on average.</p>
+
+        <h4>Authority → persuasion</h4>
+        <p>People are more persuaded by perceived authority, expertise, and credibility — independent of argument strength. Authority is sensitive to superficial cues: <strong>height, dress (suit/uniform), graying hair, eyeglasses, British accent, deep voice</strong>.</p>
+
+        <div class="callout contrast"><strong>Descriptive ≠ prescriptive.</strong> Just because liking and authority tactics work doesn't mean they should. Who do these advantage? Who do they disadvantage? How could a process be redesigned to reduce reliance on them?</div>
+
+        <h4>Bounded attention</h4>
+        <p>Limited attention → limited decision-making. We "see" only a subset of perceivable information and have little awareness that we're missing anything.</p>
+        <p>Gorilla experiment: <strong>83% of radiologists</strong> failed to notice a gorilla superimposed on a CT scan. ~100% of naive observers missed it. Yet radiologists were far better at detecting actual nodules. Expertise focuses attention but creates blind spots.</p>
+
+        <h4>Pitfalls of group decision-making</h4>
+        <ol class="numbered">
+            <li><span class="key">Groupthink</span> — tendency of group members to conform to the consensus viewpoint. Asch conformity experiment: 75% of participants conformed on at least one trial; overall rate 32%.</li>
+            <li><span class="key">Abilene paradox</span> — group agrees on a course of action that no individual actually wants. Everyone assumes others want it.</li>
+            <li><span class="key">Group polarization</span> — groups make more extreme decisions than individuals would alone.</li>
+        </ol>
+
+        <h4>Counters to bounded attention</h4>
+        <ul class="bullets">
+            <li>Different people focused on different issues — argument for diversity in teams.</li>
+            <li>Norms that allow for dissent.</li>
+            <li>Mechanisms to reconcile and synthesize divergent opinions and data.</li>
+        </ul>
+    </div>
+
+    <div class="class-block" id="class-9">
+        <span class="label">Class 9 · Apr 13</span>
+        <h3>Networking</h3>
+        <p class="class-meta">Case: Claude Grunitzky · Activity: Murder Mystery — "Who Killed Robert Guion?"</p>
+
+        <h4>Murder Mystery exercise</h4>
+        <p>Information was distributed across three versions of packets. Groups had to share <em>uncommon/unshared</em> information to solve correctly. Demonstrates the importance of information sharing across networks. (Eddie did it — implicated by multiple sources, exonerated by no one.)</p>
+
+        <h4>How groups form</h4>
+        <ul class="bullets">
+            <li><span class="key">Proximity</span> (Festinger, Schacter, Back, 1950): we form relationships with people who are physically close. Those nearby tend to share knowledge and experiences.</li>
+            <li><span class="key">Homophily</span>: we like and prefer to interact with others who are similar, familiar, and close.</li>
+            <li>Study of 816 new entrepreneurs: biggest predictor in founding-team formation was similarity in <strong>gender, ethnicity, occupation</strong>.</li>
+        </ul>
+
+        <h4>Racial composition of US social networks (PRRI 2013)</h4>
+        <ul class="bullets">
+            <li>White Americans' close networks: 91% White.</li>
+            <li>Black Americans' close networks: 83% Black.</li>
+            <li>Hispanic Americans' close networks: 64% Hispanic.</li>
+            <li>We overwhelmingly discuss "important matters" with people who look like us.</li>
+        </ul>
+
+        <h4>Homogeneous vs heterogeneous groups</h4>
+        <table class="compact">
+            <tr><th>Homogeneous — Pros</th><th>Homogeneous — Cons</th></tr>
+            <tr><td>Similarity breeds liking</td><td>Narrow perspectives</td></tr>
+            <tr><td>High cohesion</td><td>Low motivation to change/learn</td></tr>
+            <tr><td>Low start-up costs</td><td>Lack of new ideas</td></tr>
+            <tr><td>Easy to agree</td><td>Groupthink &amp; conformity risk</td></tr>
+        </table>
+        <table class="compact">
+            <tr><th>Heterogeneous — Pros</th><th>Heterogeneous — Cons</th></tr>
+            <tr><td>Richer pools of information</td><td>High start-up costs</td></tr>
+            <tr><td>More learning</td><td>Higher potential for conflict</td></tr>
+            <tr><td>More creativity and innovation</td><td>Risk of marginalization, ostracism</td></tr>
+            <tr><td>More specialization</td><td>Difficult to assemble</td></tr>
+        </table>
+        <p>Watson, Kumar &amp; Michaelsen (1993): homogeneous groups are often better in months 1–2, but performance differences disappear by month 4. Diverse groups have higher startup costs but eventually outperform.</p>
+
+        <h4>Take-homes</h4>
+        <ol class="numbered">
+            <li>Not everyone loves networking — but the benefits are real, so push yourself.</li>
+            <li>Networking is beneficial but presents costs (personal, professional, even network-related — too many close ties precludes weak ones).</li>
+            <li>Balance <strong>depth (strong ties)</strong> with <strong>breadth (weak ties)</strong>. Too much reliance on similarity limits perspective. Strive for new perspectives.</li>
+        </ol>
+    </div>
+
+    <div class="class-block" id="class-10">
+        <span class="label">Class 10 · Apr 20</span>
+        <h3>Motivation &amp; designing incentives</h3>
+        <p class="class-meta">Case: Lincoln Electric · Reading: "On the Folly of Rewarding A While Hoping for B" (Kerr) · Super-Mario-Bros-themed slides</p>
+
+        <h4>Motivation defined</h4>
+        <p>The psychological forces within a person that determine the direction of behavior, level of effort, and persistence in the face of obstacles. If employees are unmotivated, their skills and abilities are wasted.</p>
+
+        <h4>Sources of motivation</h4>
+        <ul class="bullets">
+            <li><strong>Situational:</strong> extrinsic rewards (pay-for-performance, piece-rates, commissions, promotions) and intrinsic rewards (challenge, growth, fairness, equity).</li>
+            <li><strong>Individual:</strong> personality differences — need for achievement, power, growth, affiliation.</li>
+        </ul>
+
+        <h4>Motivation theories</h4>
+        <table class="compact">
+            <tr><th>Theory</th><th>Core idea</th></tr>
+            <tr><td><strong>Maslow / Alderfer's ERG</strong></td><td>Hierarchy of needs (physiological → safety → social → esteem → self-actualization). People care about more than just money.</td></tr>
+            <tr><td><strong>Two-Factor (Herzberg)</strong></td><td><em>Motivators</em> (achievement, recognition, growth): presence motivates, absence is neutral. <em>Hygiene factors</em> (pay, conditions, policies): presence doesn't motivate, but absence demotivates.</td></tr>
+            <tr><td><strong>Expectancy</strong></td><td>Motivation = f(expectancy, instrumentality, valence). Effort → performance → outcome → value. If any link breaks, motivation collapses.</td></tr>
+            <tr><td><strong>Equity</strong></td><td>People evaluate input/output ratios against past precedents and peers. Perceived inequity → less motivation. Fairness is an incredibly powerful motivator.</td></tr>
+            <tr><td><strong>Goal-setting</strong></td><td>Specific, challenging-yet-realistic goals beat "do your best." 50 years of empirical support. Commitment is higher when employees are involved in goal-setting.</td></tr>
+        </table>
+
+        <p><strong>Ultimatum game:</strong> proposers offer ~40% (many offer 50/50). Majority of responders reject offers below 40%, even with high stakes. People will sacrifice money to punish unfairness.</p>
+
+        <h4>Pay for performance</h4>
+        <div class="callout"><strong>Compensation = s + b · x</strong><br>
+        s = salary (fixed) · b = rate of reward contingent on performance · x = performance measure (often imperfect)<br>
+        Three models: piece-rate only (s=0), salary only (b=0), mixed.</div>
+
+        <h4>Downsides of pay-for-performance</h4>
+        <ul class="bullets">
+            <li>Performance is hard to measure accurately.</li>
+            <li>Can undermine teamwork (especially with relative payouts).</li>
+            <li>Encourages short-term focus over learning.</li>
+            <li>Encourages unethical behavior, "fudging" the numbers.</li>
+            <li>Once introduced, hard to change — people are distrustful of pay changes.</li>
+        </ul>
+
+        <h4>"On the Folly of Rewarding A While Hoping for B"</h4>
+        <p>Kerr's classic: misaligned incentives are everywhere.</p>
+        <ul class="bullets">
+            <li>Vietnam War: military goal was "win"; GI goal was "get home alive."</li>
+            <li>Consulting: progress reports written by the same people who recommended the change.</li>
+            <li>Doctors, students, budgeting: same pattern.</li>
+        </ul>
+
+        <h4>Take-homes</h4>
+        <ol class="numbered">
+            <li>Incentive systems are hard. Hard to measure everything that matters and get the "right" system.</li>
+            <li>Pay-for-performance may seem like a panacea — but it has real downsides (health, risk, undermining intrinsic benefits, precluding teamwork, oversight cost).</li>
+            <li>Incentive clashes are common: orgs reward one dimension when many are relevant; multiple metrics interfere; employees value unquantifiable things; extrinsic clashes with intrinsic.</li>
+        </ol>
+    </div>
+
+    <div class="class-block" id="class-11">
+        <span class="label">Class 11 · Apr 27</span>
+        <h3>Collaborative learning — failure &amp; feedback</h3>
+        <p class="class-meta">Case: Wolfgang Keller at Königsbräu · Activity: Smith-Burke performance review role-play</p>
+
+        <h4>The Wolfgang Keller case</h4>
+        <p>Keller (34, HBS MBA, turnaround artist, hands-on, blunt, impatient) is managing Brodsky (44, formal, delegatory, slow, analytical). Different styles. Keller's reservations: too distant, too slow, too passive, too formal, not proactive, too delegatory.</p>
+        <p>The case decision: (a) fire Brodsky / deny salary increase; (b) coach him up; (c) re-organize / restructure; (d) wait and see.</p>
+
+        <h4>Why feedback is essential</h4>
+        <ul class="bullets">
+            <li>It's hard to know how we're truly performing or how we're "seen" by others.</li>
+            <li>Many self-protective mechanisms get in the way.</li>
+            <li>To improve, you must know how you're actually performing.</li>
+            <li>Self-assessment accuracy is itself a leadership skill.</li>
+        </ul>
+
+        <h4>Errors in performance appraisals</h4>
+        <ul class="bullets">
+            <li><span class="key">Stereotyping</span> — placing an employee in a category based on one or a few traits.</li>
+            <li><span class="key">Overestimation</span> — people overestimate their relative performance.</li>
+            <li><span class="key">Unskilled-and-unaware (Dunning-Kruger)</span> — least skilled overestimate competency; most skilled underestimate it.</li>
+        </ul>
+
+        <h4>Why most feedback is useless</h4>
+        <ul class="bullets">
+            <li><strong>Sugarcoated:</strong> painful to give, painful to receive — managers withhold or distort positively.</li>
+            <li><strong>Too late:</strong> by the time it's said, it's irrelevant.</li>
+            <li><strong>Too vague:</strong> doesn't say what to actually change.</li>
+            <li><strong>Inconsistent:</strong> evaluations and ratings don't match. Standard deviation matters — averages hide everything.</li>
+        </ul>
+
+        <h4>Self-serving bias</h4>
+        <p>Success → internal/personal attributes ("I'm clearly awesome"). Failure → situational factors ("my boss doesn't like me"). It blinds us from honest feedback and is really annoying when observed in others.</p>
+
+        <h4>Fair process effect</h4>
+        <p>People are more willing to accept outcomes — good <em>or</em> bad — if the process to determine those outcomes is fair. It's not just <em>what</em> you do, it's <em>how</em> you do it.</p>
+
+        <h4>Six criteria for procedural fairness</h4>
+        <ol class="numbered">
+            <li>Are rules and procedures applied <strong>consistently</strong> across individuals?</li>
+            <li>Are decisions made <strong>impartially</strong>, unaffected by self-interest?</li>
+            <li>Are decisions made using <strong>accurate information</strong>?</li>
+            <li>Is there opportunity for <strong>appeal or correction</strong> after decisions are made?</li>
+            <li>Are all stakeholders <strong>represented</strong> — do they have a voice?</li>
+            <li>Do procedures and decisions follow <strong>moral / ethical standards</strong>?</li>
+        </ol>
+        <p>Plus: quality of interpersonal treatment (dignity, respect, neutrality, explanation of decisions).</p>
+        <div class="callout contrast"><strong>It doesn't matter if <em>you</em> think you're acting fairly — benefits emerge only when you're <em>seen</em> to be fair.</strong> Fair procedures make unfavorable outcomes especially more acceptable.</div>
+
+        <h4>Preventing surprise</h4>
+        <ul class="bullets">
+            <li><strong>As feedback recipient (Burke):</strong> manage up. Ensure your manager sees your situation as you see it.</li>
+            <li><strong>As feedback giver (Smith):</strong> employees should never be surprised. Provide ongoing candid feedback.</li>
+            <li>Procedural fairness is critical for sustaining motivation.</li>
+        </ul>
+
+        <h4>Take-homes</h4>
+        <ol class="numbered">
+            <li>The feedback process is tough — task-based feedback easily spills into relationship-based tension. Stay focused on aligned goals.</li>
+            <li><strong>Giving feedback:</strong> let the recipient speak first (gives voice). Make it concrete, actionable, task-focused — not personal or vague. Don't wait.</li>
+            <li><strong>Receiving feedback:</strong> overcome self-serving bias. Treat feedback as a learning opportunity (even if you disagree). Focus on process over outcome.</li>
+        </ol>
+    </div>
+
+    <div class="class-block" id="class-12">
+        <span class="label">Class 12 · May 4</span>
+        <h3>Values, norms, inclusivity / summary</h3>
+        <p class="class-meta">Reading: "Can Your Employees Really Speak Freely?" · Final class · Case Memo 2 (Wolfgang Keller) due</p>
+        <p>Wraps the course by tying together values, norms, inclusivity, and summary. Final LCP and peer eval are due 5/10.</p>
+    </div>
+
+    <h2 id="lcp">Final Leadership Commitments Plan (LCP)</h2>
+    <p class="meta">5–7 pages double-spaced · Due May 10, 9pm · 25% of final grade · +5% for peer evaluation</p>
+
+    <p>The LCP is the capstone — a personal document built up across the semester through Exercises A and B, peer drafts, and feedback rounds. The final asks eight questions:</p>
+    <ol class="numbered">
+        <li>What is your <strong>leadership vision</strong>, and how is it informed by your values — personal, cultural, and/or generational? How will you influence others going forward?</li>
+        <li>What are your <strong>motivations</strong>, including goals and near-term priorities?</li>
+        <li>How will you use and prioritize <strong>inputs and resources</strong> (people, time, money) to achieve your goals?</li>
+        <li>How will you <strong>define and measure success</strong>?</li>
+        <li>Where do you anticipate <strong>(mis)alignment and conflicts</strong>? How will you approach and resolve them?</li>
+        <li>What are the <strong>3 biggest risks</strong> to achieving your vision and goals? If you're unhappy in 5 years, what's the most likely reason?</li>
+        <li>How will you ensure that you and others around you <strong>make good (or at least better) decisions</strong>?</li>
+        <li>How do the lessons of creating a Leadership Commitments Plan apply to <strong>leading an organization</strong>?</li>
+    </ol>
+
+    <p class="footer">last updated may 2026 · <a href="../">mba</a> · <a href="/">home</a></p>
+</section>
+
+</body>
+
+</html>
