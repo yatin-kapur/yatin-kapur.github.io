@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>F&amp;M Exam 2 — One Page Cheat Sheet</title>
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Thasadith:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  @page { size: letter; margin: 0.25in; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Thasadith', 'Arial Narrow', Arial, sans-serif;
+    font-size: 7pt;
+    line-height: 1.22;
+    color: #111;
+    background: #fff;
+    padding: 0.25in;
+    letter-spacing: 0.2px;
+  }
+  a { color: #ff3333; text-decoration: none; }
+  a:hover { color: #ff6666; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 7px; }
+  .col { break-inside: avoid; }
+  h1 { font-size: 11pt; font-weight: 700; text-align: center; margin-bottom: 5px; grid-column: 1/-1; letter-spacing: 0.5px; }
+  h2 { font-size: 8pt; font-weight: 700; padding: 1px 0 1px 4px; margin: 4px 0 2px; border-left: 2px solid #ff3333; color: #111; letter-spacing: 0.3px; }
+  h3 { font-size: 7pt; font-weight: 700; color: #333; margin: 3px 0 1px; border-bottom: 0.5px solid #aaa; padding-bottom: 0.5px; }
+  .formula { background: #f7f7f7; padding: 2px 4px; margin: 2px 0; border-left: 1px solid #ff3333; font-family: 'Courier New', monospace; font-size: 6.4pt; line-height: 1.3; }
+  ul { padding-left: 11px; margin: 1px 0; list-style-type: disc; }
+  li { margin-bottom: 0px; line-height: 1.25; }
+  .imp { font-weight: 700; color: #ff3333; }
+  table { width: 100%; border-collapse: collapse; margin: 2px 0; font-size: 6.5pt; }
+  td, th { border: 0.5px solid #aaa; padding: 1.5px 3px; text-align: center; }
+  th { background: #f0f0f0; font-size: 6.5pt; font-weight: 700; }
+  .ne { background: #fff0f0; font-weight: 700; color: #ff3333; }
+  .tree { background: #fafafa; border-left: 1px solid #ff3333; padding: 2px 4px; margin: 2px 0; font-family: 'Courier New', monospace; font-size: 6.2pt; line-height: 1.2; white-space: pre; }
+  .ex { color: #555; font-style: italic; font-size: 6.5pt; }
+  .topbar { display: flex; justify-content: space-between; align-items: center; grid-column: 1/-1; margin-bottom: 4px; font-size: 7.5pt; }
+  .topbar .crumb { color: #888; }
+  @media print {
+    body { padding: 0; }
+    .no-print { display: none; }
+    .topbar { display: none; }
+  }
+  .btn-print {
+    position: fixed; top: 10px; right: 10px; padding: 6px 14px;
+    background: #ff3333; color: #fff; border: none; border-radius: 3px;
+    cursor: pointer; font-family: inherit; font-size: 11pt; font-weight: 700; z-index: 999;
+  }
+  .btn-print:hover { background: #ff6666; }
+</style>
+</head>
+<body>
+<button class="btn-print no-print" onclick="window.print()">Print</button>
+<div class="grid">
+<div class="topbar no-print">
+  <span class="crumb"><a href="./">← back to study hub</a></span>
+  <span class="crumb">Firms &amp; Markets · Exam 2</span>
+</div>
+<h1>FIRMS &amp; MARKETS — EXAM 2 CHEAT SHEET</h1>
+
+<!-- COLUMN 1 -->
+<div class="col">
+
+<h2>Game Theory (Mod 8)</h2>
+<h3>Definitions</h3>
+<ul>
+  <li><b>Dominant strategy:</b> best regardless of opponent. <span class="ex">Ex: Defect in PD</span></li>
+  <li><b>Dominated strategy:</b> always worse than another. Eliminate, re-check.</li>
+  <li><b>Nash Eq (NE):</b> both play best responses; no one wants to deviate.</li>
+</ul>
+
+<h3>Prisoners' Dilemma</h3>
+<table>
+  <tr><th></th><th>C</th><th>D</th></tr>
+  <tr><th>C</th><td>(−1, −1)</td><td>(−9, 0)</td></tr>
+  <tr><th>D</th><td>(0, −9)</td><td class="ne">(−6, −6) NE</td></tr>
+</table>
+<ul>
+  <li>D dominant for both. NE = (D,D) even though (C,C) better for both.</li>
+  <li><b>Finding NE:</b> per column, mark Row's max. Per row, mark Col's max. NE = both marked.</li>
+</ul>
+
+<h3>Sequential (backward induction)</h3>
+<div class="tree">You ─┬─ Invest ─── Rival ─┬─ Enter  → (10, −2)
+     │                     └─ Stay   → <b>(40, 0) ✓</b>
+     └─ Don't ─── Rival ──┬─ Enter  → <b>(20, 10) ✓</b>
+                           └─ Stay   → (50, 0)</div>
+<ul>
+  <li>Solve from end. If Invest → Rival stays (−2&lt;0). If Don't → Rival enters (10&gt;0).</li>
+  <li>You: Invest→40 vs Don't→20. <span class="imp">Invest!</span></li>
+  <li><b>Value of commitment</b> = π(seq) − π(sim).</li>
+</ul>
+
+<h2>Commitment (Mod 11)</h2>
+<ul>
+  <li>Must be <b>visible, credible, irreversible</b>. <span class="ex">Cortés burns ships.</span></li>
+  <li><b>Entry deterrence:</b> invest to make rival's entry payoff negative.</li>
+  <li>Key: payoffs lower in ALL scenarios, but changes WHICH scenario happens.</li>
+  <li><b>Preemption:</b> product proliferation, excess capacity, predatory pricing.</li>
+</ul>
+
+<h3>Entry deterrence pattern</h3>
+<div class="tree">Incumbent ─┬─ High cap → Entrant out → (lower, 0)
+            └─ Low cap  → Entrant in  → (even lower, +)</div>
+<ul><li>If π(high cap, no entry) &gt; π(low cap, entry) → invest.</li></ul>
+
+<h2>Price Competition (Mod 9)</h2>
+<h3>Bertrand trap</h3>
+<ul>
+  <li>Identical goods, same MC → <span class="imp">NE: P = MC, π = 0</span> (even with 2 firms).</li>
+  <li><span class="ex">Ex: 4 firms, P=2000−Q, MC=0 → NE: P=0, π=0</span></li>
+</ul>
+
+<h3>5 escapes from Bertrand</h3>
+<table>
+  <tr><th>Strategy</th><th>How</th><th>Example</th></tr>
+  <tr><td>Cost leadership</td><td>Price just under rival MC</td><td>Senstrum: P=$3.02, MC=$2</td></tr>
+  <tr><td>Differentiation</td><td>Non-identical → pricing power</td><td>Time vs Newsweek</td></tr>
+  <tr><td>Limit capacity</td><td>Can't serve whole market</td><td>Sony / Microsoft</td></tr>
+  <tr><td>Price matching</td><td>Removes undercut incentive</td><td>"We match any price"</td></tr>
+  <tr><td>Repeated</td><td>Tacit cooperation (Mod 10)</td><td>Trigger strategies</td></tr>
+</table>
+
+<h3>Differentiated Bertrand</h3>
+<div class="formula">q₁ = a − p₁ + b·p₂, MC = c
+π₁ = (p₁−c)(a−p₁+b·p₂)
+FOC → p₁* = (a+c+b·p₂)/2
+Symmetric NE: p* = (a+c)/(2−b)</div>
+<div class="ex">Ex: q=5−p₁+0.5p₂, MC=1 → BR: p₁=3+0.25p₂ → NE: p*=$4. Monopolist: $5.50.</div>
+
+</div>
+
+<!-- COLUMN 2 -->
+<div class="col">
+
+<h2>Cooperation (Mod 10)</h2>
+<h3>Cartels</h3>
+<ul>
+  <li>Restrict output to quotas → monopoly price → split profits.</li>
+  <li><span class="imp">Illegal (felony)</span> in US, EU, Japan, Korea, Brazil.</li>
+  <li>Each member tempted to cheat (more output at high P).</li>
+</ul>
+
+<h3>Trigger strategy &amp; NPV</h3>
+<div class="formula">Trigger: "High P forever UNLESS deviation → P=MC forever"
+
+NPV(coop)    = π_mono/n + (π_mono/n)/r = (π_mono/n)(1+1/r)
+NPV(deviate) = π_mono + 0
+
+<b>Cooperate when: r &lt; 1/(n−1)</b>
+  2 firms: r&lt;100% | 3: r&lt;50% | 4: r&lt;33%</div>
+
+<h3>Worked example (from Final)</h3>
+<div class="ex">3 firms, MC=100, Q=1000−P, r=5%</div>
+<div class="formula">Mono: MR=1000−2Q=100 → Q=450, P=550
+π_mono = 450×450 = 202,500. Each: 67,500
+NPV(coop) = 67,500 + 67,500/.05 = 1,417,500
+NPV(dev)  = 202,500
+1.4M &gt;&gt; 202K → <b>YES cooperate</b> (5% &lt; 50% ✓)</div>
+
+<h3>With antitrust (X = detect prob, k = penalty)</h3>
+<div class="formula">E[cartel] = (1−X)·[π_c(1+1/r)] + X·[π_c − k·π_c]
+Cartel when E[cartel] &gt; π_dev → solve for X</div>
+<div class="ex">Ex: 4 firms, π_mono=1M, r=20%, k=3 → X &lt; 25%</div>
+
+<h3>Finite repeated games</h3>
+<ul>
+  <li><span class="imp">Cooperation UNRAVELS</span> — backward induction from last period.</li>
+  <li>Period T: no future → deviate. Period T−1: T deviate anyway → deviate…</li>
+  <li>Result: P=MC in ALL periods. <span class="ex">3-period game → P=0 every period.</span></li>
+</ul>
+
+<h3>Tacit collusion (legal)</h3>
+<ul>
+  <li>No explicit agreement → not illegal. Trigger strategy is NE.</li>
+  <li>Easier: fewer firms, lower r, transparent prices, frequent interaction.</li>
+</ul>
+
+<h2>Monopoly Review</h2>
+<div class="formula">P = a − bQ → MR = a − 2bQ
+MR = MC → Q*, then P* = a − bQ*
+π = (P*−MC)·Q*
+MR = P(1 + 1/ε)    Markup: (P−MC)/P = −1/ε
+CS = ½·Q·(P_max − P*)
+DWL = ½·(Qc−Qm)·(Pm−MC)</div>
+<div class="ex">Ex: P=2000−Q, MC=0 → MR=0 → Q=1000, P=$1000, π=$1M</div>
+
+<h3>Infinite geometric series</h3>
+<div class="formula">a + a/(1+r) + a/(1+r)² + ... = a·(1+r)/r = a + a/r
+(current period + PV of all future periods)</div>
+
+</div>
+
+<!-- COLUMN 3 -->
+<div class="col">
+
+<h2>Asymmetric Info (Mod 12)</h2>
+
+<h3>Adverse selection (hidden type — BEFORE)</h3>
+<ul>
+  <li>Informed knows quality; uninformed doesn't.</li>
+  <li><b>Lemons spiral:</b> offer avg price → good sellers exit → avg drops → more exit → <span class="imp">only worst remains</span>.</li>
+</ul>
+<div class="tree">Qualities: q=0 (bad) ... q=1 (good)
+Buyer offers p(avg=0.5) → q&gt;0.5 exit
+→ p(avg=0.25) → q&gt;0.25 exit
+→ ... → only q=0 remains = FAILURE</div>
+<div class="ex">Ex: used cars; health insurance (sick buy, healthy don't → spiral)</div>
+
+<h3>Moral hazard (hidden action — AFTER)</h3>
+<ul>
+  <li>Unobserved risky behavior after deal is made.</li>
+  <li><span class="ex">Ex: reckless driving after insurance, "too big to fail", shirking</span></li>
+  <li><b>Fixes:</b> monitoring, incentive pay, stock options, deductibles, no-claim bonus.</li>
+</ul>
+
+<h3>Signaling vs screening</h3>
+<table>
+  <tr><th></th><th>Signaling</th><th>Screening</th></tr>
+  <tr><td><b>Who acts</b></td><td>Informed</td><td>Uninformed</td></tr>
+  <tr><td><b>Mechanism</b></td><td>Costly action reveals type</td><td>Menu sorts types</td></tr>
+  <tr><td><b>Examples</b></td><td>Warranty, education, cert</td><td>Deductible menu, job test</td></tr>
+  <tr><td><b>Key</b></td><td>Costlier for bad type</td><td>Incentive-compatible</td></tr>
+</table>
+<div class="ex">Separating eq: types choose differently → info revealed. Pooling eq: same choice → no info.</div>
+
+<h2>Platforms &amp; Networks (Mod 13)</h2>
+
+<h3>Two types of network effects</h3>
+<table>
+  <tr><th>Type</th><th>Definition</th><th>Examples</th></tr>
+  <tr><td><b>Direct</b> (same-side)</td><td>More same-type users → more value</td><td>Phone, Facebook, fax</td></tr>
+  <tr><td><b>Indirect</b> (cross-side)</td><td>More users on side A → value to B</td><td>Uber, Xbox, AmEx</td></tr>
+</table>
+<div class="formula">Connections with n users: n(n−1)/2
+  5: 10  |  12: 66  |  100: 4,950</div>
+
+<h3>Platform pricing</h3>
+<div class="formula">Subsidize elastic/scarce side, charge inelastic side
+AmEx: merchants +3%, cardholders −1%, net = 2%
+$100 purchase: merchant pays $103, buyer pays $99</div>
+
+<h3>Winner-take-most</h3>
+<ul>
+  <li>Network effects + <b>incompatibility</b> → market tips to one platform.</li>
+  <li><b>Critical mass:</b> min users for self-sustaining growth. <span class="ex">VHS beat Betamax.</span></li>
+  <li>Why "most" not "all"? Multi-homing, niches, regulation.</li>
+  <li><b>Interop</b> → coexistence (email). <b>No interop</b> → tipping (consoles).</li>
+  <li>TS-max price can be <b>below MC</b> (network externality justifies subsidy).</li>
+</ul>
+
+<h2>Exam Checklist</h2>
+<ul>
+  <li>□ Matrix? → dominated strats → best responses → NE</li>
+  <li>□ Game tree? → backward induction from end</li>
+  <li>□ Repeated? → NPV: coop vs deviate. r &lt; 1/(n−1)?</li>
+  <li>□ Finite repeat? → unravels, NE every period</li>
+  <li>□ Bertrand? → P=MC unless escape (5 ways)</li>
+  <li>□ Commitment? → compare invest+no entry vs no invest+entry</li>
+  <li>□ Info problem? → adverse selection (before) vs moral hazard (after)</li>
+  <li>□ Signal vs screen? → who acts: informed or uninformed?</li>
+  <li>□ Network effects? → direct vs indirect, interop vs not</li>
+  <li>□ Always: MR = a−2bQ, MR=MC, π=(P−MC)Q</li>
+</ul>
+
+</div>
+</div>
+</body>
+</html>

@@ -9,6 +9,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Thasadith:wght@700&display=swap" rel="stylesheet">
+    <script src="/scripts/theme.js"></script>
+    <style>
+        .tagline { min-height: 1.5em; }
+        .tagline .ch { transition: color 0.15s ease; }
+        .tagline .ch.pending { visibility: hidden; }
+        .tagline .ch.head { color: #ff3333; }
+        .tagline .ch.trail { color: #ff8a8a; }
+        html[data-theme="dark"] .tagline .ch.head { color: #ff5a5a; }
+        html[data-theme="dark"] .tagline .ch.trail { color: #ff9a9a; }
+
+        #name-h1 { position: relative; padding-bottom: 6px; }
+        #name-h1 .ulbar {
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            height: 1px;
+            background: #ff3333;
+            width: 0;
+            transition: width 0.7s ease;
+            pointer-events: none;
+        }
+        html[data-theme="dark"] #name-h1 .ulbar { background: #ff5a5a; }
+    </style>
 </head>
 
 <body>
@@ -18,9 +41,71 @@
         </br>
         </br>
         </br>
-        <h1>Yatin Kapur</h1>
-		<p>If you have my number, you have my ear!</p>
+        <h1 id="name-h1"><span id="name-first">Yatin</span> Kapur</h1>
+        <p id="tagline" class="tagline" data-text="If you have my number, you have my ear!"></p>
     </section>
+
+    <script>
+        (function () {
+            var p = document.getElementById('tagline');
+            if (!p) return;
+            var text = p.dataset.text;
+            var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+            var html = '';
+            for (var k = 0; k < text.length; k++) {
+                var c = text.charAt(k);
+                var safe = c === ' ' ? '&nbsp;' : (c === '<' ? '&lt;' : (c === '>' ? '&gt;' : (c === '&' ? '&amp;' : c)));
+                html += '<span class="ch pending">' + safe + '</span>';
+            }
+            p.innerHTML = html;
+            var spans = p.querySelectorAll('.ch');
+
+            function drawUnderline() {
+                var h1 = document.getElementById('name-h1');
+                var nameFirst = document.getElementById('name-first');
+                if (!h1 || !nameFirst) return;
+                var h1Rect = h1.getBoundingClientRect();
+                var firstRect = nameFirst.getBoundingClientRect();
+                var bar = document.createElement('span');
+                bar.className = 'ulbar';
+                bar.style.left = (firstRect.left - h1Rect.left) + 'px';
+                h1.appendChild(bar);
+                bar.getBoundingClientRect();
+                requestAnimationFrame(function () {
+                    bar.style.width = firstRect.width + 'px';
+                });
+            }
+
+            if (reduced) {
+                spans.forEach(function (s) { s.classList.remove('pending'); });
+                drawUnderline();
+                return;
+            }
+
+            var i = 0;
+            var step = 45;
+            function tick() {
+                if (i >= spans.length) {
+                    setTimeout(function () {
+                        spans.forEach(function (s) { s.classList.remove('head', 'trail'); });
+                        setTimeout(drawUnderline, 220);
+                    }, 80);
+                    return;
+                }
+                spans[i].classList.remove('pending');
+                if (i - 2 >= 0) spans[i - 2].classList.remove('trail');
+                if (i - 1 >= 0) {
+                    spans[i - 1].classList.remove('head');
+                    spans[i - 1].classList.add('trail');
+                }
+                spans[i].classList.add('head');
+                i++;
+                setTimeout(tick, step);
+            }
+            setTimeout(tick, 250);
+        })();
+    </script>
 
 </body>
 
