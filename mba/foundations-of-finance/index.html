@@ -1,0 +1,977 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Foundations of Finance — Yatin Kapur</title>
+    <link rel="stylesheet" href="/stylesheets/main.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Thasadith:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+    <script>
+      // Define toggles in <head> so onclick handlers always find them, regardless of script timing.
+      function toggleAnswer(btn) {
+        var a = btn.nextElementSibling;
+        a.classList.toggle('show');
+        btn.textContent = a.classList.contains('show') ? 'Hide solution' : 'Show solution';
+      }
+      function togglePanel(btn, panelClass, hiddenLabel, shownLabel) {
+        var panel = btn.closest('.formula-box').querySelector('.' + panelClass);
+        panel.classList.toggle('show');
+        btn.textContent = panel.classList.contains('show') ? shownLabel : hiddenLabel;
+      }
+      function toggleIntuition(btn) {
+        togglePanel(btn, 'intuition', '💡 intuition', '▲ hide intuition');
+      }
+      function toggleDerivation(btn) {
+        togglePanel(btn, 'derivation', '▼ derive', '▲ hide derivation');
+      }
+      // Render KaTeX once the DOM and deferred scripts are ready.
+      document.addEventListener('DOMContentLoaded', function() {
+        if (typeof renderMathInElement === 'function') {
+          renderMathInElement(document.body, {
+            delimiters: [
+              {left: '\\[', right: '\\]', display: true},
+              {left: '\\(', right: '\\)', display: false}
+            ],
+            throwOnError: false
+          });
+        }
+      });
+    </script>
+    <script src="/scripts/theme.js"></script>
+    <style>
+        .container { width: 48em; }
+        .crumb { font-size: 0.95em; margin-bottom: 1em; }
+        .meta { color: #888; font-size: 0.95em; margin-top: -0.5em; margin-bottom: 1.5em; }
+
+        h2 { font-size: 1.6em; font-weight: 700; margin-top: 2.5em; margin-bottom: 0.6em; padding-top: 0.5em; border-top: 1px solid #eee; }
+        h2:first-of-type { border-top: none; padding-top: 0; }
+        h3 { font-size: 1.2em; font-weight: 700; margin-top: 1.5em; margin-bottom: 0.4em; }
+        h4 { font-size: 1em; font-weight: 700; margin-top: 1.2em; margin-bottom: 0.3em; color: #333; }
+
+        p { line-height: 1.6em; margin-bottom: 0.8em; }
+
+        ul.bullets, ol.numbered { padding-left: 1.5em; margin: 0.5em 0 1em; text-transform: none; list-style-type: disc; }
+        ol.numbered { list-style-type: decimal; }
+        ul.bullets li, ol.numbered li { padding: 0.15em 0; line-height: 1.55em; text-transform: none; }
+
+        ul.toc { padding: 0.5em 0 0; margin: 0; list-style-type: none; text-transform: none; }
+        ul.toc li { display: inline; }
+        ul.toc li::after { content: " · "; color: #ccc; }
+        ul.toc li:last-child::after { content: ""; }
+
+        .key { font-weight: 700; }
+        .imp { color: #ff3333; font-weight: 700; }
+        em { font-style: italic; }
+
+        table { width: 100%; border-collapse: collapse; margin: 1em 0; font-size: 0.95em; }
+        table th, table td { text-align: left; padding: 0.5em 0.7em; border-bottom: 1px solid #eee; vertical-align: top; line-height: 1.5em; }
+        table th { font-weight: 700; border-bottom: 2px solid #333; }
+
+        table.matrix { width: auto; min-width: 60%; margin: 0.8em 0; }
+        table.matrix td, table.matrix th { border: 1px solid #ddd; text-align: center; padding: 0.45em 0.85em; }
+        table.matrix th { background: #f7f7f7; border-bottom: 1px solid #ddd; font-weight: 700; }
+
+        .formula { background: #f7f7f7; border-left: 3px solid #ff3333; padding: 0.85em 1.1em; margin: 0.9em 0; font-family: 'JetBrains Mono', 'Courier New', monospace; font-size: 0.85em; line-height: 1.55em; white-space: pre-wrap; color: #222; }
+
+        .formula-box { background: #f7f7f7; border-left: 3px solid #ff3333; padding: 0.8em 1.1em; margin: 0.9em 0; }
+        .formula-box .katex-display { margin: 0.4em 0; }
+        .formula-box p { margin: 0.4em 0; }
+        .formula-box .ref { font-size: 0.85em; color: #888; margin-top: 0.4em; }
+        .formula-box .ref code { background: #ececec; padding: 0.05em 0.35em; border-radius: 2px; font-size: 0.92em; }
+        .formula-actions { margin-top: 0.4em; display: flex; gap: 1.2em; flex-wrap: wrap; }
+        .intuition-btn, .derive-btn { background: transparent; border: none; padding: 0.2em 0; cursor: pointer; font: inherit; font-size: 0.82em; }
+        .intuition-btn { color: #b08800; }
+        .intuition-btn:hover { color: #d4a500; }
+        .derive-btn { color: #888; }
+        .derive-btn:hover { color: #ff3333; }
+        .intuition, .derivation { display: none; margin-top: 0.6em; padding-top: 0.6em; border-top: 1px dashed #ccc; font-size: 0.93em; line-height: 1.65em; color: #444; }
+        .intuition.show, .derivation.show { display: block; }
+        .intuition p, .derivation p { margin-bottom: 0.55em; }
+        .intuition .katex-display, .derivation .katex-display { margin: 0.3em 0; }
+        .intuition { border-top-color: #e6d399; background: linear-gradient(180deg, rgba(240, 224, 160, 0.18) 0%, transparent 100%); margin-top: 0.6em; padding: 0.7em 0.9em 0.5em; border-top: none; border-left: 2px solid #e6c060; }
+        .intuition p:first-child { margin-top: 0; }
+
+        .excel-table { font-size: 0.88em; }
+        .excel-table th { background: #f7f7f7; }
+        .excel-table code { background: #ececec; padding: 0.05em 0.3em; border-radius: 2px; font-size: 0.92em; }
+
+        .callout { background: #fff8e1; border-left: 3px solid #f0c040; padding: 0.9em 1.2em; margin: 1em 0; font-size: 0.95em; line-height: 1.55em; }
+
+        .takeaways { background: #fff5f5; border-left: 4px solid #ff3333; padding: 1em 1.3em; margin: 1.2em 0; }
+        .takeaways h3 { margin-top: 0.2em; }
+        .takeaways ol { padding-left: 1.4em; }
+        .takeaways li { padding: 0.3em 0; line-height: 1.55em; }
+
+        .modules { padding: 0; margin: 0.5em 0 1.5em; list-style-type: none; text-transform: none; }
+        .modules li { padding: 0.5em 0; border-bottom: 1px solid #f0f0f0; text-transform: none; }
+        .modules li:last-child { border-bottom: none; }
+        .modules .num { display: inline-block; width: 7em; font-size: 0.85em; color: #888; text-transform: uppercase; letter-spacing: 0.5px; }
+        .modules .name { font-weight: 700; }
+        .modules .desc { display: block; font-size: 0.92em; color: #666; margin-left: 7em; margin-top: 0.1em; line-height: 1.45em; }
+
+        .problem { background: #fafafa; border-left: 3px solid #ddd; padding: 0.9em 1.2em; margin: 1.2em 0; }
+        .problem .qnum { font-size: 0.8em; font-weight: 700; color: #888; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.3em; display: block; }
+        .problem h3 { margin-top: 0; }
+
+        .answer-btn { background: transparent; color: #ff3333; border: 1px solid #ff3333; padding: 0.35em 1em; border-radius: 3px; cursor: pointer; font: inherit; font-size: 0.9em; margin-top: 0.6em; }
+        .answer-btn:hover { background: #ff3333; color: #fff; }
+        .answer { display: none; margin-top: 0.8em; padding: 0.9em 1.1em; background: #fff; border: 1px solid #eee; border-left: 3px solid #ff3333; }
+        .answer.show { display: block; }
+        .answer h4 { margin-top: 0; }
+
+        .stub { color: #999; font-style: italic; font-size: 0.95em; }
+
+        .footer { font-size: 0.85em; color: #888; margin-top: 3em; padding-top: 1em; border-top: 1px solid #eee; }
+
+        /* === Dark-mode overrides for page-specific elements === */
+        html[data-theme="dark"] .formula-box { background: #1d1d1d; color: #e8e8e8; }
+        html[data-theme="dark"] .formula-box .ref { color: #9a9a9a; }
+        html[data-theme="dark"] .formula-box .ref code,
+        html[data-theme="dark"] .excel-table code { background: #2a2a2a; color: #e8e8e8; }
+        html[data-theme="dark"] .derive-btn { color: #9a9a9a; }
+        html[data-theme="dark"] .derive-btn:hover { color: #ff5a5a; }
+        html[data-theme="dark"] .intuition-btn { color: #d4a500; }
+        html[data-theme="dark"] .intuition-btn:hover { color: #ffcc44; }
+        html[data-theme="dark"] .derivation { color: #c8c8c8; border-top-color: #444; }
+        html[data-theme="dark"] .intuition { color: #d8d8d8; background: rgba(212, 165, 0, 0.10); border-left-color: #b08800; }
+        html[data-theme="dark"] .excel-table th { background: #1d1d1d; }
+        html[data-theme="dark"] .stub { color: #777; }
+        html[data-theme="dark"] .footer { border-top-color: #2a2a2a; color: #9a9a9a; }
+        /* KaTeX in dark mode — let the rendered math inherit page text color */
+        html[data-theme="dark"] .katex,
+        html[data-theme="dark"] .katex-display,
+        html[data-theme="dark"] .katex .mord,
+        html[data-theme="dark"] .katex .mop,
+        html[data-theme="dark"] .katex .mbin,
+        html[data-theme="dark"] .katex .mrel,
+        html[data-theme="dark"] .katex .mopen,
+        html[data-theme="dark"] .katex .mclose,
+        html[data-theme="dark"] .katex .mpunct,
+        html[data-theme="dark"] .katex .minner { color: #e8e8e8; }
+        html[data-theme="dark"] .takeaways { background: #2b1717; border-left-color: #ff5a5a; }
+        html[data-theme="dark"] .takeaways p { color: #c8c8c8; }
+    </style>
+</head>
+
+<body>
+
+<section class="container">
+    <p class="crumb"><a href="../">← mba</a></p>
+
+    <h1>Foundations of Finance</h1>
+    <p class="meta">Prof. Anthony Lynch · NYU Stern · COR1-GB.2311 · Mon/Wed 6–9pm · May 18 – Jun 29, 2026 (Midterm Jun 15, Final Jun 29)</p>
+
+    <p>Personal notes from Lynch's Foundations of Finance. The course works through the three big asset classes — equity, debt, and derivatives — answering for each: what's the payoff, where does it trade, how is it valued, how is it used. Most of the heavy lifting is portfolio theory and asset pricing (CAPM, multifactor models, no-arbitrage). Built around mean-variance optimization, beta, the security market line, and bond/option pricing.</p>
+
+    <p><strong>Exam format:</strong> in-person, multiple choice, open-book with one airplane-mode device. Midterm covers Lectures 1–6 (90 min). Final covers the whole course. If final % &gt; midterm %, final counts for the full 90% (replaces midterm weight). Problem sets and concept question assignments together count for 10%.</p>
+
+    <p style="font-size: 0.92em; color: #666;"><em>Tip:</em> each formula on the page has two buttons beneath it. <strong>💡 intuition</strong> expands a plain-language explanation of <em>what the formula means</em> and why each piece is there — useful if math isn't your first language. <strong>▼ derive</strong> expands a first-principles proof (compounding, geometric series, limits). Use whichever helps the idea click.</p>
+
+    <ul class="toc">
+        <li><a href="#takeaways">key ideas</a></li>
+        <li><a href="#modules">modules</a></li>
+        <li><a href="#schedule">schedule</a></li>
+        <li><a href="#overview">overview</a></li>
+        <li><a href="#tvm">time value of money</a></li>
+        <li><a href="#equity-markets">equity markets</a></li>
+        <li><a href="#stock-positions">stock positions</a></li>
+        <li><a href="#problems">drill problems</a></li>
+        <li><a href="#integrated">integrated problems</a></li>
+    </ul>
+
+    <div class="takeaways" id="takeaways">
+        <h3>Key ideas so far</h3>
+        <p style="margin-top: 0; font-size: 0.9em; color: #666;">Conceptual previews from the Overview lecture — the course will formalize each of these.</p>
+        <ol>
+            <li><strong>Investors prefer more to less and almost all are risk averse.</strong> Risk-averse means: for a given expected return, prefer lower volatility; for a given volatility, prefer higher expected return.</li>
+            <li><strong>A dollar today is worth more than a dollar later.</strong> Every valuation question reduces to: discount future cash flows by the right rate and add them up. PV, FV, annuity, perpetuity — different shapes of the same idea.</li>
+            <li><strong>Diversification works.</strong> Portfolios of assets and individual assets have similar average returns, but portfolio volatility declines as you add assets. Don't put all your eggs in one basket.</li>
+            <li><strong>Riskier assets must offer higher expected returns</strong> — otherwise no one risk-averse would hold them. Risk premium isn't generosity, it's market clearing.</li>
+            <li><strong>No arbitrage / law of one price.</strong> Two assets with identical cash flows must have the same price. Any price difference (after taxes, liquidity, transaction costs) is an arbitrage opportunity, and well-functioning markets don't let those exist for long.</li>
+            <li><strong>Option value is non-negative.</strong> A right (without obligation) to do something in the future must be worth ≥ 0 today.</li>
+            <li><strong>Market efficiency is a warning.</strong> If U.S. equity prices are efficient w.r.t. public information, you can't beat the market on average using public info — risk-adjusted. This is the big warning the course returns to at the end.</li>
+        </ol>
+    </div>
+
+    <h2 id="modules">Modules covered so far</h2>
+
+    <ul class="modules">
+        <li>
+            <span class="num">L 1</span><a href="#overview" class="name">Overview</a>
+            <span class="desc">Asset classes, what the financial system does, primary vs secondary markets, the seven core concepts the course returns to.</span>
+        </li>
+        <li>
+            <span class="num">L 1–2</span><a href="#tvm" class="name">Time Value of Money</a>
+            <span class="desc">PV/FV, annuities, perpetuities, APR vs EAR, continuous compounding.</span>
+        </li>
+        <li>
+            <span class="num">L 2</span><a href="#equity-markets" class="name">Equity markets</a>
+            <span class="desc">Primary issuance and IPO underpricing, limit-order books, dealer markets, bid-ask spread, NBBO.</span>
+        </li>
+        <li>
+            <span class="num">L 2–3</span><a href="#stock-positions" class="name">Stock positions</a>
+            <span class="desc">Return formula. Long with own funds, long on margin, short selling. Percentage margin.</span>
+        </li>
+    </ul>
+
+    <p style="font-size: 0.92em; color: #888;"><em>Modules to add as the course progresses: return distribution (L3), portfolio management with 1 / 2 / N risky assets (L3–5), CAPM and performance measures (L5–6), multifactor models (L6), fixed income (L7–9), derivatives (L9–11), valuation, market efficiency.</em></p>
+
+    <h2 id="schedule">Class schedule</h2>
+    <table>
+        <thead>
+            <tr><th>Class</th><th>Date</th><th>Topic</th><th>Due</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>1</td><td>Mon May 18</td><td>Overview · TVM intro</td><td></td></tr>
+            <tr><td>2</td><td>Wed May 20</td><td>TVM · Equities &amp; markets · Stock positions</td><td></td></tr>
+            <tr><td>3</td><td>Wed May 27</td><td>Portfolio return · Return distribution</td><td></td></tr>
+            <tr><td>4</td><td>Mon Jun 1</td><td>Portfolio mgmt: 1 risky + riskless, 2 risky + riskless</td><td>CQ 1</td></tr>
+            <tr><td>5</td><td>Wed Jun 3</td><td>Portfolio mgmt: N risky + riskless · CAPM</td><td>PS 1</td></tr>
+            <tr><td>6</td><td>Mon Jun 8</td><td>CAPM performance · Multifactor models</td><td>CQ 2</td></tr>
+            <tr><td>7</td><td>Wed Jun 10</td><td>Multifactor wrap · Fixed income intro</td><td></td></tr>
+            <tr><td>8</td><td>Mon Jun 15</td><td><span class="imp">Midterm</span> (90 min) · Fixed income</td><td></td></tr>
+            <tr><td>9</td><td>Wed Jun 17</td><td>Fixed income valuation · Yield curves · Forward rates</td><td>PS 2 · CQ 3</td></tr>
+            <tr><td>10</td><td>Mon Jun 22</td><td>Derivatives intro · Options</td><td>CQ 4</td></tr>
+            <tr><td>11</td><td>Wed Jun 24</td><td>Options valuation · Forwards valuation · Valuation models · Market efficiency</td><td></td></tr>
+            <tr><td>12</td><td>Mon Jun 29</td><td><span class="imp">Final exam</span></td><td></td></tr>
+            <tr><td></td><td>Wed Jul 1</td><td></td><td>PS 3 · CQ 5</td></tr>
+        </tbody>
+    </table>
+    <p><em>Grading:</em> Concept questions + problem sets 10% (any combo to reach 10%); midterm 36%; final 54%. If the final percentage beats the midterm percentage, the final counts for the entire 90%.</p>
+
+    <h2 id="overview">Overview — what finance is about</h2>
+
+    <h3>Asset classes</h3>
+    <ul class="bullets">
+        <li><span class="key">Real assets:</span> physical things — land, buildings, machines.</li>
+        <li><span class="key">Financial assets (securities):</span> claims on real or financial assets. Four flavors:
+            <ul class="bullets">
+                <li><strong>Money</strong> — medium of exchange.</li>
+                <li><strong>Debt</strong> — claim to a predetermined payment stream.</li>
+                <li><strong>Equity</strong> — residual claim on a firm's assets, usually with corporate control rights.</li>
+                <li><strong>Derivatives</strong> — payoff depends on the value of another asset.</li>
+            </ul>
+        </li>
+    </ul>
+
+    <h3>What the financial system does</h3>
+    <ol class="numbered">
+        <li>Allocates capital from savers to capital users; disciplines firm investment decisions.</li>
+        <li>Lets investors smooth consumption over time.</li>
+        <li>Repackages risk so investors bear less of it.</li>
+        <li>Disseminates information (prices aggregate beliefs).</li>
+        <li>Lets investors exploit economies of scale in trading.</li>
+    </ol>
+
+    <h3>Markets</h3>
+    <ul class="bullets">
+        <li><strong>Primary vs secondary:</strong> primary = new issues sold to initial buyers; secondary = previously issued securities trade among investors.</li>
+        <li><strong>Money vs capital:</strong> money = short-term debt (&lt; 1 yr maturity); capital = long-term debt and equity.</li>
+        <li><strong>Mutual funds &amp; index funds:</strong> low-cost vehicles for individuals to hold diversified portfolios. The S&amp;P 500 is value-weighted (more $ in big firms), 500 stocks chosen to mirror the U.S. market.</li>
+    </ul>
+
+    <h3>Core concepts the course returns to</h3>
+    <ul class="bullets">
+        <li><strong>Investor preferences:</strong> all prefer more to less; almost all are risk averse.</li>
+        <li><strong>Time value of money:</strong> a dollar today &gt; a dollar later.</li>
+        <li><strong>Diversification:</strong> portfolio volatility falls as assets are added; average returns are unchanged.</li>
+        <li><strong>Risk adjustment:</strong> riskier assets must offer higher expected returns.</li>
+        <li><strong>No arbitrage:</strong> two assets with the same cash flows must have the same price (law of one price). Differences only arise from taxes, liquidity, or transaction costs.</li>
+        <li><strong>Option value:</strong> a right without an obligation has non-negative value today.</li>
+        <li><strong>Market efficiency:</strong> in an efficient market, price is an unbiased estimate of value. The U.S. stock market is probably efficient w.r.t. publicly available info → you can't beat it on average using public info, risk-adjusted.</li>
+    </ul>
+
+    <h2 id="tvm">Lectures 1–2 — Time Value of Money</h2>
+
+    <p>The atomic operation of finance: take a cash flow at one date and figure out its equivalent value at another date, given an interest rate. Everything else stacks on top of this.</p>
+
+    <h3>Single cash flows (discrete compounding)</h3>
+
+    <div class="formula-box">
+        <p><strong>Future value</strong></p>
+        \[ V_{t+n} \;=\; V_t \, (1 + r)^n \]
+        <div class="formula-actions">
+            <button class="intuition-btn" onclick="toggleIntuition(this)">💡 intuition</button>
+            <button class="derive-btn" onclick="toggleDerivation(this)">▼ derive</button>
+        </div>
+        <div class="intuition">
+            <p>Money in a bank earns interest. Put $100 in a 5% account: one year later it's $105. The next year, that whole $105 earns 5%, so you get $110.25 — slightly more than $110, because you also earned interest on the interest. The <em>(1+r)<sup>n</sup></em> just stacks that little bit of "interest on interest" <em>n</em> times.</p>
+            <p>Think of it like a snowball rolling downhill: each period it picks up new snow proportional to how big it already is, so it grows faster the longer it rolls. That's compounding — and it's why finance people obsess over starting to invest early.</p>
+        </div>
+        <div class="derivation">
+            <p>Start with one period. By definition of "effective per-period rate <em>r</em>," money at <em>t</em> grows to:</p>
+            \[ V_{t+1} \;=\; V_t (1 + r) \]
+            <p>Apply the same rule again to <em>V<sub>t+1</sub></em>:</p>
+            \[ V_{t+2} \;=\; V_{t+1}(1+r) \;=\; V_t (1+r)^2 \]
+            <p>Iterating <em>n</em> times stacks the factor:</p>
+            \[ V_{t+n} \;=\; V_t (1+r)^n \]
+            <p>This is just "interest on interest" written compactly. The exponent counts how many compoundings happen between the two dates.</p>
+        </div>
+    </div>
+
+    <div class="formula-box">
+        <p><strong>Present value</strong></p>
+        \[ V_t \;=\; V_{t+n} \, (1 + r)^{-n} \]
+        <div class="formula-actions">
+            <button class="intuition-btn" onclick="toggleIntuition(this)">💡 intuition</button>
+            <button class="derive-btn" onclick="toggleDerivation(this)">▼ derive</button>
+        </div>
+        <div class="intuition">
+            <p>If someone promises you $110.25 in two years, how much would you pay for that promise today? You'd pay less than $110.25 — because if you had the money now, you could invest it and grow it yourself. At a 5% rate, you'd pay exactly $100.</p>
+            <p>"Discounting" is just compounding run in reverse. The further in the future the cash, the less it's worth today. This is the single most important idea in finance: every valuation — stocks, bonds, businesses — is some version of "what's this future cash worth today?"</p>
+        </div>
+        <div class="derivation">
+            <p>Solve the future-value formula for <em>V<sub>t</sub></em>. Divide both sides by <em>(1+r)<sup>n</sup></em>:</p>
+            \[ V_t \;=\; \frac{V_{t+n}}{(1+r)^n} \;=\; V_{t+n} (1+r)^{-n} \]
+            <p>So present-valuing is just future-valuing in reverse — discount instead of compound.</p>
+        </div>
+    </div>
+
+    <div class="formula-box">
+        <p><strong>Effective <em>n</em>-period rate from the per-period rate</strong></p>
+        \[ r_n \;=\; (1 + r)^n - 1 \]
+        <div class="formula-actions">
+            <button class="intuition-btn" onclick="toggleIntuition(this)">💡 intuition</button>
+            <button class="derive-btn" onclick="toggleDerivation(this)">▼ derive</button>
+        </div>
+        <div class="intuition">
+            <p>If you earn 5% per year for two years, your <em>total</em> return isn't 10% — it's slightly more (10.25%) because of compounding. This formula converts a "per-period" rate into the actual cumulative growth rate over <em>n</em> periods.</p>
+            <p>Useful when you need to compare returns over different timeframes: "is 8% over 5 years better than 7% over 6 years?" Convert both to the same horizon using this formula.</p>
+        </div>
+        <div class="derivation">
+            <p>By definition, the effective <em>n</em>-period rate <em>r<sub>n</sub></em> satisfies:</p>
+            \[ V_{t+n} \;=\; V_t (1 + r_n) \]
+            <p>But the future-value formula says <em>V<sub>t+n</sub> = V<sub>t</sub> (1+r)<sup>n</sup></em>. Equating the two:</p>
+            \[ V_t (1+r_n) \;=\; V_t (1+r)^n \quad\Rightarrow\quad 1 + r_n \;=\; (1+r)^n \]
+            <p>Subtract 1 to get the formula. The "n-period rate" is just the cumulative growth factor minus one.</p>
+        </div>
+    </div>
+
+    <p><em>r</em> is the effective rate <em>per period</em>, expressed as a decimal. The period must match the interval between cash flows — if cash flows are monthly, <em>r</em> is the monthly rate.</p>
+
+    <h3>APR (nominal rate) vs EAR (effective annual rate)</h3>
+    <p>The APR <em>i<sub>nom</sub></em> with <em>m</em> compounding periods per year is the per-period rate times <em>m</em>. It's a quoting convention, not a real rate. The EAR is the actual annual rate you earn.</p>
+
+    <div class="formula-box">
+        <p><strong>Definition: per-period rate from APR</strong></p>
+        \[ r_{1/m} \;=\; \frac{i_{\text{nom}}}{m} \]
+        <div class="formula-actions">
+            <button class="intuition-btn" onclick="toggleIntuition(this)">💡 intuition</button>
+        </div>
+        <div class="intuition">
+            <p>APR ("annual percentage rate") is just the banks' favorite quoting convention. When your credit card says "18% APR with monthly compounding," they really charge you 18% ÷ 12 = 1.5% <em>per month</em>. APR is the headline number; the per-period rate is what actually compounds.</p>
+            <p>So APR alone is meaningless without knowing <em>how often</em> it compounds. Two different lenders quoting the same APR can be charging very different amounts.</p>
+        </div>
+        <p class="ref">By convention, the APR is the per-period rate times the number of periods per year — a quoting rule, nothing more.</p>
+    </div>
+
+    <div class="formula-box">
+        <p><strong>APR → EAR</strong></p>
+        \[ \text{EAR} \;=\; \left( 1 + \frac{i_{\text{nom}}}{m} \right)^{\!m} - 1 \]
+        <div class="formula-actions">
+            <button class="intuition-btn" onclick="toggleIntuition(this)">💡 intuition</button>
+            <button class="derive-btn" onclick="toggleDerivation(this)">▼ derive</button>
+        </div>
+        <div class="intuition">
+            <p>EAR is the <em>real</em> annual cost — what you'd compare across loans. APR is the quoted number; EAR is what it actually costs you over a year after compounding.</p>
+            <p>An 18% APR compounded monthly is really 19.56% per year. The extra 1.56% is interest charged on interest you've already accrued during the year. The more frequently a loan compounds (daily &gt; monthly &gt; annually), the bigger the gap between APR and EAR.</p>
+            <p>The rule of thumb: if you're comparing two loans with the same APR, the one that compounds more frequently is the worse deal.</p>
+        </div>
+        <div class="derivation">
+            <p>The per-period rate is <em>r<sub>1/m</sub> = i<sub>nom</sub>/m</em>. A year contains <em>m</em> compounding periods, so applying the effective-<em>n</em>-period-rate formula with <em>n = m</em>:</p>
+            \[ \text{EAR} \;=\; (1 + r_{1/m})^m - 1 \;=\; \left(1 + \tfrac{i_{\text{nom}}}{m}\right)^m - 1 \]
+            <p>Two APRs with the same headline number compound differently if <em>m</em> differs — e.g., 18% APR compounded monthly (EAR ≈ 19.56%) vs daily (EAR ≈ 19.72%).</p>
+        </div>
+    </div>
+
+    <div class="formula-box">
+        <p><strong>EAR → APR</strong></p>
+        \[ i_{\text{nom}} \;=\; \left[ (1 + r)^{1/m} - 1 \right] m \]
+        <div class="formula-actions">
+            <button class="intuition-btn" onclick="toggleIntuition(this)">💡 intuition</button>
+            <button class="derive-btn" onclick="toggleDerivation(this)">▼ derive</button>
+        </div>
+        <div class="intuition">
+            <p>The reverse direction: you know what an account actually earns per year (EAR), and you want to back out the per-period rate so you can compare against a bank's APR quote, or use it in a monthly cash-flow calculation.</p>
+            <p>This is the operation a mortgage calculator performs internally — given an EAR, figure out the monthly rate to apply to the loan balance each month.</p>
+        </div>
+        <div class="derivation">
+            <p>If the effective <em>annual</em> rate is <em>r</em>, the effective <em>(1/m)-year</em> rate satisfies:</p>
+            \[ (1 + r_{1/m})^m \;=\; 1 + r \quad\Rightarrow\quad r_{1/m} \;=\; (1+r)^{1/m} - 1 \]
+            <p>By definition, the APR is <em>m × r<sub>1/m</sub></em>. Multiplying through gives the formula.</p>
+        </div>
+    </div>
+
+    <p><span class="imp">Watch out:</span> APR with monthly compounding ≠ APR with annual compounding even if they're the same number. Always convert to EAR before comparing rates with different compounding frequencies.</p>
+
+    <h3>Continuous compounding</h3>
+
+    <div class="formula-box">
+        <p><strong>Continuous rate from / to effective rate</strong></p>
+        \[ r' \;=\; \ln(1 + r) \qquad\Longleftrightarrow\qquad r \;=\; e^{r'} - 1 \]
+        <div class="formula-actions">
+            <button class="intuition-btn" onclick="toggleIntuition(this)">💡 intuition</button>
+            <button class="derive-btn" onclick="toggleDerivation(this)">▼ derive (limit of compounding)</button>
+        </div>
+        <div class="intuition">
+            <p>Imagine compounding interest more and more often: yearly, then monthly, daily, hourly, every second… each increase in frequency gives you a little more. You might guess "infinitely often = infinite money," but it doesn't — the gains taper off and approach a hard limit. That limit is the natural exponential function <em>e<sup>x</sup></em>.</p>
+            <p>Continuous compounding is just the idealization of "compounded as often as possible." If a bank quotes an effective annual rate of 12%, the <em>continuously compounded</em> equivalent is about 11.33% — slightly lower, because continuous compounding makes each tiny bit of interest work harder.</p>
+            <p>Why bother? Because the math is way cleaner. Continuous rates <em>add</em> over time (5% for 2 years = 10% total), while discrete rates <em>multiply</em> ((1.05)<sup>2</sup>). Almost everything in derivatives pricing is in continuous time for this reason.</p>
+        </div>
+        <div class="derivation">
+            <p>Start with an APR of <em>i<sub>nom</sub></em> compounded <em>m</em> times per year. The EAR is:</p>
+            \[ \text{EAR}_m \;=\; \left(1 + \tfrac{i_{\text{nom}}}{m}\right)^m - 1 \]
+            <p>Let <em>m → ∞</em> (compound infinitely many times per year). Use the standard limit:</p>
+            \[ \lim_{m \to \infty} \left(1 + \tfrac{x}{m}\right)^m \;=\; e^x \]
+            <p>(This is one definition of <em>e</em>; equivalently <em>e<sup>x</sup> = Σ x<sup>k</sup>/k!</em>.) So:</p>
+            \[ \text{EAR}_\infty \;=\; e^{i_{\text{nom}}} - 1 \]
+            <p>Calling the continuously compounded rate <em>r' = i<sub>nom</sub></em> and the effective annual rate <em>r = EAR<sub>∞</sub></em>:</p>
+            \[ r \;=\; e^{r'} - 1 \quad\Longleftrightarrow\quad r' \;=\; \ln(1+r) \]
+            <p>Intuition: continuous compounding pushes you from a discrete <em>(1+r/m)<sup>m</sup></em> to the smooth exponential <em>e<sup>r'</sup></em>. For small rates, <em>r' ≈ r</em> (since <em>ln(1+r) ≈ r</em>).</p>
+        </div>
+    </div>
+
+    <div class="formula-box">
+        <p><strong>FV and PV with continuous compounding</strong></p>
+        \[ V_{t+n} \;=\; V_t \, e^{n \, r'} \qquad V_t \;=\; V_{t+n} \, e^{-n \, r'} \]
+        <div class="formula-actions">
+            <button class="intuition-btn" onclick="toggleIntuition(this)">💡 intuition</button>
+            <button class="derive-btn" onclick="toggleDerivation(this)">▼ derive</button>
+        </div>
+        <div class="intuition">
+            <p>Same idea as discrete FV/PV — money grows or shrinks at a rate — but with the smooth exponential <em>e<sup>x</sup></em> in place of <em>(1+r)<sup>n</sup></em>. Time enters the formula as a smooth continuous variable instead of in discrete chunks.</p>
+            <p>The key magic: the exponent is just <em>(rate × time)</em>. So a 5% continuous rate for 3 years grows your money by <em>e<sup>0.15</sup></em>. To run it backwards (PV), you put a minus sign in the exponent. Nothing fancier than that.</p>
+        </div>
+        <div class="derivation">
+            <p>Plug <em>1 + r = e<sup>r'</sup></em> into the discrete FV formula:</p>
+            \[ V_{t+n} \;=\; V_t (1+r)^n \;=\; V_t \left(e^{r'}\right)^n \;=\; V_t \, e^{n r'} \]
+            <p>PV is the algebraic inverse. The exponent <em>scales linearly</em> with time, which is the property that makes continuous rates so clean.</p>
+        </div>
+    </div>
+
+    <div class="formula-box">
+        <p><strong>Continuously compounded <em>n</em>-period rate</strong></p>
+        \[ r'_n \;=\; n \, r' \]
+        <div class="formula-actions">
+            <button class="intuition-btn" onclick="toggleIntuition(this)">💡 intuition</button>
+            <button class="derive-btn" onclick="toggleDerivation(this)">▼ derive</button>
+        </div>
+        <div class="intuition">
+            <p>Discrete rates compound: 5% per year for 2 years is <em>(1.05)<sup>2</sup> − 1 = 10.25%</em>, not 10%. <span class="imp">Continuous rates just add:</span> 5% per year for 2 years is exactly 10% total continuous.</p>
+            <p>This is the entire reason continuous compounding exists in finance theory — addition is simpler than multiplication, especially when you're stacking many different time periods, like in options pricing where you compound from "today" through a moving expiration date.</p>
+        </div>
+        <div class="derivation">
+            <p>By definition the n-period continuous rate satisfies <em>V<sub>t+n</sub>/V<sub>t</sub> = e<sup>r'<sub>n</sub></sup></em>. From the FV formula above, that ratio is <em>e<sup>n r'</sup></em>. So:</p>
+            \[ e^{r'_n} \;=\; e^{n r'} \quad\Rightarrow\quad r'_n \;=\; n \, r' \]
+            <p>Continuous rates simply add over time, instead of compounding multiplicatively like discrete rates do. <span class="imp">This is why Black-Scholes is written in continuous time</span> — the algebra is dramatically cleaner.</p>
+        </div>
+    </div>
+
+    <p>Used heavily in derivatives pricing (Black-Scholes) because <em>continuous rates add</em> instead of compounding multiplicatively — much cleaner algebra.</p>
+
+    <h3>Annuities — <em>N</em> equal cash flows at equal intervals</h3>
+    <p>First cash flow at <em>t+1</em>, last at <em>t+N</em>. <em>r</em> = effective per-period rate.</p>
+
+    <div class="formula-box">
+        <p><strong>PV annuity factor — value one period BEFORE the first cash flow</strong></p>
+        \[ \text{PVAF}(r, N) \;=\; \frac{1 - (1+r)^{-N}}{r} \qquad V_t \;=\; C \cdot \text{PVAF}(r, N) \]
+        <div class="formula-actions">
+            <button class="intuition-btn" onclick="toggleIntuition(this)">💡 intuition</button>
+            <button class="derive-btn" onclick="toggleDerivation(this)">▼ derive (geometric series)</button>
+        </div>
+        <div class="intuition">
+            <p>An annuity is just a stream of equal payments — like a salary, a mortgage payment, or a fixed pension. To value the whole stream <em>today</em>, you'd discount each future payment back to today and add them all up.</p>
+            <p>Doing that summation by hand for 360 mortgage payments would be miserable. The PVAF is a shortcut: a single number you multiply by the per-period payment <em>C</em> to get the present value. Think of it as "how many years of cash you're effectively buying" — a 30-year mortgage at 6% has PVAF ≈ 167 monthly periods, meaning $400K today buys $400K/167 ≈ $2,398/month.</p>
+            <p>The factor is always less than <em>N</em> because future dollars are worth less than today's.</p>
+        </div>
+        <div class="derivation">
+            <p>The annuity pays <em>C</em> at <em>t+1, t+2, …, t+N</em>. The PV is the sum of PVs of each cash flow:</p>
+            \[ V_t \;=\; \frac{C}{(1+r)} + \frac{C}{(1+r)^2} + \cdots + \frac{C}{(1+r)^N} \]
+            <p>Factor out <em>C</em> and recognize a finite geometric series with first term <em>a = 1/(1+r)</em> and common ratio <em>q = 1/(1+r)</em>:</p>
+            \[ V_t \;=\; C \sum_{k=1}^{N} q^k \;=\; C \cdot a \cdot \frac{1 - q^N}{1 - q} \]
+            <p>Plug in <em>a</em> and <em>q</em>:</p>
+            \[ V_t \;=\; C \cdot \frac{1}{1+r} \cdot \frac{1 - (1+r)^{-N}}{1 - \tfrac{1}{1+r}} \]
+            <p>The denominator simplifies: <em>1 − 1/(1+r) = r/(1+r)</em>. So:</p>
+            \[ V_t \;=\; C \cdot \frac{1}{1+r} \cdot \frac{1 - (1+r)^{-N}}{r/(1+r)} \;=\; C \cdot \frac{1 - (1+r)^{-N}}{r} \]
+            <p>The "magic" is just the geometric series sum formula. Sanity checks:</p>
+            <ul class="bullets">
+                <li>If <em>N = 1</em>: PVAF = (1 − (1+r)<sup>−1</sup>)/r = 1/(1+r). ✓ (one cash flow, one period away)</li>
+                <li>If <em>N → ∞</em>: PVAF → 1/r — that's the perpetuity formula. ✓</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="formula-box">
+        <p><strong>FV annuity factor — value AT the last cash flow</strong></p>
+        \[ \text{FVAF}(r, N) \;=\; \frac{(1+r)^N - 1}{r} \qquad V_{t+N} \;=\; C \cdot \text{FVAF}(r, N) \]
+        <div class="formula-actions">
+            <button class="intuition-btn" onclick="toggleIntuition(this)">💡 intuition</button>
+            <button class="derive-btn" onclick="toggleDerivation(this)">▼ derive</button>
+        </div>
+        <div class="intuition">
+            <p>This is the retirement-savings formula. You save the same amount <em>C</em> every period (say, $500/month into a 401(k)) for <em>N</em> periods at rate <em>r</em>. How much do you have at the end?</p>
+            <p>The first contribution gets to compound for the longest, the last one barely compounds at all. The FVAF accounts for all those overlapping compounding windows in one closed-form number.</p>
+            <p>For 30 years of monthly savings at 7% APR, FVAF ≈ 1,220. So $500/month becomes 500 × 1,220 ≈ $610K — way more than 30 × 12 × $500 = $180K of contributions. The other ~$430K is pure compounding magic.</p>
+        </div>
+        <div class="derivation">
+            <p>The cash flow received at <em>t+k</em> grows for <em>N−k</em> more periods to time <em>t+N</em>:</p>
+            \[ V_{t+N} \;=\; \sum_{k=1}^{N} C \, (1+r)^{N-k} \;=\; C \sum_{j=0}^{N-1} (1+r)^j \]
+            <p>This is a geometric series with first term 1 and ratio <em>q = (1+r)</em>:</p>
+            \[ V_{t+N} \;=\; C \cdot \frac{(1+r)^N - 1}{(1+r) - 1} \;=\; C \cdot \frac{(1+r)^N - 1}{r} \]
+            <p>Equivalently, take the PV annuity value <em>V<sub>t</sub></em> and compound it forward <em>N</em> periods — same answer:</p>
+            \[ V_{t+N} \;=\; V_t (1+r)^N \;=\; C \cdot \frac{1 - (1+r)^{-N}}{r} \cdot (1+r)^N \;=\; C \cdot \frac{(1+r)^N - 1}{r} \]
+        </div>
+    </div>
+
+    <p><strong>Amortization:</strong> a level-payment loan is an annuity from the lender's side. Outstanding balance after any payment = PV of remaining payments. Interest accrued in a period = balance × per-period rate; the rest of the payment goes to principal.</p>
+
+    <h3>Perpetuities — equal cash flows forever</h3>
+
+    <div class="formula-box">
+        <p><strong>PV perpetuity</strong> (value one period BEFORE the first cash flow)</p>
+        \[ V_t \;=\; \frac{C}{r} \]
+        <div class="formula-actions">
+            <button class="intuition-btn" onclick="toggleIntuition(this)">💡 intuition</button>
+            <button class="derive-btn" onclick="toggleDerivation(this)">▼ derive (limit of annuity / infinite geometric series)</button>
+        </div>
+        <div class="intuition">
+            <p>A perpetuity is a magic asset that pays you the same amount, forever. You might think it would be worth infinite — but it isn't, because each future payment is worth less than the one before. At a 10% discount rate, getting $1 forever is worth exactly $10 today.</p>
+            <p>Here's the most intuitive way to see why <em>V = C/r</em>: if you had <em>X</em> dollars in a 10% bank account, you'd earn <em>X × 10%</em> in interest each year without touching the principal. For that interest to be exactly <em>C</em>, you need <em>X = C / r</em>. So a perpetuity paying <em>C</em> per year is equivalent to a pile of money <em>C/r</em> earning interest.</p>
+            <p>This formula is the foundation of stock valuation, real estate cap rates, and "what's a business worth" rules of thumb.</p>
+        </div>
+        <div class="derivation">
+            <p><strong>Path 1: limit of the annuity formula.</strong> Take <em>N → ∞</em> in PVAF:</p>
+            \[ V_t \;=\; \lim_{N \to \infty} C \cdot \frac{1 - (1+r)^{-N}}{r} \]
+            <p>Since <em>r &gt; 0</em>, <em>(1+r)<sup>−N</sup> → 0</em>. So <em>V<sub>t</sub> = C/r</em>.</p>
+            <p><strong>Path 2: infinite geometric series directly.</strong> Sum PVs of all future cash flows:</p>
+            \[ V_t \;=\; \sum_{k=1}^{\infty} \frac{C}{(1+r)^k} \;=\; \frac{C}{1+r} \cdot \frac{1}{1 - \tfrac{1}{1+r}} \;=\; \frac{C}{1+r} \cdot \frac{1+r}{r} \;=\; \frac{C}{r} \]
+            <p>Same answer. Note this requires <em>r &gt; 0</em> — otherwise the geometric series diverges.</p>
+        </div>
+    </div>
+
+    <div class="formula-box">
+        <p><strong>Growing perpetuity</strong> (cash flow grows at <em>g</em> per period; requires <em>r &gt; g</em>)</p>
+        \[ V_t \;=\; \frac{C_1}{r - g} \]
+        <div class="formula-actions">
+            <button class="intuition-btn" onclick="toggleIntuition(this)">💡 intuition</button>
+            <button class="derive-btn" onclick="toggleDerivation(this)">▼ derive (geometric series, again)</button>
+        </div>
+        <div class="intuition">
+            <p>Like a regular perpetuity, but the cash flow grows over time — e.g., a dividend that increases 3% per year forever. This is the famous <strong>Gordon growth model</strong> used to value stocks.</p>
+            <p>The intuition: growth acts like a partial refund on the discount rate. If your discount rate is 9% and cash flows grow 3% per year, it's as if you're only really discounting at <em>9% − 3% = 6%</em>. The effective discount is the gap between the two.</p>
+            <p><span class="imp">The "r &gt; g" requirement is real, not a technicality.</span> If cash flows grow faster than you discount them, the math says the asset is infinitely valuable — which is finance's way of telling you the assumption is unrealistic. No real cash flow grows faster than the discount rate forever.</p>
+        </div>
+        <div class="derivation">
+            <p>Cash flow at <em>t+k</em> is <em>C<sub>1</sub> (1+g)<sup>k−1</sup></em>. PV sum:</p>
+            \[ V_t \;=\; \sum_{k=1}^{\infty} \frac{C_1 (1+g)^{k-1}}{(1+r)^k} \;=\; \frac{C_1}{1+r} \sum_{k=0}^{\infty} \left(\frac{1+g}{1+r}\right)^{\!k} \]
+            <p>Infinite geometric series with ratio <em>q = (1+g)/(1+r)</em>. Converges iff <em>|q| &lt; 1</em>, i.e., <em>r &gt; g</em>. Sum is <em>1/(1−q)</em>:</p>
+            \[ V_t \;=\; \frac{C_1}{1+r} \cdot \frac{1}{1 - \tfrac{1+g}{1+r}} \;=\; \frac{C_1}{1+r} \cdot \frac{1+r}{r-g} \;=\; \frac{C_1}{r-g} \]
+            <p>Special case <em>g = 0</em> recovers the flat perpetuity <em>V<sub>t</sub> = C/r</em>. If <em>g ≥ r</em> the value is infinite (or negative) — the series diverges. <span class="imp">In finance "r &gt; g" is a real constraint, not a technicality</span> — perpetual growth at a rate above the discount rate would make any company infinitely valuable.</p>
+        </div>
+    </div>
+
+    <h3>Discrete vs continuous — side by side</h3>
+    <table>
+        <thead>
+            <tr><th></th><th>Discrete compounding</th><th>Continuous compounding</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>Per-period rate</td><td>\( r = e^{r'} - 1 \)</td><td>\( r' = \ln(1 + r) \)</td></tr>
+            <tr><td><em>n</em>-period rate</td><td>\( 1 + r_n = (1+r)^n \)</td><td>\( r'_n = n \, r' \)</td></tr>
+            <tr><td>FV formula</td><td>\( V_{t+n} = V_t (1+r)^n \)</td><td>\( V_{t+n} = V_t \, e^{n r'} \)</td></tr>
+            <tr><td>PV formula</td><td>\( V_t = V_{t+n} (1+r)^{-n} \)</td><td>\( V_t = V_{t+n} \, e^{-n r'} \)</td></tr>
+        </tbody>
+    </table>
+
+    <h3>Excel template — what the professor's spreadsheet computes</h3>
+
+    <p>Lynch distributes a "Time Value of Money Formula Template" with one block per formula. Each block has inputs at the top and an output cell with the relevant Excel expression. Useful as a sanity-check calculator when working concept questions.</p>
+
+    <table class="excel-table">
+        <thead>
+            <tr><th>Block</th><th>Inputs (example)</th><th>Excel formula (output)</th></tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>FV (single sum)</td>
+                <td>\( V_t = 100,\; r = 0.12,\; n = 3 \)</td>
+                <td><code>=V_t * (1 + r)^n</code> → 140.49</td>
+            </tr>
+            <tr>
+                <td>PV (single sum)</td>
+                <td>\( V_{t+n} = 140.49,\; r = 0.12,\; n = 3 \)</td>
+                <td><code>=V_{t+n} * (1 + r)^(-n)</code> → 100.00</td>
+            </tr>
+            <tr>
+                <td>Effective <em>n</em>-period rate</td>
+                <td>\( r = 0.12,\; n = 3 \)</td>
+                <td><code>=(1 + r)^n - 1</code> → 0.4049</td>
+            </tr>
+            <tr>
+                <td>PV annuity factor</td>
+                <td>\( N = 3,\; r = 0.10,\; C = 1{,}000 \)</td>
+                <td><code>=(1 - (1+r)^(-N)) / r</code> → 2.4869<br>\(V_t = C \cdot \text{PVAF}\) → 2,486.85</td>
+            </tr>
+            <tr>
+                <td>Annuity → cash flow (loan amortization)</td>
+                <td>\( N = 36,\; r = 0.18/12,\; V_t = 5{,}000 \)</td>
+                <td><code>=V_t / PVAF</code> → ~$180.76 per month</td>
+            </tr>
+            <tr>
+                <td>FV annuity factor</td>
+                <td>\( N = 3,\; r = 0.10,\; C = 1{,}000 \)</td>
+                <td><code>=((1+r)^N - 1) / r</code> → 3.31<br>\(V_{t+N}\) → 3,310</td>
+            </tr>
+            <tr>
+                <td>Perpetuity</td>
+                <td>\( r = 0.10,\; C = 10{,}000 \)</td>
+                <td><code>=C / r</code> → 100,000</td>
+            </tr>
+            <tr>
+                <td>APR → EAR</td>
+                <td>\( i_{\text{nom}} = 0.1139,\; m = 12 \)</td>
+                <td><code>=(1 + i_nom/m)^m - 1</code> → 0.12</td>
+            </tr>
+            <tr>
+                <td>EAR → APR</td>
+                <td>\( r = 0.12,\; m = 12 \)</td>
+                <td><code>=((1+r)^(1/m) - 1) * m</code> → 0.1139</td>
+            </tr>
+            <tr>
+                <td>Continuous → effective</td>
+                <td>\( r' = 0.1133 \)</td>
+                <td><code>=EXP(r') - 1</code> → 0.12</td>
+            </tr>
+            <tr>
+                <td>Effective → continuous</td>
+                <td>\( r = 0.12 \)</td>
+                <td><code>=LN(1 + r)</code> → 0.1133</td>
+            </tr>
+            <tr>
+                <td>Continuous FV / PV</td>
+                <td>\( V_t = 100,\; r' = 0.1133,\; n = 3 \)</td>
+                <td><code>=V_t * EXP(n * r')</code> → 140.49</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <p class="ref" style="color: #888; font-size: 0.88em;">Note: the three examples above for <em>r = 12%, n = 3</em> are the same numbers across discrete, APR-monthly, and continuous representations — same effective annual rate quoted three ways.</p>
+
+    <h2 id="equity-markets">Lecture 2 — Equity markets</h2>
+
+    <h3>Primary market</h3>
+    <ul class="bullets">
+        <li>Firm picks a lead <strong>underwriter</strong> (an investment bank) who contacts potential buyers.</li>
+        <li><strong>Firm-commitment</strong> underwriting (the common case): the bank buys the shares from the firm and resells to the public at a markup. <strong>Best-efforts</strong>: bank doesn't take inventory, just helps place.</li>
+        <li>Types of issues: <strong>IPO</strong> (first public offering), <strong>seasoned</strong> issue, <strong>private placement</strong> (sold to a handful of institutions).</li>
+    </ul>
+
+    <h3>IPO stylized facts</h3>
+    <ul class="bullets">
+        <li>Most IPOs are oversubscribed at the offer price.</li>
+        <li>Issue price is on average <em>below</em> the first-day market price → "IPO underpricing." Reason: informed investors only subscribe to underpriced IPOs, uninformed get full allocation of overpriced (bad) deals and only a fraction of underpriced (good) ones. To break even on average, deals must be underpriced.</li>
+        <li>Long-run: IPOs <em>underperform</em> comparable stocks.</li>
+    </ul>
+
+    <h3>Secondary market mechanics</h3>
+    <ul class="bullets">
+        <li><strong>Call auction:</strong> all orders aggregated at a fixed time, trade clears at the equilibrium price.</li>
+        <li><strong>Continuous auction:</strong> trades happen throughout the day at prices that bounce around equilibrium. Solves the immediacy problem.</li>
+        <li>Two continuous auction structures:
+            <ul class="bullets">
+                <li><strong>Limit order ("order-driven") markets</strong> — used for stocks, options, futures.</li>
+                <li><strong>Dealer markets</strong> — used for bonds, currencies, swaps, OTC derivatives. Dealers post bid/ask quotes and are always counterparty to customer trades.</li>
+            </ul>
+        </li>
+    </ul>
+
+    <h3>Limit order book</h3>
+    <ul class="bullets">
+        <li><strong>Market order:</strong> execute now at best available price. <strong>Limit order:</strong> execute only at your stated price or better (provides liquidity).</li>
+        <li>Order book = collection of unexecuted limit orders, sorted in <strong>price-time priority</strong> (higher bids first; if tied, earlier order first).</li>
+        <li><strong>Bid</strong> = highest unfilled limit buy = price a market seller receives. <strong>Ask</strong> = lowest unfilled limit sell = price a market buyer pays.</li>
+        <li><strong>Spread</strong> = Ask − Bid &gt; 0. Profit earned by limit orders for providing immediacy. Spread is the cost of demanding immediacy via a market order.</li>
+        <li><strong>Marketable limit order:</strong> a newly-arrived limit order that can execute immediately against the book. Buy priced ≥ lowest ask, or sell priced ≤ highest bid.</li>
+    </ul>
+
+    <h3>How dealers set quotes</h3>
+    <p>Dealers don't want directional exposure → they manage inventory toward zero.</p>
+    <ul class="bullets">
+        <li>Inventory too high (more sells than buys hitting them) → lower bid (discourage selling) <em>and</em> lower ask (encourage buying).</li>
+        <li>Inventory too low (more buys than sells) → raise bid (encourage selling to them) <em>and</em> raise ask (discourage buying from them).</li>
+    </ul>
+
+    <h3>Determinants of bid-ask spread</h3>
+    <ul class="bullets">
+        <li><strong>Volume:</strong> higher volume → lower spread (less inventory risk per trade).</li>
+        <li><strong>Volatility:</strong> higher volatility → higher spread (more inventory risk).</li>
+        <li><strong>Competition between dealers:</strong> more competition → tighter spreads.</li>
+        <li><strong>Adverse selection:</strong> if market orders are coming from better-informed counterparties, dealers widen spreads to compensate.</li>
+    </ul>
+
+    <h3>Trading costs</h3>
+    <ol class="numbered">
+        <li><strong>Commission</strong> — broker's fee.</li>
+        <li><strong>Bid-ask spread</strong> — cost of immediacy (market orders).</li>
+        <li><strong>Market impact</strong> — for large orders, you move the price against yourself.</li>
+    </ol>
+
+    <h3>U.S. secondary market structure</h3>
+    <ul class="bullets">
+        <li>Most stocks trade in a <em>fragmented, hybrid</em> market — many venues (NYSE, NASDAQ, BATS, Direct Edge, ECNs), many mechanisms.</li>
+        <li>Exchanges linked by the <strong>consolidated quotation system</strong>. <strong>NBBO</strong> = National Best Bid and Offer = highest bid and lowest ask across all linked venues. Reg NMS forces routing to the venue with the better quote.</li>
+        <li>Why people trade: information advantage, liquidity needs (raise cash / deploy cash), or rebalancing.</li>
+    </ul>
+
+    <h2 id="stock-positions">Lecture 2 — Stock positions</h2>
+
+    <h3>Return formula</h3>
+
+    <div class="formula-box">
+        <p><strong>Single-period return</strong> on an asset from <em>t</em> to <em>t+1</em>:</p>
+        \[ R_{t+1} \;=\; \frac{p_{t+1} + c_{t+1} - p_t}{p_t} \;=\; \frac{p_{t+1} + c_{t+1}}{p_t} - 1 \]
+        <div class="formula-actions">
+            <button class="intuition-btn" onclick="toggleIntuition(this)">💡 intuition</button>
+        </div>
+        <div class="intuition">
+            <p>Return is just the percentage change in your wealth over the period. Buy a stock at $100, sell at $110 → 10% return. If it also paid a $2 dividend, your total return is $12 / $100 = 12%.</p>
+            <p>The key idea: cash you got in your pocket (the dividend) and price appreciation count the same toward your return. The formula reflects that by putting price gain <em>and</em> cash flow in the numerator. This is sometimes called "total return."</p>
+        </div>
+        <p class="ref">where <em>p</em> is price and <em>c</em> is any cash flow paid (dividend, coupon). Convention: returns are calculated close-to-close.</p>
+    </div>
+
+    <h3>Three ways to hold a stock</h3>
+
+    <h4>Long with own funds</h4>
+    <p>Example: $8,000 capital, $6,000 in XYZ stock.</p>
+    <table class="matrix">
+        <thead><tr><th>Assets</th><th></th><th>Liabilities</th><th></th></tr></thead>
+        <tbody>
+            <tr><td>XYZ stock</td><td>6,000</td><td></td><td></td></tr>
+            <tr><td>Cash</td><td>2,000</td><td>Net worth</td><td>8,000</td></tr>
+            <tr><td><strong>Total</strong></td><td><strong>8,000</strong></td><td><strong>Total</strong></td><td><strong>8,000</strong></td></tr>
+        </tbody>
+    </table>
+
+    <h4>Long on margin (lever up with broker loan)</h4>
+    <p>$8,000 capital, want $11,200 of XYZ → borrow $3,200 at the call money rate.</p>
+    <table class="matrix">
+        <thead><tr><th>Assets</th><th></th><th>Liabilities</th><th></th></tr></thead>
+        <tbody>
+            <tr><td>XYZ stock</td><td>11,200</td><td>Loan</td><td>3,200</td></tr>
+            <tr><td></td><td></td><td>Net worth</td><td>8,000</td></tr>
+            <tr><td><strong>Total</strong></td><td><strong>11,200</strong></td><td><strong>Total</strong></td><td><strong>11,200</strong></td></tr>
+        </tbody>
+    </table>
+    <p>Margin amplifies sensitivity of net worth to stock price — both up and down.</p>
+
+    <h4>Short selling</h4>
+    <p>Borrow shares, sell them in the market. The loan is denominated in <em>shares</em>, not dollars. Net worth has <em>negative</em> sensitivity to the stock price.</p>
+    <p>Example: $8,000 cash with broker. Borrow 1,400 XYZ shares; sell at $8 → receive $11,200 cash.</p>
+    <table class="matrix">
+        <thead><tr><th>Assets</th><th></th><th>Liabilities</th><th></th></tr></thead>
+        <tbody>
+            <tr><td>Cash</td><td>19,200</td><td>Loan (1,400 sh @ $8)</td><td>11,200</td></tr>
+            <tr><td></td><td></td><td>Net worth</td><td>8,000</td></tr>
+            <tr><td><strong>Total</strong></td><td><strong>19,200</strong></td><td><strong>Total</strong></td><td><strong>19,200</strong></td></tr>
+        </tbody>
+    </table>
+
+    <h3>Percentage margin</h3>
+
+    <div class="formula-box">
+        \[ \text{Margin} \;=\; \frac{\text{Net Worth}}{\text{Value of Stock}} \]
+        <div class="formula-actions">
+            <button class="intuition-btn" onclick="toggleIntuition(this)">💡 intuition</button>
+        </div>
+        <div class="intuition">
+            <p>"Margin" tells you what fraction of your stock position is funded by <em>your own money</em> vs borrowed money. 50% margin means half your stock is yours, half is borrowed from the broker. 100% margin means you bought with all cash (no borrowing).</p>
+            <p>When the stock falls, your equity shrinks faster than the loan shrinks (the loan doesn't shrink — you still owe it). So your percentage margin falls. If it drops below the broker's <strong>maintenance margin</strong> (often 25–30%), you get a <em>margin call</em>: put up more cash or they liquidate.</p>
+            <p>Margin is your skin in the game. Lower margin = more leverage = bigger gains AND bigger losses.</p>
+        </div>
+    </div>
+    <ul class="bullets">
+        <li>U.S. <strong>initial margin</strong> minimum: 50%. If margin falls below the broker's <strong>maintenance margin</strong>, you must either post collateral or close out.</li>
+        <li><strong>Long on margin:</strong> margin = % decline in stock price that wipes out your net worth.</li>
+        <li><strong>Short selling:</strong> margin = % increase in stock price that wipes out your net worth.</li>
+    </ul>
+
+    <h2 id="problems">Drill problems</h2>
+
+    <p>One concept at a time. The integrated section below stitches multiple ideas into single problems.</p>
+
+    <div class="problem">
+        <span class="qnum">Q1 — Time value of money</span>
+        <h3>APR vs EAR</h3>
+        <p>Your credit card quotes an APR of 18% with monthly compounding. What is the effective annual rate (EAR)? If a different card quotes an APR of 18% with daily compounding (365 days), what is the EAR? Which is more expensive?</p>
+        <button class="answer-btn" onclick="toggleAnswer(this)">Show solution</button>
+        <div class="answer">
+            <h4>Solution</h4>
+            <p>Monthly compounding: per-period rate = 0.18 / 12 = 0.015.</p>
+            <div class="formula">EAR = (1 + 0.015)^12 − 1
+    = 1.1956 − 1
+    = 0.1956  →  19.56%</div>
+            <p>Daily compounding: per-period rate = 0.18 / 365.</p>
+            <div class="formula">EAR = (1 + 0.18/365)^365 − 1
+    = 0.1972  →  19.72%</div>
+            <p><span class="imp">Daily compounding is slightly more expensive</span> — same APR, but more compounding periods means more interest-on-interest.</p>
+        </div>
+    </div>
+
+    <div class="problem">
+        <span class="qnum">Q2 — Annuity</span>
+        <h3>Mortgage payment</h3>
+        <p>You take out a $400,000 30-year fixed mortgage at 6% APR with monthly compounding. What is the monthly payment? How much principal is left after the first payment?</p>
+        <button class="answer-btn" onclick="toggleAnswer(this)">Show solution</button>
+        <div class="answer">
+            <h4>Solution</h4>
+            <p>Per-period (monthly) rate r = 0.06 / 12 = 0.005. N = 30 × 12 = 360 payments. PV = $400,000.</p>
+            <div class="formula">PVAF(0.005, 360) = [1 − (1.005)^(-360)] / 0.005
+                ≈ 166.79
+
+C = PV / PVAF = 400,000 / 166.79
+  ≈ $2,398 per month</div>
+            <p>First-month interest = 400,000 × 0.005 = $2,000. Principal portion of first payment = 2,398 − 2,000 = $398. Balance after first payment = $399,602.</p>
+        </div>
+    </div>
+
+    <div class="problem">
+        <span class="qnum">Q3 — Short selling</span>
+        <h3>Margin and a price move</h3>
+        <p>You have $10,000 cash. You short 500 shares of XYZ at $40 (proceeds = $20,000). Your maintenance margin is 30%. At what price does the broker call you?</p>
+        <button class="answer-btn" onclick="toggleAnswer(this)">Show solution</button>
+        <div class="answer">
+            <h4>Solution</h4>
+            <p>Right after the short: cash = $30,000 (your $10K + $20K from sale). Liability = 500 shares (initially worth $20,000). Net worth = $10,000.</p>
+            <p>If price rises to P, liability = 500P. Net worth = 30,000 − 500P.</p>
+            <div class="formula">Margin = Net Worth / Value of Stock
+       = (30,000 − 500P) / (500P)
+       = 0.30  (maintenance margin)
+
+→ 30,000 − 500P = 150P
+→ 30,000 = 650P
+→ P ≈ $46.15</div>
+            <p>At P = $46.15 you get a margin call. The percentage margin = the % price increase that wipes out the buffer.</p>
+        </div>
+    </div>
+
+    <div class="problem">
+        <span class="qnum">Q4 — Continuous compounding</span>
+        <h3>Rate conversion</h3>
+        <p>A bank quotes a continuously compounded rate of 5% per year. What is the EAR? If a different bank quotes EAR = 5%, what is the equivalent continuously compounded rate? What is the FV of $1,000 invested for 7 years at 5% continuously compounded?</p>
+        <button class="answer-btn" onclick="toggleAnswer(this)">Show solution</button>
+        <div class="answer">
+            <h4>Solution</h4>
+            <div class="formula">Continuous rate r' = 5% = 0.05.
+EAR  r = exp(r') − 1
+       = exp(0.05) − 1
+       = 0.05127  →  5.127%
+
+If EAR = 5%, equivalent continuous rate:
+  r' = ln(1 + 0.05) = ln(1.05) ≈ 0.04879  →  4.879%
+
+FV of $1,000 at 5% continuous for 7 years:
+  FV = 1,000 × exp(0.05 × 7)
+     = 1,000 × exp(0.35)
+     ≈ 1,000 × 1.4191
+     ≈ $1,419.07</div>
+            <p>Continuously compounded rate is always slightly lower than the equivalent EAR (because more compounding earns more). And for an EAR of x, the continuous rate is ln(1+x) ≈ x for small x.</p>
+        </div>
+    </div>
+
+    <div class="problem">
+        <span class="qnum">Q5 — Growing perpetuity</span>
+        <h3>Building intuition for the formula</h3>
+        <p>An asset will pay $4.12 at the end of next year, growing at 3% per year forever after that. Your required return is 9%. What is it worth today? What is it worth right after the first payment is received?</p>
+        <button class="answer-btn" onclick="toggleAnswer(this)">Show solution</button>
+        <div class="answer">
+            <h4>Solution</h4>
+            <div class="formula">PV_0 = C_1 / (r − g)
+     = 4.12 / (0.09 − 0.03)
+     = 4.12 / 0.06
+     = $68.67</div>
+            <p>Right after the first payment is received, the next expected cash flow is C₂ = 4.12 × 1.03 = $4.2436 (one year out). So:</p>
+            <div class="formula">PV_1 (ex-payment) = C_2 / (r − g)
+                 = 4.2436 / 0.06
+                 ≈ $70.73
+
+(equivalently PV_0 × (1 + g) = 68.67 × 1.03 ≈ $70.73)</div>
+            <p>Value grows at the cash-flow growth rate g — consistent with the constant-growth assumption. <span class="imp">Requires r &gt; g, otherwise PV is infinite (or negative).</span></p>
+        </div>
+    </div>
+
+    <h2 id="integrated">Integrated problems</h2>
+
+    <p>Each of these wires together multiple ideas — the kind of multi-step reasoning Lynch's exam tends to probe.</p>
+
+    <div class="problem">
+        <span class="qnum">INT 1 — TVM × annuity × starting age</span>
+        <h3>Retirement savings target</h3>
+        <p>You're 30 and want $2,000,000 in your retirement account at age 65. You'll save the same dollar amount at the end of every month between now and then, in an account earning 7% APR with monthly compounding. (a) How much do you need to save per month? (b) If you wait until age 35 to start, how much more per month do you need? Comment on the cost of delay.</p>
+        <button class="answer-btn" onclick="toggleAnswer(this)">Show solution</button>
+        <div class="answer">
+            <h4>Solution</h4>
+            <p><strong>Setup.</strong> Per-period rate r = 0.07 / 12 ≈ 0.005833. This is a future-value annuity problem: equal monthly payments C, target FV = $2M at the final payment date.</p>
+            <p><strong>(a) Starting at 30:</strong> N = 35 × 12 = 420 payments.</p>
+            <div class="formula">FVAF(r, N) = [(1 + r)^N − 1] / r
+            = [(1.005833)^420 − 1] / 0.005833
+            ≈ [11.524 − 1] / 0.005833
+            ≈ 1,804.7
+
+C = FV / FVAF = 2,000,000 / 1,804.7
+  ≈ $1,108 per month</div>
+            <p><strong>(b) Starting at 35:</strong> N = 30 × 12 = 360 payments.</p>
+            <div class="formula">FVAF(r, 360) = [(1.005833)^360 − 1] / 0.005833
+            ≈ [8.117 − 1] / 0.005833
+            ≈ 1,219.97
+
+C = 2,000,000 / 1,219.97 ≈ $1,640 per month</div>
+            <p><strong>Cost of delay:</strong> $1,640 − $1,108 = ~$532 more per month, every month for 30 years. That's 48% more savings to reach the same target. <span class="imp">Time and compounding do almost all the work in long-horizon savings</span> — the extra 5 years at the start matter way more than the 5 years cut off the end.</p>
+        </div>
+    </div>
+
+    <div class="problem">
+        <span class="qnum">INT 2 — margin × return formula × balance sheet</span>
+        <h3>Levered long: scenarios</h3>
+        <p>You have $20,000 of your own cash. You buy $40,000 worth of stock at $50/share (800 shares) — half on margin, borrowing $20,000 from your broker at 4% annual interest. Ignore commissions. Over one year, you receive a $1.00/share dividend. Compute your <em>return on equity</em> (return on your $20K) if the stock ends the year at (a) $60, (b) $50, (c) $40. Also compute the initial percentage margin and the price at which you'd get a margin call assuming a 30% maintenance margin.</p>
+        <button class="answer-btn" onclick="toggleAnswer(this)">Show solution</button>
+        <div class="answer">
+            <h4>Solution</h4>
+            <p><strong>Initial percentage margin.</strong> Net worth = $20,000, value of stock = $40,000.</p>
+            <div class="formula">Initial margin = 20,000 / 40,000 = 50%   (meets U.S. minimum)</div>
+            <p><strong>Return on equity in each scenario.</strong> At year end your equity = (value of stock + dividends received) − (loan + interest owed). Initial equity = $20K.</p>
+            <div class="formula">Year-end equity = (800 × P_end) + (800 × $1)  −  (20,000 × 1.04)
+                = 800 × P_end + 800 − 20,800
+
+Return on equity = (year-end equity − 20,000) / 20,000</div>
+            <table class="matrix">
+                <thead><tr><th>Year-end price</th><th>Stock value</th><th>+ Dividends</th><th>− Loan repaid</th><th>= Equity</th><th>Return on $20K</th></tr></thead>
+                <tbody>
+                    <tr><td>$60</td><td>$48,000</td><td>$800</td><td>−$20,800</td><td>$28,000</td><td><strong>+40%</strong></td></tr>
+                    <tr><td>$50</td><td>$40,000</td><td>$800</td><td>−$20,800</td><td>$20,000</td><td><strong>0%</strong></td></tr>
+                    <tr><td>$40</td><td>$32,000</td><td>$800</td><td>−$20,800</td><td>$12,000</td><td><strong>−40%</strong></td></tr>
+                </tbody>
+            </table>
+            <p>Compare: <strong>unlevered</strong> returns on the stock alone are +22%, +2%, −18% in those scenarios. <span class="imp">Margin roughly doubles the gain and the loss</span>, with a small drag from interest. The break-even stock return is the one that just covers the interest cost on the borrowed half.</p>
+            <p><strong>Margin call price.</strong> The percentage margin during the year is net worth / value of stock. If price drops to P, net worth ≈ 800P − 20,000 (ignoring intra-year interest). Set margin = 30%:</p>
+            <div class="formula">(800P − 20,000) / (800P) = 0.30
+800P − 20,000 = 240P
+560P = 20,000
+P ≈ $35.71</div>
+            <p>If the stock falls below ~$35.71, the broker calls you to put up more collateral or close out part of the position.</p>
+        </div>
+    </div>
+
+
+    <p class="footer">last updated may 2026 · <a href="../">mba</a> · <a href="/">home</a></p>
+</section>
+
+</body>
+
+</html>
