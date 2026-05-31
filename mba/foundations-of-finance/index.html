@@ -215,12 +215,12 @@
             <span class="desc">Primary issuance and IPO underpricing, limit-order books, dealer markets, bid-ask spread, NBBO.</span>
         </li>
         <li>
-            <span class="num">L 2–3</span><a href="#stock-positions" class="name">Stock positions</a>
-            <span class="desc">Return formula. Long with own funds, long on margin, short selling. Percentage margin.</span>
+            <span class="num">L 2–3</span><a href="#stock-positions" class="name">Stock positions &amp; portfolio return</a>
+            <span class="desc">Return formula. Long with own funds, long on margin, short selling. Percentage margin. Portfolio return formula and the four weight patterns (long, levered, long+cash, short).</span>
         </li>
     </ul>
 
-    <p style="font-size: 0.92em; color: #888;"><em>Modules to add as the course progresses: return distribution (L3), portfolio management with 1 / 2 / N risky assets (L3–5), CAPM and performance measures (L5–6), multifactor models (L6), fixed income (L7–9), derivatives (L9–11), valuation, market efficiency.</em></p>
+    <p style="font-size: 0.92em; color: #888;"><em>Next up (starts in Class 4, Mon Jun 1): return distribution (Lecture 3), portfolio management with 1 / 2 / N risky assets (Lectures 3–5), CAPM and performance measures (Lectures 5–6), multifactor models (L6). After midterm: fixed income, derivatives, valuation, market efficiency.</em></p>
 
     <h2 id="schedule">Class schedule</h2>
     <table>
@@ -729,7 +729,7 @@
         <li>Why people trade: information advantage, liquidity needs (raise cash / deploy cash), or rebalancing.</li>
     </ul>
 
-    <h2 id="stock-positions">Lecture 2 - Stock positions</h2>
+    <h2 id="stock-positions">Lectures 2-3 - Stock positions &amp; portfolio return</h2>
 
     <h3>Return formula</h3>
 
@@ -801,6 +801,47 @@
         <li><strong>Long on margin:</strong> margin = % decline in stock price that wipes out your net worth.</li>
         <li><strong>Short selling:</strong> margin = % increase in stock price that wipes out your net worth.</li>
     </ul>
+
+    <h3>Portfolio return formula</h3>
+
+    <div class="formula-box">
+        <p><strong>Return on a portfolio of <em>N</em> assets</strong></p>
+        \[ R_p \;=\; \omega_1 R_1 + \omega_2 R_2 + \cdots + \omega_N R_N \qquad \text{with} \quad \sum_{i=1}^{N} \omega_i = 1 \]
+        <div class="formula-actions">
+            <button class="intuition-btn" onclick="toggleIntuition(this)">💡 intuition</button>
+            <button class="derive-btn" onclick="toggleDerivation(this)">▼ derive</button>
+        </div>
+        <div class="intuition">
+            <p>Your portfolio's return is just a weighted average of the returns on each thing you own. If 60% of your money is in Stock A (which returned 10%) and 40% in Stock B (which returned 5%), your portfolio returned 0.6 × 10% + 0.4 × 5% = 8%. Simple as that.</p>
+            <p>The weights <em>ω<sub>i</sub></em> are the fraction of your starting wealth in each asset. They must sum to 1, because the pieces add up to the whole. The interesting bit is that weights can be negative (when you short) or greater than 1 (when you buy on margin) — see the table below.</p>
+            <p>This formula is the foundation of <em>everything</em> in portfolio theory. Mean-variance, CAPM, the efficient frontier — they're all just questions about how to pick the weights <em>ω<sub>i</sub></em>.</p>
+        </div>
+        <div class="derivation">
+            <p>Let <em>W<sub>0</sub></em> be your starting wealth. By definition of "weight," the dollar amount in asset <em>i</em> at the start is <em>ω<sub>i</sub> W<sub>0</sub></em>. Over one period, asset <em>i</em>'s value grows to <em>ω<sub>i</sub> W<sub>0</sub> (1 + R<sub>i</sub>)</em>.</p>
+            <p>End-of-period wealth is the sum across all assets:</p>
+            \[ W_1 \;=\; \sum_{i=1}^{N} \omega_i W_0 (1 + R_i) \;=\; W_0 \sum_{i=1}^{N} \omega_i (1 + R_i) \]
+            <p>Portfolio return is end-over-start minus 1:</p>
+            \[ R_p \;=\; \frac{W_1}{W_0} - 1 \;=\; \sum_{i=1}^{N} \omega_i (1 + R_i) - 1 \;=\; \sum_{i=1}^{N} \omega_i + \sum_{i=1}^{N} \omega_i R_i - 1 \]
+            <p>Since the weights sum to 1, the first sum is just 1 and cancels the trailing −1:</p>
+            \[ R_p \;=\; \sum_{i=1}^{N} \omega_i R_i \]
+            <p>So the return on a portfolio is exactly the weighted average of the asset returns, with portfolio weights as the weights. No surprise — but it relies on Σ <em>ω<sub>i</sub></em> = 1 to work cleanly.</p>
+        </div>
+    </div>
+
+    <h4>Weight interpretation</h4>
+    <p>The three ways to hold a stock map onto specific weight patterns:</p>
+    <table>
+        <thead>
+            <tr><th>Position</th><th>\(\omega_{\text{stock}}\)</th><th>\(\omega_{\text{riskless}}\)</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>Long stock with own money</td><td>0 ≤ ω ≤ 1</td><td>0 ≤ ω ≤ 1 (rest in cash)</td></tr>
+            <tr><td>Long stock + long T-bills</td><td>0 ≤ ω ≤ 1</td><td>0 ≤ ω ≤ 1</td></tr>
+            <tr><td>Long on margin (borrowing)</td><td>ω &gt; 1</td><td>ω &lt; 0 (short the riskless = borrowing)</td></tr>
+            <tr><td>Short selling stock</td><td>ω &lt; 0</td><td>ω &gt; 1 (long the proceeds in cash)</td></tr>
+        </tbody>
+    </table>
+    <p>Buying on margin = "negative cash position." Short-selling stock = "negative stock position." The portfolio return formula handles all four cases with the same equation — only the signs and magnitudes of the weights change.</p>
 
     <h2 id="problems">Drill problems</h2>
 
