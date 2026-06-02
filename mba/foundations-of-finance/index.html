@@ -101,6 +101,15 @@
         .excel-table th { background: #f7f7f7; }
         .excel-table code { background: #ececec; padding: 0.05em 0.3em; border-radius: 2px; font-size: 0.92em; }
 
+        svg.cal-plot { display: block; margin: 1em auto 0.3em; max-width: 100%; height: auto; }
+        .caption { font-style: italic; }
+
+        .remember { background: rgba(40, 130, 130, 0.07); border-left: 4px solid #2a8888; padding: 0.85em 1.2em; margin: 1.8em 0 2.5em; font-size: 0.94em; line-height: 1.62em; }
+        .remember .label { font-size: 0.78em; font-weight: 700; color: #2a8888; letter-spacing: 0.7px; text-transform: uppercase; margin-bottom: 0.3em; display: block; }
+        .remember h4 { margin: 0 0 0.5em; font-size: 1.05em; color: #2a8888; font-weight: 700; }
+        .remember ul { margin: 0.2em 0 0; padding-left: 1.4em; }
+        .remember li { padding: 0.2em 0; line-height: 1.55em; }
+
         .callout { background: #fff8e1; border-left: 3px solid #f0c040; padding: 0.9em 1.2em; margin: 1em 0; font-size: 0.95em; line-height: 1.55em; }
 
         .takeaways { background: #fff5f5; border-left: 4px solid #ff3333; padding: 1em 1.3em; margin: 1.2em 0; }
@@ -156,6 +165,19 @@
         html[data-theme="dark"] .katex .minner { color: #e8e8e8; }
         html[data-theme="dark"] .takeaways { background: #2b1717; border-left-color: #ff5a5a; }
         html[data-theme="dark"] .takeaways p { color: #c8c8c8; }
+        /* SVG plots in dark mode */
+        html[data-theme="dark"] svg.cal-plot line[stroke="#666"] { stroke: #aaa; }
+        html[data-theme="dark"] svg.cal-plot line[stroke="#e8e8e8"] { stroke: #2a2a2a; }
+        html[data-theme="dark"] svg.cal-plot text[fill="#666"],
+        html[data-theme="dark"] svg.cal-plot text[fill="#888"] { fill: #aaa; }
+        html[data-theme="dark"] svg.cal-plot text[fill="#333"],
+        html[data-theme="dark"] svg.cal-plot text[fill="#555"] { fill: #e8e8e8; }
+        html[data-theme="dark"] svg.cal-plot circle[fill="#333"],
+        html[data-theme="dark"] svg.cal-plot circle[fill="#555"] { fill: #e8e8e8; }
+        html[data-theme="dark"] svg.cal-plot line[stroke="#888"] { stroke: #aaa; }
+        html[data-theme="dark"] .remember { background: rgba(80, 200, 200, 0.10); border-left-color: #4ec0c0; }
+        html[data-theme="dark"] .remember .label,
+        html[data-theme="dark"] .remember h4 { color: #6ecaca; }
     </style>
 </head>
 
@@ -181,21 +203,30 @@
         <li><a href="#tvm">time value of money</a></li>
         <li><a href="#equity-markets">equity markets</a></li>
         <li><a href="#stock-positions">stock positions</a></li>
-        <li><a href="#problems">drill problems</a></li>
+        <li><a href="#return-dist">return distribution</a></li>
+        <li><a href="#one-risky">1 risky + riskless</a></li>
         <li><a href="#integrated">integrated problems</a></li>
     </ul>
 
     <div class="takeaways" id="takeaways">
-        <h3>Key ideas so far</h3>
-        <p style="margin-top: 0; font-size: 0.9em; color: #666;">Conceptual previews from the Overview lecture - the course will formalize each of these.</p>
+        <h3>Key ideas so far (through Class 4)</h3>
+        <p style="margin-top: 0; font-size: 0.9em; color: #666;">Refreshed after each lecture. Each lecture section also has its own "✦ remember this" callout at the end.</p>
         <ol>
-            <li><strong>Investors prefer more to less and almost all are risk averse.</strong> Risk-averse means: for a given expected return, prefer lower volatility; for a given volatility, prefer higher expected return.</li>
-            <li><strong>A dollar today is worth more than a dollar later.</strong> Every valuation question reduces to: discount future cash flows by the right rate and add them up. PV, FV, annuity, perpetuity - different shapes of the same idea.</li>
-            <li><strong>Diversification works.</strong> Portfolios of assets and individual assets have similar average returns, but portfolio volatility declines as you add assets. Don't put all your eggs in one basket.</li>
-            <li><strong>Riskier assets must offer higher expected returns</strong> - otherwise no one risk-averse would hold them. Risk premium isn't generosity, it's market clearing.</li>
-            <li><strong>No arbitrage / law of one price.</strong> Two assets with identical cash flows must have the same price. Any price difference (after taxes, liquidity, transaction costs) is an arbitrage opportunity, and well-functioning markets don't let those exist for long.</li>
-            <li><strong>Option value is non-negative.</strong> A right (without obligation) to do something in the future must be worth ≥ 0 today.</li>
-            <li><strong>Market efficiency is a warning.</strong> If U.S. equity prices are efficient w.r.t. public information, you can't beat the market on average using public info - risk-adjusted. This is the big warning the course returns to at the end.</li>
+            <li><strong>A dollar today is worth more than a dollar later.</strong> Every valuation question reduces to: discount future cash flows by the right rate and add them up. PV, FV, annuity, perpetuity — different shapes of the same idea. Compounding is the snowball; discounting is the snowball in reverse.</li>
+            <li><strong>APR ≠ EAR.</strong> APR is a quoting convention (the per-period rate times the number of compounding periods per year). EAR is the actual annual rate you earn or pay. Always convert to EAR before comparing rates with different compounding frequencies.</li>
+            <li><strong>Continuous compounding is the limit</strong> as you compound more and more often. Continuous rates <em>add</em> over time instead of compounding multiplicatively, which is why all of derivatives pricing uses them.</li>
+            <li><strong>Annuities and perpetuities collapse infinite sums into one formula</strong> via the geometric series. Annuity PVAF = (1 − (1+r)<sup>−N</sup>)/r; perpetuity = C/r; growing perpetuity = C/(r−g) when r &gt; g.</li>
+            <li><strong>Investors prefer more to less, and almost all are risk averse.</strong> Risk averse means: for a given expected return, prefer lower volatility; for a given volatility, prefer higher expected return. When one portfolio has higher E[R] AND higher σ, the call depends on the investor's risk-aversion level.</li>
+            <li><strong>Markets have structure.</strong> Limit orders provide liquidity (you sit on the book at a price); market orders demand immediacy (you cross the spread and pay the cost). Bid-ask spread is the price of immediacy and the profit of liquidity providers. Dealers manage inventory toward zero.</li>
+            <li><strong>The three ways to hold a stock — long, on margin, short</strong> — map to portfolio weights ω: in (0,1], &gt;1 with negative riskless weight, &lt;0 respectively. Percentage margin = Net Worth / Value of Stock; if it falls below maintenance margin, you get a margin call.</li>
+            <li><strong>The portfolio return formula</strong> R_p = Σ ω<sub>i</sub> R<sub>i</sub> handles long, levered, and short positions with the same equation — only the signs and magnitudes of weights change. Weights sum to 1.</li>
+            <li><strong>Risk = standard deviation (for now).</strong> A return distribution is summarized by E[R] (its center) and σ (its spread). Covariance and correlation describe how two assets move together — and that joint behavior is the whole point of diversification.</li>
+            <li><strong>Regression slope = covariance / variance.</strong> b = σ[Y,X] / σ²[X]. When we run R_stock on R_market in Lecture 5, this slope becomes <em>beta</em>, the central risk measure in CAPM.</li>
+            <li><strong>One risky + one riskless = a Capital Allocation Line</strong> in (σ, E[R]) space. Slope = (E[R<sub>i</sub>] − R<sub>f</sub>) / σ[R<sub>i</sub>] = reward per unit of risk. Between two risky assets, every risk-averse investor picks the one with the steeper CAL, regardless of their personal risk aversion.</li>
+            <li><strong>Two-fund separation (preview).</strong> Risk aversion determines <em>where</em> on the CAL you sit (more averse = closer to R<sub>f</sub>, less averse = further out / on margin). It does NOT determine <em>which</em> CAL — that's a universal choice. This is the seed of CAPM.</li>
+            <li><strong>No arbitrage / law of one price.</strong> Two assets with identical cash flows must have the same price. Any price difference (after taxes, liquidity, transaction costs) is an arbitrage opportunity, and well-functioning markets don't let those last.</li>
+            <li><strong>Market efficiency is a warning.</strong> If U.S. equity prices are efficient w.r.t. public information, you can't beat the market on average using public info, risk-adjusted. This is the big warning the course returns to at the end.</li>
+            <li><strong>Option value is non-negative.</strong> A right (without obligation) to do something in the future must be worth ≥ 0 today. (Comes back in Lecture 10.)</li>
         </ol>
     </div>
 
@@ -218,9 +249,17 @@
             <span class="num">L 2–3</span><a href="#stock-positions" class="name">Stock positions &amp; portfolio return</a>
             <span class="desc">Return formula. Long with own funds, long on margin, short selling. Percentage margin. Portfolio return formula and the four weight patterns (long, levered, long+cash, short).</span>
         </li>
+        <li>
+            <span class="num">L 3</span><a href="#return-dist" class="name">Return distribution</a>
+            <span class="desc">Expected return, variance and standard deviation, covariance and correlation, linear regression. Inputs needed to choose portfolio weights.</span>
+        </li>
+        <li>
+            <span class="num">L 3–4</span><a href="#one-risky" class="name">One risky + one riskless asset</a>
+            <span class="desc">Risk aversion formalized. Portfolio E[R] and σ with one risky asset + T-bills. The Capital Allocation Line (CAL) and its slope. Picking between risky assets.</span>
+        </li>
     </ul>
 
-    <p style="font-size: 0.92em; color: #888;"><em>Next up (starts in Class 4, Mon Jun 1): return distribution (Lecture 3), portfolio management with 1 / 2 / N risky assets (Lectures 3–5), CAPM and performance measures (Lectures 5–6), multifactor models (L6). After midterm: fixed income, derivatives, valuation, market efficiency.</em></p>
+    <p style="font-size: 0.92em; color: #888;"><em>Next up (Class 5, Wed Jun 3): two risky assets + a riskless asset (Lecture 4), then N risky assets and the minimum variance frontier (Lectures 4–5), CAPM (Lecture 5), CAPM performance measures and multifactor models (Lectures 5–6). After midterm: fixed income, derivatives, valuation, market efficiency.</em></p>
 
     <h2 id="schedule">Class schedule</h2>
     <table>
@@ -286,6 +325,15 @@
         <li><strong>Option value:</strong> a right without an obligation has non-negative value today.</li>
         <li><strong>Market efficiency:</strong> in an efficient market, price is an unbiased estimate of value. The U.S. stock market is probably efficient w.r.t. publicly available info → you can't beat it on average using public info, risk-adjusted.</li>
     </ul>
+
+    <div class="remember">
+        <span class="label">✦ remember this — Lecture 1</span>
+        <ul>
+            <li><strong>Four asset types:</strong> money, debt, equity, derivatives. Three things the financial system does that matter: allocate capital, smooth consumption, repackage risk.</li>
+            <li><strong>Seven core concepts</strong> the course returns to: risk aversion, time value of money, diversification, risk adjustment, no arbitrage, option value, market efficiency. Everything that follows is just formal machinery for one of these.</li>
+            <li><strong>Mutual funds (especially index funds) exist because of market efficiency.</strong> If you can't beat the market on average using public info, the rational play is to own the market cheaply.</li>
+        </ul>
+    </div>
 
     <h2 id="tvm">Lectures 1–2 - Time Value of Money</h2>
 
@@ -529,7 +577,86 @@
         </div>
     </div>
 
+    <h4>Whiteboard example: Tom's retirement — two chained annuities</h4>
+
+    <p>Tom is 35 today and wants to retire at 65. After retirement, he wants to withdraw $10,000 each year for 10 years (so 10 birthday withdrawals on his 66th through 75th birthdays). His savings earn 8% per year (EAR). Two scenarios:</p>
+    <p>(A) Tom deposits an equal amount each year from age 36 to 65 (30 annual deposits) to fund the withdrawals.<br>(B) Tom inherits a lump sum and deposits it once, on his 36th birthday.</p>
+
+    <h4>Step 1 (both scenarios): How much money does he need at age 65?</h4>
+    <p>On his 65th birthday (just after the last deposit), the balance must be enough to fund 10 future withdrawals of $10,000. That's a PV annuity at age 65, with first cash flow at age 66, last at age 75, <em>r</em> = 8%, <em>N</em> = 10.</p>
+    <div class="formula">PVAF(0.08, 10) = [1 − (1.08)^(−10)] / 0.08
+              = [1 − 0.46319] / 0.08
+              ≈ 6.7101
+
+Balance needed at 65 = $10,000 × 6.7101 ≈ $67,101</div>
+
+    <p>This intermediate number is the bridge between the two halves of the problem.</p>
+
+    <h4>Scenario A: equal annual deposits, 30 of them</h4>
+    <p>30 deposits at ages 36 through 65 must accumulate to $67,101 at age 65. That's an FV annuity at age 65 with the last cash flow on the same day as the target — exactly the setup for FVAF.</p>
+    <div class="formula">FVAF(0.08, 30) = [(1.08)^30 − 1] / 0.08
+              = [10.0627 − 1] / 0.08
+              ≈ 113.28
+
+C = 67,101 / 113.28 ≈ $592 per year</div>
+
+    <p>So if Tom puts away ~$592 every birthday for 30 years, he can withdraw $10K every birthday for 10 years after retirement. Total deposited: 30 × $592 = $17,760. Total withdrawn: 10 × $10K = $100,000. <span class="imp">Compounding does the other ~$82K of work.</span></p>
+
+    <h4>Scenario B: one lump-sum deposit at age 36</h4>
+    <p>If Tom deposits a single sum at age 36, it grows for 29 years (from age 36 to age 65) at 8%. It needs to reach $67,101 by age 65.</p>
+    <div class="formula">Required lump sum × (1.08)^29 = 67,101
+(1.08)^29 ≈ 9.317
+
+Lump sum = 67,101 / 9.317 ≈ $7,201</div>
+
+    <p>About $7,200 today funds the entire retirement income stream — because it has 29 years to compound at 8% before withdrawals begin, multiplying it by ~9.3×. Then the balance fights off the withdrawals because it keeps earning interest during the payout phase too.</p>
+
+    <p><strong>Comparison:</strong> 30 deposits × $592 = $17,760 total cash out of pocket (Scenario A), vs $7,201 lump sum today (Scenario B). The lump sum is &lt;50% as much cash but achieves the same retirement income — because every dollar deposited at 36 has 29 years to compound, while the average deposit in Scenario A has only ~15 years.</p>
+
     <p><strong>Amortization:</strong> a level-payment loan is an annuity from the lender's side. Outstanding balance after any payment = PV of remaining payments. Interest accrued in a period = balance × per-period rate; the rest of the payment goes to principal.</p>
+
+    <h4>Whiteboard example: 30-year mortgage</h4>
+
+    <p>You take a $400,000 mortgage. 30 years (360 monthly payments). APR = 6% compounded monthly, so the per-month rate is <em>r = 0.06 / 12 = 0.005</em>.</p>
+
+    <h4>(a) Monthly payment</h4>
+    <p>The bank lends you $400,000 today; you make 360 equal payments. So $400,000 = <em>C × PVAF(0.005, 360)</em>. Solve for <em>C</em>:</p>
+    <div class="formula">PVAF(0.005, 360) = [1 − (1.005)^(−360)] / 0.005
+              = [1 − 0.16604] / 0.005
+              = 0.83396 / 0.005
+              ≈ 166.79
+
+C = 400,000 / 166.79 ≈ $2,398.20 per month</div>
+
+    <h4>(b) How the first payment breaks down</h4>
+    <div class="formula">Interest accrued in month 1:  $400,000 × 0.005 = $2,000.00
+Principal paid in month 1:    $2,398.20 − $2,000 = $398.20
+Loan balance after payment 1: $400,000 − $398.20 = $399,601.80</div>
+
+    <p>The first month, almost the entire payment goes to interest. Welcome to a mortgage.</p>
+
+    <h4>(c) How the very last payment breaks down</h4>
+    <p>By month 360, the balance is down to almost zero. Payment is still $2,398.20, but now it's almost all principal and almost no interest. The interest portion shrinks each month as the balance shrinks.</p>
+
+    <h4>(d) Balance after 10 years (just after payment 120)</h4>
+    <p>The outstanding balance equals the PV of the <em>remaining</em> 240 payments at the per-period rate:</p>
+    <div class="formula">PVAF(0.005, 240) = [1 − (1.005)^(−240)] / 0.005
+              = [1 − 0.30207] / 0.005
+              ≈ 139.58
+
+Balance = $2,398.20 × 139.58 ≈ $334,750</div>
+
+    <p>After 10 years of payments ($287,784 total paid in), you've only knocked the balance down from $400K to ~$335K. The other ~$222K of your payments went to interest. <span class="imp">Mortgages are front-loaded with interest</span> — a key reason early extra principal payments save so much money.</p>
+
+    <h4>(e) Refinance comparison</h4>
+    <p>Suppose 10 years in, rates have dropped to 4% APR. Should you refinance? Your remaining balance is $334,750. Pay it off as a new 20-year loan at 4%/12 ≈ 0.333%/month:</p>
+    <div class="formula">New PVAF(0.00333, 240) = [1 − (1.00333)^(−240)] / 0.00333 ≈ 165.02
+New monthly payment = 334,750 / 165.02 ≈ $2,028 per month
+
+Savings: $2,398 − $2,028 = $370 per month × 240 months = $88,800 over the life of the loan
+(ignoring closing costs)</div>
+
+    <p>If closing costs are, say, $5,000, you'd break even in ~14 months and save $80K+ over the remaining loan life. <span class="imp">Refinancing math is literally just the annuity formula run twice.</span></p>
 
     <h3>Perpetuities - equal cash flows forever</h3>
 
@@ -663,6 +790,17 @@
 
     <p class="ref" style="color: #888; font-size: 0.88em;">Note: the three examples above for <em>r = 12%, n = 3</em> are the same numbers across discrete, APR-monthly, and continuous representations - same effective annual rate quoted three ways.</p>
 
+    <div class="remember">
+        <span class="label">✦ remember this — Lectures 1-2 (TVM)</span>
+        <ul>
+            <li><strong>Compounding and discounting are the same operation, run in opposite directions.</strong> Multiply by (1+r)<sup>n</sup> to push a cash flow forward in time; multiply by (1+r)<sup>−n</sup> to pull it back.</li>
+            <li><strong>APR is a quote; EAR is what you actually earn or pay.</strong> Always convert to EAR before comparing rates with different compounding frequencies. EAR = (1 + i<sub>nom</sub>/m)<sup>m</sup> − 1.</li>
+            <li><strong>Continuous compounding is the limit</strong> as compounding frequency → ∞. r' = ln(1+r); r = e<sup>r'</sup> − 1. Continuous rates ADD over time (a 5% rate for 2 years = 10% continuous), which is why derivatives pricing uses them.</li>
+            <li><strong>Annuity, perpetuity, growing perpetuity are geometric-series tricks.</strong> They collapse infinite or large sums of cash flows into a single formula. Perpetuity = C/r is the cleanest: "value = cash flow / rate."</li>
+            <li><strong>Use Lynch's TVM Excel template</strong> for concept-question calculations — there's a calculator block for every formula.</li>
+        </ul>
+    </div>
+
     <h2 id="equity-markets">Lecture 2 - Equity markets</h2>
 
     <h3>Primary market</h3>
@@ -700,6 +838,36 @@
         <li><strong>Marketable limit order:</strong> a newly-arrived limit order that can execute immediately against the book. Buy priced ≥ lowest ask, or sell priced ≤ highest bid.</li>
     </ul>
 
+    <h4>Whiteboard example: DZX stock order book</h4>
+
+    <p>The kind of order book Lynch puts on the whiteboard. Read it like a price ladder — sell orders on top (at higher prices), buy orders on the bottom (at lower prices). The gap between the lowest sell and highest buy is the spread.</p>
+
+    <table class="matrix">
+        <thead><tr><th>Price</th><th>Limit Sell Orders</th><th>Limit Buy Orders</th></tr></thead>
+        <tbody>
+            <tr><td>$43.80</td><td>100 shares</td><td></td></tr>
+            <tr><td>$43.75</td><td></td><td></td></tr>
+            <tr><td>$43.70</td><td>300 shares</td><td></td></tr>
+            <tr><td>$43.65</td><td></td><td></td></tr>
+            <tr><td>$43.60</td><td>100 shares</td><td></td></tr>
+            <tr><td>$43.55</td><td><strong>400 shares ← lowest ask</strong></td><td></td></tr>
+            <tr><td>$43.50</td><td></td><td></td></tr>
+            <tr><td>$43.45</td><td></td><td></td></tr>
+            <tr><td>$43.40</td><td></td><td><strong>500 shares ← highest bid</strong></td></tr>
+            <tr><td>$43.35</td><td></td><td>200 shares</td></tr>
+            <tr><td>$43.30</td><td></td><td></td></tr>
+            <tr><td>$43.25</td><td></td><td>200 shares</td></tr>
+            <tr><td>$43.20</td><td></td><td>100 shares</td></tr>
+        </tbody>
+    </table>
+
+    <ul class="bullets">
+        <li><strong>Asked price</strong> = $43.55 (lowest unfilled sell). <strong>Bid price</strong> = $43.40 (highest unfilled buy). <strong>Spread</strong> = $0.15.</li>
+        <li>A market <strong>buy</strong> of 100 shares executes at the lowest ask: <strong>$43.55</strong>. The 400-share sell order at $43.55 has 300 remaining.</li>
+        <li>A market <strong>sell</strong> of 100 shares executes at the highest bid: <strong>$43.40</strong>. The 500-share buy order at $43.40 has 400 remaining.</li>
+        <li>If a market buy of 500 shares comes in: 400 fill at $43.55, then 100 walk up the book to fill at $43.60 (the next ask). <span class="imp">This is market impact</span> — large orders move the price.</li>
+    </ul>
+
     <h3>How dealers set quotes</h3>
     <p>Dealers don't want directional exposure → they manage inventory toward zero.</p>
     <ul class="bullets">
@@ -728,6 +896,17 @@
         <li>Exchanges linked by the <strong>consolidated quotation system</strong>. <strong>NBBO</strong> = National Best Bid and Offer = highest bid and lowest ask across all linked venues. Reg NMS forces routing to the venue with the better quote.</li>
         <li>Why people trade: information advantage, liquidity needs (raise cash / deploy cash), or rebalancing.</li>
     </ul>
+
+    <div class="remember">
+        <span class="label">✦ remember this — Lecture 2 (Equity Markets)</span>
+        <ul>
+            <li><strong>Primary vs secondary markets.</strong> Primary = new issues sold to first buyers (IPO, seasoned issue). Secondary = re-trading of existing shares. IPOs are systematically underpriced — informed investors get the good ones; uninformed need underpricing on average to break even.</li>
+            <li><strong>Limit orders provide liquidity; market orders take it.</strong> Limit orders sit on the book at a price; market orders cross the spread. Spread = Ask − Bid &gt; 0 is the price of immediacy.</li>
+            <li><strong>Order book obeys price-time priority.</strong> Higher bids and lower asks fill first; ties break by order arrival time. Large market orders "walk the book" and cause market impact.</li>
+            <li><strong>Dealers manage inventory toward zero.</strong> Inventory too high → lower both bid and ask. Inventory too low → raise both. Spread widens with volatility and adverse selection; narrows with volume and dealer competition.</li>
+            <li><strong>NBBO</strong> = best bid and ask across all linked venues. Reg NMS forces routing to the best quote.</li>
+        </ul>
+    </div>
 
     <h2 id="stock-positions">Lectures 2-3 - Stock positions &amp; portfolio return</h2>
 
@@ -843,108 +1022,545 @@
     </table>
     <p>Buying on margin = "negative cash position." Short-selling stock = "negative stock position." The portfolio return formula handles all four cases with the same equation — only the signs and magnitudes of the weights change.</p>
 
-    <h2 id="problems">Drill problems</h2>
+    <div class="remember">
+        <span class="label">✦ remember this — Lectures 2-3 (Stock positions &amp; portfolio return)</span>
+        <ul>
+            <li><strong>Return = (P<sub>t+1</sub> + C<sub>t+1</sub> − P<sub>t</sub>) / P<sub>t</sub>.</strong> Dividends count the same as price appreciation. Returns calculated close-to-close by convention.</li>
+            <li><strong>Three ways to hold a stock</strong>, all described by the same portfolio-weight framework: long with own cash (0 &lt; ω ≤ 1), levered long (ω &gt; 1, borrowing), short selling (ω &lt; 0). Margin amplifies returns both ways.</li>
+            <li><strong>Percentage margin = Net Worth / Value of Stock.</strong> U.S. initial minimum is 50%. If margin falls below the broker's maintenance margin (often 25-30%), you get a <em>margin call</em> — post collateral or close out.</li>
+            <li><strong>Portfolio return formula:</strong> R<sub>p</sub> = Σ ω<sub>i</sub> R<sub>i</sub> with Σω<sub>i</sub> = 1. This handles longs, shorts, and margin trades with one equation; only the signs and magnitudes of weights change.</li>
+        </ul>
+    </div>
 
-    <p>One concept at a time. The integrated section below stitches multiple ideas into single problems.</p>
+    <h2 id="return-dist">Lecture 3 - Characterizing the return distribution</h2>
 
-    <div class="problem">
-        <span class="qnum">Q1 - Time value of money</span>
-        <h3>APR vs EAR</h3>
-        <p>Your credit card quotes an APR of 18% with monthly compounding. What is the effective annual rate (EAR)? If a different card quotes an APR of 18% with daily compounding (365 days), what is the EAR? Which is more expensive?</p>
-        <button class="answer-btn" onclick="toggleAnswer(this)">Show solution</button>
-        <div class="answer">
-            <h4>Solution</h4>
-            <p>Monthly compounding: per-period rate = 0.18 / 12 = 0.015.</p>
-            <div class="formula">EAR = (1 + 0.015)^12 − 1
-    = 1.1956 − 1
-    = 0.1956  →  19.56%</div>
-            <p>Daily compounding: per-period rate = 0.18 / 365.</p>
-            <div class="formula">EAR = (1 + 0.18/365)^365 − 1
-    = 0.1972  →  19.72%</div>
-            <p><span class="imp">Daily compounding is slightly more expensive</span> - same APR, but more compounding periods means more interest-on-interest.</p>
+    <p>So far we've talked about returns as if we already knew them. But the return on a risky asset is uncertain — we only know its <em>distribution</em>. To build a portfolio we need to summarize that distribution. Two moments do the job: <strong>expected return</strong> (the center) and <strong>variance</strong> (the spread). When we have multiple assets, we also need <strong>covariance</strong> to capture how they move together.</p>
+
+    <h3>Notation</h3>
+    <p>Suppose there are <em>K</em> possible "states of the world" at the end of the period (e.g., expansion, recession, normal). Each state <em>s</em> has probability <em>prob(s)</em> and a known return for each asset in that state. The probabilities sum to 1.</p>
+
+    <h3>Expected return</h3>
+
+    <div class="formula-box">
+        \[ E[R_A] \;=\; \sum_{s=1}^{K} \text{prob}(s) \cdot R_A(s) \]
+        <div class="formula-actions">
+            <button class="intuition-btn" onclick="toggleIntuition(this)">💡 intuition</button>
+            <button class="derive-btn" onclick="toggleDerivation(this)">▼ derive</button>
+        </div>
+        <div class="intuition">
+            <p>The expected return is just the probability-weighted average return across all the possible outcomes. If a stock returns 20% half the time and −10% the other half, its expected return is 0.5 × 20% + 0.5 × (−10%) = 5%.</p>
+            <p>"Expected" doesn't mean "what's most likely to happen" — it means the long-run average if you played the same gamble many times. In any single year you'll get one specific outcome, not the expected value.</p>
+            <p>This is also called the <em>mean</em> of the return distribution. It's the single best one-number summary of "what return should I bake into my plans?"</p>
+        </div>
+        <div class="derivation">
+            <p>This is just the definition of expectation for a discrete random variable. If <em>R<sub>A</sub></em> can take values <em>R<sub>A</sub>(s<sub>1</sub>), R<sub>A</sub>(s<sub>2</sub>), …</em> with probabilities <em>prob(s<sub>1</sub>), prob(s<sub>2</sub>), …</em>, then:</p>
+            \[ E[R_A] \;=\; \sum_s \text{prob}(s) \cdot R_A(s) \]
+            <p>The weights are probabilities; they sum to 1; we average. Nothing fancier.</p>
         </div>
     </div>
 
-    <div class="problem">
-        <span class="qnum">Q2 - Annuity</span>
-        <h3>Mortgage payment</h3>
-        <p>You take out a $400,000 30-year fixed mortgage at 6% APR with monthly compounding. What is the monthly payment? How much principal is left after the first payment?</p>
-        <button class="answer-btn" onclick="toggleAnswer(this)">Show solution</button>
-        <div class="answer">
-            <h4>Solution</h4>
-            <p>Per-period (monthly) rate r = 0.06 / 12 = 0.005. N = 30 × 12 = 360 payments. PV = $400,000.</p>
-            <div class="formula">PVAF(0.005, 360) = [1 − (1.005)^(-360)] / 0.005
-                ≈ 166.79
+    <h3>Variance and standard deviation</h3>
 
-C = PV / PVAF = 400,000 / 166.79
-  ≈ $2,398 per month</div>
-            <p>First-month interest = 400,000 × 0.005 = $2,000. Principal portion of first payment = 2,398 − 2,000 = $398. Balance after first payment = $399,602.</p>
+    <div class="formula-box">
+        \[ \sigma^2[R_A] \;=\; \sum_{s} \text{prob}(s) \cdot \left(R_A(s) - E[R_A]\right)^2 \qquad \sigma[R_A] \;=\; \sqrt{\sigma^2[R_A]} \]
+        <div class="formula-actions">
+            <button class="intuition-btn" onclick="toggleIntuition(this)">💡 intuition</button>
+            <button class="derive-btn" onclick="toggleDerivation(this)">▼ derive</button>
+        </div>
+        <div class="intuition">
+            <p>Variance measures how spread-out the possible returns are around the mean. For each possible outcome, you take the gap between that outcome and the expected return, square it (so positive and negative gaps both count as "spread"), and average across all the states.</p>
+            <p>Two assets can have the same expected return but very different variance: one delivers 5% reliably every year, the other ranges from −30% to +40%. The second is way "riskier" in the everyday sense, and variance captures that.</p>
+            <p><strong>Standard deviation</strong> (the square root of variance) is what people actually quote, because it has the same units as the return (percent). A stock with σ = 20% has typical year-to-year swings of roughly ±20% around its mean. Variance has units of "percent squared," which is unintuitive.</p>
+            <p>In finance, "<em>risk</em>" usually means standard deviation of returns — at least until we get to CAPM where the relevant risk measure changes.</p>
+        </div>
+        <div class="derivation">
+            <p>Variance is the expectation of the <em>squared</em> deviation from the mean — the standard definition from statistics:</p>
+            \[ \sigma^2[R_A] \;=\; E\!\left[(R_A - E[R_A])^2\right] \]
+            <p>Expanding the expectation for a discrete random variable:</p>
+            \[ \sigma^2[R_A] \;=\; \sum_s \text{prob}(s) \cdot (R_A(s) - E[R_A])^2 \]
+            <p>Why square the deviation? Because if you just averaged the raw deviations (<em>R<sub>A</sub>(s) − E[R<sub>A</sub>]</em>), they'd cancel out and you'd always get zero — the mean is by construction the balancing point of the distribution. Squaring makes them all positive so they accumulate.</p>
+            <p>Standard deviation is simply <em>√variance</em> to recover the original units.</p>
         </div>
     </div>
 
-    <div class="problem">
-        <span class="qnum">Q3 - Short selling</span>
-        <h3>Margin and a price move</h3>
-        <p>You have $10,000 cash. You short 500 shares of XYZ at $40 (proceeds = $20,000). Your maintenance margin is 30%. At what price does the broker call you?</p>
-        <button class="answer-btn" onclick="toggleAnswer(this)">Show solution</button>
-        <div class="answer">
-            <h4>Solution</h4>
-            <p>Right after the short: cash = $30,000 (your $10K + $20K from sale). Liability = 500 shares (initially worth $20,000). Net worth = $10,000.</p>
-            <p>If price rises to P, liability = 500P. Net worth = 30,000 − 500P.</p>
-            <div class="formula">Margin = Net Worth / Value of Stock
-       = (30,000 − 500P) / (500P)
-       = 0.30  (maintenance margin)
+    <h3>Covariance and correlation</h3>
 
-→ 30,000 − 500P = 150P
-→ 30,000 = 650P
-→ P ≈ $46.15</div>
-            <p>At P = $46.15 you get a margin call. The percentage margin = the % price increase that wipes out the buffer.</p>
+    <div class="formula-box">
+        <p><strong>Covariance</strong> between two assets' returns:</p>
+        \[ \sigma[R_A, R_B] \;=\; \sum_{s} \text{prob}(s) \cdot (R_A(s) - E[R_A])(R_B(s) - E[R_B]) \]
+        <p><strong>Correlation</strong> (standardized version):</p>
+        \[ \rho[R_A, R_B] \;=\; \frac{\sigma[R_A, R_B]}{\sigma[R_A]\, \sigma[R_B]} \qquad \rho \in [-1, +1] \]
+        <div class="formula-actions">
+            <button class="intuition-btn" onclick="toggleIntuition(this)">💡 intuition</button>
+            <button class="derive-btn" onclick="toggleDerivation(this)">▼ derive</button>
+        </div>
+        <div class="intuition">
+            <p>Covariance asks: when asset A has a good year (above its mean), does asset B <em>tend</em> to also have a good year? If yes, covariance is positive. If A's good years coincide with B's bad years, covariance is negative. If they move independently, covariance is zero.</p>
+            <p>Think of two stocks: an airline and an oil producer. When oil prices spike, oil stocks soar while airlines suffer (jet fuel is a huge cost). They have <em>negative</em> covariance. Now imagine two banks — they move together because they're exposed to the same interest-rate environment. Strong positive covariance.</p>
+            <p><strong>Correlation</strong> is just covariance rescaled to fit between −1 and +1, so you can compare across asset pairs that have wildly different volatilities. ρ = +1 = perfectly in sync. ρ = 0 = unrelated. ρ = −1 = perfectly opposite. Real assets are usually somewhere in between — most stocks are mildly positively correlated with each other (most things go up when the economy is good).</p>
+            <p><span class="imp">This is the magic ingredient in diversification:</span> if you combine assets that aren't perfectly correlated, the portfolio's overall risk is <em>less</em> than the weighted average of the individual risks. That's the entire point of holding more than one thing.</p>
+        </div>
+        <div class="derivation">
+            <p>Covariance is the expected product of the deviations of each asset from its own mean:</p>
+            \[ \sigma[R_A, R_B] \;=\; E\!\left[(R_A - E[R_A])(R_B - E[R_B])\right] \]
+            <p>For a discrete distribution this expands to the probability-weighted sum shown above. Two important special cases:</p>
+            <ul class="bullets">
+                <li><strong>A and itself:</strong> <em>σ[R<sub>A</sub>, R<sub>A</sub>] = E[(R<sub>A</sub> − E[R<sub>A</sub>])²] = σ²[R<sub>A</sub>]</em>. Covariance with self = variance.</li>
+                <li><strong>Correlation = ±1 means perfect linear dependence.</strong> If <em>R<sub>B</sub> = a + b R<sub>A</sub></em> for constants <em>a, b</em>, then ρ = +1 (if b &gt; 0) or −1 (if b &lt; 0).</li>
+            </ul>
+            <p>Covariance has awkward units (return × return) and depends on the scale of the assets. Correlation is the cleaned-up version: divide by both standard deviations to get a unit-free number that always lies in [−1, +1].</p>
+            \[ \rho[R_A, R_B] \;=\; \frac{\sigma[R_A, R_B]}{\sigma[R_A] \, \sigma[R_B]} \]
+            <p>By the Cauchy-Schwarz inequality, this ratio is always between −1 and 1, so correlation is a clean comparable measure across any pair of assets.</p>
         </div>
     </div>
 
-    <div class="problem">
-        <span class="qnum">Q4 - Continuous compounding</span>
-        <h3>Rate conversion</h3>
-        <p>A bank quotes a continuously compounded rate of 5% per year. What is the EAR? If a different bank quotes EAR = 5%, what is the equivalent continuously compounded rate? What is the FV of $1,000 invested for 7 years at 5% continuously compounded?</p>
-        <button class="answer-btn" onclick="toggleAnswer(this)">Show solution</button>
-        <div class="answer">
-            <h4>Solution</h4>
-            <div class="formula">Continuous rate r' = 5% = 0.05.
-EAR  r = exp(r') − 1
-       = exp(0.05) − 1
-       = 0.05127  →  5.127%
+    <h3>Linear regression</h3>
 
-If EAR = 5%, equivalent continuous rate:
-  r' = ln(1 + 0.05) = ln(1.05) ≈ 0.04879  →  4.879%
-
-FV of $1,000 at 5% continuous for 7 years:
-  FV = 1,000 × exp(0.05 × 7)
-     = 1,000 × exp(0.35)
-     ≈ 1,000 × 1.4191
-     ≈ $1,419.07</div>
-            <p>Continuously compounded rate is always slightly lower than the equivalent EAR (because more compounding earns more). And for an EAR of x, the continuous rate is ln(1+x) ≈ x for small x.</p>
+    <div class="formula-box">
+        <p><strong>Regression of <em>Y</em> on <em>X</em></strong></p>
+        \[ Y \;=\; a + b X + e \]
+        \[ b \;=\; \frac{\sigma[Y, X]}{\sigma^2[X]} \qquad a \;=\; E[Y] - b \, E[X] \]
+        <div class="formula-actions">
+            <button class="intuition-btn" onclick="toggleIntuition(this)">💡 intuition</button>
+            <button class="derive-btn" onclick="toggleDerivation(this)">▼ derive</button>
+        </div>
+        <div class="intuition">
+            <p>Regression draws the <em>best straight line</em> through a cloud of data points. Given two random variables <em>X</em> and <em>Y</em>, it answers: "if I know <em>X</em>, what's my best guess for <em>Y</em>?"</p>
+            <p>The slope <em>b</em> says "for each one-unit increase in X, Y goes up by b on average." The intercept <em>a</em> is the predicted Y when X = 0. The residual <em>e</em> is what the line missed — the gap between the actual Y and the predicted Y.</p>
+            <p>Why we care: in Lecture 5 we'll regress a stock's returns on the market's returns. The slope of that regression is <em>beta</em> — the central risk measure in CAPM. So this formula is the math behind every "beta" you've ever seen quoted on Yahoo Finance.</p>
+            <p>"Best" line means the one that minimizes the sum of <em>squared</em> residuals. Squared so positive and negative misses both count.</p>
+        </div>
+        <div class="derivation">
+            <p>Pick <em>a</em> and <em>b</em> to minimize <em>E[e²]</em> = <em>E[(Y − a − bX)²]</em>. Take partial derivatives and set to zero.</p>
+            <p><strong>Optimal intercept</strong> (first-order condition on <em>a</em>):</p>
+            \[ \frac{\partial}{\partial a} E[(Y - a - bX)^2] \;=\; -2 \, E[Y - a - bX] \;=\; 0 \]
+            <p>So <em>E[Y − a − bX] = 0</em>, which means <em>a = E[Y] − b E[X]</em>. This forces the line to pass through the point of means <em>(E[X], E[Y])</em> — and it means the residual <em>e</em> has zero expectation, <em>E[e] = 0</em>.</p>
+            <p><strong>Optimal slope</strong> (first-order condition on <em>b</em>):</p>
+            \[ \frac{\partial}{\partial b} E[(Y - a - bX)^2] \;=\; -2 \, E[X(Y - a - bX)] \;=\; 0 \]
+            <p>Substitute the optimal <em>a</em> back in. The condition becomes <em>E[X·e] = 0</em>, equivalent to <em>σ[X, e] = 0</em>. Expanding <em>e = Y − a − bX</em> and using <em>a = E[Y] − bE[X]</em>:</p>
+            \[ E[X(Y - E[Y]) - b X (X - E[X])] \;=\; 0 \;\Rightarrow\; \sigma[Y, X] - b \, \sigma^2[X] \;=\; 0 \]
+            <p>Solve for <em>b</em>:</p>
+            \[ b \;=\; \frac{\sigma[Y, X]}{\sigma^2[X]} \]
+            <p>Two properties that fall out for free: <em>E[e] = 0</em> (residuals average to zero) and <em>σ[X, e] = 0</em> (residuals are uncorrelated with the predictor). These are the two "orthogonality conditions" that define the OLS regression line.</p>
         </div>
     </div>
 
-    <div class="problem">
-        <span class="qnum">Q5 - Growing perpetuity</span>
-        <h3>Building intuition for the formula</h3>
-        <p>An asset will pay $4.12 at the end of next year, growing at 3% per year forever after that. Your required return is 9%. What is it worth today? What is it worth right after the first payment is received?</p>
-        <button class="answer-btn" onclick="toggleAnswer(this)">Show solution</button>
-        <div class="answer">
-            <h4>Solution</h4>
-            <div class="formula">PV_0 = C_1 / (r − g)
-     = 4.12 / (0.09 − 0.03)
-     = 4.12 / 0.06
-     = $68.67</div>
-            <p>Right after the first payment is received, the next expected cash flow is C₂ = 4.12 × 1.03 = $4.2436 (one year out). So:</p>
-            <div class="formula">PV_1 (ex-payment) = C_2 / (r − g)
-                 = 4.2436 / 0.06
-                 ≈ $70.73
+    <h3>Inputs to the portfolio choice problem</h3>
+    <p>Given <em>N</em> risky assets plus a riskless asset, an investor needs three things to choose portfolio weights:</p>
+    <ol class="numbered">
+        <li><strong>E[R<sub>i</sub>]</strong> for every asset (expected returns)</li>
+        <li><strong>σ[R<sub>i</sub>]</strong> for every asset (standard deviations)</li>
+        <li><strong>σ[R<sub>i</sub>, R<sub>j</sub>]</strong> for every pair (covariances)</li>
+    </ol>
+    <p>Under mean-variance assumptions, the investor cares only about the resulting portfolio's <em>E[R<sub>p</sub>]</em> and <em>σ[R<sub>p</sub>]</em>. Those two summary numbers are functions of the weights and the three inputs above. The whole rest of the course is variations on: <em>"given these inputs and some assumption about preferences, how should I pick the weights?"</em></p>
 
-(equivalently PV_0 × (1 + g) = 68.67 × 1.03 ≈ $70.73)</div>
-            <p>Value grows at the cash-flow growth rate g - consistent with the constant-growth assumption. <span class="imp">Requires r &gt; g, otherwise PV is infinite (or negative).</span></p>
+    <h3>Whiteboard example: DFQ &amp; BML in three states</h3>
+
+    <p>Lynch's go-to example: two stocks <strong>DFQ</strong> and <strong>BML</strong>, three states of the world (expansion, recovery, crisis), riskless rate <em>R<sub>f</sub></em> = 6%.</p>
+
+    <table class="matrix">
+        <thead><tr><th>State</th><th>Probability</th><th>R<sub>DFQ</sub></th><th>R<sub>BML</sub></th></tr></thead>
+        <tbody>
+            <tr><td>Expansion</td><td>0.20</td><td>33%</td><td>20%</td></tr>
+            <tr><td>Recovery</td><td>0.70</td><td>8%</td><td>10%</td></tr>
+            <tr><td>Crisis</td><td>0.10</td><td>−12%</td><td>−10%</td></tr>
+        </tbody>
+    </table>
+
+    <h4>Expected returns</h4>
+    <div class="formula">E[R_DFQ] = 0.20×33% + 0.70×8% + 0.10×(−12%)
+        = 6.6% + 5.6% − 1.2%
+        = 11%
+
+E[R_BML] = 0.20×20% + 0.70×10% + 0.10×(−10%)
+        = 4% + 7% − 1%
+        = 10%</div>
+
+    <h4>Variance and standard deviation of DFQ</h4>
+    <p>Deviations from <em>E[R<sub>DFQ</sub>]</em> = 11%: <strong>+22, −3, −23</strong> percentage points.</p>
+    <div class="formula">σ²[R_DFQ] = 0.20×(22)² + 0.70×(−3)² + 0.10×(−23)²
+         = 0.20×484 + 0.70×9 + 0.10×529
+         = 96.8 + 6.3 + 52.9
+         = 156   (in %², or 0.0156 in decimal²)
+
+σ[R_DFQ] = √156 ≈ 12.49%</div>
+
+    <h4>Variance and standard deviation of BML</h4>
+    <p>Deviations from <em>E[R<sub>BML</sub>]</em> = 10%: <strong>+10, 0, −20</strong>.</p>
+    <div class="formula">σ²[R_BML] = 0.20×(10)² + 0.70×(0)² + 0.10×(−20)²
+         = 0.20×100 + 0 + 0.10×400
+         = 20 + 0 + 40
+         = 60
+
+σ[R_BML] = √60 ≈ 7.75%</div>
+
+    <h4>Covariance and correlation</h4>
+    <div class="formula">σ[R_DFQ, R_BML] = 0.20×(22)(10) + 0.70×(−3)(0) + 0.10×(−23)(−20)
+              = 0.20×220 + 0 + 0.10×460
+              = 44 + 0 + 46
+              = 90
+
+ρ[R_DFQ, R_BML] = 90 / (12.49 × 7.75)
+              ≈ 90 / 96.80
+              ≈ 0.93</div>
+
+    <p>High positive correlation — both stocks tend to do well in expansion and badly in crisis. Diversification benefit is small.</p>
+
+    <h4>Regression of DFQ on BML</h4>
+    <div class="formula">b = σ[R_DFQ, R_BML] / σ²[R_BML] = 90 / 60 = 1.5
+a = E[R_DFQ] − b × E[R_BML] = 11% − 1.5×10% = −4%
+
+R_DFQ  =  −4%  +  1.5 × R_BML  +  e</div>
+
+    <p>So a 1 percentage-point increase in BML's return is associated with a 1.5 percentage-point increase in DFQ's return, on average. The slope <em>b</em> = 1.5 is what becomes "beta" when we run the same regression against the market portfolio in Lecture 5.</p>
+
+    <p>We'll keep using these DFQ / BML numbers in the next section to build portfolios.</p>
+
+    <div class="remember">
+        <span class="label">✦ remember this — Lecture 3 (Return Distribution)</span>
+        <ul>
+            <li><strong>Return distributions are summarized by E[R] (center) and σ (spread).</strong> Expected return = probability-weighted mean. Variance = probability-weighted squared deviation from the mean. Standard deviation = √variance, in the same units as returns.</li>
+            <li><strong>Covariance measures joint movement.</strong> Same sign = move together; opposite = move opposite. Correlation = covariance / (σ<sub>1</sub> × σ<sub>2</sub>), always in [−1, +1]. Correlation is the standardized, scale-free version of covariance.</li>
+            <li><strong>Regression slope b = σ[Y, X] / σ²[X].</strong> Intercept a = E[Y] − b × E[X]. The line passes through the point of means and minimizes the sum of squared residuals. <span class="imp">When Y is a stock's return and X is the market's, b becomes <em>beta</em> in Lecture 5.</span></li>
+            <li><strong>To build a portfolio you need three input sets:</strong> E[R<sub>i</sub>] for each asset, σ[R<sub>i</sub>] for each asset, and σ[R<sub>i</sub>, R<sub>j</sub>] for every pair. The rest of portfolio theory is "given these, pick the weights."</li>
+        </ul>
+    </div>
+
+    <h2 id="one-risky">Lectures 3-4 - One risky + one riskless asset</h2>
+
+    <p>The simplest portfolio problem: you have access to <em>one</em> risky asset (say, a stock) and the <em>riskless</em> asset (T-bills). How do you split your money?</p>
+
+    <h3>Investor preferences, formalized</h3>
+
+    <p>The mean-variance setup makes two assumptions about preferences:</p>
+    <ul class="bullets">
+        <li><strong>All investors prefer more to less</strong> — for a given level of risk, higher expected return is always better.</li>
+        <li><strong>Almost all investors are risk averse</strong> — for a given expected return, lower volatility is always better.</li>
+    </ul>
+    <p>Stated more formally: for any risk-averse investor,</p>
+    <ul class="bullets">
+        <li>If two portfolios have the <strong>same E[R]</strong>: pick the one with <strong>lower σ</strong>.</li>
+        <li>If two portfolios have the <strong>same σ</strong>: pick the one with <strong>higher E[R]</strong>.</li>
+        <li>If one has both higher E[R] AND higher σ: depends on how risk-averse the investor is.</li>
+    </ul>
+
+    <h3>Portfolio expected return — general formula</h3>
+
+    <div class="formula-box">
+        \[ E[R_p] \;=\; \omega_1 E[R_1] + \omega_2 E[R_2] + \cdots + \omega_N E[R_N] \]
+        <div class="formula-actions">
+            <button class="intuition-btn" onclick="toggleIntuition(this)">💡 intuition</button>
+            <button class="derive-btn" onclick="toggleDerivation(this)">▼ derive</button>
         </div>
+        <div class="intuition">
+            <p>The expected return on a portfolio is just the weighted average of the expected returns of the assets in it. Same logic as the portfolio return formula from Class 3 — but now we're averaging the <em>expectations</em>, not realized returns.</p>
+            <p>This works for any number of assets and any weight pattern (including margin and short selling). Clean.</p>
+        </div>
+        <div class="derivation">
+            <p>From Lecture 2-3: <em>R<sub>p</sub> = Σ ω<sub>i</sub> R<sub>i</sub></em>. Expectation is a <em>linear operator</em>, so it distributes over sums:</p>
+            \[ E[R_p] \;=\; E\!\left[\sum_i \omega_i R_i\right] \;=\; \sum_i \omega_i \, E[R_i] \]
+            <p>The weights <em>ω<sub>i</sub></em> are known constants (decided at the start of the period), so they come out of the expectation. Clean and simple.</p>
+        </div>
+    </div>
+
+    <h3>Standard deviation: one risky + one riskless</h3>
+
+    <div class="formula-box">
+        \[ \sigma[R_p] \;=\; |\omega_i| \cdot \sigma[R_i] \qquad \text{(one risky asset } i \text{ + riskless)} \]
+        <div class="formula-actions">
+            <button class="intuition-btn" onclick="toggleIntuition(this)">💡 intuition</button>
+            <button class="derive-btn" onclick="toggleDerivation(this)">▼ derive</button>
+        </div>
+        <div class="intuition">
+            <p>The riskless asset has zero volatility by definition (it's "riskless"). So all the portfolio's volatility comes from the risky asset, scaled by how much you have invested in it.</p>
+            <p>If you put 60% in a stock with σ = 20%, the portfolio has σ = 0.6 × 20% = 12%. If you go on margin and have ω = 1.5 in the stock (financed by ω = −0.5 in the riskless), portfolio σ = 1.5 × 20% = 30%. Margin amplifies risk linearly.</p>
+            <p><strong>Why the absolute value?</strong> Because risk is symmetric — going short a risky asset with ω = −0.5 gives you the same volatility as going long with ω = +0.5. Standard deviation doesn't care about direction; only magnitude.</p>
+        </div>
+        <div class="derivation">
+            <p>For a two-asset portfolio (one risky + riskless), variance is:</p>
+            \[ \sigma^2[R_p] \;=\; \omega_i^2 \, \sigma^2[R_i] + \omega_f^2 \, \sigma^2[R_f] + 2 \omega_i \omega_f \, \sigma[R_i, R_f] \]
+            <p>Now use two facts about the riskless asset:</p>
+            <ul class="bullets">
+                <li><em>σ²[R<sub>f</sub>] = 0</em> (riskless = zero variance)</li>
+                <li><em>σ[R<sub>i</sub>, R<sub>f</sub>] = 0</em> (riskless return is constant, so it can't covary with anything)</li>
+            </ul>
+            <p>The second and third terms vanish, leaving:</p>
+            \[ \sigma^2[R_p] \;=\; \omega_i^2 \, \sigma^2[R_i] \quad\Rightarrow\quad \sigma[R_p] \;=\; |\omega_i| \, \sigma[R_i] \]
+            <p>The absolute value comes from taking the square root — variance is squared, so a negative weight squares to positive.</p>
+        </div>
+    </div>
+
+    <h3>How (σ, E[R]) traces out as you vary the weight</h3>
+
+    <p>Now we can plot it. As you change <em>ω</em> (your weight in the risky asset), the portfolio's (σ, E[R]) point moves along a specific path in mean-variance space. Using DFQ (<em>E[R]</em> = 11%, <em>σ</em> = 12.49%) and <em>R<sub>f</sub></em> = 6%:</p>
+
+    <svg class="cal-plot" viewBox="0 0 540 380" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Portfolio (σ, E[R]) as weight varies, both long and short branches">
+        <!-- gridlines vertical -->
+        <line x1="160" y1="40" x2="160" y2="310" stroke="#e8e8e8" stroke-dasharray="3,3"/>
+        <line x1="260" y1="40" x2="260" y2="310" stroke="#e8e8e8" stroke-dasharray="3,3"/>
+        <line x1="360" y1="40" x2="360" y2="310" stroke="#e8e8e8" stroke-dasharray="3,3"/>
+        <line x1="460" y1="40" x2="460" y2="310" stroke="#e8e8e8" stroke-dasharray="3,3"/>
+        <!-- gridlines horizontal -->
+        <line x1="60" y1="220" x2="460" y2="220" stroke="#e8e8e8" stroke-dasharray="3,3"/>
+        <line x1="60" y1="130" x2="460" y2="130" stroke="#e8e8e8" stroke-dasharray="3,3"/>
+        <line x1="60" y1="40" x2="460" y2="40" stroke="#e8e8e8" stroke-dasharray="3,3"/>
+        <!-- axes -->
+        <line x1="60" y1="310" x2="470" y2="310" stroke="#666" stroke-width="1.5"/>
+        <line x1="60" y1="310" x2="60" y2="35" stroke="#666" stroke-width="1.5"/>
+        <!-- axis labels -->
+        <text x="265" y="350" text-anchor="middle" font-size="13" fill="#666">σ (standard deviation, %)</text>
+        <text x="22" y="180" text-anchor="middle" font-size="13" fill="#666" transform="rotate(-90, 22, 180)">E[R] (%)</text>
+        <!-- x ticks -->
+        <text x="60" y="325" text-anchor="middle" font-size="11" fill="#888">0</text>
+        <text x="160" y="325" text-anchor="middle" font-size="11" fill="#888">5</text>
+        <text x="260" y="325" text-anchor="middle" font-size="11" fill="#888">10</text>
+        <text x="360" y="325" text-anchor="middle" font-size="11" fill="#888">15</text>
+        <text x="460" y="325" text-anchor="middle" font-size="11" fill="#888">20</text>
+        <!-- y ticks -->
+        <text x="50" y="314" text-anchor="end" font-size="11" fill="#888">0</text>
+        <text x="50" y="224" text-anchor="end" font-size="11" fill="#888">5</text>
+        <text x="50" y="134" text-anchor="end" font-size="11" fill="#888">10</text>
+        <text x="50" y="44" text-anchor="end" font-size="11" fill="#888">15</text>
+        <!-- Upper branch (red solid) from R_f (60,202) to (460,58) -->
+        <line x1="60" y1="202" x2="460" y2="58" stroke="#ff3333" stroke-width="2.5"/>
+        <!-- Lower branch (dashed gray) from R_f (60,202) to (360, 310) -->
+        <line x1="60" y1="202" x2="360" y2="310" stroke="#888" stroke-width="2" stroke-dasharray="6,4"/>
+        <!-- R_f point -->
+        <circle cx="60" cy="202" r="5" fill="#333"/>
+        <text x="68" y="198" font-size="11" fill="#333">R_f, ω = 0</text>
+        <!-- ω = 0.5: (185, 157) -->
+        <circle cx="185" cy="157" r="3.5" fill="#ff3333"/>
+        <text x="192" y="153" font-size="10" fill="#666">ω = 0.5</text>
+        <!-- ω = 1.0 (DFQ): (310, 112) -->
+        <circle cx="310" cy="112" r="5.5" fill="#ff3333"/>
+        <text x="318" y="108" font-size="11" fill="#ff3333" font-weight="bold">DFQ (ω = 1)</text>
+        <!-- ω = 1.4 (margin): (410, 76) -->
+        <circle cx="410" cy="76" r="3.5" fill="#ff3333"/>
+        <text x="320" y="71" font-size="10" fill="#666">ω = 1.4 (margin)</text>
+        <!-- ω = -0.5: (185, 247) -->
+        <circle cx="185" cy="247" r="3.5" fill="#888"/>
+        <text x="192" y="251" font-size="10" fill="#666">ω = −0.5 (short)</text>
+        <!-- ω = -1: (310, 292) -->
+        <circle cx="310" cy="292" r="3.5" fill="#888"/>
+        <text x="318" y="296" font-size="10" fill="#666">ω = −1 (full short)</text>
+        <!-- branch labels -->
+        <text x="410" y="50" font-size="11" fill="#ff3333" font-weight="bold">long positions →</text>
+        <text x="290" y="305" font-size="11" fill="#888">short positions ↘</text>
+    </svg>
+
+    <p class="caption">Each weight <em>ω</em> on DFQ maps to one point in (σ, E[R]) space. Long positions trace out the upper red branch; short positions trace out the lower dashed branch. Both branches start at R<sub>f</sub> (when ω = 0, you're 100% in T-bills).</p>
+
+    <p>Two things to notice:</p>
+    <ul class="bullets">
+        <li>The <strong>upper (red) branch</strong> has positive slope: more risk → more expected return. This is the "good" direction.</li>
+        <li>The <strong>lower (gray) branch</strong> has negative slope: more risk → <em>less</em> expected return. This is what shorting DFQ gets you, because DFQ has a positive expected risk premium (E[R] &gt; R<sub>f</sub>). Shorting it means you're betting against a winner — you bear the risk but lose the premium.</li>
+    </ul>
+
+    <p><span class="imp">No risk-averse investor ever picks the lower branch.</span> For any σ on the lower branch, there's a portfolio on the upper branch with the SAME σ and a HIGHER E[R]. That's Rule 1 in action (see next subsection).</p>
+
+    <h3>Decision rules: how risk-averse investors choose</h3>
+
+    <p>Lynch states two rules that any risk-averse investor follows when comparing two portfolios:</p>
+
+    <table>
+        <thead><tr><th>Rule</th><th>If you fix…</th><th>… then prefer</th><th>Why</th></tr></thead>
+        <tbody>
+            <tr><td>Rule 1</td><td>σ (volatility) constant</td><td>higher E[R]</td><td>"More return for the same risk is always better."</td></tr>
+            <tr><td>Rule 2</td><td>E[R] constant</td><td>lower σ</td><td>"Less risk for the same return is always better."</td></tr>
+        </tbody>
+    </table>
+
+    <p>What happens when one portfolio has BOTH higher E[R] AND higher σ than the other? Then it depends — a more risk-averse investor might prefer the safer, lower-return one; a less risk-averse investor would take the higher-risk one. Risk aversion enters as a personal trade-off only in this case.</p>
+
+    <p><strong>Rule 1, applied to the graph above:</strong> Take any σ value, say σ = 6.25%. The upper branch gives E[R] = 8.5% (ω = +0.5, long DFQ); the lower branch gives E[R] = 3.5% (ω = −0.5, short DFQ). Same volatility, but the upper-branch portfolio dominates. Every risk-averse investor picks it. The lower branch is eliminated entirely.</p>
+
+    <p><strong>Rule 2</strong> will become important in the next lecture when we have two risky assets — the portfolio possibility curve will <em>bend</em>, and you can find two portfolios with the same E[R] but different σ. Rule 2 then tells you to pick the leftward one (lower σ). On the current 1-risky-+-riskless setup, each E[R] uniquely maps to a single σ on each branch, so Rule 2 doesn't add anything new beyond Rule 1.</p>
+
+    <h3>Where do risk-averse investors sit on the CAL?</h3>
+
+    <p>After applying the rules, every risk-averse investor agrees: hold a portfolio on the upper (red) branch. But <em>where</em> on it? That depends on personal risk aversion.</p>
+
+    <svg class="cal-plot" viewBox="0 0 540 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Where risk-averse investors sit on the CAL">
+        <!-- gridlines -->
+        <line x1="160" y1="40" x2="160" y2="270" stroke="#e8e8e8" stroke-dasharray="3,3"/>
+        <line x1="260" y1="40" x2="260" y2="270" stroke="#e8e8e8" stroke-dasharray="3,3"/>
+        <line x1="360" y1="40" x2="360" y2="270" stroke="#e8e8e8" stroke-dasharray="3,3"/>
+        <line x1="460" y1="40" x2="460" y2="270" stroke="#e8e8e8" stroke-dasharray="3,3"/>
+        <line x1="60" y1="195" x2="460" y2="195" stroke="#e8e8e8" stroke-dasharray="3,3"/>
+        <line x1="60" y1="120" x2="460" y2="120" stroke="#e8e8e8" stroke-dasharray="3,3"/>
+        <line x1="60" y1="45" x2="460" y2="45" stroke="#e8e8e8" stroke-dasharray="3,3"/>
+        <!-- axes -->
+        <line x1="60" y1="270" x2="470" y2="270" stroke="#666" stroke-width="1.5"/>
+        <line x1="60" y1="270" x2="60" y2="35" stroke="#666" stroke-width="1.5"/>
+        <!-- axis labels -->
+        <text x="265" y="305" text-anchor="middle" font-size="13" fill="#666">σ (standard deviation, %)</text>
+        <text x="22" y="155" text-anchor="middle" font-size="13" fill="#666" transform="rotate(-90, 22, 155)">E[R] (%)</text>
+        <!-- x ticks -->
+        <text x="60" y="285" text-anchor="middle" font-size="11" fill="#888">0</text>
+        <text x="160" y="285" text-anchor="middle" font-size="11" fill="#888">5</text>
+        <text x="260" y="285" text-anchor="middle" font-size="11" fill="#888">10</text>
+        <text x="360" y="285" text-anchor="middle" font-size="11" fill="#888">15</text>
+        <text x="460" y="285" text-anchor="middle" font-size="11" fill="#888">20</text>
+        <!-- y ticks -->
+        <text x="50" y="274" text-anchor="end" font-size="11" fill="#888">0</text>
+        <text x="50" y="199" text-anchor="end" font-size="11" fill="#888">5</text>
+        <text x="50" y="124" text-anchor="end" font-size="11" fill="#888">10</text>
+        <text x="50" y="49" text-anchor="end" font-size="11" fill="#888">15</text>
+        <!-- CAL upper branch only -->
+        <line x1="60" y1="180" x2="460" y2="60" stroke="#ff3333" stroke-width="2.5"/>
+        <!-- R_f point -->
+        <circle cx="60" cy="180" r="5" fill="#333"/>
+        <text x="68" y="176" font-size="11" fill="#333">R_f</text>
+        <!-- High risk-averse position at ω≈0.3, σ≈3.75, E[R]=7.5 → x=135, y=187.5... -->
+        <!-- σ=3.75 → x=60+3.75*20=135, E[R]=7.5 → y=270-7.5*15=157.5 -->
+        <circle cx="135" cy="157" r="6" fill="#ff3333" stroke="#fff" stroke-width="1.5"/>
+        <text x="140" y="146" font-size="11" fill="#ff3333" font-weight="bold">High RA</text>
+        <text x="140" y="135" font-size="10" fill="#666">(ω ≈ 0.3)</text>
+        <!-- DFQ at ω=1: (310, 105) - using y = 270 - E[R]*15 = 270 - 11*15 = 105 -->
+        <circle cx="310" cy="105" r="5" fill="#888"/>
+        <text x="318" y="101" font-size="11" fill="#666">DFQ (ω = 1)</text>
+        <!-- Low risk-averse at ω≈1.3, σ≈16.2, E[R]=12.5 → x=384, y=82.5 -->
+        <circle cx="384" cy="82" r="6" fill="#ff3333" stroke="#fff" stroke-width="1.5"/>
+        <text x="392" y="71" font-size="11" fill="#ff3333" font-weight="bold">Low RA</text>
+        <text x="392" y="60" font-size="10" fill="#666">(ω ≈ 1.3, margin)</text>
+        <!-- Arrow from R_f along the line -->
+        <text x="100" y="225" font-size="10" fill="#666">← more risk averse, more in T-bills</text>
+        <text x="280" y="225" font-size="10" fill="#666">less risk averse, more in risky asset →</text>
+    </svg>
+
+    <p class="caption">Same CAL, different sitting positions. More risk averse → closer to R<sub>f</sub> (more in T-bills, less in DFQ). Less risk averse → further along the line, possibly on margin (ω &gt; 1).</p>
+
+    <p>A useful mental model:</p>
+    <ul class="bullets">
+        <li><strong>Highly risk-averse</strong> (say, near retirement, can't afford big drawdowns): ω might be 0.2-0.4 in the risky asset, rest in T-bills. Low expected return but low volatility.</li>
+        <li><strong>Moderately risk-averse</strong>: ω near 1.0 — basically all in the risky asset, no cash buffer.</li>
+        <li><strong>Low risk aversion</strong> (young, long horizon, high tolerance for swings): ω &gt; 1 — borrow at the riskless rate and lever into the risky asset for amplified expected return at the cost of amplified volatility.</li>
+    </ul>
+
+    <p>The CAL is the menu; the investor's risk aversion picks the dish. <span class="imp">Crucially, every risk-averse investor uses the SAME menu (same CAL), just orders different things from it.</span> This is the seed of the two-fund separation theorem we'll see when we get to multiple risky assets.</p>
+
+    <h3>Capital Allocation Line (CAL)</h3>
+
+    <div class="formula-box">
+        <p><strong>Slope of the CAL for risky asset <em>i</em>:</strong></p>
+        \[ \text{slope}[\text{CAL}_i] \;=\; \frac{|E[R_i] - R_f|}{\sigma[R_i]} \]
+        <div class="formula-actions">
+            <button class="intuition-btn" onclick="toggleIntuition(this)">💡 intuition</button>
+            <button class="derive-btn" onclick="toggleDerivation(this)">▼ derive</button>
+        </div>
+        <div class="intuition">
+            <p>The Capital Allocation Line is the menu of all portfolios you can build by mixing one risky asset with the riskless asset. Plot it in (σ, E[R]) space and it's a <em>straight line</em> starting from the riskless asset (at σ = 0, E[R] = R<sub>f</sub>) and passing through the risky asset (at σ = σ[R<sub>i</sub>], E[R] = E[R<sub>i</sub>]).</p>
+            <p>The <strong>slope</strong> of this line is <em>excess return per unit of risk</em> — how much extra expected return you earn for each unit of standard deviation you take on. This is sometimes called the <em>reward-to-variability ratio</em>. Higher slope = better deal.</p>
+            <p>Key insight: between two risky assets, <span class="imp">a risk-averse investor will always prefer the one with the steeper CAL</span>, regardless of how risk-averse they are. Risk preference only determines <em>where</em> on the CAL to sit, not <em>which</em> CAL to use.</p>
+            <p>If E[R<sub>i</sub>] &gt; R<sub>f</sub>, you hold the risky asset with ω ≥ 0 (possibly on margin if ω &gt; 1). If E[R<sub>i</sub>] &lt; R<sub>f</sub>, you actually want to short the risky asset (ω &lt; 0). Why hold something with expected return below the risk-free rate? You wouldn't — short it instead.</p>
+        </div>
+        <div class="derivation">
+            <p>Take a portfolio of weight <em>ω</em> in risky asset <em>i</em> and <em>(1 − ω)</em> in the riskless asset. From the formulas above:</p>
+            \[ E[R_p] \;=\; \omega E[R_i] + (1 - \omega) R_f \;=\; R_f + \omega (E[R_i] - R_f) \]
+            \[ \sigma[R_p] \;=\; |\omega| \, \sigma[R_i] \]
+            <p>Solve the second for <em>|ω|</em>: <em>|ω| = σ[R<sub>p</sub>] / σ[R<sub>i</sub>]</em>. Substituting:</p>
+            \[ E[R_p] \;=\; R_f \pm \frac{\sigma[R_p]}{\sigma[R_i]} \cdot (E[R_i] - R_f) \]
+            <p>(The ± reflects ω being positive or negative — long or short.) This is a straight line in (σ, E[R]) space passing through <em>(0, R<sub>f</sub>)</em>, with slope:</p>
+            \[ \text{slope} \;=\; \frac{|E[R_i] - R_f|}{\sigma[R_i]} \]
+            <p>Absolute value because by convention we plot σ on the positive horizontal axis even when ω is negative.</p>
+        </div>
+    </div>
+
+    <h3>Choosing between two risky assets</h3>
+    <p>If you have a choice of two risky assets A and B to combine with the riskless asset, which do you pick?</p>
+    <p><strong>Answer:</strong> pick the one with the <strong>higher CAL slope</strong>. Doesn't matter how risk-averse you are. Why? Because any point on the lower-slope CAL is dominated by some point on the higher-slope CAL — the same σ, but more expected return.</p>
+    <p>Risk preference only affects the <em>weight</em> you choose on that CAL — i.e., how far up the line you sit. More risk-averse → lower weight on the risky asset, more in T-bills. Less risk-averse → higher weight, possibly on margin (ω &gt; 1, levered into the risky asset).</p>
+
+    <h3>Whiteboard example: DFQ vs BML (continued from Lecture 3)</h3>
+
+    <p>Using the inputs from the prior section: <em>E[R<sub>DFQ</sub>]</em> = 11%, <em>σ[R<sub>DFQ</sub>]</em> = 12.49%, <em>E[R<sub>BML</sub>]</em> = 10%, <em>σ[R<sub>BML</sub>]</em> = 7.75%, <em>R<sub>f</sub></em> = 6%.</p>
+
+    <h4>CAL slopes</h4>
+    <div class="formula">slope[CAL_DFQ] = (11% − 6%) / 12.49% = 5 / 12.49 ≈ 0.400
+slope[CAL_BML] = (10% − 6%) /  7.75% = 4 /  7.75 ≈ 0.516</div>
+
+    <p><span class="imp">BML has the steeper CAL.</span> Every risk-averse investor prefers to combine BML with T-bills over DFQ with T-bills — at any given level of σ, BML's CAL gives more expected return.</p>
+
+    <h4>Picture it</h4>
+    <p>Each CAL is the menu of (σ, E[R]) combinations available by mixing one risky asset with T-bills. The line starts at the riskless asset (σ=0, E[R]=R<sub>f</sub>) and passes through the risky asset's (σ, E[R]) point. The risky asset itself sits at ω = 1; sliding left along the CAL means more in T-bills; sliding right past the asset means buying on margin.</p>
+
+    <svg class="cal-plot" viewBox="0 0 520 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Capital allocation lines for DFQ and BML">
+        <!-- gridlines -->
+        <line x1="60" y1="60" x2="60" y2="310" stroke="#e8e8e8" stroke-width="1"/>
+        <line x1="185" y1="60" x2="185" y2="310" stroke="#e8e8e8" stroke-width="1" stroke-dasharray="3,3"/>
+        <line x1="310" y1="60" x2="310" y2="310" stroke="#e8e8e8" stroke-width="1" stroke-dasharray="3,3"/>
+        <line x1="435" y1="60" x2="435" y2="310" stroke="#e8e8e8" stroke-width="1" stroke-dasharray="3,3"/>
+        <line x1="60" y1="310" x2="460" y2="310" stroke="#e8e8e8" stroke-width="1"/>
+        <line x1="60" y1="235" x2="460" y2="235" stroke="#e8e8e8" stroke-width="1" stroke-dasharray="3,3"/>
+        <line x1="60" y1="160" x2="460" y2="160" stroke="#e8e8e8" stroke-width="1" stroke-dasharray="3,3"/>
+        <line x1="60" y1="85" x2="460" y2="85" stroke="#e8e8e8" stroke-width="1" stroke-dasharray="3,3"/>
+
+        <!-- axes -->
+        <line x1="60" y1="310" x2="465" y2="310" stroke="#666" stroke-width="1.5"/>
+        <line x1="60" y1="310" x2="60" y2="55" stroke="#666" stroke-width="1.5"/>
+
+        <!-- axis labels -->
+        <text x="262" y="345" text-anchor="middle" font-size="13" fill="#666">σ (standard deviation, %)</text>
+        <text x="22" y="180" text-anchor="middle" font-size="13" fill="#666" transform="rotate(-90, 22, 180)">E[R] (%)</text>
+
+        <!-- x ticks (5, 10, 15) -->
+        <text x="60" y="325" text-anchor="middle" font-size="11" fill="#888">0</text>
+        <text x="185" y="325" text-anchor="middle" font-size="11" fill="#888">5</text>
+        <text x="310" y="325" text-anchor="middle" font-size="11" fill="#888">10</text>
+        <text x="435" y="325" text-anchor="middle" font-size="11" fill="#888">15</text>
+
+        <!-- y ticks (5, 10, 15) -->
+        <text x="50" y="314" text-anchor="end" font-size="11" fill="#888">0</text>
+        <text x="50" y="239" text-anchor="end" font-size="11" fill="#888">5</text>
+        <text x="50" y="164" text-anchor="end" font-size="11" fill="#888">10</text>
+        <text x="50" y="89" text-anchor="end" font-size="11" fill="#888">15</text>
+
+        <!-- BML CAL (steeper, dashed red) - from (0,6) slope 0.516, end at σ=15 → E[R]=13.74 -->
+        <!-- screen: (60,220) to (435, 103) -->
+        <line x1="60" y1="220" x2="435" y2="103" stroke="#ff3333" stroke-width="2"/>
+        <!-- DFQ CAL (less steep, gray) - from (0,6) slope 0.40, end at σ=15 → E[R]=12 -->
+        <!-- screen: (60,220) to (435, 130) -->
+        <line x1="60" y1="220" x2="435" y2="130" stroke="#888" stroke-width="2" stroke-dasharray="6,4"/>
+
+        <!-- R_f point -->
+        <circle cx="60" cy="220" r="5" fill="#333"/>
+        <text x="68" y="216" font-size="11" fill="#333">R<tspan font-size="9" baseline-shift="sub">f</tspan> = 6%</text>
+
+        <!-- BML point at (7.75%, 10%) → screen (60+7.75*25, 310-10*15) = (253.75, 160) -->
+        <circle cx="254" cy="160" r="5" fill="#ff3333"/>
+        <text x="261" y="156" font-size="11" fill="#ff3333" font-weight="bold">BML (7.75, 10) — slope 0.516</text>
+
+        <!-- DFQ point at (12.49%, 11%) → screen (60+12.49*25, 310-11*15) = (372.25, 145) -->
+        <circle cx="372" cy="145" r="5" fill="#555"/>
+        <text x="379" y="141" font-size="11" fill="#555" font-weight="bold">DFQ (12.49, 11) — slope 0.400</text>
+    </svg>
+
+    <p class="caption" style="font-size:0.88em; color:#888; text-align:center; margin-top:-0.4em;">CAL for BML (solid red) is steeper than CAL for DFQ (dashed gray) — so risk-averse investors choose BML with T-bills.</p>
+
+    <h4>Sit on the CAL: a few specific portfolios</h4>
+    <p>For each portfolio: 40% in DFQ + 60% in T-bills:</p>
+    <div class="formula">E[R_p] = 0.4 × 11% + 0.6 × 6% = 4.4% + 3.6% = 8%
+σ[R_p] = |0.4| × 12.49% = 5%
+
+Check: slope = (8 − 6) / 5 = 0.40  ✓  matches CAL slope.</div>
+
+    <p>140% in DFQ on margin (ω = 1.4, riskless = −0.4):</p>
+    <div class="formula">E[R_p] = 1.4 × 11% + (−0.4) × 6% = 15.4% − 2.4% = 13%
+σ[R_p] = |1.4| × 12.49% ≈ 17.49%
+
+Check: slope = (13 − 6) / 17.49 ≈ 0.40  ✓  same CAL.</div>
+
+    <p>Same CAL → same slope, regardless of where you sit on it. Risk aversion determines <em>where</em>; the asset choice determines <em>which line</em>.</p>
+
+    <div class="remember">
+        <span class="label">✦ remember this — Lectures 3-4 (1 Risky + Riskless)</span>
+        <ul>
+            <li><strong>Portfolio expected return is linear in weights:</strong> E[R<sub>p</sub>] = Σ ω<sub>i</sub> E[R<sub>i</sub>]. Standard deviation with one risky + one riskless is simpler still: σ[R<sub>p</sub>] = |ω| × σ[R<sub>i</sub>].</li>
+            <li><strong>The Capital Allocation Line</strong> in (σ, E[R]) space starts at R<sub>f</sub> and runs through the risky asset. Its slope = (E[R<sub>i</sub>] − R<sub>f</sub>) / σ[R<sub>i</sub>] = reward per unit of risk. Same number as the Sharpe ratio.</li>
+            <li><strong>Two decision rules:</strong> (1) fix σ → prefer higher E[R]; (2) fix E[R] → prefer lower σ. Rule 1 alone rules out short positions (the lower branch of the line) when E[R<sub>i</sub>] &gt; R<sub>f</sub>.</li>
+            <li><strong>Between two risky assets, pick the steeper CAL.</strong> This is universal — doesn't depend on risk aversion. Risk aversion only picks <em>where</em> on the chosen CAL you sit: more averse = closer to R<sub>f</sub>; less averse = further out, possibly on margin (ω &gt; 1).</li>
+            <li><strong>Seed of two-fund separation:</strong> all risk-averse investors use the same CAL, just sit at different points. Lecture 5 generalizes this to the market portfolio and CAPM.</li>
+        </ul>
     </div>
 
     <h2 id="integrated">Integrated problems</h2>
