@@ -1989,12 +1989,12 @@ Individual asset weights:
 
     <p>The next few formulas use matrix notation because writing out N-fold sums is unwieldy. Three quick reminders:</p>
     <ul class="bullets">
-        <li><strong>w</strong> is an N-tall column vector of weights: <em>w = (ω<sub>1</sub>, ω<sub>2</sub>, …, ω<sub>N</sub>)<sup>T</sup></em>. The superscript <em>T</em> means "transpose" (turn the column into a row).</li>
-        <li><strong>Σ</strong> (capital sigma) is the N × N covariance matrix. The entry in row <em>i</em>, column <em>j</em> is <em>Σ<sub>i,j</sub> = σ<sub>i,j</sub></em> (covariance of asset <em>i</em> with asset <em>j</em>). Diagonal entries <em>Σ<sub>i,i</sub> = σ²<sub>i</sub></em> are variances. The matrix is symmetric (<em>σ<sub>i,j</sub> = σ<sub>j,i</sub></em>).</li>
-        <li><strong>w<sup>T</sup> Σ w</strong> is a single number (a "quadratic form") — multiply weights through both sides of the matrix and add up everything. It expands to <em>Σ<sub>i,j</sub> ω<sub>i</sub> Σ<sub>i,j</sub> ω<sub>j</sub></em>, which is exactly the portfolio variance double-sum. Picture: each cell <em>(i, j)</em> contributes <em>ω<sub>i</sub> × σ<sub>i,j</sub> × ω<sub>j</sub></em> to the total.</li>
+        <li>\(\mathbf{w}\) is an N-tall column vector of weights: \(\mathbf{w} = (\omega_1, \omega_2, \ldots, \omega_N)^{\top}\). The superscript \(\top\) means "transpose" — turn the column into a row.</li>
+        <li>\(\boldsymbol{\Sigma}\) (capital sigma) is the \(N \times N\) covariance matrix. The entry in row \(i\), column \(j\) is \(\Sigma_{i,j} = \sigma_{i,j}\) (covariance of asset \(i\) with asset \(j\)). Diagonal entries \(\Sigma_{i,i} = \sigma_i^2\) are variances. The matrix is symmetric (\(\sigma_{i,j} = \sigma_{j,i}\)).</li>
+        <li>\(\mathbf{w}^{\top}\boldsymbol{\Sigma}\mathbf{w}\) is a single number (a "quadratic form") — multiply weights through both sides of the matrix and add up. It expands to \(\sum_{i,j} \omega_i\,\sigma_{i,j}\,\omega_j\), which is exactly the portfolio variance double-sum. Picture: each cell \((i, j)\) contributes \(\omega_i \cdot \sigma_{i,j} \cdot \omega_j\) to the total.</li>
     </ul>
 
-    <p>Similarly, <em>w<sup>T</sup> μ = ω<sub>1</sub>μ<sub>1</sub> + ω<sub>2</sub>μ<sub>2</sub> + … = E[R<sub>p</sub>]</em> (portfolio expected return = weighted average), and <em>w<sup>T</sup> 1 = ω<sub>1</sub> + ω<sub>2</sub> + … = 1</em> (weights sum to one). Matrix notation is just a shorthand — every step below can be rewritten with summation signs if you prefer.</p>
+    <p>Similarly, \(\mathbf{w}^{\top}\boldsymbol{\mu} = \omega_1\mu_1 + \omega_2\mu_2 + \cdots = E[R_p]\) (portfolio expected return = weighted average), and \(\mathbf{w}^{\top}\mathbf{1} = \omega_1 + \omega_2 + \cdots = 1\) (weights sum to one). Matrix notation is just a shorthand — every step below can be rewritten with summation signs if you prefer.</p>
 
     <h3>Portfolio variance with N assets</h3>
 
@@ -2003,25 +2003,24 @@ Individual asset weights:
         \[ \sigma^2[R_p] \;=\; \sum_{i=1}^{N} \sum_{j=1}^{N} \omega_i\,\omega_j\,\sigma_{i,j} \]
         <p><strong>Matrix form:</strong></p>
         \[ \sigma^2[R_p] \;=\; \mathbf{w}^{\top} \boldsymbol{\Sigma}\, \mathbf{w} \qquad \text{with } \mathbf{w}^{\top}\mathbf{1} = 1 \]
-        <p>where <strong>w</strong> ∈ ℝ<sup>N</sup> is the weight vector, <strong>Σ</strong> is the N × N covariance matrix (<em>Σ<sub>i,j</sub> = σ<sub>i,j</sub></em>, with diagonal entries <em>Σ<sub>i,i</sub> = σ²<sub>i</sub></em>), and <strong>1</strong> is the vector of ones.</p>
+        <p>where \(\mathbf{w} \in \mathbb{R}^N\) is the weight vector, \(\boldsymbol{\Sigma}\) is the \(N \times N\) covariance matrix (\(\Sigma_{i,j} = \sigma_{i,j}\), with diagonal entries \(\Sigma_{i,i} = \sigma_i^2\)), and \(\mathbf{1}\) is the vector of ones.</p>
         <div class="formula-actions">
             <button class="intuition-btn" onclick="toggleIntuition(this)">💡 intuition</button>
             <button class="derive-btn" onclick="toggleDerivation(this)">▼ derive</button>
         </div>
         <div class="intuition">
-            <p>For N assets, portfolio variance has <em>N²</em> terms total. <em>N</em> of them are diagonal (variance × weight²); the other <em>N(N−1)</em> are off-diagonal (covariance × cross weights). Picture an N×N grid: every cell contributes to the total.</p>
-            <p>The matrix form <em>w<sup>T</sup> Σ w</em> is the same expression written compactly. It's also the standard form used in mean-variance optimization libraries — once you can compute Σ and pick w, the variance just falls out as a quadratic form.</p>
+            <p>For N assets, portfolio variance has \(N^2\) terms total. \(N\) of them are diagonal (variance × weight²); the other \(N(N-1)\) are off-diagonal (covariance × cross weights). Picture an N×N grid: every cell contributes to the total.</p>
+            <p>The matrix form \(\mathbf{w}^{\top}\boldsymbol{\Sigma}\mathbf{w}\) is the same expression written compactly. It's also the standard form used in mean-variance optimization libraries — once you can compute \(\boldsymbol{\Sigma}\) and pick \(\mathbf{w}\), the variance just falls out as a quadratic form.</p>
             <p>As N grows, the off-diagonal terms (covariances) overwhelm the diagonal terms (variances) — there are way more of them. This is what drives the diversification result below.</p>
         </div>
         <div class="derivation">
-            <p>Start with the definition. Portfolio return is <em>R<sub>p</sub> = Σ<sub>i</sub> ω<sub>i</sub> R<sub>i</sub></em>. Variance of a linear combination:</p>
+            <p>Start with the definition. Portfolio return is \(R_p = \sum_i \omega_i R_i\). Variance of a linear combination:</p>
             \[ \sigma^2[R_p] \;=\; \mathrm{Var}\!\left(\sum_{i=1}^N \omega_i R_i\right) \;=\; \sum_{i=1}^N \sum_{j=1}^N \omega_i \omega_j \,\mathrm{Cov}(R_i, R_j) \;=\; \sum_{i,j} \omega_i \omega_j \sigma_{i,j} \]
-            <p>using bilinearity of covariance. Note <em>σ<sub>i,i</sub> = σ²<sub>i</sub></em>.</p>
-            <p><strong>Matrix form:</strong> stack weights and covariances into vectors/matrices. Let <strong>w</strong> = (ω<sub>1</sub>, …, ω<sub>N</sub>)<sup>T</sup> and <strong>Σ</strong> = [σ<sub>i,j</sub>]. Then:</p>
-            \[ \mathbf{w}^{\top} \boldsymbol{\Sigma}\,\mathbf{w} \;=\; \sum_{i=1}^N \sum_{j=1}^N w_i\, \Sigma_{i,j}\, w_j \;=\; \sigma^2[R_p] \]
-            <p>Both forms are equivalent. The matrix form is more compact and makes optimization easier (the Lagrangian below uses it directly).</p>
-            <p>One useful identity: write Σ as a sum of variance and covariance pieces. With <em>D</em> = diagonal of variances and <em>off-diag</em> = covariances only:</p>
-            \[ \sigma^2[R_p] \;=\; \underbrace{\sum_i \omega_i^2 \sigma_i^2}_{\text{diagonal (own-variance) terms}} + \underbrace{\sum_{i \ne j} \omega_i \omega_j \sigma_{i,j}}_{\text{off-diagonal (covariance) terms}} \]
+            <p>using bilinearity of covariance, with \(\sigma_{i,i} = \sigma_i^2\).</p>
+            <p><strong>Matrix form:</strong> stack weights and covariances. Let \(\mathbf{w} = (\omega_1, \ldots, \omega_N)^{\top}\) and \(\boldsymbol{\Sigma} = [\sigma_{i,j}]\). Then:</p>
+            \[ \mathbf{w}^{\top} \boldsymbol{\Sigma}\,\mathbf{w} \;=\; \sum_{i=1}^N \sum_{j=1}^N \omega_i\, \Sigma_{i,j}\, \omega_j \;=\; \sigma^2[R_p] \]
+            <p>Both forms are equivalent. The matrix form is more compact and makes optimization easier (the Lagrangian below uses it directly). One useful identity — split \(\boldsymbol{\Sigma}\) into diagonal (variances) and off-diagonal (covariances) pieces:</p>
+            \[ \sigma^2[R_p] \;=\; \underbrace{\sum_i \omega_i^2 \sigma_i^2}_{\text{diagonal (own-variance) terms}} \;+\; \underbrace{\sum_{i \ne j} \omega_i \omega_j \sigma_{i,j}}_{\text{off-diagonal (covariance) terms}} \]
         </div>
     </div>
 
@@ -2032,7 +2031,7 @@ Individual asset weights:
     <div class="formula-box">
         <p><strong>Equal-weighted portfolio variance:</strong></p>
         \[ \sigma^2[R_p] \;=\; \frac{1}{N} \cdot \overline{\sigma^2} \;+\; \left(1 - \frac{1}{N}\right) \cdot \overline{\sigma_{i,j}} \]
-        <p>where <em>σ̄²</em> is the <em>average variance</em> of the N assets and <em>σ̄<sub>i,j</sub></em> is the <em>average pairwise covariance</em>.</p>
+        <p>where \(\overline{\sigma^2}\) is the <em>average variance</em> of the N assets and \(\overline{\sigma_{i,j}}\) is the <em>average pairwise covariance</em>.</p>
         <div class="formula-actions">
             <button class="intuition-btn" onclick="toggleIntuition(this)">💡 intuition</button>
             <button class="derive-btn" onclick="toggleDerivation(this)">▼ derive</button>
@@ -2040,38 +2039,38 @@ Individual asset weights:
         <div class="intuition">
             <p>Equal-weighting splits portfolio variance into two pieces:</p>
             <ul class="bullets">
-                <li><strong>(1/N) × average variance</strong> — the "own-asset" piece. This shrinks toward zero as you add more assets. It represents <em>idiosyncratic</em> / firm-specific / diversifiable risk.</li>
-                <li><strong>(1 − 1/N) × average covariance</strong> — the "co-movement" piece. As N grows, this approaches the average covariance itself. It represents <em>systematic</em> / market / undiversifiable risk.</li>
+                <li><strong>\((1/N) \cdot \overline{\sigma^2}\)</strong> — the "own-asset" piece. Shrinks toward zero as you add more assets. Represents <em>idiosyncratic</em> / firm-specific / diversifiable risk.</li>
+                <li><strong>\((1 - 1/N) \cdot \overline{\sigma_{i,j}}\)</strong> — the "co-movement" piece. As N grows, this approaches the average covariance itself. Represents <em>systematic</em> / market / undiversifiable risk.</li>
             </ul>
-            <p>The first term goes to 0 as N → ∞. The second term goes to <em>σ̄<sub>i,j</sub></em> as N → ∞. So:</p>
+            <p>The first term goes to 0 as \(N \to \infty\). The second term goes to \(\overline{\sigma_{i,j}}\):</p>
             \[ \lim_{N \to \infty} \sigma^2[R_p] \;=\; \overline{\sigma_{i,j}} \]
             <p>Portfolio variance can NEVER fall below the average pairwise covariance, no matter how many assets you add. <span class="imp">That floor is the systematic risk — the part you can't diversify away.</span> CAPM is built on this distinction.</p>
         </div>
         <div class="derivation">
-            <p>Set <em>ω<sub>i</sub> = 1/N</em> for all <em>i</em>. Substitute into the double sum:</p>
+            <p>Set \(\omega_i = 1/N\) for all \(i\). Substitute into the double sum:</p>
             \[ \sigma^2[R_p] \;=\; \sum_{i=1}^N \sum_{j=1}^N \frac{1}{N} \cdot \frac{1}{N} \cdot \sigma_{i,j} \;=\; \frac{1}{N^2} \sum_{i,j} \sigma_{i,j} \]
-            <p>Split the double sum into diagonal (i=j) and off-diagonal (i≠j) parts:</p>
-            \[ \sum_{i,j} \sigma_{i,j} \;=\; \underbrace{\sum_{i=1}^N \sigma_{i,i}}_{\text{diagonal}} + \underbrace{\sum_{i \ne j} \sigma_{i,j}}_{\text{off-diagonal}} \;=\; N\,\overline{\sigma^2} + N(N-1)\,\overline{\sigma_{i,j}} \]
-            <p>where we used: there are <em>N</em> diagonal entries averaging to <em>σ̄²</em>, and <em>N(N−1)</em> off-diagonal entries averaging to <em>σ̄<sub>i,j</sub></em>. Divide by N²:</p>
+            <p>Split the double sum into diagonal (\(i = j\)) and off-diagonal (\(i \ne j\)) parts:</p>
+            \[ \sum_{i,j} \sigma_{i,j} \;=\; \underbrace{\sum_{i=1}^N \sigma_{i,i}}_{\text{diagonal}} \;+\; \underbrace{\sum_{i \ne j} \sigma_{i,j}}_{\text{off-diagonal}} \;=\; N\,\overline{\sigma^2} + N(N-1)\,\overline{\sigma_{i,j}} \]
+            <p>There are \(N\) diagonal entries averaging to \(\overline{\sigma^2}\) and \(N(N-1)\) off-diagonal entries averaging to \(\overline{\sigma_{i,j}}\). Divide by \(N^2\):</p>
             \[ \sigma^2[R_p] \;=\; \frac{N\,\overline{\sigma^2}}{N^2} + \frac{N(N-1)\,\overline{\sigma_{i,j}}}{N^2} \;=\; \frac{\overline{\sigma^2}}{N} + \frac{N-1}{N}\,\overline{\sigma_{i,j}} \]
-            <p>which is the same as <em>(1/N) σ̄² + (1 − 1/N) σ̄<sub>i,j</sub></em>. ∎</p>
+            <p>which is the same as \((1/N)\,\overline{\sigma^2} + (1 - 1/N)\,\overline{\sigma_{i,j}}\). ∎</p>
         </div>
     </div>
 
     <h3>Special cases that make the result tangible</h3>
 
-    <p>Let every asset have the same variance <em>σ²</em>. Then <em>σ̄² = σ²</em>, and the average covariance simplifies to <em>σ̄<sub>i,j</sub> = ρ̄ · σ²</em> where <em>ρ̄</em> is the average pairwise correlation.</p>
+    <p>Let every asset have the same variance \(\sigma^2\). Then \(\overline{\sigma^2} = \sigma^2\), and the average covariance simplifies to \(\overline{\sigma_{i,j}} = \bar{\rho}\,\sigma^2\), where \(\bar{\rho}\) is the average pairwise correlation.</p>
 
     <table>
-        <thead><tr><th>ρ̄</th><th>σ²[R<sub>p</sub>]</th><th>σ[R<sub>p</sub>] as N → ∞</th><th>Meaning</th></tr></thead>
+        <thead><tr><th>\(\bar{\rho}\)</th><th>\(\sigma^2[R_p]\)</th><th>\(\sigma[R_p]\) as \(N \to \infty\)</th><th>Meaning</th></tr></thead>
         <tbody>
-            <tr><td>0</td><td>σ² / N</td><td>0</td><td>Full diversification: vol vanishes.</td></tr>
-            <tr><td>0.5</td><td>σ² (1/N + (1 − 1/N) × 0.5)</td><td>σ × √0.5 ≈ 0.71 σ</td><td>Half the firm vol stays as systematic risk.</td></tr>
-            <tr><td>1</td><td>σ²</td><td>σ</td><td>No diversification: assets all move identically.</td></tr>
+            <tr><td>\(0\)</td><td>\(\sigma^2 / N\)</td><td>\(0\)</td><td>Full diversification: vol vanishes.</td></tr>
+            <tr><td>\(0.5\)</td><td>\(\sigma^2 \bigl(\tfrac{1}{N} + (1 - \tfrac{1}{N}) \cdot 0.5\bigr)\)</td><td>\(\sigma\sqrt{0.5} \approx 0.71\,\sigma\)</td><td>Half the firm vol stays as systematic risk.</td></tr>
+            <tr><td>\(1\)</td><td>\(\sigma^2\)</td><td>\(\sigma\)</td><td>No diversification: assets all move identically.</td></tr>
         </tbody>
     </table>
 
-    <p>So <em>ρ̄</em> sets the floor. With ρ̄ = 0.5 and 100 assets, the equal-weighted portfolio still has roughly 70% of an individual asset's σ. <span class="imp">Even infinite diversification cannot reduce risk below √ρ̄ × σ.</span></p>
+    <p>So \(\bar{\rho}\) sets the floor. With \(\bar{\rho} = 0.5\) and 100 assets, the equal-weighted portfolio still has roughly 70% of an individual asset's σ. <span class="imp">Even infinite diversification cannot reduce risk below \(\sqrt{\bar{\rho}}\,\sigma\).</span></p>
 
     <h3>Picture: how σ[R<sub>p</sub>] decays with N</h3>
 
@@ -2155,46 +2154,46 @@ Individual asset weights:
             <p>The "efficient frontier" (upper half) is the only part risk-averse investors care about. The lower half (inefficient) is dominated by the upper half — same σ, lower E[R].</p>
         </div>
         <div class="derivation">
-            <p><strong>Step 1: set up the Lagrangian.</strong> We're minimizing <em>(1/2) w<sup>T</sup>Σw</em> (the ½ is just for clean algebra — doesn't change the optimum). Subtract a multiplier <em>λ<sub>1</sub></em> times each constraint:</p>
+            <p><strong>Step 1: set up the Lagrangian.</strong> We're minimizing \(\tfrac{1}{2}\,\mathbf{w}^{\top}\boldsymbol{\Sigma}\mathbf{w}\) (the \(\tfrac{1}{2}\) is just for clean algebra — doesn't change the optimum). Subtract a multiplier \(\lambda_k\) times each constraint:</p>
             \[ \mathcal{L} \;=\; \tfrac{1}{2}\,\mathbf{w}^{\top}\boldsymbol{\Sigma}\mathbf{w} - \lambda_1 (\mathbf{w}^{\top}\boldsymbol{\mu} - \mu^*) - \lambda_2 (\mathbf{w}^{\top}\mathbf{1} - 1) \]
             <p><strong>Step 2: take the gradient with respect to w and set to zero.</strong> Two matrix-calculus facts you need:</p>
             <ul class="bullets">
-                <li><em>∇<sub>w</sub>(w<sup>T</sup>Aw) = 2Aw</em> (when A is symmetric — which Σ always is). So <em>∇<sub>w</sub>(½ w<sup>T</sup>Σw) = Σw</em>.</li>
-                <li><em>∇<sub>w</sub>(w<sup>T</sup>v) = v</em> for any constant vector v.</li>
+                <li>\(\nabla_{\mathbf{w}}\bigl(\mathbf{w}^{\top}\mathbf{A}\mathbf{w}\bigr) = 2\mathbf{A}\mathbf{w}\) when \(\mathbf{A}\) is symmetric (which \(\boldsymbol{\Sigma}\) always is). So \(\nabla_{\mathbf{w}}\bigl(\tfrac{1}{2}\,\mathbf{w}^{\top}\boldsymbol{\Sigma}\mathbf{w}\bigr) = \boldsymbol{\Sigma}\mathbf{w}\).</li>
+                <li>\(\nabla_{\mathbf{w}}\bigl(\mathbf{w}^{\top}\mathbf{v}\bigr) = \mathbf{v}\) for any constant vector \(\mathbf{v}\).</li>
             </ul>
             \[ \nabla_{\mathbf{w}} \mathcal{L} \;=\; \boldsymbol{\Sigma}\mathbf{w} - \lambda_1 \boldsymbol{\mu} - \lambda_2 \mathbf{1} \;=\; \mathbf{0} \]
-            <p>Solve for <strong>w</strong> by left-multiplying with <em>Σ⁻¹</em>:</p>
+            <p>Solve for \(\mathbf{w}\) by left-multiplying with \(\boldsymbol{\Sigma}^{-1}\):</p>
             \[ \mathbf{w}^{\,*} \;=\; \lambda_1 \boldsymbol{\Sigma}^{-1}\boldsymbol{\mu} + \lambda_2 \boldsymbol{\Sigma}^{-1}\mathbf{1} \]
-            <p><span class="imp">Note what this means:</span> the optimal portfolio is a linear combination of two fixed vectors — <em>Σ⁻¹μ</em> (a portfolio biased toward high-expected-return assets after adjusting for correlations) and <em>Σ⁻¹1</em> (the minimum-variance portfolio direction). The Lagrange multipliers <em>λ<sub>1</sub>, λ<sub>2</sub></em> just control the mix. This is already the <strong>two-fund spanning property</strong>: any MVF portfolio is a mixture of just two reference portfolios.</p>
-            <p><strong>Step 3: pin down λ<sub>1</sub>, λ<sub>2</sub> using the two constraints.</strong> Plug <em>w*</em> back into <em>w<sup>T</sup>μ = μ*</em> and <em>w<sup>T</sup>1 = 1</em>:</p>
+            <p><span class="imp">Note what this means:</span> the optimal portfolio is a linear combination of two fixed vectors — \(\boldsymbol{\Sigma}^{-1}\boldsymbol{\mu}\) (a portfolio biased toward high-expected-return assets after adjusting for correlations) and \(\boldsymbol{\Sigma}^{-1}\mathbf{1}\) (the minimum-variance portfolio direction). The Lagrange multipliers \(\lambda_1, \lambda_2\) just control the mix. This is already the <strong>two-fund spanning property</strong>: any MVF portfolio is a mixture of just two reference portfolios.</p>
+            <p><strong>Step 3: pin down \(\lambda_1, \lambda_2\) using the two constraints.</strong> Plug \(\mathbf{w}^{*}\) back into \(\mathbf{w}^{\top}\boldsymbol{\mu} = \mu^*\) and \(\mathbf{w}^{\top}\mathbf{1} = 1\):</p>
             \[ \lambda_1\,\boldsymbol{\mu}^{\top}\boldsymbol{\Sigma}^{-1}\boldsymbol{\mu} + \lambda_2\,\boldsymbol{\mu}^{\top}\boldsymbol{\Sigma}^{-1}\mathbf{1} \;=\; \mu^* \]
             \[ \lambda_1\,\mathbf{1}^{\top}\boldsymbol{\Sigma}^{-1}\boldsymbol{\mu} + \lambda_2\,\mathbf{1}^{\top}\boldsymbol{\Sigma}^{-1}\mathbf{1} \;=\; 1 \]
-            <p><strong>Step 4: name the constants that keep appearing.</strong> Three scalars depend only on Σ and μ (NOT on μ*):</p>
+            <p><strong>Step 4: name the constants that keep appearing.</strong> Three scalars depend only on \(\boldsymbol{\Sigma}\) and \(\boldsymbol{\mu}\) (NOT on \(\mu^*\)):</p>
             \[ A \;\equiv\; \boldsymbol{\mu}^{\top}\boldsymbol{\Sigma}^{-1}\boldsymbol{\mu} \qquad B \;\equiv\; \boldsymbol{\mu}^{\top}\boldsymbol{\Sigma}^{-1}\mathbf{1} \qquad C \;\equiv\; \mathbf{1}^{\top}\boldsymbol{\Sigma}^{-1}\mathbf{1} \qquad D \;\equiv\; AC - B^2 \]
             <p>What they mean physically:</p>
             <ul class="bullets">
-                <li><em>A</em> = "weighted size of the expected-return vector" after Σ⁻¹ adjusts for correlations. Large A → big return premia available.</li>
-                <li><em>B</em> = the "alignment" between μ and 1 through Σ⁻¹. Related to the global mean return.</li>
-                <li><em>C</em> = "ease of constructing portfolios" — inverse of the global minimum variance (since <em>σ²<sub>min</sub> = 1/C</em>, as we'll show).</li>
-                <li><em>D</em> = AC − B². Always positive (by Cauchy-Schwarz). Sets the "curvature" of the MVF hyperbola.</li>
+                <li>\(A\) = "weighted size of the expected-return vector" after \(\boldsymbol{\Sigma}^{-1}\) adjusts for correlations. Large \(A\) → big return premia available.</li>
+                <li>\(B\) = the "alignment" between \(\boldsymbol{\mu}\) and \(\mathbf{1}\) through \(\boldsymbol{\Sigma}^{-1}\). Related to the global mean return.</li>
+                <li>\(C\) = "ease of constructing portfolios" — inverse of the global minimum variance (since \(\sigma^2_{\min} = 1/C\), as we'll show).</li>
+                <li>\(D = AC - B^2\). Always positive (by Cauchy-Schwarz). Sets the "curvature" of the MVF hyperbola.</li>
             </ul>
-            <p>The two constraint equations become a 2×2 linear system in <em>λ<sub>1</sub>, λ<sub>2</sub></em>:</p>
+            <p>The two constraint equations become a 2×2 linear system in \(\lambda_1, \lambda_2\):</p>
             \[ \begin{cases} A\,\lambda_1 + B\,\lambda_2 = \mu^* \\ B\,\lambda_1 + C\,\lambda_2 = 1 \end{cases} \]
             <p>Solve (standard 2×2):</p>
             \[ \lambda_1 \;=\; \frac{C\,\mu^* - B}{D} \qquad \lambda_2 \;=\; \frac{A - B\,\mu^*}{D} \]
             <p><strong>Step 5: write down the optimal portfolio.</strong></p>
-            \[ \mathbf{w}^{\,*}(\mu^*) \;=\; \frac{C\mu^* - B}{D}\,\boldsymbol{\Sigma}^{-1}\boldsymbol{\mu} + \frac{A - B\mu^*}{D}\,\boldsymbol{\Sigma}^{-1}\mathbf{1} \]
-            <p>The MVF as a whole is parameterized by <em>μ*</em>: pick any target expected return, plug in, get the weights.</p>
-            <p><strong>Step 6: variance at the optimum.</strong> Use the FOC: <em>Σw* = λ<sub>1</sub>μ + λ<sub>2</sub>1</em>. So:</p>
+            \[ \mathbf{w}^{\,*}(\mu^*) \;=\; \frac{C\mu^* - B}{D}\,\boldsymbol{\Sigma}^{-1}\boldsymbol{\mu} \;+\; \frac{A - B\mu^*}{D}\,\boldsymbol{\Sigma}^{-1}\mathbf{1} \]
+            <p>The MVF as a whole is parameterized by \(\mu^*\): pick any target expected return, plug in, get the weights.</p>
+            <p><strong>Step 6: variance at the optimum.</strong> Use the FOC: \(\boldsymbol{\Sigma}\mathbf{w}^{*} = \lambda_1\boldsymbol{\mu} + \lambda_2\mathbf{1}\). So:</p>
             \[ \sigma^2[\mathbf{w}^{\,*}] \;=\; \mathbf{w}^{*\top}\boldsymbol{\Sigma}\mathbf{w}^{*} \;=\; \mathbf{w}^{*\top}(\lambda_1\boldsymbol{\mu} + \lambda_2\mathbf{1}) \;=\; \lambda_1\,\mu^* + \lambda_2 \]
-            <p>Plug in the expressions for λ<sub>1</sub>, λ<sub>2</sub>:</p>
+            <p>Plug in the expressions for \(\lambda_1, \lambda_2\):</p>
             \[ \sigma^2[\mathbf{w}^{\,*}] \;=\; \frac{C\,(\mu^*)^2 - 2B\,\mu^* + A}{D} \]
-            <p>This is a <em>parabola</em> in <em>(σ², μ*)</em> coordinates — equivalently a <em>hyperbola</em> in <em>(σ, μ*)</em> coordinates. That hyperbola is the MVF.</p>
-            <p><strong>Step 7: the global minimum-variance portfolio.</strong> Minimize variance over <em>μ*</em>:</p>
+            <p>This is a <em>parabola</em> in \((\sigma^2, \mu^*)\) coordinates — equivalently a <em>hyperbola</em> in \((\sigma, \mu^*)\) coordinates. That hyperbola is the MVF.</p>
+            <p><strong>Step 7: the global minimum-variance portfolio.</strong> Minimize variance over \(\mu^*\):</p>
             \[ \frac{d\sigma^2}{d\mu^*} \;=\; \frac{2C\mu^* - 2B}{D} \;=\; 0 \quad\Rightarrow\quad \mu^*_{\min} \;=\; \frac{B}{C} \]
-            <p>At this target, λ<sub>1</sub> = 0, so the portfolio is purely <em>Σ⁻¹1</em>-direction:</p>
+            <p>At this target, \(\lambda_1 = 0\), so the portfolio is purely in the \(\boldsymbol{\Sigma}^{-1}\mathbf{1}\) direction:</p>
             \[ \mathbf{w}^{\,*}_{\min} \;=\; \frac{\boldsymbol{\Sigma}^{-1}\mathbf{1}}{\mathbf{1}^{\top}\boldsymbol{\Sigma}^{-1}\mathbf{1}} \;=\; \frac{\boldsymbol{\Sigma}^{-1}\mathbf{1}}{C} \]
-            <p>And its variance: <em>σ²<sub>min</sub> = 1/C</em>. So <em>C</em> really does measure "ease of constructing low-variance portfolios" — bigger C → smaller global minimum variance.</p>
+            <p>And its variance: \(\sigma^2_{\min} = 1/C\). So \(C\) really does measure "ease of constructing low-variance portfolios" — bigger \(C\) → smaller global minimum variance.</p>
         </div>
     </div>
 
@@ -2278,39 +2277,39 @@ Individual asset weights:
 
     <div class="formula-box">
         \[ \mathbf{w}_T \;=\; \frac{\boldsymbol{\Sigma}^{-1} \boldsymbol{\mu}_{\text{excess}}}{\mathbf{1}^{\top} \boldsymbol{\Sigma}^{-1} \boldsymbol{\mu}_{\text{excess}}} \]
-        <p>where <em>μ<sub>excess</sub> = μ − R<sub>f</sub> · 1</em> is the vector of excess expected returns (each entry is <em>E[R<sub>i</sub>] − R<sub>f</sub></em>).</p>
+        <p>where \(\boldsymbol{\mu}_{\text{excess}} = \boldsymbol{\mu} - R_f \cdot \mathbf{1}\) is the vector of excess expected returns (each entry is \(E[R_i] - R_f\)).</p>
         <div class="formula-actions">
             <button class="intuition-btn" onclick="toggleIntuition(this)">💡 intuition</button>
             <button class="derive-btn" onclick="toggleDerivation(this)">▼ derive (max Sharpe with N assets)</button>
         </div>
         <div class="intuition">
-            <p>The numerator <em>Σ⁻¹μ<sub>excess</sub></em> tells you the "raw" weighting: each asset is weighted by its excess return, then "scrubbed" through the inverse covariance matrix so that highly-correlated assets share weight (rather than double-counting). The denominator is the sum of those raw weights — it normalizes so the weights sum to 1.</p>
-            <p>This formula contains the same intuition as the 2-asset case: high excess return ⇒ more weight, high covariance with the rest of the portfolio ⇒ less weight (because that's redundant exposure).</p>
-            <p><em>w<sub>T</sub></em> can have negative entries (some assets are shorted in the tangency portfolio if they have negative excess return or correlate the wrong way). That's normal.</p>
+            <p>The numerator \(\boldsymbol{\Sigma}^{-1}\boldsymbol{\mu}_{\text{excess}}\) is the "raw" weighting: each asset is weighted by its excess return, then "scrubbed" through the inverse covariance matrix so that highly-correlated assets share weight rather than double-counting. The denominator is the sum of those raw weights — it normalizes so the final weights sum to 1.</p>
+            <p>Same intuition as the 2-asset case: high excess return ⇒ more weight; high covariance with the rest of the portfolio ⇒ less weight (because that's redundant exposure).</p>
+            <p>\(\mathbf{w}_T\) can have negative entries — some assets are shorted in the tangency portfolio if they have negative excess return or correlate the wrong way. That's normal.</p>
         </div>
         <div class="derivation">
-            <p><strong>Step 1: state the problem.</strong> Choose the risky-asset weights <em>w</em> to maximize the Sharpe ratio:</p>
+            <p><strong>Step 1: state the problem.</strong> Choose the risky-asset weights \(\mathbf{w}\) to maximize the Sharpe ratio:</p>
             \[ \max_{\mathbf{w}} \;\; \frac{\mathbf{w}^{\top}\boldsymbol{\mu} - R_f}{\sqrt{\mathbf{w}^{\top}\boldsymbol{\Sigma}\mathbf{w}}} \quad \text{subject to } \mathbf{w}^{\top}\mathbf{1} = 1 \]
             <p>The constraint forces the weights to sum to 1 — i.e., 100% of the risky-asset bucket goes into these N assets.</p>
-            <p><strong>Step 2: simplify the numerator using the constraint.</strong> Because <em>w<sup>T</sup>1 = 1</em>, you can write <em>R<sub>f</sub> = R<sub>f</sub> w<sup>T</sup>1 = w<sup>T</sup>(R<sub>f</sub>1)</em>. Then:</p>
+            <p><strong>Step 2: simplify the numerator using the constraint.</strong> Because \(\mathbf{w}^{\top}\mathbf{1} = 1\), you can write \(R_f = R_f \,\mathbf{w}^{\top}\mathbf{1} = \mathbf{w}^{\top}(R_f \mathbf{1})\). Then:</p>
             \[ \mathbf{w}^{\top}\boldsymbol{\mu} - R_f \;=\; \mathbf{w}^{\top}\boldsymbol{\mu} - \mathbf{w}^{\top}(R_f\mathbf{1}) \;=\; \mathbf{w}^{\top}(\boldsymbol{\mu} - R_f\mathbf{1}) \;=\; \mathbf{w}^{\top}\boldsymbol{\mu}_{\text{excess}} \]
             <p>So we're maximizing:</p>
             \[ S(\mathbf{w}) \;=\; \frac{\mathbf{w}^{\top}\boldsymbol{\mu}_{\text{excess}}}{\sqrt{\mathbf{w}^{\top}\boldsymbol{\Sigma}\mathbf{w}}} \]
-            <p><strong>Step 3: use the scale-invariance trick.</strong> Notice that if you scale <em>w → cw</em> for any positive constant <em>c</em>, both the numerator and the denominator scale by <em>c</em> (numerator linear in <em>w</em>, denominator linear after the square root). So <em>S</em> is unchanged. <span class="imp">This means we can drop the constraint <em>w<sup>T</sup>1 = 1</em> entirely</span> — solve the unconstrained problem to find the right DIRECTION of <em>w</em>, then rescale at the end to make weights sum to 1.</p>
+            <p><strong>Step 3: use the scale-invariance trick.</strong> If you rescale \(\mathbf{w} \to c\mathbf{w}\) for any positive constant \(c\), both the numerator (linear in \(\mathbf{w}\)) and the denominator (linear after the square root) scale by \(c\). So \(S\) is unchanged. <span class="imp">This means we can drop the constraint \(\mathbf{w}^{\top}\mathbf{1} = 1\) entirely</span> — solve the unconstrained problem to find the right DIRECTION of \(\mathbf{w}\), then rescale at the end so the weights sum to 1.</p>
             <p><strong>Step 4: take the gradient.</strong> Use the quotient rule and the matrix identities:</p>
             <ul class="bullets">
-                <li>∇<sub>w</sub>(w<sup>T</sup>μ<sub>excess</sub>) = μ<sub>excess</sub></li>
-                <li>∇<sub>w</sub>√(w<sup>T</sup>Σw) = Σw / √(w<sup>T</sup>Σw)</li>
+                <li>\(\nabla_{\mathbf{w}}\bigl(\mathbf{w}^{\top}\boldsymbol{\mu}_{\text{excess}}\bigr) = \boldsymbol{\mu}_{\text{excess}}\)</li>
+                <li>\(\nabla_{\mathbf{w}}\sqrt{\mathbf{w}^{\top}\boldsymbol{\Sigma}\mathbf{w}} = \boldsymbol{\Sigma}\mathbf{w} \,/\, \sqrt{\mathbf{w}^{\top}\boldsymbol{\Sigma}\mathbf{w}}\)</li>
             </ul>
             \[ \nabla_{\mathbf{w}} S \;=\; \frac{1}{\sqrt{\mathbf{w}^{\top}\boldsymbol{\Sigma}\mathbf{w}}}\,\boldsymbol{\mu}_{\text{excess}} \;-\; \frac{\mathbf{w}^{\top}\boldsymbol{\mu}_{\text{excess}}}{(\mathbf{w}^{\top}\boldsymbol{\Sigma}\mathbf{w})^{3/2}}\,\boldsymbol{\Sigma}\mathbf{w} \;=\; \mathbf{0} \]
-            <p><strong>Step 5: rearrange to isolate w.</strong> Multiply through by <em>(w<sup>T</sup>Σw)^(3/2)</em> and collect terms:</p>
-            \[ \boldsymbol{\Sigma}\mathbf{w} \;=\; \underbrace{\frac{\mathbf{w}^{\top}\boldsymbol{\Sigma}\mathbf{w}}{\mathbf{w}^{\top}\boldsymbol{\mu}_{\text{excess}}}}_{\text{some positive scalar }k}\,\boldsymbol{\mu}_{\text{excess}} \]
-            <p>That scalar <em>k</em> on the right depends on <em>w</em>, but it doesn't matter — by scale-invariance we only care about <em>direction</em>. Multiply both sides by <em>Σ⁻¹</em>:</p>
+            <p><strong>Step 5: rearrange to isolate \(\mathbf{w}\).</strong> Multiply through by \((\mathbf{w}^{\top}\boldsymbol{\Sigma}\mathbf{w})^{3/2}\) and collect terms:</p>
+            \[ \boldsymbol{\Sigma}\mathbf{w} \;=\; \underbrace{\frac{\mathbf{w}^{\top}\boldsymbol{\Sigma}\mathbf{w}}{\mathbf{w}^{\top}\boldsymbol{\mu}_{\text{excess}}}}_{\text{positive scalar }k}\,\boldsymbol{\mu}_{\text{excess}} \]
+            <p>The scalar \(k\) on the right depends on \(\mathbf{w}\), but by scale-invariance we only care about <em>direction</em>. Multiply both sides by \(\boldsymbol{\Sigma}^{-1}\):</p>
             \[ \mathbf{w} \;=\; k \,\boldsymbol{\Sigma}^{-1}\boldsymbol{\mu}_{\text{excess}} \quad\Rightarrow\quad \mathbf{w} \;\propto\; \boldsymbol{\Sigma}^{-1}\boldsymbol{\mu}_{\text{excess}} \]
-            <p><strong>Step 6: normalize so weights sum to 1.</strong> Pick the constant <em>k</em> so that <em>w<sup>T</sup>1 = 1</em>. If <em>w = k Σ⁻¹μ<sub>excess</sub></em>, then <em>w<sup>T</sup>1 = k · 1<sup>T</sup>Σ⁻¹μ<sub>excess</sub>, set this equal to 1 → k = 1 / (1<sup>T</sup>Σ⁻¹μ<sub>excess</sub>)</em>. So:</p>
+            <p><strong>Step 6: normalize so weights sum to 1.</strong> Pick the constant \(k\) so that \(\mathbf{w}^{\top}\mathbf{1} = 1\). If \(\mathbf{w} = k\,\boldsymbol{\Sigma}^{-1}\boldsymbol{\mu}_{\text{excess}}\), then \(\mathbf{w}^{\top}\mathbf{1} = k \cdot \mathbf{1}^{\top}\boldsymbol{\Sigma}^{-1}\boldsymbol{\mu}_{\text{excess}}\); setting this equal to 1 gives \(k = 1 \,/\, \mathbf{1}^{\top}\boldsymbol{\Sigma}^{-1}\boldsymbol{\mu}_{\text{excess}}\). So:</p>
             \[ \mathbf{w}_T \;=\; \frac{\boldsymbol{\Sigma}^{-1}\boldsymbol{\mu}_{\text{excess}}}{\mathbf{1}^{\top}\boldsymbol{\Sigma}^{-1}\boldsymbol{\mu}_{\text{excess}}} \]
-            <p>This is the tangency portfolio formula. Conceptually the answer is just <em>"Σ⁻¹μ<sub>excess</sub>, normalized"</em>.</p>
-            <p><strong>What does Σ⁻¹ actually do?</strong> Think of <em>Σ⁻¹μ<sub>excess</sub></em> as <em>"excess return per unit of risk exposure, adjusted for correlations."</em> If two assets are highly correlated, Σ⁻¹ partially cancels them out — you don't want to double-count similar risks. If one asset has a high Sharpe but covaries with everything else, Σ⁻¹ shrinks its weight. The result is the unique direction in N-asset space that maximizes the reward-per-risk trade-off.</p>
+            <p>This is the tangency portfolio formula. Conceptually the answer is just <em>"\(\boldsymbol{\Sigma}^{-1}\boldsymbol{\mu}_{\text{excess}}\), normalized."</em></p>
+            <p><strong>What does \(\boldsymbol{\Sigma}^{-1}\) actually do?</strong> Think of \(\boldsymbol{\Sigma}^{-1}\boldsymbol{\mu}_{\text{excess}}\) as <em>"excess return per unit of risk exposure, adjusted for correlations."</em> If two assets are highly correlated, \(\boldsymbol{\Sigma}^{-1}\) partially cancels them out — you don't want to double-count similar risks. If one asset has a high Sharpe but covaries with everything else, \(\boldsymbol{\Sigma}^{-1}\) shrinks its weight. The result is the unique direction in N-asset space that maximizes the reward-per-risk trade-off.</p>
         </div>
     </div>
 
@@ -2318,53 +2317,43 @@ Individual asset weights:
 
     <p>The matrix formula has to reduce to the 2-asset closed form we derived earlier. Let's verify. For 2 assets:</p>
 
-    <div class="formula">μ_excess = (μ_1, μ_2)^T
+    \[ \boldsymbol{\mu}_{\text{excess}} \;=\; \begin{pmatrix} \mu_1 \\ \mu_2 \end{pmatrix} \qquad \boldsymbol{\Sigma} \;=\; \begin{pmatrix} \sigma_1^2 & \sigma_{1,2} \\ \sigma_{1,2} & \sigma_2^2 \end{pmatrix} \qquad \boldsymbol{\Sigma}^{-1} \;=\; \frac{1}{\sigma_1^2 \sigma_2^2 - \sigma_{1,2}^2} \begin{pmatrix} \sigma_2^2 & -\sigma_{1,2} \\ -\sigma_{1,2} & \sigma_1^2 \end{pmatrix} \]
 
-         | σ_1²    σ_{1,2} |               1     |  σ_2²   -σ_{1,2} |
-Σ =      |                 |     Σ⁻¹ =  ─────── |                  |
-         | σ_{1,2}  σ_2²   |             σ_1²σ_2² - σ_{1,2}²    | -σ_{1,2}   σ_1²  |</div>
+    <p>(Standard 2×2 inverse: swap diagonal, negate off-diagonal, divide by determinant.)</p>
 
-    <p>(That's the standard 2×2 inverse: swap diagonal, negate off-diagonal, divide by determinant.)</p>
+    <p>Multiply <em>Σ⁻¹</em> by <em>μ<sub>excess</sub></em>:</p>
 
-    <div class="formula">                       1                   |  σ_2² μ_1 - σ_{1,2} μ_2  |
-Σ⁻¹ μ_excess  =  ─────────────────────  |                          |
-                σ_1²σ_2² - σ_{1,2}²    | -σ_{1,2} μ_1 + σ_1² μ_2  |</div>
+    \[ \boldsymbol{\Sigma}^{-1} \boldsymbol{\mu}_{\text{excess}} \;=\; \frac{1}{\sigma_1^2 \sigma_2^2 - \sigma_{1,2}^2} \begin{pmatrix} \sigma_2^2 \mu_1 - \sigma_{1,2}\mu_2 \\ -\sigma_{1,2}\mu_1 + \sigma_1^2 \mu_2 \end{pmatrix} \]
 
-    <p>Sum of components (which is <em>1<sup>T</sup>Σ⁻¹μ<sub>excess</sub></em>):</p>
+    <p>Sum the two components (that's <em>1<sup>T</sup>Σ⁻¹μ<sub>excess</sub></em>):</p>
 
-    <div class="formula">                σ_2² μ_1 - σ_{1,2} μ_2 + σ_1² μ_2 - σ_{1,2} μ_1
-1^T Σ⁻¹ μ_e  =  ─────────────────────────────────────────────
-                          σ_1²σ_2² - σ_{1,2}²
+    \[ \mathbf{1}^{\top} \boldsymbol{\Sigma}^{-1} \boldsymbol{\mu}_{\text{excess}} \;=\; \frac{\mu_1 \sigma_2^2 + \mu_2 \sigma_1^2 - (\mu_1 + \mu_2)\,\sigma_{1,2}}{\sigma_1^2 \sigma_2^2 - \sigma_{1,2}^2} \]
 
-              = (μ_1 σ_2² + μ_2 σ_1² - (μ_1 + μ_2) σ_{1,2}) / (σ_1²σ_2² - σ_{1,2}²)</div>
+    <p>Divide the first component of <em>Σ⁻¹μ<sub>excess</sub></em> by this sum — the determinant cancels — and you get the first weight:</p>
 
-    <p>So the first weight is:</p>
+    \[ \omega_{1,T} \;=\; \frac{\mu_1\,\sigma_2^2 - \mu_2\,\sigma_{1,2}}{\mu_1\,\sigma_2^2 + \mu_2\,\sigma_1^2 - (\mu_1 + \mu_2)\,\sigma_{1,2}} \]
 
-    <div class="formula">                  σ_2² μ_1 - σ_{1,2} μ_2
-ω_{1,T} =  ───────────────────────────────────
-            μ_1 σ_2² + μ_2 σ_1² - (μ_1 + μ_2) σ_{1,2}</div>
-
-    <p>This matches exactly the closed-form 2-asset tangency formula. ✓ The matrix machinery generalizes the same logic to N assets, but the answer for N = 2 is recoverable in a few lines of algebra.</p>
+    <p>This matches exactly the closed-form 2-asset tangency formula derived earlier. ✓ The matrix machinery generalizes the same logic to N assets, but the answer for N = 2 is recoverable in a few lines of algebra.</p>
 
     <h3>The new efficient frontier is the CAL through T</h3>
 
-    <p>With R<sub>f</sub> available, an investor can hold ANY combination of T and R<sub>f</sub>. The set of achievable portfolios is the entire <strong>straight line</strong> from R<sub>f</sub> through T (and beyond, via margin). Its slope is the maximum Sharpe ratio:</p>
+    <p>With \(R_f\) available, an investor can hold ANY combination of \(T\) and \(R_f\). The set of achievable portfolios is the entire <strong>straight line</strong> from \(R_f\) through \(T\) (and beyond, via margin). Its slope is the maximum Sharpe ratio:</p>
 
     <div class="formula-box">
         \[ \text{slope}_{\text{CAL through T}} \;=\; \frac{E[R_T] - R_f}{\sigma_T} \;=\; \sqrt{\boldsymbol{\mu}_{\text{excess}}^{\top}\,\boldsymbol{\Sigma}^{-1}\,\boldsymbol{\mu}_{\text{excess}}} \]
-        <p>This is the highest Sharpe ratio achievable from any portfolio of the N risky assets and R<sub>f</sub>.</p>
+        <p>This is the highest Sharpe ratio achievable from any portfolio of the \(N\) risky assets and \(R_f\).</p>
         <div class="formula-actions">
             <button class="derive-btn" onclick="toggleDerivation(this)">▼ derive</button>
         </div>
         <div class="derivation">
-            <p>The CAL slope is just the Sharpe ratio at the tangency portfolio. Use <em>w<sub>T</sub> = Σ⁻¹μ<sub>excess</sub> / B</em> where <em>B = 1<sup>T</sup>Σ⁻¹μ<sub>excess</sub></em>.</p>
-            <p>Excess return at T:</p>
+            <p>The CAL slope is just the Sharpe ratio at the tangency portfolio. Write \(\mathbf{w}_T = \boldsymbol{\Sigma}^{-1}\boldsymbol{\mu}_{\text{excess}}\,/\,B\) where \(B = \mathbf{1}^{\top}\boldsymbol{\Sigma}^{-1}\boldsymbol{\mu}_{\text{excess}}\).</p>
+            <p>Excess return at \(T\):</p>
             \[ \mathbf{w}_T^{\top}\boldsymbol{\mu}_{\text{excess}} \;=\; \frac{(\boldsymbol{\Sigma}^{-1}\boldsymbol{\mu}_{\text{excess}})^{\top}}{B}\boldsymbol{\mu}_{\text{excess}} \;=\; \frac{\boldsymbol{\mu}_{\text{excess}}^{\top}\boldsymbol{\Sigma}^{-1}\boldsymbol{\mu}_{\text{excess}}}{B} \;=\; \frac{A}{B} \]
-            <p>where <em>A = μ<sub>excess</sub><sup>T</sup>Σ⁻¹μ<sub>excess</sub></em>. Variance at T:</p>
+            <p>where \(A = \boldsymbol{\mu}_{\text{excess}}^{\top}\boldsymbol{\Sigma}^{-1}\boldsymbol{\mu}_{\text{excess}}\). Variance at \(T\):</p>
             \[ \mathbf{w}_T^{\top}\boldsymbol{\Sigma}\mathbf{w}_T \;=\; \frac{(\boldsymbol{\Sigma}^{-1}\boldsymbol{\mu}_{\text{excess}})^{\top}\boldsymbol{\Sigma}\,\boldsymbol{\Sigma}^{-1}\boldsymbol{\mu}_{\text{excess}}}{B^2} \;=\; \frac{\boldsymbol{\mu}_{\text{excess}}^{\top}\boldsymbol{\Sigma}^{-1}\boldsymbol{\mu}_{\text{excess}}}{B^2} \;=\; \frac{A}{B^2} \]
-            <p>So σ<sub>T</sub> = √A / |B|. Sharpe ratio:</p>
+            <p>So \(\sigma_T = \sqrt{A}\,/\,|B|\). Sharpe ratio:</p>
             \[ \text{slope} \;=\; \frac{A/B}{\sqrt{A}/|B|} \;=\; \mathrm{sgn}(B) \cdot \sqrt{A} \;=\; \sqrt{\boldsymbol{\mu}_{\text{excess}}^{\top}\,\boldsymbol{\Sigma}^{-1}\,\boldsymbol{\mu}_{\text{excess}}} \]
-            <p>(assuming <em>B > 0</em>, which is the standard case where the average excess return is positive).</p>
+            <p>(assuming \(B > 0\), the standard case where the average excess return is positive).</p>
         </div>
     </div>
 
