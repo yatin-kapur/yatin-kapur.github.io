@@ -105,6 +105,24 @@
         svg.cal-plot { display: block; margin: 1em auto 0.3em; max-width: 100%; height: auto; }
         .caption { font-style: italic; }
 
+        .glossary { background: #f7f7f7; border-left: 3px solid #ff3333; padding: 0.9em 1.2em; margin: 1.5em 0; font-size: 0.88em; line-height: 1.55em; }
+        .glossary summary { font-weight: 700; font-size: 1.05em; cursor: pointer; color: #ff3333; outline: none; user-select: none; }
+        .glossary summary:hover { color: #ff6666; }
+        .glossary[open] summary { margin-bottom: 0.5em; }
+        .glossary .gloss-note { margin: 0.3em 0 1em; font-size: 0.85em; color: #888; font-style: italic; line-height: 1.5em; }
+        .glossary .gloss-h { font-size: 0.85em; font-weight: 700; color: #888; text-transform: uppercase; letter-spacing: 0.6px; margin: 1em 0 0.4em; padding-bottom: 0.2em; border-bottom: 1px solid #ddd; }
+        .glossary .gloss-h:first-of-type { margin-top: 0.5em; }
+        .glossary dl { margin: 0; padding: 0; }
+        .glossary dt { font-weight: 700; color: #b03030; margin: 0.5em 0 0.1em; font-family: 'JetBrains Mono', 'Courier New', monospace; font-size: 0.92em; }
+        .glossary dd { margin: 0 0 0.4em 0; color: #444; line-height: 1.5em; }
+        @media (min-width: 1240px) {
+            .glossary { position: fixed; top: 4.5em; right: 1.5em; width: 17em; max-height: calc(100vh - 6em); overflow-y: auto; margin: 0; z-index: 10; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05); }
+            .glossary .gloss-note { display: none; }
+        }
+        @media (max-width: 1239px) {
+            .glossary { max-width: 100%; }
+        }
+
         .remember { background: rgba(40, 130, 130, 0.07); border-left: 4px solid #2a8888; padding: 0.85em 1.2em; margin: 1.8em 0 2.5em; font-size: 0.94em; line-height: 1.62em; }
         .remember .label { font-size: 0.78em; font-weight: 700; color: #2a8888; letter-spacing: 0.7px; text-transform: uppercase; margin-bottom: 0.3em; display: block; }
         .remember h4 { margin: 0 0 0.5em; font-size: 1.05em; color: #2a8888; font-weight: 700; }
@@ -179,6 +197,16 @@
         html[data-theme="dark"] .remember { background: rgba(80, 200, 200, 0.10); border-left-color: #4ec0c0; }
         html[data-theme="dark"] .remember .label,
         html[data-theme="dark"] .remember h4 { color: #6ecaca; }
+        html[data-theme="dark"] .glossary { background: #1d1d1d; }
+        html[data-theme="dark"] .glossary summary { color: #ff5a5a; }
+        html[data-theme="dark"] .glossary summary:hover { color: #ff8080; }
+        html[data-theme="dark"] .glossary .gloss-note { color: #9a9a9a; }
+        html[data-theme="dark"] .glossary .gloss-h { color: #aaa; border-bottom-color: #2a2a2a; }
+        html[data-theme="dark"] .glossary dt { color: #ff8080; }
+        html[data-theme="dark"] .glossary dd { color: #c8c8c8; }
+        @media (min-width: 1240px) {
+            html[data-theme="dark"] .glossary { box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3); }
+        }
     </style>
 </head>
 
@@ -206,11 +234,62 @@
         <li><a href="#stock-positions">stock positions</a></li>
         <li><a href="#return-dist">return distribution</a></li>
         <li><a href="#one-risky">1 risky + riskless</a></li>
+        <li><a href="#two-risky">2 risky</a></li>
+        <li><a href="#two-risky-plus-rf">2 risky + riskless</a></li>
+        <li><a href="#n-risky">N risky</a></li>
+        <li><a href="#n-risky-plus-rf">N risky + riskless</a></li>
         <li><a href="#integrated">integrated problems</a></li>
+        <li><a href="#glossary">glossary</a></li>
     </ul>
 
+    <details class="glossary" id="glossary" open>
+        <summary>Glossary &amp; notation reference</summary>
+        <p class="gloss-note">Floats to the right margin on wide screens; stays at the top here on narrow ones. Tap the heading to collapse.</p>
+
+        <h4 class="gloss-h">Math notation</h4>
+        <dl>
+            <dt>ω<sub>i</sub></dt><dd>Portfolio weight on asset <em>i</em> — the fraction of wealth held in that asset. Σ ω<sub>i</sub> = 1.</dd>
+            <dt>R<sub>i</sub></dt><dd>Return on asset <em>i</em> over a period.</dd>
+            <dt>R<sub>f</sub></dt><dd>Riskless (risk-free) rate — typically a T-bill yield.</dd>
+            <dt>E[R<sub>i</sub>]</dt><dd>Expected return — probability-weighted mean of possible returns.</dd>
+            <dt>σ[R<sub>i</sub>]</dt><dd>Standard deviation of return — square root of variance. The default "risk" measure.</dd>
+            <dt>σ²[R<sub>i</sub>]</dt><dd>Variance — probability-weighted squared deviation from the mean.</dd>
+            <dt>σ<sub>i,j</sub></dt><dd>Covariance between assets <em>i</em> and <em>j</em>. Same sign = they move together.</dd>
+            <dt>ρ<sub>i,j</sub></dt><dd>Correlation — covariance standardized to lie in [−1, +1].</dd>
+            <dt>μ<sub>i</sub></dt><dd>Excess return: E[R<sub>i</sub>] − R<sub>f</sub>.</dd>
+            <dt>Σ</dt><dd>The N × N covariance matrix (capital sigma).</dd>
+            <dt>1</dt><dd>Vector of ones, length N.</dd>
+        </dl>
+
+        <h4 class="gloss-h">Acronyms</h4>
+        <dl>
+            <dt>APR</dt><dd>Annual Percentage Rate — a quoting convention (per-period rate × periods/year).</dd>
+            <dt>EAR</dt><dd>Effective Annual Rate — the actual annual rate after compounding.</dd>
+            <dt>PV / FV</dt><dd>Present Value / Future Value.</dd>
+            <dt>PVAF / FVAF</dt><dd>Present / Future Value Annuity Factor.</dd>
+            <dt>IPO</dt><dd>Initial Public Offering.</dd>
+            <dt>NBBO</dt><dd>National Best Bid and Offer — best bid + ask across linked exchanges.</dd>
+            <dt>NYSE</dt><dd>New York Stock Exchange.</dd>
+            <dt>NASDAQ</dt><dd>Originally the National Association of Securities Dealers Automated Quotation system.</dd>
+            <dt>CAL</dt><dd>Capital Allocation Line — the menu of (σ, E[R]) combinations from mixing one risky asset (or T) with R<sub>f</sub>.</dd>
+            <dt>MVF</dt><dd>Minimum Variance Frontier — for each target E[R], the portfolio with the lowest σ.</dd>
+            <dt>T</dt><dd>Tangency portfolio — the risky-asset mix with the maximum Sharpe ratio. Every risk-averse investor holds it under two-fund separation.</dd>
+            <dt>FOC</dt><dd>First-Order Condition — set the derivative of the objective to zero.</dd>
+            <dt>CAPM</dt><dd>Capital Asset Pricing Model — coming in Lecture 5.</dd>
+            <dt>CML / SML</dt><dd>Capital Market Line / Security Market Line — Lecture 5 objects.</dd>
+            <dt>SMB / HML</dt><dd>Small-Minus-Big / High-Minus-Low — Fama-French size and value factors (Lecture 6).</dd>
+        </dl>
+
+        <h4 class="gloss-h">Worked-example characters</h4>
+        <dl>
+            <dt>DFQ, BML</dt><dd>Fictional stocks used in Lynch's running portfolio examples. DFQ has higher expected return (11%) and higher volatility (12.49%); BML is the lower-return, lower-volatility one (10%, 7.75%). Three-state setup: expansion 20%, recovery 70%, crisis 10%.</dd>
+            <dt>KLV, QLM, DZX, XYZ</dt><dd>Other fictional tickers Lynch uses in concept questions and problem sets.</dd>
+            <dt>Small Firm, ADM</dt><dd>Asset names from Lynch's empirical examples — Small Firm refers to a small-cap portfolio, ADM is Archer Daniels Midland.</dd>
+        </dl>
+    </details>
+
     <div class="takeaways" id="takeaways">
-        <h3>Key ideas so far (through Class 4)</h3>
+        <h3>Key ideas so far (through Class 5)</h3>
         <p style="margin-top: 0; font-size: 0.9em; color: #666;">Refreshed after each lecture. Each lecture section also has its own "✦ remember this" callout at the end.</p>
         <ol>
             <li><strong>A dollar today is worth more than a dollar later.</strong> Every valuation question reduces to: discount future cash flows by the right rate and add them up. PV, FV, annuity, perpetuity — different shapes of the same idea. Compounding is the snowball; discounting is the snowball in reverse.</li>
@@ -225,6 +304,12 @@
             <li><strong>Regression slope = covariance / variance.</strong> b = σ[Y,X] / σ²[X]. When we run R_stock on R_market in Lecture 5, this slope becomes <em>beta</em>, the central risk measure in CAPM.</li>
             <li><strong>One risky + one riskless = a Capital Allocation Line</strong> in (σ, E[R]) space. Slope = (E[R<sub>i</sub>] − R<sub>f</sub>) / σ[R<sub>i</sub>] = reward per unit of risk. Between two risky assets, every risk-averse investor picks the one with the steeper CAL, regardless of their personal risk aversion.</li>
             <li><strong>Two-fund separation (preview).</strong> Risk aversion determines <em>where</em> on the CAL you sit (more averse = closer to R<sub>f</sub>, less averse = further out / on margin). It does NOT determine <em>which</em> CAL — that's a universal choice. This is the seed of CAPM.</li>
+            <li><strong>With two risky assets, the portfolio possibility curve bows leftward as correlation drops.</strong> Lower ρ → more diversification benefit. At ρ = −1 you can construct a riskless portfolio. Min-variance portfolio: ω₁* = (σ₂² − σ<sub>1,2</sub>) / (σ₁² + σ₂² − 2σ<sub>1,2</sub>).</li>
+            <li><strong>Adding a riskless asset changes the efficient frontier from a curve to a straight line.</strong> The CAL through the tangency portfolio T dominates every point on the curved frontier except T itself.</li>
+            <li><strong>Tangency portfolio T:</strong> for 2 assets, closed form using excess returns and covariances. For N assets, w<sub>T</sub> = Σ⁻¹μ<sub>excess</sub> / (1<sup>T</sup>Σ⁻¹μ<sub>excess</sub>). Max Sharpe ratio: √(μ<sub>excess</sub><sup>T</sup>Σ⁻¹μ<sub>excess</sub>).</li>
+            <li><strong>For N assets, equal-weighted portfolio variance decomposes as σ²/N + (1 − 1/N) × avg covariance.</strong> First term → 0 (diversifiable / idiosyncratic risk). Second term → average covariance (systematic / undiversifiable risk). Even infinite diversification can't get below √ρ̄ × σ.</li>
+            <li><strong>Minimum variance frontier (MVF)</strong> is the leftmost boundary of achievable (σ, E[R]) — a hyperbola in (σ, μ) space, parabola in (σ², μ) space. Efficient frontier = upper half. Adding risky assets always shifts MVF left.</li>
+            <li><strong>Two-fund separation theorem:</strong> with N risky assets + R<sub>f</sub>, every risk-averse mean-variance investor holds the same tangency portfolio T, just in different mix with R<sub>f</sub>. The asset-selection problem and the risk-level problem fully decouple. <span class="imp">This is the engine of CAPM.</span></li>
             <li><strong>No arbitrage / law of one price.</strong> Two assets with identical cash flows must have the same price. Any price difference (after taxes, liquidity, transaction costs) is an arbitrage opportunity, and well-functioning markets don't let those last.</li>
             <li><strong>Market efficiency is a warning.</strong> If U.S. equity prices are efficient w.r.t. public information, you can't beat the market on average using public info, risk-adjusted. This is the big warning the course returns to at the end.</li>
             <li><strong>Option value is non-negative.</strong> A right (without obligation) to do something in the future must be worth ≥ 0 today. (Comes back in Lecture 10.)</li>
@@ -258,9 +343,25 @@
             <span class="num">L 3–4</span><a href="#one-risky" class="name">One risky + one riskless asset</a>
             <span class="desc">Risk aversion formalized. Portfolio E[R] and σ with one risky asset + T-bills. The Capital Allocation Line (CAL) and its slope. Picking between risky assets.</span>
         </li>
+        <li>
+            <span class="num">L 4</span><a href="#two-risky" class="name">Two risky assets</a>
+            <span class="desc">Portfolio variance with covariance/correlation. Portfolio possibility curve and how it bows with correlation. Minimum-variance portfolio (closed form). Efficient vs inefficient region.</span>
+        </li>
+        <li>
+            <span class="num">L 4</span><a href="#two-risky-plus-rf" class="name">Two risky + riskless</a>
+            <span class="desc">Two-step decision. Tangency portfolio T (max Sharpe). CAL through T as the new efficient frontier. Total portfolio weights ω<sub>i,p</sub> = ω<sub>i,T</sub> · ω<sub>T,p</sub>.</span>
+        </li>
+        <li>
+            <span class="num">L 4–5</span><a href="#n-risky" class="name">N risky assets</a>
+            <span class="desc">Matrix variance w<sup>T</sup>Σw. Equal-weighted diversification: σ²<sub>p</sub> = σ̄²/N + (1−1/N)σ̄<sub>i,j</sub>. Systematic vs idiosyncratic risk. Minimum-variance frontier via Lagrangian.</span>
+        </li>
+        <li>
+            <span class="num">L 4–5</span><a href="#n-risky-plus-rf" class="name">N risky + riskless</a>
+            <span class="desc">Tangency portfolio T = Σ⁻¹μ<sub>excess</sub>/(1<sup>T</sup>Σ⁻¹μ<sub>excess</sub>). New efficient frontier = CAL through T. Two-fund separation theorem.</span>
+        </li>
     </ul>
 
-    <p style="font-size: 0.92em; color: #888;"><em>Next up (Class 5, Wed Jun 3): two risky assets + a riskless asset (Lecture 4), then N risky assets and the minimum variance frontier (Lectures 4–5), CAPM (Lecture 5), CAPM performance measures and multifactor models (Lectures 5–6). After midterm: fixed income, derivatives, valuation, market efficiency.</em></p>
+    <p style="font-size: 0.92em; color: #888;"><em>Next up (Class 6, Mon Jun 8): CAPM (Lecture 5) — the market portfolio = tangency portfolio, beta as the relevant risk measure, the Security Market Line. Then CAPM performance measures (Jensen's α, Sharpe ratio) and the empirical evidence (Lectures 5–6), multifactor models like Fama-French (L6). Midterm is Mon Jun 15. After midterm: fixed income, derivatives, valuation, market efficiency.</em></p>
 
     <h2 id="schedule">Class schedule</h2>
     <table>
@@ -1561,6 +1662,807 @@ Check: slope = (13 − 6) / 17.49 ≈ 0.40  ✓  same CAL.</div>
             <li><strong>Two decision rules:</strong> (1) fix σ → prefer higher E[R]; (2) fix E[R] → prefer lower σ. Rule 1 alone rules out short positions (the lower branch of the line) when E[R<sub>i</sub>] &gt; R<sub>f</sub>.</li>
             <li><strong>Between two risky assets, pick the steeper CAL.</strong> This is universal — doesn't depend on risk aversion. Risk aversion only picks <em>where</em> on the chosen CAL you sit: more averse = closer to R<sub>f</sub>; less averse = further out, possibly on margin (ω &gt; 1).</li>
             <li><strong>Seed of two-fund separation:</strong> all risk-averse investors use the same CAL, just sit at different points. Lecture 5 generalizes this to the market portfolio and CAPM.</li>
+        </ul>
+    </div>
+
+    <h2 id="two-risky">Lecture 4 - Two risky assets</h2>
+
+    <p>Now we add a second risky asset. With one risky + one riskless, the (σ, E[R]) menu was a straight line — easy. With two risky assets, the menu becomes a <em>curve</em>, and the curve's shape depends on the correlation between the two assets. This is where diversification benefit shows up as actual geometry.</p>
+
+    <h3>Portfolio variance with two risky assets</h3>
+
+    <div class="formula-box">
+        <p><strong>Variance in terms of covariance</strong></p>
+        \[ \sigma^2[R_p] \;=\; \omega_1^2\,\sigma_1^2 + \omega_2^2\,\sigma_2^2 + 2\,\omega_1\omega_2\,\sigma_{1,2} \]
+        <p><strong>Variance in terms of correlation</strong></p>
+        \[ \sigma^2[R_p] \;=\; \omega_1^2\,\sigma_1^2 + \omega_2^2\,\sigma_2^2 + 2\,\omega_1\omega_2\,\rho_{1,2}\,\sigma_1\,\sigma_2 \]
+        <div class="formula-actions">
+            <button class="intuition-btn" onclick="toggleIntuition(this)">💡 intuition</button>
+            <button class="derive-btn" onclick="toggleDerivation(this)">▼ derive</button>
+        </div>
+        <div class="intuition">
+            <p>The variance of a sum has three pieces: the variance of each asset weighted by ω², PLUS a "cross term" that depends on how the two assets co-move. If they move together (positive covariance), the cross term is positive and adds to portfolio variance. If they move opposite (negative covariance), the cross term subtracts — that's diversification doing its job.</p>
+            <p>The correlation form makes the role of ρ obvious: portfolio variance is highest when ρ = +1 (no diversification) and lowest when ρ = −1 (assets are perfect hedges). For any ρ &lt; 1, you get <em>some</em> diversification benefit — portfolio σ falls below the weighted average of the individual σ's.</p>
+        </div>
+        <div class="derivation">
+            <p>Start with the definition <em>R<sub>p</sub> = ω<sub>1</sub>R<sub>1</sub> + ω<sub>2</sub>R<sub>2</sub></em>. Variance of a linear combination:</p>
+            \[ \sigma^2[R_p] \;=\; \mathrm{Var}(\omega_1 R_1 + \omega_2 R_2) \]
+            <p>Use the general identity <em>Var(aX + bY) = a²Var(X) + b²Var(Y) + 2ab\,Cov(X,Y)</em>:</p>
+            \[ \sigma^2[R_p] \;=\; \omega_1^2\,\mathrm{Var}(R_1) + \omega_2^2\,\mathrm{Var}(R_2) + 2\omega_1\omega_2\,\mathrm{Cov}(R_1,R_2) \]
+            <p>Rewrite with finance notation (σ² for variance, σ<sub>i,j</sub> for covariance), giving the first form. For the second form, substitute <em>σ<sub>1,2</sub> = ρ<sub>1,2</sub> σ<sub>1</sub> σ<sub>2</sub></em>.</p>
+            <p>For a quick sanity check, take <em>ρ = 1</em>: <em>σ²<sub>p</sub> = (ω<sub>1</sub>σ<sub>1</sub> + ω<sub>2</sub>σ<sub>2</sub>)²</em>, so <em>σ<sub>p</sub> = ω<sub>1</sub>σ<sub>1</sub> + ω<sub>2</sub>σ<sub>2</sub></em> — exactly the weighted average of the individual σ's. Perfect positive correlation produces NO diversification. Any ρ &lt; 1 produces some.</p>
+        </div>
+    </div>
+
+    <h3>Portfolio possibility curve</h3>
+
+    <p>As <em>ω<sub>1</sub></em> varies from 0 to 1 (no shorting), the pair (σ[R<sub>p</sub>], E[R<sub>p</sub>]) traces out a curve in mean-variance space. Its shape depends critically on the correlation between the two assets. Below: same DFQ and BML (E[R] = 11%, σ = 12.49% and E[R] = 10%, σ = 7.75%), but with the correlation varied. <span class="imp">As ρ falls, the curve bows further to the left</span> — that's diversification visible as geometry.</p>
+
+    <svg class="cal-plot" viewBox="0 0 540 380" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Portfolio possibility curves at different correlations">
+        <!-- gridlines -->
+        <line x1="60" y1="55" x2="60" y2="310" stroke="#e8e8e8"/>
+        <line x1="60" y1="310" x2="460" y2="310" stroke="#e8e8e8"/>
+        <line x1="160" y1="55" x2="160" y2="310" stroke="#e8e8e8" stroke-dasharray="3,3"/>
+        <line x1="260" y1="55" x2="260" y2="310" stroke="#e8e8e8" stroke-dasharray="3,3"/>
+        <line x1="360" y1="55" x2="360" y2="310" stroke="#e8e8e8" stroke-dasharray="3,3"/>
+        <line x1="460" y1="55" x2="460" y2="310" stroke="#e8e8e8" stroke-dasharray="3,3"/>
+        <line x1="60" y1="226" x2="460" y2="226" stroke="#e8e8e8" stroke-dasharray="3,3"/>
+        <line x1="60" y1="143" x2="460" y2="143" stroke="#e8e8e8" stroke-dasharray="3,3"/>
+        <line x1="60" y1="60" x2="460" y2="60" stroke="#e8e8e8" stroke-dasharray="3,3"/>
+        <!-- axes -->
+        <line x1="60" y1="310" x2="470" y2="310" stroke="#666" stroke-width="1.5"/>
+        <line x1="60" y1="310" x2="60" y2="50" stroke="#666" stroke-width="1.5"/>
+        <!-- axis labels -->
+        <text x="265" y="345" text-anchor="middle" font-size="13" fill="#666">σ (standard deviation, %)</text>
+        <text x="22" y="180" text-anchor="middle" font-size="13" fill="#666" transform="rotate(-90, 22, 180)">E[R] (%)</text>
+        <!-- x ticks -->
+        <text x="60" y="325" text-anchor="middle" font-size="11" fill="#888">0</text>
+        <text x="160" y="325" text-anchor="middle" font-size="11" fill="#888">5</text>
+        <text x="260" y="325" text-anchor="middle" font-size="11" fill="#888">10</text>
+        <text x="360" y="325" text-anchor="middle" font-size="11" fill="#888">15</text>
+        <text x="460" y="325" text-anchor="middle" font-size="11" fill="#888">20</text>
+        <!-- y ticks: E[R] = 9 → y=310, 12 → y=60, so each % = 83.3 -->
+        <text x="50" y="314" text-anchor="end" font-size="11" fill="#888">9</text>
+        <text x="50" y="230" text-anchor="end" font-size="11" fill="#888">10</text>
+        <text x="50" y="147" text-anchor="end" font-size="11" fill="#888">11</text>
+        <text x="50" y="64" text-anchor="end" font-size="11" fill="#888">12</text>
+        <!-- ρ = +1: straight line from BML to DFQ -->
+        <line x1="215" y1="226" x2="310" y2="143" stroke="#888" stroke-width="1.5"/>
+        <text x="320" y="153" font-size="10" fill="#666">ρ = +1 (no benefit)</text>
+        <!-- ρ = 0.5 curve -->
+        <polyline points="215,226 213,210 217,205 229,185 256,165 310,143" fill="none" stroke="#ff9933" stroke-width="2"/>
+        <text x="240" y="178" font-size="10" fill="#cc6600">ρ = 0.5</text>
+        <!-- ρ = 0 curve -->
+        <polyline points="215,226 195,205 196,185 235,164 310,143" fill="none" stroke="#ff3333" stroke-width="2"/>
+        <text x="195" y="160" font-size="10" fill="#ff3333">ρ = 0</text>
+        <!-- ρ = -0.5 curve -->
+        <polyline points="215,226 155,200 169,185 215,164 310,143" fill="none" stroke="#bb33aa" stroke-width="2"/>
+        <text x="150" y="190" font-size="10" fill="#bb33aa">ρ = −0.5</text>
+        <!-- ρ = -1 curve (kinked at σ=0, ω=0.383) -->
+        <polyline points="215,226 60,194 124,185 145,180 198,164 310,143" fill="none" stroke="#3366cc" stroke-width="2"/>
+        <text x="65" y="208" font-size="10" fill="#3366cc">ρ = −1 (perfect hedge)</text>
+        <!-- BML asset point -->
+        <circle cx="215" cy="226" r="5" fill="#333"/>
+        <text x="221" y="222" font-size="11" fill="#333" font-weight="bold">BML (7.75, 10)</text>
+        <!-- DFQ asset point -->
+        <circle cx="310" cy="143" r="5" fill="#333"/>
+        <text x="316" y="139" font-size="11" fill="#333" font-weight="bold">DFQ (12.49, 11)</text>
+    </svg>
+
+    <p class="caption">All curves connect the same two endpoints (BML and DFQ). The curve <em>bows leftward</em> as ρ decreases — that's diversification reducing risk for the same expected return. At ρ = −1, the curve hits σ = 0 (a perfect hedge can be built from two perfectly-negatively-correlated risky assets).</p>
+
+    <h3>Minimum-variance portfolio (two risky)</h3>
+
+    <p>Among all portfolios on the curve, the one with the smallest σ is the <strong>minimum-variance portfolio</strong>. Its weight in asset 1 is:</p>
+
+    <div class="formula-box">
+        \[ \omega_1^{\,*} \;=\; \frac{\sigma_2^{\,2} - \sigma_{1,2}}{\sigma_1^{\,2} + \sigma_2^{\,2} - 2\sigma_{1,2}} \;=\; \frac{\sigma_2^{\,2} - \rho\,\sigma_1\,\sigma_2}{\sigma_1^{\,2} + \sigma_2^{\,2} - 2\rho\,\sigma_1\,\sigma_2} \]
+        <div class="formula-actions">
+            <button class="intuition-btn" onclick="toggleIntuition(this)">💡 intuition</button>
+            <button class="derive-btn" onclick="toggleDerivation(this)">▼ derive</button>
+        </div>
+        <div class="intuition">
+            <p>The minimum-variance portfolio puts MORE weight in the asset with LOWER standard deviation, but the precise weight depends on covariance. When ρ &lt; 0 (assets hedge each other), you sometimes hold a lot of the higher-vol asset because each "good" period for one offsets a "bad" period for the other.</p>
+            <p>When ρ = +1, the formula gives ω₁* = (σ₂² − σ₁σ₂)/(σ₁ − σ₂)² × σ₂/(σ₁−σ₂) — which can be negative (shorting the higher-vol asset to neutralize risk via the perfect linear relationship).</p>
+        </div>
+        <div class="derivation">
+            <p>We want to choose <em>ω</em> ≡ ω<sub>1</sub> (so ω<sub>2</sub> = 1 − ω) to minimize:</p>
+            \[ \sigma^2[R_p](\omega) \;=\; \omega^2 \sigma_1^2 + (1-\omega)^2 \sigma_2^2 + 2\omega(1-\omega) \sigma_{1,2} \]
+            <p>Take the first-order condition (FOC) — differentiate with respect to <em>ω</em> and set to zero:</p>
+            \[ \frac{d \sigma^2}{d\omega} \;=\; 2\omega \sigma_1^2 - 2(1-\omega)\sigma_2^2 + 2(1-2\omega)\sigma_{1,2} \;=\; 0 \]
+            <p>Divide by 2 and expand:</p>
+            \[ \omega \sigma_1^2 - \sigma_2^2 + \omega \sigma_2^2 + \sigma_{1,2} - 2\omega \sigma_{1,2} \;=\; 0 \]
+            <p>Group terms in <em>ω</em>:</p>
+            \[ \omega\,(\sigma_1^2 + \sigma_2^2 - 2\sigma_{1,2}) \;=\; \sigma_2^2 - \sigma_{1,2} \]
+            <p>Solve:</p>
+            \[ \omega_1^{\,*} \;=\; \frac{\sigma_2^2 - \sigma_{1,2}}{\sigma_1^2 + \sigma_2^2 - 2\sigma_{1,2}} \]
+            <p>Substitute <em>σ<sub>1,2</sub> = ρ σ<sub>1</sub> σ<sub>2</sub></em> for the correlation form. Second-order condition is automatically satisfied because <em>σ²[R<sub>p</sub>]</em> is a convex parabola in <em>ω</em>: the coefficient of <em>ω²</em> is <em>σ²<sub>1</sub> + σ²<sub>2</sub> − 2σ<sub>1,2</sub> ≥ 0</em> (this is just Var(R<sub>1</sub> − R<sub>2</sub>) ≥ 0).</p>
+        </div>
+    </div>
+
+    <h3>Efficient vs inefficient region</h3>
+
+    <p>The portfolio possibility curve has two halves:</p>
+    <ul class="bullets">
+        <li><strong>Positive-sloped portion (above the minimum-variance portfolio):</strong> the <em>efficient frontier</em>. Higher E[R] for higher σ. Risk-averse investors only pick portfolios here.</li>
+        <li><strong>Negative-sloped portion (below the minimum-variance portfolio):</strong> the <em>inefficient region</em>. For any point here, there's a point directly above it with the same σ but higher E[R] — so by Rule 1, nobody picks the lower point.</li>
+    </ul>
+
+    <p>For the DFQ/BML curve at any ρ &lt; 1, both halves exist. At ρ = +1 the curve is just a straight line so there's no minimum-variance portfolio interior to the segment (the lowest σ is just BML).</p>
+
+    <h3>Whiteboard example: minimum variance with DFQ &amp; BML</h3>
+
+    <p>Using <em>σ<sub>DFQ</sub></em> = 12.49% (so <em>σ²</em> = 156), <em>σ<sub>BML</sub></em> = 7.75% (so <em>σ²</em> = 60), and trying three different correlations:</p>
+
+    <table>
+        <thead><tr><th>ρ</th><th>σ<sub>DFQ,BML</sub></th><th>ω<sub>DFQ</sub>*</th><th>ω<sub>BML</sub>*</th><th>σ at minimum</th></tr></thead>
+        <tbody>
+            <tr><td>+0.5</td><td>48.40</td><td>(60 − 48.4)/(156 + 60 − 96.8) ≈ <strong>0.097</strong></td><td>0.903</td><td>≈ 7.67%</td></tr>
+            <tr><td>0</td><td>0</td><td>(60 − 0)/(156 + 60) = <strong>0.278</strong></td><td>0.722</td><td>≈ 6.58%</td></tr>
+            <tr><td>−0.5</td><td>−48.40</td><td>(60 + 48.4)/(156 + 60 + 96.8) ≈ <strong>0.347</strong></td><td>0.653</td><td>≈ 4.74%</td></tr>
+            <tr><td>−1</td><td>−96.80</td><td>(60 + 96.8)/(156 + 60 + 193.6) ≈ <strong>0.383</strong></td><td>0.617</td><td><strong>≈ 0%</strong> (riskless!)</td></tr>
+        </tbody>
+    </table>
+
+    <p>As correlation drops, you put more weight on DFQ in the minimum-variance portfolio — counterintuitive at first (DFQ is the riskier asset!) but it makes sense: when DFQ moves up and BML moves down (negative correlation), DFQ's "extra volatility" actually neutralizes BML's swings. At ρ = −1, a specific weight combination produces a perfectly riskless portfolio.</p>
+
+    <h2 id="two-risky-plus-rf">Lecture 4 - Two risky assets + a riskless asset</h2>
+
+    <p>Now add T-bills to the mix. With two risky assets, the menu was a curve. Adding a riskless asset gives us back straight-line CALs, but now the CALs can be drawn from R<sub>f</sub> to <em>any portfolio on the curve</em>. The question becomes: which CAL is steepest? That CAL passes through the so-called <strong>tangency portfolio T</strong>, and every risk-averse investor wants it.</p>
+
+    <h3>The two-step decision</h3>
+
+    <p>With two risky assets plus a riskless asset, the investor's choice splits cleanly into two steps:</p>
+
+    <ol class="numbered">
+        <li><strong>Find the best risky portfolio T</strong> — the mixture of the two risky assets whose CAL has the steepest slope.</li>
+        <li><strong>Pick how much of T vs. R<sub>f</sub></strong> to hold — this is the personal risk-aversion call, identical to the 1-risky-+-riskless problem from the previous lecture.</li>
+    </ol>
+
+    <p>Crucially, Step 1's answer is <em>the same for every risk-averse investor</em>. The mix of the two risky assets is universal. Only Step 2 — how levered or conservative to be — depends on personal taste. This is the seed of <strong>two-fund separation</strong> that will later become CAPM.</p>
+
+    <h3>Tangency portfolio T</h3>
+
+    <p>The tangency portfolio is the risky-asset mixture that maximizes the Sharpe ratio (CAL slope). For two assets, the closed-form solution is:</p>
+
+    <div class="formula-box">
+        \[ \omega_{1,T} \;=\; \frac{\mu_1\,\sigma_2^2 - \mu_2\,\sigma_{1,2}}{\mu_1\,\sigma_2^2 + \mu_2\,\sigma_1^2 - (\mu_1 + \mu_2)\,\sigma_{1,2}} \]
+        <p>where <em>μ<sub>i</sub> = E[R<sub>i</sub>] − R<sub>f</sub></em> is the excess return of asset <em>i</em>.</p>
+        <div class="formula-actions">
+            <button class="intuition-btn" onclick="toggleIntuition(this)">💡 intuition</button>
+            <button class="derive-btn" onclick="toggleDerivation(this)">▼ derive (max Sharpe ratio)</button>
+        </div>
+        <div class="intuition">
+            <p>The tangency portfolio is the unique risky portfolio whose CAL is steepest — the highest Sharpe ratio achievable in the (σ, E[R]) plane. Geometrically, the CAL through R<sub>f</sub> just touches (is tangent to) the upper edge of the portfolio possibility curve at T.</p>
+            <p>The formula weights each asset by its excess return <em>μ</em> times the OTHER asset's variance, minus its excess return times the covariance. Intuitively: the more an asset contributes (high <em>μ</em>) and the less it covaries with the other (low <em>σ<sub>1,2</sub></em>), the more weight it gets.</p>
+            <p>Note: tangency weights can be negative — when one asset has such a poor Sharpe ratio relative to the other that you'd rather short it to fund a bigger position in the other. That's not pathological; it's the math telling you the lower-Sharpe asset is just dominated.</p>
+        </div>
+        <div class="derivation">
+            <p>The Sharpe ratio of a portfolio with weights (ω, 1−ω) is:</p>
+            \[ S(\omega) \;=\; \frac{E[R_p] - R_f}{\sigma[R_p]} \;=\; \frac{\omega\,\mu_1 + (1-\omega)\,\mu_2}{\sqrt{\omega^2\sigma_1^2 + (1-\omega)^2\sigma_2^2 + 2\omega(1-\omega)\sigma_{1,2}}} \]
+            <p>Maximizing <em>S</em> is equivalent to maximizing <em>S²</em> (assuming the numerator is positive). Let <em>N(ω) = ωμ<sub>1</sub> + (1−ω)μ<sub>2</sub></em> and <em>V(ω) = σ²[R<sub>p</sub>]</em>. We want:</p>
+            \[ \frac{d}{d\omega} \frac{N^2}{V} \;=\; \frac{2 N N' V - N^2 V'}{V^2} \;=\; 0 \quad\Rightarrow\quad 2 N' V \;=\; N V' \]
+            <p>Compute the derivatives:</p>
+            \[ N' \;=\; \mu_1 - \mu_2 \qquad V' \;=\; 2\omega\sigma_1^2 - 2(1-\omega)\sigma_2^2 + 2(1-2\omega)\sigma_{1,2} \]
+            <p>Substitute into <em>2N'V = NV'</em>:</p>
+            \[ 2(\mu_1 - \mu_2)\,V(\omega) \;=\; [\,\omega\mu_1 + (1-\omega)\mu_2\,] \,\bigl[2\omega\sigma_1^2 - 2(1-\omega)\sigma_2^2 + 2(1-2\omega)\sigma_{1,2}\bigr] \]
+            <p>This is messy but linear in <em>ω</em> after expansion. After distributing and collecting like terms in <em>ω</em>, the <em>ω²</em> and higher terms cancel (this is the magic of the Sharpe optimization), leaving a linear equation:</p>
+            \[ \omega\,[\mu_1\sigma_2^2 + \mu_2\sigma_1^2 - (\mu_1+\mu_2)\sigma_{1,2}] \;=\; \mu_1\sigma_2^2 - \mu_2\sigma_{1,2} \]
+            <p>Solve for <em>ω</em>:</p>
+            \[ \omega_{1,T} \;=\; \frac{\mu_1\sigma_2^2 - \mu_2\sigma_{1,2}}{\mu_1\sigma_2^2 + \mu_2\sigma_1^2 - (\mu_1+\mu_2)\sigma_{1,2}} \]
+            <p><strong>Alternative geometric argument:</strong> The tangency point is where the line from R<sub>f</sub> is tangent to the portfolio possibility curve. At that point, the slope of the curve equals the slope of the CAL. Computing both slopes and equating yields the same answer. This is the clean way to remember it: <em>"the steepest CAL touches the curve exactly once."</em></p>
+        </div>
+    </div>
+
+    <h3>Picture: tangency on the portfolio possibility curve</h3>
+
+    <p>Using DFQ + BML with a hypothetical ρ = 0.3 (low enough to make the tangency interior, i.e., both weights positive). At this ρ:</p>
+    <ul class="bullets">
+        <li><em>σ<sub>DFQ,BML</sub></em> = 0.3 × 12.49 × 7.75 ≈ 29.04</li>
+        <li><em>ω<sub>DFQ,T</sub></em> = (5×60 − 4×29.04) / (5×60 + 4×156 − 9×29.04) = 183.84 / 662.64 ≈ <strong>0.277</strong></li>
+        <li><em>ω<sub>BML,T</sub></em> ≈ <strong>0.723</strong></li>
+        <li><em>E[R<sub>T</sub>]</em> = 0.277×11 + 0.723×10 ≈ 10.28%</li>
+        <li><em>σ<sub>T</sub></em> ≈ 7.41%</li>
+        <li><em>Slope of CAL through T</em> = (10.28 − 6) / 7.41 ≈ <strong>0.577</strong></li>
+    </ul>
+
+    <p>Compare to the best single-asset CAL: BML's slope was 0.516. So the tangency portfolio's Sharpe ratio (0.577) is <em>strictly better</em> than either asset alone. <span class="imp">Diversification has expanded the menu of achievable (σ, E[R]) points</span>, and the new optimal sits somewhere in between the two assets.</p>
+
+    <svg class="cal-plot" viewBox="0 0 540 380" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Tangency portfolio for two risky assets and riskless asset">
+        <!-- gridlines -->
+        <line x1="60" y1="55" x2="60" y2="310" stroke="#e8e8e8"/>
+        <line x1="60" y1="310" x2="470" y2="310" stroke="#e8e8e8"/>
+        <line x1="160" y1="55" x2="160" y2="310" stroke="#e8e8e8" stroke-dasharray="3,3"/>
+        <line x1="260" y1="55" x2="260" y2="310" stroke="#e8e8e8" stroke-dasharray="3,3"/>
+        <line x1="360" y1="55" x2="360" y2="310" stroke="#e8e8e8" stroke-dasharray="3,3"/>
+        <line x1="460" y1="55" x2="460" y2="310" stroke="#e8e8e8" stroke-dasharray="3,3"/>
+        <line x1="60" y1="240" x2="460" y2="240" stroke="#e8e8e8" stroke-dasharray="3,3"/>
+        <line x1="60" y1="170" x2="460" y2="170" stroke="#e8e8e8" stroke-dasharray="3,3"/>
+        <line x1="60" y1="100" x2="460" y2="100" stroke="#e8e8e8" stroke-dasharray="3,3"/>
+        <!-- axes -->
+        <line x1="60" y1="310" x2="470" y2="310" stroke="#666" stroke-width="1.5"/>
+        <line x1="60" y1="310" x2="60" y2="50" stroke="#666" stroke-width="1.5"/>
+        <!-- axis labels -->
+        <text x="265" y="345" text-anchor="middle" font-size="13" fill="#666">σ (standard deviation, %)</text>
+        <text x="22" y="180" text-anchor="middle" font-size="13" fill="#666" transform="rotate(-90, 22, 180)">E[R] (%)</text>
+        <!-- x ticks: σ from 0 to 20, scale 20 per unit (1%) -->
+        <text x="60" y="325" text-anchor="middle" font-size="11" fill="#888">0</text>
+        <text x="160" y="325" text-anchor="middle" font-size="11" fill="#888">5</text>
+        <text x="260" y="325" text-anchor="middle" font-size="11" fill="#888">10</text>
+        <text x="360" y="325" text-anchor="middle" font-size="11" fill="#888">15</text>
+        <text x="460" y="325" text-anchor="middle" font-size="11" fill="#888">20</text>
+        <!-- y ticks: E[R] from 5 to 12, so y=310 at 5, y=50 at 12. Scale = 260/7 ≈ 37.14 per % -->
+        <text x="50" y="314" text-anchor="end" font-size="11" fill="#888">5</text>
+        <text x="50" y="240" text-anchor="end" font-size="11" fill="#888">7</text>
+        <text x="50" y="170" text-anchor="end" font-size="11" fill="#888">9</text>
+        <text x="50" y="100" text-anchor="end" font-size="11" fill="#888">11</text>
+        <!-- Portfolio possibility curve at ρ=0.3 from BML(7.75,10) to DFQ(12.49,11) -->
+        <!-- Coords: x = 60 + σ*20, y = 310 - (E-5)*37.14 -->
+        <!-- BML (7.75, 10): x=215, y=310-185.7=124 -->
+        <!-- Min variance (~ω_DFQ=0.196): σ≈7.35, E≈10.196: x=207, y=310-193=117 -->
+        <!-- Tangency (~ω_DFQ=0.277): σ≈7.41, E≈10.277: x=208, y=310-196=114 -->
+        <!-- ω_DFQ=0.5: σ≈8.28, E=10.5: x=226, y=310-204.3=106 -->
+        <!-- ω_DFQ=0.75: σ≈10.12, E=10.75: x=262, y=310-213.6=96 -->
+        <!-- DFQ (12.49, 11): x=310, y=310-222.8=87 -->
+        <polyline points="215,124 207,117 226,106 262,96 310,87" fill="none" stroke="#888" stroke-width="2"/>
+        <!-- Inefficient lower branch (mirrored, schematic) -->
+        <polyline points="215,124 230,140 260,160 310,180" fill="none" stroke="#ccc" stroke-width="1.5" stroke-dasharray="4,3"/>
+        <text x="280" y="170" font-size="9" fill="#999">inefficient</text>
+        <!-- R_f point at (0, 6): x=60, y=310-37.14=273 -->
+        <circle cx="60" cy="273" r="5" fill="#333"/>
+        <text x="68" y="269" font-size="11" fill="#333">R_f = 6%</text>
+        <!-- CAL through T: from (60, 273) with slope rising. -->
+        <!-- Slope in screen coords: ΔE/Δσ = 0.577 (%/%) → Δy = -0.577 * 37.14 / 20 per x = -1.07 per x... let me recompute. -->
+        <!-- T is at σ=7.41, E=10.277. Screen: x=208, y=114. -->
+        <!-- Line from (60, 273) through (208, 114). Slope screen = (114-273)/(208-60) = -159/148 ≈ -1.074 -->
+        <!-- Extend to x=460: y = 273 + (460-60) * (-1.074) = 273 - 429.6 = -156.6 (offscreen!) -->
+        <!-- Extend to within plot: at y=55 (top), x = 60 + (55-273)/-1.074 = 60 + 203 = 263 -->
+        <line x1="60" y1="273" x2="263" y2="55" stroke="#ff3333" stroke-width="2"/>
+        <!-- Tangency portfolio T marker -->
+        <circle cx="208" cy="114" r="6" fill="#ff3333" stroke="#fff" stroke-width="1.5"/>
+        <text x="160" y="105" font-size="11" fill="#ff3333" font-weight="bold">T (tangency)</text>
+        <text x="160" y="92" font-size="10" fill="#666">σ=7.41, E[R]=10.28</text>
+        <!-- BML asset point -->
+        <circle cx="215" cy="124" r="4" fill="#555"/>
+        <text x="222" y="140" font-size="10" fill="#555">BML</text>
+        <!-- DFQ asset point -->
+        <circle cx="310" cy="87" r="4" fill="#555"/>
+        <text x="316" y="91" font-size="10" fill="#555">DFQ</text>
+        <!-- CAL label -->
+        <text x="100" y="240" font-size="10" fill="#ff3333">CAL through T (slope 0.577)</text>
+    </svg>
+
+    <p class="caption">The portfolio possibility curve (gray) connects BML and DFQ; the red line is the CAL through R<sub>f</sub> tangent to the curve at T. Every risk-averse investor sits SOMEWHERE on that red line — and to do so, they hold T as their entire risky-asset position.</p>
+
+    <h3>Total portfolio weights with two risky assets + riskless</h3>
+
+    <p>Once you know T (the risky-asset portfolio) and you've decided how much to put in T vs. R<sub>f</sub>, your weight in each individual risky asset is the product:</p>
+
+    <div class="formula-box">
+        \[ \omega_{i,p} \;=\; \omega_{i,T} \cdot \omega_{T,p} \]
+        <p>where <em>ω<sub>T,p</sub></em> is the weight of T in your total portfolio (decided by your risk aversion), and <em>ω<sub>i,T</sub></em> is the weight of asset <em>i</em> within T (the same for everyone).</p>
+        <div class="formula-actions">
+            <button class="intuition-btn" onclick="toggleIntuition(this)">💡 intuition</button>
+        </div>
+        <div class="intuition">
+            <p>You hold T as a single "bundle" — its composition is fixed by the universal tangency-portfolio formula. Then you decide how much of the bundle to hold (vs. T-bills) based on personal taste. Your final weight in any one asset is just "fraction of total that's in T" × "fraction of T that's in this asset."</p>
+            <p>Example: ω<sub>T,p</sub> = 0.6 (60% of your money in T), and ω<sub>DFQ,T</sub> = 0.277 (T is 27.7% DFQ). Then your overall position in DFQ is 0.6 × 0.277 ≈ 16.6% of your total wealth.</p>
+        </div>
+    </div>
+
+    <h3>Whiteboard example: building a portfolio with target σ</h3>
+
+    <p>Continuing the ρ = 0.3 DFQ + BML + R<sub>f</sub> setup, suppose an investor wants a portfolio with <em>σ</em> = 4%. Using the CAL through T (slope 0.577) and tangency portfolio T (σ<sub>T</sub> = 7.41%):</p>
+
+    <div class="formula">σ[R_p]   = ω_T,p × σ_T          (since R_f has zero variance)
+   4%   = ω_T,p × 7.41%
+ω_T,p  = 4 / 7.41 ≈ 0.540   →  54% in T, 46% in R_f
+
+E[R_p] = R_f + ω_T,p × (E[R_T] - R_f)
+       = 6 + 0.540 × (10.28 - 6)
+       = 6 + 0.540 × 4.28
+       ≈ 8.31%
+
+Individual asset weights:
+ω_DFQ,p = 0.540 × 0.277 ≈ 0.150  (15% in DFQ)
+ω_BML,p = 0.540 × 0.723 ≈ 0.390  (39% in BML)
+ω_Rf,p  = 1 - 0.540 = 0.460       (46% in T-bills)
+                                  Check: 0.15 + 0.39 + 0.46 = 1.00 ✓</div>
+
+    <div class="remember">
+        <span class="label">✦ remember this — Lecture 4 (2 risky + R<sub>f</sub>)</span>
+        <ul>
+            <li><strong>Portfolio variance with 2 risky assets:</strong> σ²[R<sub>p</sub>] = ω₁²σ₁² + ω₂²σ₂² + 2ω₁ω₂ρσ₁σ₂. The third (cross) term is where correlation matters. For any ρ &lt; 1, you get some diversification benefit.</li>
+            <li><strong>The portfolio possibility curve bows leftward as ρ falls.</strong> At ρ = 1 it's a straight line (no benefit); at ρ = −1 it hits σ = 0 (perfect hedge possible).</li>
+            <li><strong>Minimum-variance portfolio:</strong> ω₁* = (σ₂² − σ<sub>1,2</sub>) / (σ₁² + σ₂² − 2σ<sub>1,2</sub>). Counterintuitively, weight on the higher-vol asset rises as correlation falls.</li>
+            <li><strong>Two-step decision when R<sub>f</sub> is available:</strong> (1) find the steepest-CAL risky portfolio T (tangency); (2) decide how much T vs R<sub>f</sub> based on risk aversion. Step 1 is universal; step 2 is personal.</li>
+            <li><strong>Tangency portfolio (2 assets):</strong> ω<sub>1,T</sub> = (μ₁σ₂² − μ₂σ<sub>1,2</sub>) / (μ₁σ₂² + μ₂σ₁² − (μ₁+μ₂)σ<sub>1,2</sub>) where μ<sub>i</sub> = E[R<sub>i</sub>] − R<sub>f</sub>. The CAL through T has the maximum Sharpe ratio achievable.</li>
+            <li><strong>Total weights are multiplicative:</strong> ω<sub>i,p</sub> = ω<sub>i,T</sub> × ω<sub>T,p</sub>. T is the "bundle"; risk aversion picks how much of the bundle to hold.</li>
+        </ul>
+    </div>
+
+    <h2 id="n-risky">Lectures 4-5 - N risky assets</h2>
+
+    <p>Generalize to <em>N</em> risky assets. The key new objects are the <em>N × N</em> covariance matrix and the <em>minimum-variance frontier</em>. The diversification result becomes spectacular: as <em>N</em> grows, idiosyncratic risk gets washed out completely, leaving only systematic (average-covariance) risk. This is the engine of CAPM in the next lecture.</p>
+
+    <h3>A matrix notation primer (so the rest is readable)</h3>
+
+    <p>The next few formulas use matrix notation because writing out N-fold sums is unwieldy. Three quick reminders:</p>
+    <ul class="bullets">
+        <li><strong>w</strong> is an N-tall column vector of weights: <em>w = (ω<sub>1</sub>, ω<sub>2</sub>, …, ω<sub>N</sub>)<sup>T</sup></em>. The superscript <em>T</em> means "transpose" (turn the column into a row).</li>
+        <li><strong>Σ</strong> (capital sigma) is the N × N covariance matrix. The entry in row <em>i</em>, column <em>j</em> is <em>Σ<sub>i,j</sub> = σ<sub>i,j</sub></em> (covariance of asset <em>i</em> with asset <em>j</em>). Diagonal entries <em>Σ<sub>i,i</sub> = σ²<sub>i</sub></em> are variances. The matrix is symmetric (<em>σ<sub>i,j</sub> = σ<sub>j,i</sub></em>).</li>
+        <li><strong>w<sup>T</sup> Σ w</strong> is a single number (a "quadratic form") — multiply weights through both sides of the matrix and add up everything. It expands to <em>Σ<sub>i,j</sub> ω<sub>i</sub> Σ<sub>i,j</sub> ω<sub>j</sub></em>, which is exactly the portfolio variance double-sum. Picture: each cell <em>(i, j)</em> contributes <em>ω<sub>i</sub> × σ<sub>i,j</sub> × ω<sub>j</sub></em> to the total.</li>
+    </ul>
+
+    <p>Similarly, <em>w<sup>T</sup> μ = ω<sub>1</sub>μ<sub>1</sub> + ω<sub>2</sub>μ<sub>2</sub> + … = E[R<sub>p</sub>]</em> (portfolio expected return = weighted average), and <em>w<sup>T</sup> 1 = ω<sub>1</sub> + ω<sub>2</sub> + … = 1</em> (weights sum to one). Matrix notation is just a shorthand — every step below can be rewritten with summation signs if you prefer.</p>
+
+    <h3>Portfolio variance with N assets</h3>
+
+    <div class="formula-box">
+        <p><strong>Double-sum form:</strong></p>
+        \[ \sigma^2[R_p] \;=\; \sum_{i=1}^{N} \sum_{j=1}^{N} \omega_i\,\omega_j\,\sigma_{i,j} \]
+        <p><strong>Matrix form:</strong></p>
+        \[ \sigma^2[R_p] \;=\; \mathbf{w}^{\top} \boldsymbol{\Sigma}\, \mathbf{w} \qquad \text{with } \mathbf{w}^{\top}\mathbf{1} = 1 \]
+        <p>where <strong>w</strong> ∈ ℝ<sup>N</sup> is the weight vector, <strong>Σ</strong> is the N × N covariance matrix (<em>Σ<sub>i,j</sub> = σ<sub>i,j</sub></em>, with diagonal entries <em>Σ<sub>i,i</sub> = σ²<sub>i</sub></em>), and <strong>1</strong> is the vector of ones.</p>
+        <div class="formula-actions">
+            <button class="intuition-btn" onclick="toggleIntuition(this)">💡 intuition</button>
+            <button class="derive-btn" onclick="toggleDerivation(this)">▼ derive</button>
+        </div>
+        <div class="intuition">
+            <p>For N assets, portfolio variance has <em>N²</em> terms total. <em>N</em> of them are diagonal (variance × weight²); the other <em>N(N−1)</em> are off-diagonal (covariance × cross weights). Picture an N×N grid: every cell contributes to the total.</p>
+            <p>The matrix form <em>w<sup>T</sup> Σ w</em> is the same expression written compactly. It's also the standard form used in mean-variance optimization libraries — once you can compute Σ and pick w, the variance just falls out as a quadratic form.</p>
+            <p>As N grows, the off-diagonal terms (covariances) overwhelm the diagonal terms (variances) — there are way more of them. This is what drives the diversification result below.</p>
+        </div>
+        <div class="derivation">
+            <p>Start with the definition. Portfolio return is <em>R<sub>p</sub> = Σ<sub>i</sub> ω<sub>i</sub> R<sub>i</sub></em>. Variance of a linear combination:</p>
+            \[ \sigma^2[R_p] \;=\; \mathrm{Var}\!\left(\sum_{i=1}^N \omega_i R_i\right) \;=\; \sum_{i=1}^N \sum_{j=1}^N \omega_i \omega_j \,\mathrm{Cov}(R_i, R_j) \;=\; \sum_{i,j} \omega_i \omega_j \sigma_{i,j} \]
+            <p>using bilinearity of covariance. Note <em>σ<sub>i,i</sub> = σ²<sub>i</sub></em>.</p>
+            <p><strong>Matrix form:</strong> stack weights and covariances into vectors/matrices. Let <strong>w</strong> = (ω<sub>1</sub>, …, ω<sub>N</sub>)<sup>T</sup> and <strong>Σ</strong> = [σ<sub>i,j</sub>]. Then:</p>
+            \[ \mathbf{w}^{\top} \boldsymbol{\Sigma}\,\mathbf{w} \;=\; \sum_{i=1}^N \sum_{j=1}^N w_i\, \Sigma_{i,j}\, w_j \;=\; \sigma^2[R_p] \]
+            <p>Both forms are equivalent. The matrix form is more compact and makes optimization easier (the Lagrangian below uses it directly).</p>
+            <p>One useful identity: write Σ as a sum of variance and covariance pieces. With <em>D</em> = diagonal of variances and <em>off-diag</em> = covariances only:</p>
+            \[ \sigma^2[R_p] \;=\; \underbrace{\sum_i \omega_i^2 \sigma_i^2}_{\text{diagonal (own-variance) terms}} + \underbrace{\sum_{i \ne j} \omega_i \omega_j \sigma_{i,j}}_{\text{off-diagonal (covariance) terms}} \]
+        </div>
+    </div>
+
+    <h3>Equal-weighted portfolio: the diversification result</h3>
+
+    <p>The cleanest way to see how diversification works is to consider an equal-weighted portfolio of <em>N</em> assets — each <em>ω<sub>i</sub> = 1/N</em> — and study how its variance behaves as <em>N</em> grows.</p>
+
+    <div class="formula-box">
+        <p><strong>Equal-weighted portfolio variance:</strong></p>
+        \[ \sigma^2[R_p] \;=\; \frac{1}{N} \cdot \overline{\sigma^2} \;+\; \left(1 - \frac{1}{N}\right) \cdot \overline{\sigma_{i,j}} \]
+        <p>where <em>σ̄²</em> is the <em>average variance</em> of the N assets and <em>σ̄<sub>i,j</sub></em> is the <em>average pairwise covariance</em>.</p>
+        <div class="formula-actions">
+            <button class="intuition-btn" onclick="toggleIntuition(this)">💡 intuition</button>
+            <button class="derive-btn" onclick="toggleDerivation(this)">▼ derive</button>
+        </div>
+        <div class="intuition">
+            <p>Equal-weighting splits portfolio variance into two pieces:</p>
+            <ul class="bullets">
+                <li><strong>(1/N) × average variance</strong> — the "own-asset" piece. This shrinks toward zero as you add more assets. It represents <em>idiosyncratic</em> / firm-specific / diversifiable risk.</li>
+                <li><strong>(1 − 1/N) × average covariance</strong> — the "co-movement" piece. As N grows, this approaches the average covariance itself. It represents <em>systematic</em> / market / undiversifiable risk.</li>
+            </ul>
+            <p>The first term goes to 0 as N → ∞. The second term goes to <em>σ̄<sub>i,j</sub></em> as N → ∞. So:</p>
+            \[ \lim_{N \to \infty} \sigma^2[R_p] \;=\; \overline{\sigma_{i,j}} \]
+            <p>Portfolio variance can NEVER fall below the average pairwise covariance, no matter how many assets you add. <span class="imp">That floor is the systematic risk — the part you can't diversify away.</span> CAPM is built on this distinction.</p>
+        </div>
+        <div class="derivation">
+            <p>Set <em>ω<sub>i</sub> = 1/N</em> for all <em>i</em>. Substitute into the double sum:</p>
+            \[ \sigma^2[R_p] \;=\; \sum_{i=1}^N \sum_{j=1}^N \frac{1}{N} \cdot \frac{1}{N} \cdot \sigma_{i,j} \;=\; \frac{1}{N^2} \sum_{i,j} \sigma_{i,j} \]
+            <p>Split the double sum into diagonal (i=j) and off-diagonal (i≠j) parts:</p>
+            \[ \sum_{i,j} \sigma_{i,j} \;=\; \underbrace{\sum_{i=1}^N \sigma_{i,i}}_{\text{diagonal}} + \underbrace{\sum_{i \ne j} \sigma_{i,j}}_{\text{off-diagonal}} \;=\; N\,\overline{\sigma^2} + N(N-1)\,\overline{\sigma_{i,j}} \]
+            <p>where we used: there are <em>N</em> diagonal entries averaging to <em>σ̄²</em>, and <em>N(N−1)</em> off-diagonal entries averaging to <em>σ̄<sub>i,j</sub></em>. Divide by N²:</p>
+            \[ \sigma^2[R_p] \;=\; \frac{N\,\overline{\sigma^2}}{N^2} + \frac{N(N-1)\,\overline{\sigma_{i,j}}}{N^2} \;=\; \frac{\overline{\sigma^2}}{N} + \frac{N-1}{N}\,\overline{\sigma_{i,j}} \]
+            <p>which is the same as <em>(1/N) σ̄² + (1 − 1/N) σ̄<sub>i,j</sub></em>. ∎</p>
+        </div>
+    </div>
+
+    <h3>Special cases that make the result tangible</h3>
+
+    <p>Let every asset have the same variance <em>σ²</em>. Then <em>σ̄² = σ²</em>, and the average covariance simplifies to <em>σ̄<sub>i,j</sub> = ρ̄ · σ²</em> where <em>ρ̄</em> is the average pairwise correlation.</p>
+
+    <table>
+        <thead><tr><th>ρ̄</th><th>σ²[R<sub>p</sub>]</th><th>σ[R<sub>p</sub>] as N → ∞</th><th>Meaning</th></tr></thead>
+        <tbody>
+            <tr><td>0</td><td>σ² / N</td><td>0</td><td>Full diversification: vol vanishes.</td></tr>
+            <tr><td>0.5</td><td>σ² (1/N + (1 − 1/N) × 0.5)</td><td>σ × √0.5 ≈ 0.71 σ</td><td>Half the firm vol stays as systematic risk.</td></tr>
+            <tr><td>1</td><td>σ²</td><td>σ</td><td>No diversification: assets all move identically.</td></tr>
+        </tbody>
+    </table>
+
+    <p>So <em>ρ̄</em> sets the floor. With ρ̄ = 0.5 and 100 assets, the equal-weighted portfolio still has roughly 70% of an individual asset's σ. <span class="imp">Even infinite diversification cannot reduce risk below √ρ̄ × σ.</span></p>
+
+    <h3>Picture: how σ[R<sub>p</sub>] decays with N</h3>
+
+    <p>Plotting <em>σ[R<sub>p</sub>]</em> against <em>N</em> for several values of <em>ρ̄</em>, with σ = 30% per asset:</p>
+
+    <svg class="cal-plot" viewBox="0 0 540 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Diversification: portfolio standard deviation vs number of assets">
+        <!-- gridlines -->
+        <line x1="60" y1="40" x2="60" y2="300" stroke="#e8e8e8"/>
+        <line x1="60" y1="300" x2="460" y2="300" stroke="#e8e8e8"/>
+        <line x1="140" y1="40" x2="140" y2="300" stroke="#e8e8e8" stroke-dasharray="3,3"/>
+        <line x1="220" y1="40" x2="220" y2="300" stroke="#e8e8e8" stroke-dasharray="3,3"/>
+        <line x1="300" y1="40" x2="300" y2="300" stroke="#e8e8e8" stroke-dasharray="3,3"/>
+        <line x1="380" y1="40" x2="380" y2="300" stroke="#e8e8e8" stroke-dasharray="3,3"/>
+        <line x1="460" y1="40" x2="460" y2="300" stroke="#e8e8e8" stroke-dasharray="3,3"/>
+        <line x1="60" y1="217" x2="460" y2="217" stroke="#e8e8e8" stroke-dasharray="3,3"/>
+        <line x1="60" y1="133" x2="460" y2="133" stroke="#e8e8e8" stroke-dasharray="3,3"/>
+        <line x1="60" y1="50" x2="460" y2="50" stroke="#e8e8e8" stroke-dasharray="3,3"/>
+        <!-- axes -->
+        <line x1="60" y1="300" x2="470" y2="300" stroke="#666" stroke-width="1.5"/>
+        <line x1="60" y1="300" x2="60" y2="35" stroke="#666" stroke-width="1.5"/>
+        <!-- axis labels -->
+        <text x="265" y="335" text-anchor="middle" font-size="13" fill="#666">N (number of assets)</text>
+        <text x="22" y="170" text-anchor="middle" font-size="13" fill="#666" transform="rotate(-90, 22, 170)">σ[R_p] (%)</text>
+        <!-- x ticks: N = 1, 10, 25, 50, 100 -->
+        <text x="60" y="315" text-anchor="middle" font-size="11" fill="#888">1</text>
+        <text x="140" y="315" text-anchor="middle" font-size="11" fill="#888">10</text>
+        <text x="220" y="315" text-anchor="middle" font-size="11" fill="#888">25</text>
+        <text x="300" y="315" text-anchor="middle" font-size="11" fill="#888">50</text>
+        <text x="380" y="315" text-anchor="middle" font-size="11" fill="#888">100</text>
+        <text x="460" y="315" text-anchor="middle" font-size="11" fill="#888">200</text>
+        <!-- y ticks: σ = 0, 10, 20, 30 (height 260, so 8.67 per unit) -->
+        <text x="50" y="304" text-anchor="end" font-size="11" fill="#888">0</text>
+        <text x="50" y="221" text-anchor="end" font-size="11" fill="#888">10</text>
+        <text x="50" y="137" text-anchor="end" font-size="11" fill="#888">20</text>
+        <text x="50" y="54" text-anchor="end" font-size="11" fill="#888">30</text>
+        <!-- ρ̄ = 1 (flat at 30%) -->
+        <line x1="60" y1="50" x2="460" y2="50" stroke="#888" stroke-width="2"/>
+        <text x="380" y="46" font-size="11" fill="#666">ρ̄ = 1 (no benefit)</text>
+        <!-- ρ̄ = 0.5: σ = 30 * sqrt(1/N + (1-1/N)*0.5) -->
+        <!-- N=1: 30, N=10: 30*sqrt(0.55) = 22.25, N=25: 30*sqrt(0.52)=21.6, N=50: 30*sqrt(0.51)=21.4, N=100: 30*sqrt(0.505)=21.3, N=200: 30*sqrt(0.5025)=21.27 -->
+        <!-- approaching 30 * sqrt(0.5) = 21.21 -->
+        <!-- y for σ: y = 304 - σ * 8.667 -->
+        <!-- N=1, σ=30: y=304-260=44. Wait I had y=50 for σ=30. Let me recompute: tick at y=54 for σ=30, so the scale is y=304-σ*8.33. Let me use y=304 - σ*(304-54)/30 = 304 - σ*8.333. At σ=30: y=54. At σ=0: y=304. -->
+        <!-- N=1: σ=30, y=54. x=60 (N=1) -->
+        <!-- N=10: σ=22.25, y=304-185.4=118.6 → 119. x=140 -->
+        <!-- N=25: σ=21.6, y=304-180=124. x=220 -->
+        <!-- N=50: σ=21.4, y=304-178.3=125.7→126. x=300 -->
+        <!-- N=100: σ=21.3, y=304-177.5=126.5→127. x=380 -->
+        <!-- N=200: σ=21.27, y=304-177.2=126.8→127. x=460 -->
+        <polyline points="60,54 140,119 220,124 300,126 380,127 460,127" fill="none" stroke="#bb33aa" stroke-width="2"/>
+        <text x="380" y="123" font-size="11" fill="#bb33aa">ρ̄ = 0.5 → 21.2%</text>
+        <!-- ρ̄ = 0.2: σ = 30*sqrt(1/N + (1-1/N)*0.2) -->
+        <!-- N=1: 30, y=54. N=10: 30*sqrt(0.28)=15.87, y=304-132=172. N=25: 30*sqrt(0.232)=14.45, y=304-120.4=183.6. N=50: 30*sqrt(0.216)=13.94, y=304-116.2=187.8. N=100: 30*sqrt(0.208)=13.68, y=304-114=190. N=200: 30*sqrt(0.204)=13.55, y=304-113=191 -->
+        <polyline points="60,54 140,172 220,184 300,188 380,190 460,191" fill="none" stroke="#ff3333" stroke-width="2"/>
+        <text x="320" y="195" font-size="11" fill="#ff3333">ρ̄ = 0.2 → 13.4%</text>
+        <!-- ρ̄ = 0: σ = 30/sqrt(N) -->
+        <!-- N=1: 30 → y=54. N=10: 9.49, y=304-79=225. N=25: 6, y=304-50=254. N=50: 4.24, y=304-35.3=268.7. N=100: 3, y=304-25=279. N=200: 2.12, y=304-17.7=286 -->
+        <polyline points="60,54 140,225 220,254 300,269 380,279 460,286" fill="none" stroke="#3366cc" stroke-width="2"/>
+        <text x="320" y="278" font-size="11" fill="#3366cc">ρ̄ = 0 → 0% (full)</text>
+        <!-- annotation for the floor -->
+        <text x="100" y="270" font-size="10" fill="#888">"floor" = √ρ̄ × σ</text>
+    </svg>
+
+    <p class="caption">Each curve plots σ[R_p] vs N for an equal-weighted portfolio of identical assets with σ = 30% and average pairwise correlation <em>ρ̄</em>. The diversification benefit saturates fast — most of the gain happens by N ≈ 30. After that, you're stuck with <em>√ρ̄ × σ</em>.</p>
+
+    <h3>Minimum-variance frontier (MVF) for N assets</h3>
+
+    <p>For two assets, the portfolio possibility curve was a single curve. For N assets, the set of <em>achievable</em> (σ, E[R]) points is an entire <em>region</em> in the plane. The leftmost boundary of this region — the lowest σ at each E[R] — is the <strong>minimum-variance frontier</strong>.</p>
+
+    <div class="formula-box">
+        <p><strong>MVF construction (for each target μ*):</strong></p>
+        \[ \min_{\mathbf{w}} \tfrac{1}{2}\,\mathbf{w}^{\top} \boldsymbol{\Sigma}\, \mathbf{w} \quad \text{subject to} \quad \mathbf{w}^{\top} \boldsymbol{\mu} = \mu^* \;,\; \mathbf{w}^{\top} \mathbf{1} = 1 \]
+        <p>The solution traces out a parabola in (σ², μ*) space, equivalently a hyperbola in (σ, μ*) space. The <strong>efficient frontier</strong> is the upper half of the hyperbola — the lowest σ for each ACHIEVABLE expected return.</p>
+        <div class="formula-actions">
+            <button class="intuition-btn" onclick="toggleIntuition(this)">💡 intuition</button>
+            <button class="derive-btn" onclick="toggleDerivation(this)">▼ derive (Lagrangian)</button>
+        </div>
+        <div class="intuition">
+            <p>For each target expected return <em>μ*</em>, find the portfolio that achieves it with the lowest possible σ. Plot the result. The locus of these "minimum σ for given E[R]" points is the MVF.</p>
+            <p>Adding more risky assets always shifts the MVF LEFT (or, in the degenerate case, leaves it unchanged) — because old portfolios are still possible, plus new mixtures become available. More choices ⟹ never worse, often better.</p>
+            <p>The "efficient frontier" (upper half) is the only part risk-averse investors care about. The lower half (inefficient) is dominated by the upper half — same σ, lower E[R].</p>
+        </div>
+        <div class="derivation">
+            <p><strong>Step 1: set up the Lagrangian.</strong> We're minimizing <em>(1/2) w<sup>T</sup>Σw</em> (the ½ is just for clean algebra — doesn't change the optimum). Subtract a multiplier <em>λ<sub>1</sub></em> times each constraint:</p>
+            \[ \mathcal{L} \;=\; \tfrac{1}{2}\,\mathbf{w}^{\top}\boldsymbol{\Sigma}\mathbf{w} - \lambda_1 (\mathbf{w}^{\top}\boldsymbol{\mu} - \mu^*) - \lambda_2 (\mathbf{w}^{\top}\mathbf{1} - 1) \]
+            <p><strong>Step 2: take the gradient with respect to w and set to zero.</strong> Two matrix-calculus facts you need:</p>
+            <ul class="bullets">
+                <li><em>∇<sub>w</sub>(w<sup>T</sup>Aw) = 2Aw</em> (when A is symmetric — which Σ always is). So <em>∇<sub>w</sub>(½ w<sup>T</sup>Σw) = Σw</em>.</li>
+                <li><em>∇<sub>w</sub>(w<sup>T</sup>v) = v</em> for any constant vector v.</li>
+            </ul>
+            \[ \nabla_{\mathbf{w}} \mathcal{L} \;=\; \boldsymbol{\Sigma}\mathbf{w} - \lambda_1 \boldsymbol{\mu} - \lambda_2 \mathbf{1} \;=\; \mathbf{0} \]
+            <p>Solve for <strong>w</strong> by left-multiplying with <em>Σ⁻¹</em>:</p>
+            \[ \mathbf{w}^{\,*} \;=\; \lambda_1 \boldsymbol{\Sigma}^{-1}\boldsymbol{\mu} + \lambda_2 \boldsymbol{\Sigma}^{-1}\mathbf{1} \]
+            <p><span class="imp">Note what this means:</span> the optimal portfolio is a linear combination of two fixed vectors — <em>Σ⁻¹μ</em> (a portfolio biased toward high-expected-return assets after adjusting for correlations) and <em>Σ⁻¹1</em> (the minimum-variance portfolio direction). The Lagrange multipliers <em>λ<sub>1</sub>, λ<sub>2</sub></em> just control the mix. This is already the <strong>two-fund spanning property</strong>: any MVF portfolio is a mixture of just two reference portfolios.</p>
+            <p><strong>Step 3: pin down λ<sub>1</sub>, λ<sub>2</sub> using the two constraints.</strong> Plug <em>w*</em> back into <em>w<sup>T</sup>μ = μ*</em> and <em>w<sup>T</sup>1 = 1</em>:</p>
+            \[ \lambda_1\,\boldsymbol{\mu}^{\top}\boldsymbol{\Sigma}^{-1}\boldsymbol{\mu} + \lambda_2\,\boldsymbol{\mu}^{\top}\boldsymbol{\Sigma}^{-1}\mathbf{1} \;=\; \mu^* \]
+            \[ \lambda_1\,\mathbf{1}^{\top}\boldsymbol{\Sigma}^{-1}\boldsymbol{\mu} + \lambda_2\,\mathbf{1}^{\top}\boldsymbol{\Sigma}^{-1}\mathbf{1} \;=\; 1 \]
+            <p><strong>Step 4: name the constants that keep appearing.</strong> Three scalars depend only on Σ and μ (NOT on μ*):</p>
+            \[ A \;\equiv\; \boldsymbol{\mu}^{\top}\boldsymbol{\Sigma}^{-1}\boldsymbol{\mu} \qquad B \;\equiv\; \boldsymbol{\mu}^{\top}\boldsymbol{\Sigma}^{-1}\mathbf{1} \qquad C \;\equiv\; \mathbf{1}^{\top}\boldsymbol{\Sigma}^{-1}\mathbf{1} \qquad D \;\equiv\; AC - B^2 \]
+            <p>What they mean physically:</p>
+            <ul class="bullets">
+                <li><em>A</em> = "weighted size of the expected-return vector" after Σ⁻¹ adjusts for correlations. Large A → big return premia available.</li>
+                <li><em>B</em> = the "alignment" between μ and 1 through Σ⁻¹. Related to the global mean return.</li>
+                <li><em>C</em> = "ease of constructing portfolios" — inverse of the global minimum variance (since <em>σ²<sub>min</sub> = 1/C</em>, as we'll show).</li>
+                <li><em>D</em> = AC − B². Always positive (by Cauchy-Schwarz). Sets the "curvature" of the MVF hyperbola.</li>
+            </ul>
+            <p>The two constraint equations become a 2×2 linear system in <em>λ<sub>1</sub>, λ<sub>2</sub></em>:</p>
+            \[ \begin{cases} A\,\lambda_1 + B\,\lambda_2 = \mu^* \\ B\,\lambda_1 + C\,\lambda_2 = 1 \end{cases} \]
+            <p>Solve (standard 2×2):</p>
+            \[ \lambda_1 \;=\; \frac{C\,\mu^* - B}{D} \qquad \lambda_2 \;=\; \frac{A - B\,\mu^*}{D} \]
+            <p><strong>Step 5: write down the optimal portfolio.</strong></p>
+            \[ \mathbf{w}^{\,*}(\mu^*) \;=\; \frac{C\mu^* - B}{D}\,\boldsymbol{\Sigma}^{-1}\boldsymbol{\mu} + \frac{A - B\mu^*}{D}\,\boldsymbol{\Sigma}^{-1}\mathbf{1} \]
+            <p>The MVF as a whole is parameterized by <em>μ*</em>: pick any target expected return, plug in, get the weights.</p>
+            <p><strong>Step 6: variance at the optimum.</strong> Use the FOC: <em>Σw* = λ<sub>1</sub>μ + λ<sub>2</sub>1</em>. So:</p>
+            \[ \sigma^2[\mathbf{w}^{\,*}] \;=\; \mathbf{w}^{*\top}\boldsymbol{\Sigma}\mathbf{w}^{*} \;=\; \mathbf{w}^{*\top}(\lambda_1\boldsymbol{\mu} + \lambda_2\mathbf{1}) \;=\; \lambda_1\,\mu^* + \lambda_2 \]
+            <p>Plug in the expressions for λ<sub>1</sub>, λ<sub>2</sub>:</p>
+            \[ \sigma^2[\mathbf{w}^{\,*}] \;=\; \frac{C\,(\mu^*)^2 - 2B\,\mu^* + A}{D} \]
+            <p>This is a <em>parabola</em> in <em>(σ², μ*)</em> coordinates — equivalently a <em>hyperbola</em> in <em>(σ, μ*)</em> coordinates. That hyperbola is the MVF.</p>
+            <p><strong>Step 7: the global minimum-variance portfolio.</strong> Minimize variance over <em>μ*</em>:</p>
+            \[ \frac{d\sigma^2}{d\mu^*} \;=\; \frac{2C\mu^* - 2B}{D} \;=\; 0 \quad\Rightarrow\quad \mu^*_{\min} \;=\; \frac{B}{C} \]
+            <p>At this target, λ<sub>1</sub> = 0, so the portfolio is purely <em>Σ⁻¹1</em>-direction:</p>
+            \[ \mathbf{w}^{\,*}_{\min} \;=\; \frac{\boldsymbol{\Sigma}^{-1}\mathbf{1}}{\mathbf{1}^{\top}\boldsymbol{\Sigma}^{-1}\mathbf{1}} \;=\; \frac{\boldsymbol{\Sigma}^{-1}\mathbf{1}}{C} \]
+            <p>And its variance: <em>σ²<sub>min</sub> = 1/C</em>. So <em>C</em> really does measure "ease of constructing low-variance portfolios" — bigger C → smaller global minimum variance.</p>
+        </div>
+    </div>
+
+    <h3>Picture: the minimum-variance frontier</h3>
+
+    <p>Schematic plot. Individual asset points are scattered; the MVF curves leftward of them. Upper half is the efficient frontier (positive-sloped); lower half is inefficient.</p>
+
+    <svg class="cal-plot" viewBox="0 0 540 380" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Minimum variance frontier for N risky assets">
+        <!-- gridlines -->
+        <line x1="60" y1="55" x2="60" y2="310" stroke="#e8e8e8"/>
+        <line x1="60" y1="310" x2="470" y2="310" stroke="#e8e8e8"/>
+        <line x1="160" y1="55" x2="160" y2="310" stroke="#e8e8e8" stroke-dasharray="3,3"/>
+        <line x1="260" y1="55" x2="260" y2="310" stroke="#e8e8e8" stroke-dasharray="3,3"/>
+        <line x1="360" y1="55" x2="360" y2="310" stroke="#e8e8e8" stroke-dasharray="3,3"/>
+        <line x1="460" y1="55" x2="460" y2="310" stroke="#e8e8e8" stroke-dasharray="3,3"/>
+        <line x1="60" y1="240" x2="460" y2="240" stroke="#e8e8e8" stroke-dasharray="3,3"/>
+        <line x1="60" y1="170" x2="460" y2="170" stroke="#e8e8e8" stroke-dasharray="3,3"/>
+        <line x1="60" y1="100" x2="460" y2="100" stroke="#e8e8e8" stroke-dasharray="3,3"/>
+        <!-- axes -->
+        <line x1="60" y1="310" x2="470" y2="310" stroke="#666" stroke-width="1.5"/>
+        <line x1="60" y1="310" x2="60" y2="50" stroke="#666" stroke-width="1.5"/>
+        <!-- axis labels -->
+        <text x="265" y="345" text-anchor="middle" font-size="13" fill="#666">σ (standard deviation, %)</text>
+        <text x="22" y="180" text-anchor="middle" font-size="13" fill="#666" transform="rotate(-90, 22, 180)">E[R] (%)</text>
+        <!-- x ticks -->
+        <text x="60" y="325" text-anchor="middle" font-size="11" fill="#888">0</text>
+        <text x="160" y="325" text-anchor="middle" font-size="11" fill="#888">5</text>
+        <text x="260" y="325" text-anchor="middle" font-size="11" fill="#888">10</text>
+        <text x="360" y="325" text-anchor="middle" font-size="11" fill="#888">15</text>
+        <text x="460" y="325" text-anchor="middle" font-size="11" fill="#888">20</text>
+        <!-- y ticks -->
+        <text x="50" y="314" text-anchor="end" font-size="11" fill="#888">4</text>
+        <text x="50" y="244" text-anchor="end" font-size="11" fill="#888">7</text>
+        <text x="50" y="174" text-anchor="end" font-size="11" fill="#888">10</text>
+        <text x="50" y="104" text-anchor="end" font-size="11" fill="#888">13</text>
+        <!-- Efficient frontier (upper half of hyperbola): from min-variance point upward -->
+        <!-- Approximate hyperbola passing through points: (4, 7) - min var, (5, 9), (7, 11), (10, 12.5), (15, 14) -->
+        <!-- Coords: x = 60 + σ*20, y = 310 - (E-4)*23.33 -->
+        <!-- (4, 7): x=140, y=240 (this is min var) -->
+        <!-- (5, 9): x=160, y=193 -->
+        <!-- (7, 11): x=200, y=147 -->
+        <!-- (10, 12.5): x=260, y=112 -->
+        <!-- (15, 14): x=360, y=77 -->
+        <path d="M 140,240 Q 150,200 200,147 T 360,77" fill="none" stroke="#ff3333" stroke-width="2.5"/>
+        <text x="330" y="100" font-size="11" fill="#ff3333" font-weight="bold">efficient frontier</text>
+        <!-- Inefficient lower half (mirror) -->
+        <path d="M 140,240 Q 150,265 200,290 T 350,295" fill="none" stroke="#999" stroke-width="1.5" stroke-dasharray="5,3"/>
+        <text x="270" y="298" font-size="10" fill="#888">inefficient (dominated)</text>
+        <!-- Minimum-variance portfolio marker -->
+        <circle cx="140" cy="240" r="6" fill="#ff3333" stroke="#fff" stroke-width="1.5"/>
+        <text x="80" y="232" font-size="11" fill="#ff3333" font-weight="bold">min var</text>
+        <text x="80" y="220" font-size="10" fill="#666">(σ=√1/C, μ=B/C)</text>
+        <!-- Individual asset points scattered to the right of the MVF -->
+        <circle cx="380" cy="135" r="4" fill="#555"/>
+        <text x="386" y="139" font-size="10" fill="#555">Asset 1</text>
+        <circle cx="270" cy="220" r="4" fill="#555"/>
+        <text x="276" y="224" font-size="10" fill="#555">Asset 2</text>
+        <circle cx="320" cy="170" r="4" fill="#555"/>
+        <text x="326" y="174" font-size="10" fill="#555">Asset 3</text>
+        <circle cx="220" cy="265" r="4" fill="#555"/>
+        <text x="226" y="269" font-size="10" fill="#555">Asset 4</text>
+        <circle cx="410" cy="180" r="4" fill="#555"/>
+        <text x="416" y="184" font-size="10" fill="#555">Asset 5</text>
+        <!-- Label MVF as a whole -->
+        <text x="220" y="135" font-size="10" fill="#aa1111" font-style="italic">minimum variance frontier (MVF)</text>
+    </svg>
+
+    <p class="caption">Each individual asset sits inside the achievable region (to the right of the MVF). The red curve is the efficient frontier — the upper half of the hyperbola. The dashed gray curve is the inefficient region — same σ as the efficient counterpart, lower E[R].</p>
+
+    <p><strong>Two facts about the MVF:</strong></p>
+    <ul class="bullets">
+        <li><strong>Adding risky assets only helps.</strong> Adding asset N+1 to a set of N assets cannot move the MVF to the right (a worse achievable set), and usually moves it to the left. More assets → more diversification possibilities → more efficient choices.</li>
+        <li><strong>Each individual asset lies strictly inside the MVF</strong> (except in pathological cases). The whole point of constructing the MVF is that nobody holds a single asset as their portfolio — there's always a multi-asset combination with the same E[R] and lower σ.</li>
+    </ul>
+
+    <h2 id="n-risky-plus-rf">Lectures 4-5 - N risky assets + a riskless asset</h2>
+
+    <p>Add T-bills. The same logic from the 2-risky-+-riskless case scales up: among all portfolios on the MVF, find the one whose CAL has the steepest slope (highest Sharpe ratio). That's the tangency portfolio <strong>T</strong>. The new efficient frontier is the straight CAL through T — every risk-averse investor wants to be on it.</p>
+
+    <h3>Tangency portfolio T — N-asset formula</h3>
+
+    <div class="formula-box">
+        \[ \mathbf{w}_T \;=\; \frac{\boldsymbol{\Sigma}^{-1} \boldsymbol{\mu}_{\text{excess}}}{\mathbf{1}^{\top} \boldsymbol{\Sigma}^{-1} \boldsymbol{\mu}_{\text{excess}}} \]
+        <p>where <em>μ<sub>excess</sub> = μ − R<sub>f</sub> · 1</em> is the vector of excess expected returns (each entry is <em>E[R<sub>i</sub>] − R<sub>f</sub></em>).</p>
+        <div class="formula-actions">
+            <button class="intuition-btn" onclick="toggleIntuition(this)">💡 intuition</button>
+            <button class="derive-btn" onclick="toggleDerivation(this)">▼ derive (max Sharpe with N assets)</button>
+        </div>
+        <div class="intuition">
+            <p>The numerator <em>Σ⁻¹μ<sub>excess</sub></em> tells you the "raw" weighting: each asset is weighted by its excess return, then "scrubbed" through the inverse covariance matrix so that highly-correlated assets share weight (rather than double-counting). The denominator is the sum of those raw weights — it normalizes so the weights sum to 1.</p>
+            <p>This formula contains the same intuition as the 2-asset case: high excess return ⇒ more weight, high covariance with the rest of the portfolio ⇒ less weight (because that's redundant exposure).</p>
+            <p><em>w<sub>T</sub></em> can have negative entries (some assets are shorted in the tangency portfolio if they have negative excess return or correlate the wrong way). That's normal.</p>
+        </div>
+        <div class="derivation">
+            <p><strong>Step 1: state the problem.</strong> Choose the risky-asset weights <em>w</em> to maximize the Sharpe ratio:</p>
+            \[ \max_{\mathbf{w}} \;\; \frac{\mathbf{w}^{\top}\boldsymbol{\mu} - R_f}{\sqrt{\mathbf{w}^{\top}\boldsymbol{\Sigma}\mathbf{w}}} \quad \text{subject to } \mathbf{w}^{\top}\mathbf{1} = 1 \]
+            <p>The constraint forces the weights to sum to 1 — i.e., 100% of the risky-asset bucket goes into these N assets.</p>
+            <p><strong>Step 2: simplify the numerator using the constraint.</strong> Because <em>w<sup>T</sup>1 = 1</em>, you can write <em>R<sub>f</sub> = R<sub>f</sub> w<sup>T</sup>1 = w<sup>T</sup>(R<sub>f</sub>1)</em>. Then:</p>
+            \[ \mathbf{w}^{\top}\boldsymbol{\mu} - R_f \;=\; \mathbf{w}^{\top}\boldsymbol{\mu} - \mathbf{w}^{\top}(R_f\mathbf{1}) \;=\; \mathbf{w}^{\top}(\boldsymbol{\mu} - R_f\mathbf{1}) \;=\; \mathbf{w}^{\top}\boldsymbol{\mu}_{\text{excess}} \]
+            <p>So we're maximizing:</p>
+            \[ S(\mathbf{w}) \;=\; \frac{\mathbf{w}^{\top}\boldsymbol{\mu}_{\text{excess}}}{\sqrt{\mathbf{w}^{\top}\boldsymbol{\Sigma}\mathbf{w}}} \]
+            <p><strong>Step 3: use the scale-invariance trick.</strong> Notice that if you scale <em>w → cw</em> for any positive constant <em>c</em>, both the numerator and the denominator scale by <em>c</em> (numerator linear in <em>w</em>, denominator linear after the square root). So <em>S</em> is unchanged. <span class="imp">This means we can drop the constraint <em>w<sup>T</sup>1 = 1</em> entirely</span> — solve the unconstrained problem to find the right DIRECTION of <em>w</em>, then rescale at the end to make weights sum to 1.</p>
+            <p><strong>Step 4: take the gradient.</strong> Use the quotient rule and the matrix identities:</p>
+            <ul class="bullets">
+                <li>∇<sub>w</sub>(w<sup>T</sup>μ<sub>excess</sub>) = μ<sub>excess</sub></li>
+                <li>∇<sub>w</sub>√(w<sup>T</sup>Σw) = Σw / √(w<sup>T</sup>Σw)</li>
+            </ul>
+            \[ \nabla_{\mathbf{w}} S \;=\; \frac{1}{\sqrt{\mathbf{w}^{\top}\boldsymbol{\Sigma}\mathbf{w}}}\,\boldsymbol{\mu}_{\text{excess}} \;-\; \frac{\mathbf{w}^{\top}\boldsymbol{\mu}_{\text{excess}}}{(\mathbf{w}^{\top}\boldsymbol{\Sigma}\mathbf{w})^{3/2}}\,\boldsymbol{\Sigma}\mathbf{w} \;=\; \mathbf{0} \]
+            <p><strong>Step 5: rearrange to isolate w.</strong> Multiply through by <em>(w<sup>T</sup>Σw)^(3/2)</em> and collect terms:</p>
+            \[ \boldsymbol{\Sigma}\mathbf{w} \;=\; \underbrace{\frac{\mathbf{w}^{\top}\boldsymbol{\Sigma}\mathbf{w}}{\mathbf{w}^{\top}\boldsymbol{\mu}_{\text{excess}}}}_{\text{some positive scalar }k}\,\boldsymbol{\mu}_{\text{excess}} \]
+            <p>That scalar <em>k</em> on the right depends on <em>w</em>, but it doesn't matter — by scale-invariance we only care about <em>direction</em>. Multiply both sides by <em>Σ⁻¹</em>:</p>
+            \[ \mathbf{w} \;=\; k \,\boldsymbol{\Sigma}^{-1}\boldsymbol{\mu}_{\text{excess}} \quad\Rightarrow\quad \mathbf{w} \;\propto\; \boldsymbol{\Sigma}^{-1}\boldsymbol{\mu}_{\text{excess}} \]
+            <p><strong>Step 6: normalize so weights sum to 1.</strong> Pick the constant <em>k</em> so that <em>w<sup>T</sup>1 = 1</em>. If <em>w = k Σ⁻¹μ<sub>excess</sub></em>, then <em>w<sup>T</sup>1 = k · 1<sup>T</sup>Σ⁻¹μ<sub>excess</sub>, set this equal to 1 → k = 1 / (1<sup>T</sup>Σ⁻¹μ<sub>excess</sub>)</em>. So:</p>
+            \[ \mathbf{w}_T \;=\; \frac{\boldsymbol{\Sigma}^{-1}\boldsymbol{\mu}_{\text{excess}}}{\mathbf{1}^{\top}\boldsymbol{\Sigma}^{-1}\boldsymbol{\mu}_{\text{excess}}} \]
+            <p>This is the tangency portfolio formula. Conceptually the answer is just <em>"Σ⁻¹μ<sub>excess</sub>, normalized"</em>.</p>
+            <p><strong>What does Σ⁻¹ actually do?</strong> Think of <em>Σ⁻¹μ<sub>excess</sub></em> as <em>"excess return per unit of risk exposure, adjusted for correlations."</em> If two assets are highly correlated, Σ⁻¹ partially cancels them out — you don't want to double-count similar risks. If one asset has a high Sharpe but covaries with everything else, Σ⁻¹ shrinks its weight. The result is the unique direction in N-asset space that maximizes the reward-per-risk trade-off.</p>
+        </div>
+    </div>
+
+    <h3>Sanity check: 2 assets, by matrix vs by closed form</h3>
+
+    <p>The matrix formula has to reduce to the 2-asset closed form we derived earlier. Let's verify. For 2 assets:</p>
+
+    <div class="formula">μ_excess = (μ_1, μ_2)^T
+
+         | σ_1²    σ_{1,2} |               1     |  σ_2²   -σ_{1,2} |
+Σ =      |                 |     Σ⁻¹ =  ─────── |                  |
+         | σ_{1,2}  σ_2²   |             σ_1²σ_2² - σ_{1,2}²    | -σ_{1,2}   σ_1²  |</div>
+
+    <p>(That's the standard 2×2 inverse: swap diagonal, negate off-diagonal, divide by determinant.)</p>
+
+    <div class="formula">                       1                   |  σ_2² μ_1 - σ_{1,2} μ_2  |
+Σ⁻¹ μ_excess  =  ─────────────────────  |                          |
+                σ_1²σ_2² - σ_{1,2}²    | -σ_{1,2} μ_1 + σ_1² μ_2  |</div>
+
+    <p>Sum of components (which is <em>1<sup>T</sup>Σ⁻¹μ<sub>excess</sub></em>):</p>
+
+    <div class="formula">                σ_2² μ_1 - σ_{1,2} μ_2 + σ_1² μ_2 - σ_{1,2} μ_1
+1^T Σ⁻¹ μ_e  =  ─────────────────────────────────────────────
+                          σ_1²σ_2² - σ_{1,2}²
+
+              = (μ_1 σ_2² + μ_2 σ_1² - (μ_1 + μ_2) σ_{1,2}) / (σ_1²σ_2² - σ_{1,2}²)</div>
+
+    <p>So the first weight is:</p>
+
+    <div class="formula">                  σ_2² μ_1 - σ_{1,2} μ_2
+ω_{1,T} =  ───────────────────────────────────
+            μ_1 σ_2² + μ_2 σ_1² - (μ_1 + μ_2) σ_{1,2}</div>
+
+    <p>This matches exactly the closed-form 2-asset tangency formula. ✓ The matrix machinery generalizes the same logic to N assets, but the answer for N = 2 is recoverable in a few lines of algebra.</p>
+
+    <h3>The new efficient frontier is the CAL through T</h3>
+
+    <p>With R<sub>f</sub> available, an investor can hold ANY combination of T and R<sub>f</sub>. The set of achievable portfolios is the entire <strong>straight line</strong> from R<sub>f</sub> through T (and beyond, via margin). Its slope is the maximum Sharpe ratio:</p>
+
+    <div class="formula-box">
+        \[ \text{slope}_{\text{CAL through T}} \;=\; \frac{E[R_T] - R_f}{\sigma_T} \;=\; \sqrt{\boldsymbol{\mu}_{\text{excess}}^{\top}\,\boldsymbol{\Sigma}^{-1}\,\boldsymbol{\mu}_{\text{excess}}} \]
+        <p>This is the highest Sharpe ratio achievable from any portfolio of the N risky assets and R<sub>f</sub>.</p>
+        <div class="formula-actions">
+            <button class="derive-btn" onclick="toggleDerivation(this)">▼ derive</button>
+        </div>
+        <div class="derivation">
+            <p>The CAL slope is just the Sharpe ratio at the tangency portfolio. Use <em>w<sub>T</sub> = Σ⁻¹μ<sub>excess</sub> / B</em> where <em>B = 1<sup>T</sup>Σ⁻¹μ<sub>excess</sub></em>.</p>
+            <p>Excess return at T:</p>
+            \[ \mathbf{w}_T^{\top}\boldsymbol{\mu}_{\text{excess}} \;=\; \frac{(\boldsymbol{\Sigma}^{-1}\boldsymbol{\mu}_{\text{excess}})^{\top}}{B}\boldsymbol{\mu}_{\text{excess}} \;=\; \frac{\boldsymbol{\mu}_{\text{excess}}^{\top}\boldsymbol{\Sigma}^{-1}\boldsymbol{\mu}_{\text{excess}}}{B} \;=\; \frac{A}{B} \]
+            <p>where <em>A = μ<sub>excess</sub><sup>T</sup>Σ⁻¹μ<sub>excess</sub></em>. Variance at T:</p>
+            \[ \mathbf{w}_T^{\top}\boldsymbol{\Sigma}\mathbf{w}_T \;=\; \frac{(\boldsymbol{\Sigma}^{-1}\boldsymbol{\mu}_{\text{excess}})^{\top}\boldsymbol{\Sigma}\,\boldsymbol{\Sigma}^{-1}\boldsymbol{\mu}_{\text{excess}}}{B^2} \;=\; \frac{\boldsymbol{\mu}_{\text{excess}}^{\top}\boldsymbol{\Sigma}^{-1}\boldsymbol{\mu}_{\text{excess}}}{B^2} \;=\; \frac{A}{B^2} \]
+            <p>So σ<sub>T</sub> = √A / |B|. Sharpe ratio:</p>
+            \[ \text{slope} \;=\; \frac{A/B}{\sqrt{A}/|B|} \;=\; \mathrm{sgn}(B) \cdot \sqrt{A} \;=\; \sqrt{\boldsymbol{\mu}_{\text{excess}}^{\top}\,\boldsymbol{\Sigma}^{-1}\,\boldsymbol{\mu}_{\text{excess}}} \]
+            <p>(assuming <em>B > 0</em>, which is the standard case where the average excess return is positive).</p>
+        </div>
+    </div>
+
+    <h3>Two-fund separation theorem</h3>
+
+    <div class="callout">
+        <p><strong>Two-fund separation:</strong> with N risky assets and a riskless asset, every risk-averse mean-variance investor holds <em>the same tangency portfolio T</em>, combined with R<sub>f</sub> in a proportion that depends on their personal risk aversion.</p>
+    </div>
+
+    <p>This is one of the most beautiful results in finance. It says that no matter how risk-averse you are, the composition of your risky-asset holdings should be identical to everyone else's — the only thing that varies is how much risky vs. riskless you hold. Marginal investors with different preferences agree completely on which risky portfolio to hold.</p>
+
+    <p>Why it matters:</p>
+    <ul class="bullets">
+        <li><strong>It massively simplifies portfolio choice.</strong> The investor doesn't need to think about which assets to hold — they just hold T (plus T-bills). The asset-selection problem and the risk-level problem decouple.</li>
+        <li><strong>It's the seed of CAPM.</strong> In the next lecture: under additional assumptions, T must equal the market portfolio M (every asset value-weighted). Two-fund separation + market clearing = CAPM.</li>
+    </ul>
+
+    <h3>Picture: MVF with and without a riskless asset</h3>
+
+    <svg class="cal-plot" viewBox="0 0 540 380" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Minimum variance frontier with and without riskless asset">
+        <!-- gridlines -->
+        <line x1="60" y1="55" x2="60" y2="310" stroke="#e8e8e8"/>
+        <line x1="60" y1="310" x2="470" y2="310" stroke="#e8e8e8"/>
+        <line x1="160" y1="55" x2="160" y2="310" stroke="#e8e8e8" stroke-dasharray="3,3"/>
+        <line x1="260" y1="55" x2="260" y2="310" stroke="#e8e8e8" stroke-dasharray="3,3"/>
+        <line x1="360" y1="55" x2="360" y2="310" stroke="#e8e8e8" stroke-dasharray="3,3"/>
+        <line x1="460" y1="55" x2="460" y2="310" stroke="#e8e8e8" stroke-dasharray="3,3"/>
+        <line x1="60" y1="240" x2="460" y2="240" stroke="#e8e8e8" stroke-dasharray="3,3"/>
+        <line x1="60" y1="170" x2="460" y2="170" stroke="#e8e8e8" stroke-dasharray="3,3"/>
+        <line x1="60" y1="100" x2="460" y2="100" stroke="#e8e8e8" stroke-dasharray="3,3"/>
+        <!-- axes -->
+        <line x1="60" y1="310" x2="470" y2="310" stroke="#666" stroke-width="1.5"/>
+        <line x1="60" y1="310" x2="60" y2="50" stroke="#666" stroke-width="1.5"/>
+        <!-- labels -->
+        <text x="265" y="345" text-anchor="middle" font-size="13" fill="#666">σ (standard deviation, %)</text>
+        <text x="22" y="180" text-anchor="middle" font-size="13" fill="#666" transform="rotate(-90, 22, 180)">E[R] (%)</text>
+        <!-- x ticks -->
+        <text x="60" y="325" text-anchor="middle" font-size="11" fill="#888">0</text>
+        <text x="160" y="325" text-anchor="middle" font-size="11" fill="#888">5</text>
+        <text x="260" y="325" text-anchor="middle" font-size="11" fill="#888">10</text>
+        <text x="360" y="325" text-anchor="middle" font-size="11" fill="#888">15</text>
+        <text x="460" y="325" text-anchor="middle" font-size="11" fill="#888">20</text>
+        <!-- y ticks: 4, 7, 10, 13 → y=310, 240, 170, 100 -->
+        <text x="50" y="314" text-anchor="end" font-size="11" fill="#888">4</text>
+        <text x="50" y="244" text-anchor="end" font-size="11" fill="#888">7</text>
+        <text x="50" y="174" text-anchor="end" font-size="11" fill="#888">10</text>
+        <text x="50" y="104" text-anchor="end" font-size="11" fill="#888">13</text>
+        <!-- MVF efficient frontier (curved) -->
+        <path d="M 140,240 Q 150,200 200,147 T 360,77" fill="none" stroke="#888" stroke-width="2"/>
+        <text x="280" y="125" font-size="10" fill="#666">MVF (no R_f)</text>
+        <!-- MVF inefficient lower -->
+        <path d="M 140,240 Q 150,265 200,290 T 350,295" fill="none" stroke="#ccc" stroke-width="1.5" stroke-dasharray="5,3"/>
+        <!-- R_f at (0, 5%): x=60, y=310 - (5-4)*23.33 = 286.7 → 287 -->
+        <circle cx="60" cy="287" r="5" fill="#333"/>
+        <text x="68" y="283" font-size="11" fill="#333">R_f = 5%</text>
+        <!-- Tangency T at e.g. (8, 10.5): x=220, y=310-(10.5-4)*23.33 = 158.3 → 158 -->
+        <!-- We need T to be on the MVF curve. From the path, at x=220 the curve is around y≈140-150. Let me use T at (8.5, 10.5) which is on the curve roughly. -->
+        <!-- Actually let me put T at (8, 10): x=220, y=310 - 6*23.33 = 170. -->
+        <circle cx="220" cy="170" r="6" fill="#ff3333" stroke="#fff" stroke-width="1.5"/>
+        <text x="230" y="166" font-size="11" fill="#ff3333" font-weight="bold">T (tangency)</text>
+        <!-- CAL through R_f and T: from (60, 287) through (220, 170). Slope = (170-287)/(220-60) = -117/160 ≈ -0.731 -->
+        <!-- Extend to x=420: y = 287 + (420-60)*(-0.731) = 287 - 263.2 = 23.8 → ~24 (offscreen up) -->
+        <!-- Limit at y=55: x = 60 + (55-287)/(-0.731) = 60 + 317.4 = 377.4 -->
+        <line x1="60" y1="287" x2="377" y2="55" stroke="#ff3333" stroke-width="2"/>
+        <text x="280" y="60" font-size="11" fill="#ff3333" font-weight="bold">new efficient frontier (CAL through T)</text>
+        <!-- Asset dots -->
+        <circle cx="380" cy="135" r="4" fill="#555"/>
+        <circle cx="270" cy="220" r="4" fill="#555"/>
+        <circle cx="320" cy="170" r="4" fill="#555"/>
+        <circle cx="220" cy="265" r="4" fill="#555"/>
+        <circle cx="410" cy="180" r="4" fill="#555"/>
+        <text x="350" y="270" font-size="10" fill="#888" font-style="italic">individual risky assets</text>
+    </svg>
+
+    <p class="caption">Without R<sub>f</sub>, the efficient frontier is the upper half of the MVF (gray curve). With R<sub>f</sub>, the new efficient frontier is the straight CAL through T (red line), which dominates almost the entire MVF — same risk, higher expected return.</p>
+
+    <p><strong>Note:</strong> the CAL touches the MVF curve at exactly one point (T) and lies above it everywhere else. That's why T is called the <em>tangency</em> portfolio. Past T, you can't go up the MVF; you can only ride the straight line by leveraging T (buying T on margin, i.e., ω<sub>T,p</sub> &gt; 1).</p>
+
+    <h3>Adding more assets shifts the MVF left</h3>
+
+    <p>If you expand the universe of available risky assets (e.g., add international stocks to a US-only portfolio, or add bonds to a stock portfolio), three things happen:</p>
+    <ol class="numbered">
+        <li>The MVF shifts to the LEFT — every achievable expected return now has a lower-σ portfolio backing it.</li>
+        <li>The new tangency portfolio T' has a STEEPER CAL (higher Sharpe ratio) — diversification gives you a better risk-return menu.</li>
+        <li>EVERY risk-averse investor benefits (assuming no transaction costs). Even if they don't want to hold the new asset directly, the new tangency portfolio is better than the old one.</li>
+    </ol>
+
+    <p>This is the formal answer to "why bother diversifying internationally?" or "why add bonds to a stock portfolio?" — the menu of (σ, E[R]) combinations strictly improves.</p>
+
+    <div class="remember">
+        <span class="label">✦ remember this — Lectures 4-5 (N risky ± R<sub>f</sub>)</span>
+        <ul>
+            <li><strong>Portfolio variance in matrix form:</strong> σ²[R<sub>p</sub>] = w<sup>T</sup>Σw. The covariance matrix Σ is N × N; portfolio weights are an N-vector.</li>
+            <li><strong>Diversification theorem (equal-weighted):</strong> σ²[R<sub>p</sub>] = σ̄²/N + (1 − 1/N) σ̄<sub>i,j</sub>. As N → ∞, the first term (idiosyncratic risk) vanishes; the second (systematic risk, the average covariance) remains. <span class="imp">You can't diversify below the floor of average covariance.</span></li>
+            <li><strong>Minimum-variance frontier (MVF)</strong> is the parabola in (σ², μ) space (hyperbola in (σ, μ) space) traced out by min<sub>w</sub> w<sup>T</sup>Σw subject to w<sup>T</sup>μ = μ* and w<sup>T</sup>1 = 1. Adding risky assets always shifts the MVF leftward.</li>
+            <li><strong>Tangency portfolio T for N assets:</strong> w<sub>T</sub> = Σ⁻¹μ<sub>excess</sub> / (1<sup>T</sup>Σ⁻¹μ<sub>excess</sub>). Maximum Sharpe ratio = √(μ<sub>excess</sub><sup>T</sup>Σ⁻¹μ<sub>excess</sub>).</li>
+            <li><strong>With a riskless asset, the efficient frontier is the CAL through T</strong> — a straight line, not a curve. It dominates the MVF everywhere except at the tangency point.</li>
+            <li><strong>Two-fund separation theorem:</strong> every risk-averse mean-variance investor holds the SAME tangency portfolio T, combined with R<sub>f</sub> in their personal preferred mix. Asset selection decouples from risk-level choice. <em>This is what makes CAPM work.</em></li>
         </ul>
     </div>
 
