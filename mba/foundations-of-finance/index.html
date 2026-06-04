@@ -105,6 +105,17 @@
         svg.cal-plot { display: block; margin: 1em auto 0.3em; max-width: 100%; height: auto; }
         .caption { font-style: italic; }
 
+        details.math-aside { background: #fafafa; border-left: 3px solid #ccc; padding: 0.5em 1em; margin: 1em 0; font-size: 0.94em; line-height: 1.6em; }
+        details.math-aside > summary { cursor: pointer; color: #888; font-size: 0.92em; user-select: none; outline: none; padding: 0.15em 0; list-style: none; }
+        details.math-aside > summary::-webkit-details-marker { display: none; }
+        details.math-aside > summary::before { content: '▸ '; color: #aaa; font-size: 0.85em; transition: transform 0.15s; display: inline-block; }
+        details.math-aside[open] > summary::before { content: '▾ '; }
+        details.math-aside > summary:hover { color: #ff3333; }
+        details.math-aside[open] > summary { margin-bottom: 0.6em; color: #555; }
+        details.math-aside > *:not(summary) { font-size: 0.96em; }
+        details.math-aside p { line-height: 1.6em; }
+        details.math-aside .katex-display { margin: 0.3em 0; }
+
         .glossary { background: #f7f7f7; border-left: 3px solid #ff3333; padding: 0.9em 1.2em; margin: 1.5em 0; font-size: 0.88em; line-height: 1.55em; }
         .glossary summary { font-weight: 700; font-size: 1.05em; cursor: pointer; color: #ff3333; outline: none; user-select: none; }
         .glossary summary:hover { color: #ff6666; }
@@ -197,6 +208,11 @@
         html[data-theme="dark"] .remember { background: rgba(80, 200, 200, 0.10); border-left-color: #4ec0c0; }
         html[data-theme="dark"] .remember .label,
         html[data-theme="dark"] .remember h4 { color: #6ecaca; }
+        html[data-theme="dark"] details.math-aside { background: #1d1d1d; border-left-color: #444; }
+        html[data-theme="dark"] details.math-aside > summary { color: #9a9a9a; }
+        html[data-theme="dark"] details.math-aside > summary:hover { color: #ff5a5a; }
+        html[data-theme="dark"] details.math-aside[open] > summary { color: #c8c8c8; }
+        html[data-theme="dark"] details.math-aside > summary::before { color: #777; }
         html[data-theme="dark"] .glossary { background: #1d1d1d; }
         html[data-theme="dark"] .glossary summary { color: #ff5a5a; }
         html[data-theme="dark"] .glossary summary:hover { color: #ff8080; }
@@ -1983,18 +1999,30 @@ Individual asset weights:
 
     <h2 id="n-risky">Lectures 4-5 - N risky assets</h2>
 
-    <p>Generalize to <em>N</em> risky assets. The key new objects are the <em>N × N</em> covariance matrix and the <em>minimum-variance frontier</em>. The diversification result becomes spectacular: as <em>N</em> grows, idiosyncratic risk gets washed out completely, leaving only systematic (average-covariance) risk. This is the engine of CAPM in the next lecture.</p>
+    <p>Generalize to <em>N</em> risky assets. Conceptually, almost nothing changes — same mean-variance framework, same idea of "find the best risky portfolio." What changes is the geometry:</p>
 
-    <h3>A matrix notation primer (so the rest is readable)</h3>
-
-    <p>The next few formulas use matrix notation because writing out N-fold sums is unwieldy. Three quick reminders:</p>
     <ul class="bullets">
-        <li>\(\mathbf{w}\) is an N-tall column vector of weights: \(\mathbf{w} = (\omega_1, \omega_2, \ldots, \omega_N)^{\top}\). The superscript \(\top\) means "transpose" — turn the column into a row.</li>
-        <li>\(\boldsymbol{\Sigma}\) (capital sigma) is the \(N \times N\) covariance matrix. The entry in row \(i\), column \(j\) is \(\Sigma_{i,j} = \sigma_{i,j}\) (covariance of asset \(i\) with asset \(j\)). Diagonal entries \(\Sigma_{i,i} = \sigma_i^2\) are variances. The matrix is symmetric (\(\sigma_{i,j} = \sigma_{j,i}\)).</li>
-        <li>\(\mathbf{w}^{\top}\boldsymbol{\Sigma}\mathbf{w}\) is a single number (a "quadratic form") — multiply weights through both sides of the matrix and add up. It expands to \(\sum_{i,j} \omega_i\,\sigma_{i,j}\,\omega_j\), which is exactly the portfolio variance double-sum. Picture: each cell \((i, j)\) contributes \(\omega_i \cdot \sigma_{i,j} \cdot \omega_j\) to the total.</li>
+        <li>With <strong>2 risky assets</strong>, varying ω₁ traced out a single curve in (σ, E[R]) space.</li>
+        <li>With <strong>N risky assets</strong>, the achievable region becomes a 2D <em>blob</em>. There are infinitely many portfolios reachable, scattered all over the plane.</li>
+        <li>The <strong>minimum-variance frontier (MVF)</strong> is the leftmost edge of that blob — for each target expected return, the lowest σ you can build.</li>
+        <li>The <strong>efficient frontier</strong> is the upper half of the MVF (positive-sloped). Risk-averse investors only ever pick portfolios here.</li>
     </ul>
 
-    <p>Similarly, \(\mathbf{w}^{\top}\boldsymbol{\mu} = \omega_1\mu_1 + \omega_2\mu_2 + \cdots = E[R_p]\) (portfolio expected return = weighted average), and \(\mathbf{w}^{\top}\mathbf{1} = \omega_1 + \omega_2 + \cdots = 1\) (weights sum to one). Matrix notation is just a shorthand — every step below can be rewritten with summation signs if you prefer.</p>
+    <p>The big new result is the <em>diversification theorem</em>: as N grows, idiosyncratic (firm-specific) risk gets washed out completely, leaving only systematic (average-covariance) risk. The leftover floor is what CAPM will call "the market" in the next lecture.</p>
+
+    <p>We do need matrix notation to express any of this cleanly — N-fold sums become unwieldy fast. The reference is below if you need it:</p>
+
+    <details class="math-aside">
+        <summary>matrix notation refresher</summary>
+        <ul class="bullets">
+            <li>\(\mathbf{w}\) is an N-tall column vector of weights: \(\mathbf{w} = (\omega_1, \omega_2, \ldots, \omega_N)^{\top}\). The superscript \(\top\) means "transpose" — turn the column into a row.</li>
+            <li>\(\boldsymbol{\Sigma}\) (capital sigma) is the \(N \times N\) covariance matrix. The entry in row \(i\), column \(j\) is \(\Sigma_{i,j} = \sigma_{i,j}\) (covariance of asset \(i\) with asset \(j\)). Diagonal entries \(\Sigma_{i,i} = \sigma_i^2\) are variances. The matrix is symmetric (\(\sigma_{i,j} = \sigma_{j,i}\)).</li>
+            <li>\(\mathbf{w}^{\top}\boldsymbol{\Sigma}\mathbf{w}\) is a single number (a "quadratic form") — multiply weights through both sides of the matrix and add up. It expands to \(\sum_{i,j} \omega_i\,\sigma_{i,j}\,\omega_j\), exactly the portfolio variance double-sum. Picture: each cell \((i, j)\) contributes \(\omega_i \cdot \sigma_{i,j} \cdot \omega_j\) to the total.</li>
+            <li>\(\mathbf{w}^{\top}\boldsymbol{\mu} = \omega_1\mu_1 + \omega_2\mu_2 + \cdots = E[R_p]\) (portfolio expected return = weighted average).</li>
+            <li>\(\mathbf{w}^{\top}\mathbf{1} = \omega_1 + \omega_2 + \cdots = 1\) (weights sum to one).</li>
+        </ul>
+        <p>Matrix notation is just shorthand — every step below can be rewritten with summation signs if you prefer.</p>
+    </details>
 
     <h3>Portfolio variance with N assets</h3>
 
@@ -2138,20 +2166,19 @@ Individual asset weights:
 
     <h3>Minimum-variance frontier (MVF) for N assets</h3>
 
-    <p>For two assets, the portfolio possibility curve was a single curve. For N assets, the set of <em>achievable</em> (σ, E[R]) points is an entire <em>region</em> in the plane. The leftmost boundary of this region — the lowest σ at each E[R] — is the <strong>minimum-variance frontier</strong>.</p>
+    <p><strong>What the MVF is.</strong> Pick a target expected return <em>μ*</em> (say, "I want a portfolio with E[R] = 8%"). Among all the infinitely many portfolios that achieve that target, find the one with the lowest standard deviation. That's <em>one</em> point on the MVF. Repeat for every possible target, and the locus of points traces out a curve — the MVF itself.</p>
+
+    <p><strong>What it looks like.</strong> A hyperbola opening to the right in (σ, E[R]) space (see the picture below). The <em>tip</em> of the hyperbola is the <strong>global minimum-variance portfolio</strong> — the lowest-σ portfolio achievable from these N assets. The upper branch (going up-right from the tip) is the <strong>efficient frontier</strong>; every risk-averse investor picks a point here. The lower branch is inefficient — same σ as the upper branch, lower E[R], so dominated.</p>
+
+    <p><strong>What changes when you add assets.</strong> Adding another risky asset to the menu can only shift the MVF <em>leftward</em> (better risk-return trade-off). Old portfolios are still possible; new mixtures are also possible; you can only do better. This is the diversification argument made formal.</p>
+
+    <p><strong>Formal setup.</strong> The MVF is constructed by solving, for each target <em>μ*</em>, a constrained quadratic optimization:</p>
 
     <div class="formula-box">
-        <p><strong>MVF construction (for each target μ*):</strong></p>
         \[ \min_{\mathbf{w}} \tfrac{1}{2}\,\mathbf{w}^{\top} \boldsymbol{\Sigma}\, \mathbf{w} \quad \text{subject to} \quad \mathbf{w}^{\top} \boldsymbol{\mu} = \mu^* \;,\; \mathbf{w}^{\top} \mathbf{1} = 1 \]
-        <p>The solution traces out a parabola in (σ², μ*) space, equivalently a hyperbola in (σ, μ*) space. The <strong>efficient frontier</strong> is the upper half of the hyperbola — the lowest σ for each ACHIEVABLE expected return.</p>
+        <p>The solution traces out a parabola in (σ², μ*) space — equivalently a hyperbola in (σ, μ*) space — which is the MVF.</p>
         <div class="formula-actions">
-            <button class="intuition-btn" onclick="toggleIntuition(this)">💡 intuition</button>
-            <button class="derive-btn" onclick="toggleDerivation(this)">▼ derive (Lagrangian)</button>
-        </div>
-        <div class="intuition">
-            <p>For each target expected return <em>μ*</em>, find the portfolio that achieves it with the lowest possible σ. Plot the result. The locus of these "minimum σ for given E[R]" points is the MVF.</p>
-            <p>Adding more risky assets always shifts the MVF LEFT (or, in the degenerate case, leaves it unchanged) — because old portfolios are still possible, plus new mixtures become available. More choices ⟹ never worse, often better.</p>
-            <p>The "efficient frontier" (upper half) is the only part risk-averse investors care about. The lower half (inefficient) is dominated by the upper half — same σ, lower E[R].</p>
+            <button class="derive-btn" onclick="toggleDerivation(this)">▼ derive (full Lagrangian, 7 steps)</button>
         </div>
         <div class="derivation">
             <p><strong>Step 1: set up the Lagrangian.</strong> We're minimizing \(\tfrac{1}{2}\,\mathbf{w}^{\top}\boldsymbol{\Sigma}\mathbf{w}\) (the \(\tfrac{1}{2}\) is just for clean algebra — doesn't change the optimum). Subtract a multiplier \(\lambda_k\) times each constraint:</p>
@@ -2275,17 +2302,13 @@ Individual asset weights:
 
     <h3>Tangency portfolio T — N-asset formula</h3>
 
+    <p><strong>Same problem as the 2-asset case, just bigger.</strong> We're still asking: <em>"What's the single risky-asset portfolio that gives the steepest CAL when combined with R<sub>f</sub>?"</em> The answer was \(\mathbf{w}_T\) for 2 assets — a specific pair of weights given by a closed form. For N assets, the closed form generalizes to one matrix expression.</p>
+
     <div class="formula-box">
         \[ \mathbf{w}_T \;=\; \frac{\boldsymbol{\Sigma}^{-1} \boldsymbol{\mu}_{\text{excess}}}{\mathbf{1}^{\top} \boldsymbol{\Sigma}^{-1} \boldsymbol{\mu}_{\text{excess}}} \]
         <p>where \(\boldsymbol{\mu}_{\text{excess}} = \boldsymbol{\mu} - R_f \cdot \mathbf{1}\) is the vector of excess expected returns (each entry is \(E[R_i] - R_f\)).</p>
         <div class="formula-actions">
-            <button class="intuition-btn" onclick="toggleIntuition(this)">💡 intuition</button>
-            <button class="derive-btn" onclick="toggleDerivation(this)">▼ derive (max Sharpe with N assets)</button>
-        </div>
-        <div class="intuition">
-            <p>The numerator \(\boldsymbol{\Sigma}^{-1}\boldsymbol{\mu}_{\text{excess}}\) is the "raw" weighting: each asset is weighted by its excess return, then "scrubbed" through the inverse covariance matrix so that highly-correlated assets share weight rather than double-counting. The denominator is the sum of those raw weights — it normalizes so the final weights sum to 1.</p>
-            <p>Same intuition as the 2-asset case: high excess return ⇒ more weight; high covariance with the rest of the portfolio ⇒ less weight (because that's redundant exposure).</p>
-            <p>\(\mathbf{w}_T\) can have negative entries — some assets are shorted in the tangency portfolio if they have negative excess return or correlate the wrong way. That's normal.</p>
+            <button class="derive-btn" onclick="toggleDerivation(this)">▼ derive (max Sharpe with N assets, 6 steps)</button>
         </div>
         <div class="derivation">
             <p><strong>Step 1: state the problem.</strong> Choose the risky-asset weights \(\mathbf{w}\) to maximize the Sharpe ratio:</p>
@@ -2309,31 +2332,40 @@ Individual asset weights:
             <p><strong>Step 6: normalize so weights sum to 1.</strong> Pick the constant \(k\) so that \(\mathbf{w}^{\top}\mathbf{1} = 1\). If \(\mathbf{w} = k\,\boldsymbol{\Sigma}^{-1}\boldsymbol{\mu}_{\text{excess}}\), then \(\mathbf{w}^{\top}\mathbf{1} = k \cdot \mathbf{1}^{\top}\boldsymbol{\Sigma}^{-1}\boldsymbol{\mu}_{\text{excess}}\); setting this equal to 1 gives \(k = 1 \,/\, \mathbf{1}^{\top}\boldsymbol{\Sigma}^{-1}\boldsymbol{\mu}_{\text{excess}}\). So:</p>
             \[ \mathbf{w}_T \;=\; \frac{\boldsymbol{\Sigma}^{-1}\boldsymbol{\mu}_{\text{excess}}}{\mathbf{1}^{\top}\boldsymbol{\Sigma}^{-1}\boldsymbol{\mu}_{\text{excess}}} \]
             <p>This is the tangency portfolio formula. Conceptually the answer is just <em>"\(\boldsymbol{\Sigma}^{-1}\boldsymbol{\mu}_{\text{excess}}\), normalized."</em></p>
-            <p><strong>What does \(\boldsymbol{\Sigma}^{-1}\) actually do?</strong> Think of \(\boldsymbol{\Sigma}^{-1}\boldsymbol{\mu}_{\text{excess}}\) as <em>"excess return per unit of risk exposure, adjusted for correlations."</em> If two assets are highly correlated, \(\boldsymbol{\Sigma}^{-1}\) partially cancels them out — you don't want to double-count similar risks. If one asset has a high Sharpe but covaries with everything else, \(\boldsymbol{\Sigma}^{-1}\) shrinks its weight. The result is the unique direction in N-asset space that maximizes the reward-per-risk trade-off.</p>
         </div>
     </div>
 
-    <h3>Sanity check: 2 assets, by matrix vs by closed form</h3>
+    <h3>What's actually going on in that formula</h3>
 
-    <p>The matrix formula has to reduce to the 2-asset closed form we derived earlier. Let's verify. For 2 assets:</p>
+    <p>Strip away the matrix dressing and the formula is saying three intuitive things:</p>
 
-    \[ \boldsymbol{\mu}_{\text{excess}} \;=\; \begin{pmatrix} \mu_1 \\ \mu_2 \end{pmatrix} \qquad \boldsymbol{\Sigma} \;=\; \begin{pmatrix} \sigma_1^2 & \sigma_{1,2} \\ \sigma_{1,2} & \sigma_2^2 \end{pmatrix} \qquad \boldsymbol{\Sigma}^{-1} \;=\; \frac{1}{\sigma_1^2 \sigma_2^2 - \sigma_{1,2}^2} \begin{pmatrix} \sigma_2^2 & -\sigma_{1,2} \\ -\sigma_{1,2} & \sigma_1^2 \end{pmatrix} \]
+    <ul class="bullets">
+        <li><strong>Weight each asset by its excess return</strong> — assets with higher \(E[R_i] - R_f\) get more weight. That's the \(\boldsymbol{\mu}_{\text{excess}}\) piece.</li>
+        <li><strong>Then "scrub through" \(\boldsymbol{\Sigma}^{-1}\)</strong> to avoid double-counting correlated assets. If two assets are highly correlated, \(\boldsymbol{\Sigma}^{-1}\) partially cancels them — you don't want to bet twice on the same underlying risk. If one asset has a high Sharpe ratio but covaries strongly with everything else in the universe, \(\boldsymbol{\Sigma}^{-1}\) shrinks its weight (it's redundant exposure).</li>
+        <li><strong>Normalize</strong> by \(\mathbf{1}^{\top}\boldsymbol{\Sigma}^{-1}\boldsymbol{\mu}_{\text{excess}}\) so the weights sum to 1.</li>
+    </ul>
 
-    <p>(Standard 2×2 inverse: swap diagonal, negate off-diagonal, divide by determinant.)</p>
+    <p>It's the same intuition that drove the 2-asset case: high excess return ⇒ more weight, high covariance with the rest of the portfolio ⇒ less weight. The matrix just generalizes the bookkeeping.</p>
 
-    <p>Multiply <em>Σ⁻¹</em> by <em>μ<sub>excess</sub></em>:</p>
+    <p>Two things worth knowing:</p>
+    <ul class="bullets">
+        <li>\(\mathbf{w}_T\) can have <strong>negative entries</strong> — some assets get shorted in the tangency portfolio if they have negative excess return, or if they correlate the wrong way. That's not a bug; it's the optimizer telling you the asset is dominated.</li>
+        <li>The formula reduces exactly to the 2-asset closed form we derived earlier. (If you want to see the matrix algebra reduce in a few lines, expand the proof below.)</li>
+    </ul>
 
-    \[ \boldsymbol{\Sigma}^{-1} \boldsymbol{\mu}_{\text{excess}} \;=\; \frac{1}{\sigma_1^2 \sigma_2^2 - \sigma_{1,2}^2} \begin{pmatrix} \sigma_2^2 \mu_1 - \sigma_{1,2}\mu_2 \\ -\sigma_{1,2}\mu_1 + \sigma_1^2 \mu_2 \end{pmatrix} \]
-
-    <p>Sum the two components (that's <em>1<sup>T</sup>Σ⁻¹μ<sub>excess</sub></em>):</p>
-
-    \[ \mathbf{1}^{\top} \boldsymbol{\Sigma}^{-1} \boldsymbol{\mu}_{\text{excess}} \;=\; \frac{\mu_1 \sigma_2^2 + \mu_2 \sigma_1^2 - (\mu_1 + \mu_2)\,\sigma_{1,2}}{\sigma_1^2 \sigma_2^2 - \sigma_{1,2}^2} \]
-
-    <p>Divide the first component of <em>Σ⁻¹μ<sub>excess</sub></em> by this sum — the determinant cancels — and you get the first weight:</p>
-
-    \[ \omega_{1,T} \;=\; \frac{\mu_1\,\sigma_2^2 - \mu_2\,\sigma_{1,2}}{\mu_1\,\sigma_2^2 + \mu_2\,\sigma_1^2 - (\mu_1 + \mu_2)\,\sigma_{1,2}} \]
-
-    <p>This matches exactly the closed-form 2-asset tangency formula derived earlier. ✓ The matrix machinery generalizes the same logic to N assets, but the answer for N = 2 is recoverable in a few lines of algebra.</p>
+    <details class="math-aside">
+        <summary>show: how the matrix formula reduces to the 2-asset closed form</summary>
+        <p>For 2 assets:</p>
+        \[ \boldsymbol{\mu}_{\text{excess}} \;=\; \begin{pmatrix} \mu_1 \\ \mu_2 \end{pmatrix} \qquad \boldsymbol{\Sigma} \;=\; \begin{pmatrix} \sigma_1^2 & \sigma_{1,2} \\ \sigma_{1,2} & \sigma_2^2 \end{pmatrix} \qquad \boldsymbol{\Sigma}^{-1} \;=\; \frac{1}{\sigma_1^2 \sigma_2^2 - \sigma_{1,2}^2} \begin{pmatrix} \sigma_2^2 & -\sigma_{1,2} \\ -\sigma_{1,2} & \sigma_1^2 \end{pmatrix} \]
+        <p>(Standard 2×2 inverse: swap diagonal, negate off-diagonal, divide by determinant.)</p>
+        <p>Multiply \(\boldsymbol{\Sigma}^{-1}\) by \(\boldsymbol{\mu}_{\text{excess}}\):</p>
+        \[ \boldsymbol{\Sigma}^{-1} \boldsymbol{\mu}_{\text{excess}} \;=\; \frac{1}{\sigma_1^2 \sigma_2^2 - \sigma_{1,2}^2} \begin{pmatrix} \sigma_2^2 \mu_1 - \sigma_{1,2}\mu_2 \\ -\sigma_{1,2}\mu_1 + \sigma_1^2 \mu_2 \end{pmatrix} \]
+        <p>Sum the two components (that's \(\mathbf{1}^{\top}\boldsymbol{\Sigma}^{-1}\boldsymbol{\mu}_{\text{excess}}\)):</p>
+        \[ \mathbf{1}^{\top} \boldsymbol{\Sigma}^{-1} \boldsymbol{\mu}_{\text{excess}} \;=\; \frac{\mu_1 \sigma_2^2 + \mu_2 \sigma_1^2 - (\mu_1 + \mu_2)\,\sigma_{1,2}}{\sigma_1^2 \sigma_2^2 - \sigma_{1,2}^2} \]
+        <p>Divide the first component by this sum — the determinant cancels — and you get the first weight:</p>
+        \[ \omega_{1,T} \;=\; \frac{\mu_1\,\sigma_2^2 - \mu_2\,\sigma_{1,2}}{\mu_1\,\sigma_2^2 + \mu_2\,\sigma_1^2 - (\mu_1 + \mu_2)\,\sigma_{1,2}} \]
+        <p>This matches the closed-form 2-asset tangency formula exactly. ✓</p>
+    </details>
 
     <h3>The new efficient frontier is the CAL through T</h3>
 
