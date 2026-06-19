@@ -257,6 +257,8 @@
         <li><a href="#capm">capm</a></li>
         <li><a href="#perf-measures">perf measures</a></li>
         <li><a href="#multifactor">multifactor</a></li>
+        <li><a href="#fixed-income">fixed income</a></li>
+        <li><a href="#forward-rates">forward rates</a></li>
         <li><a href="#integrated">integrated problems</a></li>
         <li><a href="#glossary">glossary</a></li>
     </ul>
@@ -306,6 +308,21 @@
             <dt>HC</dt><dd>Human Capital — PV of future labor income. Drops in bad states, motivating ICAPM hedging demand.</dd>
             <dt>SMB</dt><dd>Small Minus Big — Fama-French size factor (long small caps, short large caps).</dd>
             <dt>HML</dt><dd>High Minus Low — Fama-French value factor (long high book-to-market, short low book-to-market).</dd>
+            <dt>YTM</dt><dd>Yield to Maturity — the single APR (semi-annual compounding) that makes the PV of a bond's remaining cash flows equal its current price.</dd>
+            <dt>BEY</dt><dd>Bond-Equivalent Yield — T-bill hold-to-maturity return expressed as an APR with n-day compounding: y = (365/n)·R. The WSJ "Asked Yield" for T-bills.</dd>
+            <dt>HPR</dt><dd>Holding Period Return — R = (P<sub>end</sub> − P<sub>start</sub>)/P<sub>start</sub>; for a T-bill held to maturity, R = Par/Price − 1.</dd>
+            <dt>PVAF / PVIF</dt><dd>Present Value Annuity Factor / Present Value Interest Factor. PVAF(r,N) = (1−(1+r)<sup>−N</sup>)/r; PVIF(r,N) = (1+r)<sup>−N</sup>.</dd>
+            <dt>Par</dt><dd>Face value — the amount repaid at maturity (typically $100 or $1,000). Also called face value.</dd>
+            <dt>Coupon rate</dt><dd>Annual rate used to compute semi-annual coupons: coupon = 0.5 × coupon rate × par.</dd>
+            <dt>STRIPS</dt><dd>Separate Trading of Registered Interest and Principal Securities — Treasury program for converting coupon bonds into a set of zero-coupon claims.</dd>
+            <dt>Zero / zero coupon bond</dt><dd>Bond paying no intermediate cash flows; just par at maturity. Long-maturity analog of a T-bill.</dd>
+            <dt>Spot rate y<sub>T</sub></dt><dd>YTM on a zero coupon bond of maturity T. The "right" discount rate for a single cash flow at time T.</dd>
+            <dt>Yield curve</dt><dd>Spot rate as a function of maturity. Normal (upward) is most common; inverted (short rates &gt; long rates) historically precedes recessions.</dd>
+            <dt>f<sub>t</sub></dt><dd>6-month forward rate starting at time t (years). APR with semi-annual compounding. The rate locked in <em>today</em> for borrowing/lending from t to t + ½.</dd>
+            <dt>Bootstrap</dt><dd>Recursive extraction of the spot-rate curve from observed coupon-bond prices. Solve for y<sub>0.5</sub>, then y<sub>1</sub> using y<sub>0.5</sub>, then y<sub>1.5</sub>, etc.</dd>
+            <dt>Term premium</dt><dd>The excess of forward rates over expected future spot rates. Empirically positive on average — investors demand compensation for holding long-duration bonds.</dd>
+            <dt>Expectations hypothesis</dt><dd>Yield-curve theory: forward rates equal expected future spot rates. Implies term premium = 0. Empirically rejected.</dd>
+            <dt>Liquidity preference</dt><dd>Yield-curve theory: forwards = expected future spot + positive term premium. The empirical consensus.</dd>
         </dl>
 
         <h4 class="gloss-h">Worked-example characters</h4>
@@ -317,7 +334,7 @@
     </details>
 
     <div class="takeaways" id="takeaways">
-        <h3>Key ideas so far (through Class 7, Wed Jun 10)</h3>
+        <h3>Key ideas so far (through Class 9, Wed Jun 17)</h3>
         <p style="margin-top: 0; font-size: 0.9em; color: #666;">Refreshed after each lecture. Each lecture section also has its own "✦ remember this" callout at the end.</p>
         <ol>
             <li><strong>A dollar today is worth more than a dollar later.</strong> Every valuation question reduces to: discount future cash flows by the right rate and add them up. PV, FV, annuity, perpetuity — different shapes of the same idea. Compounding is the snowball; discounting is the snowball in reverse.</li>
@@ -345,6 +362,12 @@
             <li><strong>Performance: Jensen's α vs Sharpe.</strong> Jensen's α<sub>i</sub> = E[r<sub>i</sub>] − β<sub>i,M</sub>·E[r<sub>M</sub>] — use when the asset is one of many in a CAPM-optimal portfolio (α &gt; 0 → underpriced). Sharpe = (E[R<sub>i</sub>] − R<sub>f</sub>) / σ[R<sub>i</sub>] — use when the asset is the investor's only risky holding. <em>They can disagree on rankings.</em></li>
             <li><strong>CAPM fails empirically.</strong> Small-cap and value stocks earn persistent positive alpha. SML is too flat. Beta alone doesn't explain the cross-section.</li>
             <li><strong>Multifactor extensions (post-midterm).</strong> ICAPM: investors care about state variables too, so M need not be tangency. Fama-French 3-factor (market + SMB + HML) is the empirical workhorse — explains the size and value premia.</li>
+            <li><strong>Bond pricing = PV of remaining cash flows.</strong> The unifying idea of all fixed income. T-bills: one cash flow, one discount. Coupon bonds: stream of coupons + par at maturity, discounted at YTM. Zeros: one cash flow at one future date, discounted at the spot rate.</li>
+            <li><strong>YTM</strong> is the single APR (semi-annual compounding) such that PV of cash flows = price. Bond prices and yields move opposite. Coupon vs YTM determines par/discount/premium: Coupon &lt; YTM → discount, Coupon &gt; YTM → premium.</li>
+            <li><strong>A coupon bond = a portfolio of zeros.</strong> Treasury STRIPS makes this physical. Each cash flow can be priced at <em>its</em> spot rate; YTM is a blended summary of those spot rates.</li>
+            <li><strong>The yield curve</strong> plots the spot rate against maturity. Normal = upward sloping; inverted = recession signal. Forward rates are extracted from it (next class).</li>
+            <li><strong>The conversion triangle:</strong> strip (spot) rates ↔ forward rates ↔ bond YTMs. Each fully determines the others via no-arbitrage. Spot → forward via (1+y<sub>T</sub>/2)<sup>2T</sup> = (1+y<sub>t</sub>/2)<sup>2t</sup>(1+f<sub>t,T</sub>/2)<sup>2(T−t)</sup>. Spot → YTM by pricing each cash flow at its own spot rate, then solving. YTM → spot by bootstrapping.</li>
+            <li><strong>Forward rates are no-arbitrage extracts, not predictions.</strong> Under the expectations hypothesis they would equal expected future spot rates; under liquidity preference (the empirical consensus) they overstate expected spots by a positive term premium.</li>
             <li><strong>Market efficiency is a warning.</strong> If U.S. equity prices are efficient w.r.t. public information, you can't beat the market on average using public info, risk-adjusted. This is the big warning the course returns to at the end.</li>
             <li><strong>Option value is non-negative.</strong> A right (without obligation) to do something in the future must be worth ≥ 0 today. (Comes back in Lecture 10.)</li>
         </ol>
@@ -405,9 +428,17 @@
             <span class="num">L 7</span><a href="#multifactor" class="name">Multifactor (ICAPM &amp; Fama-French)</a>
             <span class="desc">Long-horizon investors hedge state-variable risk → M no longer needs to be T. ICAPM 2-factor model with hedging portfolio. GIP worked example. Fama-French 3-factor (market + SMB + HML); empirical fit. <em>Post-midterm material.</em></span>
         </li>
+        <li>
+            <span class="num">L 7-8 · 8</span><a href="#fixed-income" class="name">Fixed income intro</a>
+            <span class="desc">T-bills (BEY, HPR). Treasury notes &amp; bonds with semi-annual coupons. YTM as the single discount rate. Coupon-vs-YTM → par/discount/premium. STRIPS: coupon bond as a portfolio of zeros. Yield curve first look.</span>
+        </li>
+        <li>
+            <span class="num">L 8-9</span><a href="#forward-rates" class="name">Forward rates &amp; conversion</a>
+            <span class="desc">The conversion triangle: strip ↔ forward ↔ YTM. Forward rate no-arbitrage formula and 6-month special case. Spot rate as geometric mean of forwards. Bond pricing from spot curve. Bootstrapping. Yield-curve theories (expectations / liquidity preference / segmentation).</span>
+        </li>
     </ul>
 
-    <p style="font-size: 0.92em; color: #888;"><em>Midterm Mon Jun 15 (90 min, in-class). Covers Lectures 1–5 / 5-6 (through CAPM Performance Measures &amp; Empirical Evidence). Multifactor (Lecture 7) is on the page for completeness but is NOT examinable on the midterm. After midterm: fixed income, derivatives, valuation, market efficiency.</em></p>
+    <p style="font-size: 0.92em; color: #888;"><em>Through Class 9 (Wed Jun 17). Conversion triangle (spot ↔ forward ↔ YTM) and yield-curve theories are done. Next class (Class 10, Mon Jun 22): duration and bond portfolio management. After that: derivatives, valuation models, market efficiency.</em></p>
 
     <h2 id="schedule">Class schedule</h2>
     <table>
@@ -419,12 +450,12 @@
             <tr><td>2</td><td>Wed May 20</td><td>TVM · Equities &amp; markets · Stock positions</td><td></td></tr>
             <tr><td>3</td><td>Wed May 27</td><td>Portfolio return · Return distribution</td><td></td></tr>
             <tr><td>4</td><td>Mon Jun 1</td><td>Portfolio mgmt: 1 risky + riskless, 2 risky + riskless</td><td>CQ 1</td></tr>
-            <tr><td>5</td><td>Wed Jun 3</td><td>Portfolio mgmt: N risky + riskless · CAPM</td><td>PS 1</td></tr>
-            <tr><td>6</td><td>Mon Jun 8</td><td>CAPM (Lecture 5)</td><td>CQ 2</td></tr>
-            <tr><td>7</td><td>Wed Jun 10</td><td>CAPM performance &amp; empirical (L 5-6) · Multifactor (L 7)</td><td></td></tr>
-            <tr><td>8</td><td>Mon Jun 15</td><td><span class="imp">Midterm</span> (90 min) · Fixed income</td><td></td></tr>
-            <tr><td>9</td><td>Wed Jun 17</td><td>Fixed income valuation · Yield curves · Forward rates</td><td>PS 2 · CQ 3</td></tr>
-            <tr><td>10</td><td>Mon Jun 22</td><td>Derivatives intro · Options</td><td>CQ 4</td></tr>
+            <tr><td>5</td><td>Wed Jun 3</td><td>Portfolio mgmt completion: 1 risky + R<sub>f</sub>, 2 risky + R<sub>f</sub>, MVF for N risky</td><td>PS 1</td></tr>
+            <tr><td>6</td><td>Mon Jun 8</td><td>N risky + R<sub>f</sub> tangency · CAPM (L5) · CAPM perf measures &amp; empirical (L5-6)</td><td>CQ 2</td></tr>
+            <tr><td>7</td><td>Wed Jun 10</td><td>Multifactor: ICAPM &amp; Fama-French (L7)</td><td></td></tr>
+            <tr><td>8</td><td>Mon Jun 15</td><td><span class="imp">Midterm</span> (90 min) · Fixed income intro: T-bills, notes/bonds, YTM, STRIPS, yield curve first look</td><td></td></tr>
+            <tr><td>9</td><td>Wed Jun 17</td><td>Forward rates &amp; conversion triangle (L8 finish) · Yield-curve theories (L8-9)</td><td>PS 2 · CQ 3</td></tr>
+            <tr><td>10</td><td>Mon Jun 22</td><td>Duration &amp; bond portfolio management (L9) · Derivatives intro</td><td>CQ 4</td></tr>
             <tr><td>11</td><td>Wed Jun 24</td><td>Options valuation · Forwards valuation · Valuation models · Market efficiency</td><td></td></tr>
             <tr><td>12</td><td>Mon Jun 29</td><td><span class="imp">Final exam</span></td><td></td></tr>
             <tr><td></td><td>Wed Jul 1</td><td></td><td>PS 3 · CQ 5</td></tr>
@@ -3040,6 +3071,567 @@ Individual asset weights:
             <li><strong>Fama-French 3-factor</strong>: market + SMB (small minus big) + HML (high minus low book-to-market). The empirical workhorse. Explains the size and value premia that CAPM misses.</li>
             <li><strong>Assets can fail to lie on the SML and still be correctly priced</strong> by ICAPM or FF — they're being rewarded (or paying) for state-variable or factor exposures CAPM ignores.</li>
             <li><strong>For exam:</strong> CAPM is the mainline material. ICAPM and FF appear after the midterm cutoff (the midterm covers Lectures 1–5 / 5-6 only) — but understanding them locks in what "the SML" actually pins down and why empirical CAPM fails.</li>
+        </ul>
+    </div>
+
+    <h2 id="fixed-income">Lecture 7-8 &amp; 8 - Fixed income intro</h2>
+
+    <p>Module pivot. Portfolio theory and asset pricing are done. The rest of the course is about the <em>other two</em> asset classes: debt (now) and derivatives (later). Fixed income flips the question from "what return should I expect from a stock?" to "what's the price of a security that promises a fixed cash flow stream?" The whole topic reduces to: <strong>price = PV of remaining cash flows, discounted at the right yield</strong>. The hard part is the right yield.</p>
+
+    <h3>The money market — short-dated debt</h3>
+
+    <p>The <strong>money market</strong> trades instruments with original maturity ≤ 1 year. Lowest-default-risk piece of the U.S. financial system. The flagship instrument is the T-bill.</p>
+
+    <p>Other money-market instruments (not examined deeply here): commercial paper (short-term corporate debt), CDs (bank-issued), Fed Funds (overnight interbank), LIBOR (London Interbank Offered Rate — historically the reference for floating-rate loans; being phased out for SOFR).</p>
+
+    <h3>U.S. Treasury bills (T-bills)</h3>
+
+    <p>T-bills are obligations of the U.S. government — among the safest dollar-denominated assets in existence. They're <strong>discount instruments</strong>: no coupon, just bought below par and redeemed at par. Maturities issued at 4, 8, 13, 26, 52 weeks.</p>
+
+    <div class="formula-box">
+        <p><strong>T-bill holding-period return</strong> (held to maturity)</p>
+        \[ R = \frac{\text{Par} - \text{Price}}{\text{Price}} = \frac{\text{Par}}{\text{Price}} - 1 \quad \Leftrightarrow \quad \text{Price} = \frac{\text{Par}}{1 + R} \]
+        <div class="formula-actions">
+            <button class="intuition-btn" onclick="toggleIntuition(this)">💡 intuition</button>
+            <button class="derive-btn" onclick="toggleDerivation(this)">▼ derive</button>
+        </div>
+        <div class="intuition">
+            <p><strong>You pay Price today, you get Par at maturity. Your return is the gap, as a fraction of what you paid.</strong> No coupons, no compounding — just one cash flow in, one cash flow out.</p>
+            <p>Think of a T-bill as a coupon you redeem at the post office: you bought it for $99.92, you'll cash it for $100.00 in 37 days, you make 8 cents per $100. That's it. The math is trivial; what makes T-bills interesting is the <em>yield convention</em> used to compare them (next formula).</p>
+        </div>
+        <div class="derivation">
+            <p>Pure definition. R is the simple return over the holding period (n days). It's an n-day rate, not annualized.</p>
+        </div>
+    </div>
+
+    <div class="formula-box">
+        <p><strong>Bond-equivalent yield (BEY)</strong> — the "Asked Yield" quoted by the WSJ</p>
+        \[ y = \frac{365}{n} \cdot R \quad \Leftrightarrow \quad R = y \cdot \frac{n}{365} \]
+        <p>where n = days from settlement to maturity.</p>
+        <div class="formula-actions">
+            <button class="intuition-btn" onclick="toggleIntuition(this)">💡 intuition</button>
+            <button class="derive-btn" onclick="toggleDerivation(this)">▼ derive</button>
+        </div>
+        <div class="intuition">
+            <p><strong>BEY is the hold-to-maturity return expressed as an APR with n-day compounding.</strong> Recall the APR convention: APR = per-period rate × periods/year. Here the "period" is n days, there are 365/n such periods in a year, and the per-period rate is R. So y = R × (365/n) — exactly the APR.</p>
+            <p>BEY lets you <em>compare</em> T-bills of different maturities on a common annualized scale. A 37-day bill yielding R = 0.0813% is not "obviously" cheaper or more expensive than a 91-day bill yielding R = 0.20% — until you annualize both via BEY.</p>
+            <p><strong>Why it's "bond-equivalent":</strong> matches the APR-with-semi-annual-compounding convention used to quote yields on T-notes/bonds, so you can compare across maturities in the same units.</p>
+        </div>
+        <div class="derivation">
+            <p>APR definition: i<sub>nom</sub> = m × r<sub>1/m</sub>, where m = number of compound periods in a year and r<sub>1/m</sub> = the per-period rate. For an n-day T-bill, the period is n days, m = 365/n periods in a year, and r<sub>1/m</sub> = R. Substitute: y = (365/n) × R.</p>
+        </div>
+    </div>
+
+    <h3>Whiteboard example — pricing a 37-day T-bill</h3>
+
+    <p>WSJ Online, 6/26/17. Maturity 8/3/17, Asked Yield = 0.802%.</p>
+
+    <table class="matrix">
+        <thead><tr><th>Step</th><th>Calculation</th><th>Result</th></tr></thead>
+        <tbody>
+            <tr><td>1. Days to maturity</td><td>n = 3 (Jun 27-30) + 31 (Jul) + 3 (Aug 1-3) = 37</td><td>n = 37</td></tr>
+            <tr><td>2. Holding-period return from BEY</td><td>R = y · n/365 = 0.00802 × 37/365</td><td>R = 0.0813%</td></tr>
+            <tr><td>3. Price from HPR</td><td>Price = Par / (1 + R) = 100 / (1 + 0.000813)</td><td>Price = $99.919</td></tr>
+        </tbody>
+    </table>
+
+    <p><strong>Punchline:</strong> the asked yield is an APR, not the return you actually earn. The return you earn over 37 days is much smaller (0.0813%, not 0.802%). To get the price, convert BEY → HPR first, then discount par by (1 + R).</p>
+
+    <h3>Long-term credit markets — T-notes and T-bonds</h3>
+
+    <p>Distinction is original maturity:</p>
+    <ul class="bullets">
+        <li><strong>T-notes:</strong> original maturity 1–10 years.</li>
+        <li><strong>T-bonds:</strong> original maturity &gt; 10 years.</li>
+    </ul>
+
+    <p>Both pay <strong>semi-annual coupons</strong> and return par at maturity. A plain-vanilla note/bond is characterized by:</p>
+    <ol class="numbered">
+        <li><strong>Maturity</strong> — when par is repaid.</li>
+        <li><strong>Par (face value)</strong> — amount repaid at maturity (typically $100 or $1,000).</li>
+        <li><strong>Coupon rate</strong> — annual rate; semi-annual coupon = 0.5 × coupon rate × par.</li>
+        <li><strong>Coupon dates</strong> — paid on the 15th or end of the month, every 6 months.</li>
+    </ol>
+
+    <p><strong>Quoting convention:</strong> the WSJ-quoted price is the "clean price" (does NOT include accrued interest). The actual transaction price ("dirty" / invoice price) = quoted price + accrued interest since last coupon. If a coupon has just been paid, clean = dirty.</p>
+
+    <h3>Cash flow timeline — the 2% July 20 bond on 1/31/14</h3>
+
+    <p>WSJ quote on 1/31/14: 2% T-note maturing 7/31/2020, Asked = 100.0703, Asked Yield = 1.988%. Today (1/31/14) is a coupon date, so price = invoice price.</p>
+
+    <p>Six-month periods until maturity: from 1/31/14 to 7/31/20 = 13 semi-annual periods.</p>
+
+    <svg viewBox="0 0 600 110" style="max-width: 100%; background: #fafafa; margin: 0.8em 0;">
+        <!-- timeline -->
+        <line x1="40" y1="60" x2="560" y2="60" stroke="#555" stroke-width="1"/>
+        <!-- ticks -->
+        <line x1="40" y1="55" x2="40" y2="65" stroke="#555"/>
+        <line x1="120" y1="55" x2="120" y2="65" stroke="#555"/>
+        <line x1="200" y1="55" x2="200" y2="65" stroke="#555"/>
+        <line x1="400" y1="55" x2="400" y2="65" stroke="#555"/>
+        <line x1="480" y1="55" x2="480" y2="65" stroke="#555"/>
+        <line x1="560" y1="55" x2="560" y2="65" stroke="#555"/>
+        <!-- labels -->
+        <text x="40" y="45" text-anchor="middle" font-size="11" fill="#333">1/31/14</text>
+        <text x="40" y="80" text-anchor="middle" font-size="10" fill="#666">t=0</text>
+        <text x="120" y="45" text-anchor="middle" font-size="11" fill="#333">7/31/14</text>
+        <text x="120" y="80" text-anchor="middle" font-size="10" fill="#666">½</text>
+        <text x="200" y="45" text-anchor="middle" font-size="11" fill="#333">1/31/15</text>
+        <text x="200" y="80" text-anchor="middle" font-size="10" fill="#666">1</text>
+        <text x="300" y="80" text-anchor="middle" font-size="14" fill="#888">…</text>
+        <text x="400" y="45" text-anchor="middle" font-size="11" fill="#333">1/31/20</text>
+        <text x="400" y="80" text-anchor="middle" font-size="10" fill="#666">6</text>
+        <text x="480" y="45" text-anchor="middle" font-size="11" fill="#333">7/31/20</text>
+        <text x="480" y="80" text-anchor="middle" font-size="10" fill="#666">6½</text>
+        <!-- cash flows -->
+        <text x="120" y="100" text-anchor="middle" font-size="11" fill="#ff3333" font-weight="bold">$1</text>
+        <text x="200" y="100" text-anchor="middle" font-size="11" fill="#ff3333" font-weight="bold">$1</text>
+        <text x="400" y="100" text-anchor="middle" font-size="11" fill="#ff3333" font-weight="bold">$1</text>
+        <text x="480" y="100" text-anchor="middle" font-size="11" fill="#ff3333" font-weight="bold">$1 + $100</text>
+    </svg>
+
+    <p class="caption">Coupon = 0.5 × 2% × $100 = $1 every 6 months. Final cash flow at maturity: last coupon + par = $101. Thirteen total payment dates.</p>
+
+    <h3>Yield to maturity (YTM)</h3>
+
+    <div class="formula-box">
+        <p><strong>Yield to maturity</strong> (just after a coupon payment)</p>
+        \[ P(0) = C \cdot \text{PVAF}\!\left(\tfrac{\text{YTM}}{2},\, N\right) + \text{Par} \cdot \text{PVIF}\!\left(\tfrac{\text{YTM}}{2},\, N\right) \]
+        <p>where C = semi-annual coupon, N = number of coupon periods to maturity, YTM is an APR with semi-annual compounding.</p>
+        <div class="formula-actions">
+            <button class="intuition-btn" onclick="toggleIntuition(this)">💡 intuition</button>
+            <button class="derive-btn" onclick="toggleDerivation(this)">▼ derive</button>
+        </div>
+        <div class="intuition">
+            <p><strong>YTM is the single discount rate that makes the PV of all future cash flows equal the bond's current price.</strong> Think of it as the bond's "internal rate of return" — the rate you'd earn if you bought today and held to maturity (assuming you can reinvest each coupon at the YTM, an important caveat).</p>
+            <p>Two pieces of the formula:</p>
+            <ul class="bullets">
+                <li><strong>C × PVAF(YTM/2, N)</strong>: PV of the N coupon payments, valued as an annuity at the per-period rate YTM/2.</li>
+                <li><strong>Par × PVIF(YTM/2, N)</strong>: PV of the par repayment at maturity, discounted N periods.</li>
+            </ul>
+            <p><strong>Negative price-yield relationship:</strong> if YTM goes up, both pieces shrink → price falls. This is the most fundamental fact in fixed income. <em>Bond prices and yields move opposite.</em></p>
+            <p><strong>Why YTM is quoted as semi-annual-compounded APR:</strong> the cash flows come every 6 months, so the per-period rate is YTM/2. Quoting YTM (the doubled APR) gives a familiar annual number for comparison.</p>
+        </div>
+        <div class="derivation">
+            <p>Direct from "price = PV of remaining cash flows":</p>
+            \[ P(0) = \sum_{t=1}^{N} \frac{C}{(1 + \text{YTM}/2)^t} + \frac{\text{Par}}{(1 + \text{YTM}/2)^N} \]
+            <p>The coupon sum is a finite geometric series — collapse it using the annuity factor:</p>
+            \[ \sum_{t=1}^{N} \frac{1}{(1+r)^t} = \frac{1 - (1+r)^{-N}}{r} = \text{PVAF}(r, N) \]
+            <p>Substitute r = YTM/2 and pull out C to get the first term. The principal term is just one cash flow N periods out: Par × (1+r)<sup>−N</sup> = Par × PVIF(r, N).</p>
+            <p>Plugging in for the Jul 20 bond: P(0) = 1 × PVAF(0.994%, 13) + 100 × PVIF(0.994%, 13) = 12.139 + 87.934 = <strong>$100.073</strong>, matching the quoted asked price of 100.0703.</p>
+        </div>
+    </div>
+
+    <h3>Coupon rate vs YTM — par, discount, premium</h3>
+
+    <p>The single most-tested relationship in fixed income. If the bond has just paid a coupon:</p>
+
+    <table class="matrix">
+        <thead><tr><th>Condition</th><th>Implication for price</th><th>Intuition</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Coupon Rate = YTM</strong></td><td>Price = Par</td><td>Bond pays exactly the going rate; no premium or discount.</td></tr>
+            <tr><td><strong>Coupon Rate &lt; YTM</strong></td><td>Price &lt; Par (<em>discount</em>)</td><td>Bond's coupons aren't keeping up with prevailing rates; you only buy if cheap.</td></tr>
+            <tr><td><strong>Coupon Rate &gt; YTM</strong></td><td>Price &gt; Par (<em>premium</em>)</td><td>Bond's coupons are richer than prevailing rates; you'll pay extra for them.</td></tr>
+        </tbody>
+    </table>
+
+    <p><strong>Whiteboard example.</strong> WSJ Online, 7/1/2015. Two Dec 17 bonds:</p>
+
+    <table class="matrix">
+        <thead><tr><th>Bond</th><th>Coupon</th><th>Asked price</th><th>YTM (Asked yield)</th><th>Relation</th></tr></thead>
+        <tbody>
+            <tr><td>0.75% Dec 17</td><td>0.75%</td><td>99.6797</td><td>0.880%</td><td>Coupon &lt; YTM → <strong>discount</strong></td></tr>
+            <tr><td>2.75% Dec 17</td><td>2.75%</td><td>104.6094</td><td>0.878%</td><td>Coupon &gt; YTM → <strong>premium</strong></td></tr>
+        </tbody>
+    </table>
+
+    <p>Both bonds mature the same day with virtually identical YTMs (~0.88%) — so they're priced consistently with one another. The 2.75% bond trades at a premium because its richer coupons compensate buyers for paying above par.</p>
+
+    <h3>Zero coupon bonds — Treasury STRIPS</h3>
+
+    <p>A <strong>zero coupon bond</strong> ("zero") pays no intermediate cash flows — just par at maturity. In that respect it's a T-bill, but for longer maturities (up to 30 years).</p>
+
+    <p><strong>How they're created:</strong> by <em>stripping</em> a coupon bond. The U.S. Treasury STRIPS program (<strong>S</strong>eparate <strong>T</strong>rading of <strong>R</strong>egistered <strong>I</strong>nterest and <strong>P</strong>rincipal <strong>S</strong>ecurities) lets institutions register coupons and principal payments as separately tradable securities since 1982.</p>
+
+    <div class="formula-box">
+        <p><strong>Key conceptual insight</strong></p>
+        <p style="margin: 0.2em 0;"><em>A coupon bond is a portfolio of zero-coupon bonds, each maturing on one of the coupon dates.</em></p>
+        <div class="formula-actions">
+            <button class="intuition-btn" onclick="toggleIntuition(this)">💡 intuition</button>
+        </div>
+        <div class="intuition">
+            <p>Look at the cash flow timeline above. The 2% Jul 20 bond is, in effect:</p>
+            <ul class="bullets">
+                <li>13 separate zero-coupon claims of $1 each (one for each coupon date, ½ through 6½ years out), plus</li>
+                <li>1 zero-coupon claim of $100 at 6½ years (the par).</li>
+            </ul>
+            <p>You can either own the coupon bond as a single security, OR own the 14 separate zeros that replicate it. <strong>By no arbitrage</strong>, the bond price must equal the sum of the zero prices.</p>
+            <p>This decomposition is the foundation of bond pricing using spot rates (next): each cash flow gets discounted at the zero rate for <em>its</em> maturity. Coupons in 6 months get discounted at the 6-month rate; the par in 6½ years gets discounted at the 6½-year rate; nothing is averaged. YTM is the single rate that, applied uniformly, recovers the same price — but it hides the fact that different cash flows actually face different "rights" discount rates.</p>
+        </div>
+    </div>
+
+    <h3>Stripping example — converting a coupon bond into zeros</h3>
+
+    <p>Today = 2/24. An investor sends 20 of the <strong>10% Aug 25 T-notes</strong>, each with par $100, to the Treasury to be stripped. Coupons: 0.5 × 10% × $100 = $5 every 6 months. Payment dates: 8/24, 2/25, 8/25 (last one also pays par).</p>
+
+    <table class="matrix">
+        <thead><tr><th>Cash flow date</th><th>Type</th><th>Aggregate amount (20 notes)</th><th>What you get back from Treasury</th></tr></thead>
+        <tbody>
+            <tr><td>8/24</td><td>Coupon</td><td>20 × $5 = $100</td><td>1 Aug 24 ci-strip, par $100</td></tr>
+            <tr><td>2/25</td><td>Coupon</td><td>20 × $5 = $100</td><td>1 Feb 25 ci-strip, par $100</td></tr>
+            <tr><td>8/25</td><td>Coupon</td><td>20 × $5 = $100</td><td>1 Aug 25 ci-strip, par $100</td></tr>
+            <tr><td>8/25</td><td>Principal</td><td>20 × $100 = $2,000</td><td>20 Aug 25 np-strips, par $100 each</td></tr>
+        </tbody>
+    </table>
+
+    <p><strong>Notation:</strong> <em>ci</em> = coupon interest strip; <em>np</em> = note principal strip (also <em>bp</em> for bond principal). Coupon-interest strips and principal strips with the same maturity are economically identical but are tracked separately for tax purposes.</p>
+
+    <h3>Pricing a zero coupon bond</h3>
+
+    <div class="formula-box">
+        <p><strong>Zero coupon bond price</strong></p>
+        \[ P(0) = \frac{\text{Par}}{(1 + y_T/2)^{2T}} \]
+        <p>where y<sub>T</sub> = the T-year spot rate (APR, semi-annual compounding), T = maturity in years.</p>
+        <div class="formula-actions">
+            <button class="intuition-btn" onclick="toggleIntuition(this)">💡 intuition</button>
+        </div>
+        <div class="intuition">
+            <p>Same as a T-bill, just for longer maturity. One cash flow (par) at one future date, discounted by the spot rate for that maturity. The spot rate y<sub>T</sub> <em>is</em> the YTM on the zero — there are no coupons, so YTM and spot rate coincide for zeros.</p>
+            <p>This is why zeros are theoretically clean: they pin down the entire term structure of interest rates. For each maturity, the spot rate is just (Par/Price)<sup>1/(2T)</sup> − 1, times 2.</p>
+        </div>
+    </div>
+
+    <h3>The yield curve — first look</h3>
+
+    <p>The <strong>yield curve</strong> (also called the <em>term structure of interest rates</em>) shows the yield on a zero coupon Treasury as a function of maturity. It's the menu of "rents" the market currently charges for borrowing dollars over different horizons.</p>
+
+    <svg viewBox="0 0 460 280" style="max-width: 100%; background: #fafafa; margin: 0.5em 0;">
+        <!-- axes -->
+        <line x1="50" y1="240" x2="430" y2="240" stroke="#666"/>
+        <line x1="50" y1="240" x2="50" y2="30" stroke="#666"/>
+        <text x="240" y="265" text-anchor="middle" font-size="11" fill="#666">Maturity (years)</text>
+        <text x="20" y="135" font-size="11" fill="#666" transform="rotate(-90 20 135)">Yield</text>
+        <!-- maturity ticks -->
+        <text x="100" y="255" text-anchor="middle" font-size="10" fill="#888">1</text>
+        <text x="180" y="255" text-anchor="middle" font-size="10" fill="#888">5</text>
+        <text x="260" y="255" text-anchor="middle" font-size="10" fill="#888">10</text>
+        <text x="340" y="255" text-anchor="middle" font-size="10" fill="#888">20</text>
+        <text x="410" y="255" text-anchor="middle" font-size="10" fill="#888">30</text>
+        <!-- upward sloping curve (normal) -->
+        <path d="M 60 220 Q 150 200 220 160 Q 320 130 420 110" fill="none" stroke="#ff3333" stroke-width="2.5"/>
+        <text x="290" y="155" font-size="11" fill="#ff3333" font-weight="bold">normal (upward)</text>
+        <!-- flat curve -->
+        <path d="M 60 170 Q 200 168 420 165" fill="none" stroke="#888" stroke-width="2" stroke-dasharray="4 3"/>
+        <text x="350" y="175" font-size="10" fill="#888" font-style="italic">flat</text>
+        <!-- inverted curve -->
+        <path d="M 60 100 Q 180 120 280 170 Q 360 195 420 210" fill="none" stroke="#666" stroke-width="2" stroke-dasharray="2 2"/>
+        <text x="100" y="95" font-size="10" fill="#666" font-style="italic">inverted</text>
+    </svg>
+
+    <p class="caption">The yield curve takes several shapes. <strong>Upward-sloping</strong> ("normal") is the most common — investors typically require higher yields for longer-horizon lending. <strong>Flat</strong> suggests expectations of stable short rates. <strong>Inverted</strong> (short rates above long rates) is historically a recession predictor.</p>
+
+    <h3>What the yield curve is used for</h3>
+
+    <ul class="bullets">
+        <li><strong>Pricing any future cash flow.</strong> A future $1 at time T is worth 1 / (1 + y<sub>T</sub>/2)<sup>2T</sup> today. The yield curve gives you y<sub>T</sub> for every T. This is the right way to value a coupon bond — discount each cash flow at <em>its</em> spot rate, then sum.</li>
+        <li><strong>Inferring forward rates.</strong> From two spot rates (say 1-year and 2-year) you can extract the market's implied 1-year rate, 1 year from now. We'll do this in the next class.</li>
+        <li><strong>Macro signaling.</strong> Spread between 10-year and 2-year (or 10-year vs 3-month) is closely watched. Persistent inversion ⇒ market expects rate cuts ⇒ historically associated with recessions.</li>
+    </ul>
+
+    <details class="math-aside">
+        <summary>YTM vs spot rate — why they differ for coupon bonds</summary>
+        <p>For a zero coupon bond of maturity T, YTM = y<sub>T</sub> (the T-year spot rate). For a coupon bond, YTM is a <em>blended average</em> of the spot rates at each coupon date, weighted by the cash flows' contribution to PV.</p>
+        <p>If the yield curve is upward sloping, the bond's YTM will lie between the shortest spot rate (small weight on early coupons) and the longest spot rate (large weight on principal). YTM is convenient but lossy: it collapses the entire term structure into one number.</p>
+        <p>This is also why two coupon bonds with the same maturity but different coupon rates can have different YTMs — different cash flow timing means different spot-rate weighting.</p>
+    </details>
+
+    <h3>Corporate bonds — quick mention</h3>
+
+    <p>Corporate bonds work like Treasuries (semi-annual coupons, par at maturity) but introduce <strong>default risk</strong>. Key differences:</p>
+    <ul class="bullets">
+        <li><strong>Default risk:</strong> the issuer can fail to pay. Reflected in a higher YTM than Treasuries of the same maturity (the spread is the "credit spread").</li>
+        <li><strong>Seniority:</strong> senior debt gets paid before junior debt in default. Senior secured first, then senior unsecured, then subordinated.</li>
+        <li><strong>Covenants:</strong> contractual restrictions (e.g., on additional debt, dividends) to protect bondholders.</li>
+        <li><strong>Embedded options (optional):</strong> callable (issuer can buy back early — lowers price), putable (holder can sell back — raises price), convertible (holder can convert to stock — raises price).</li>
+    </ul>
+
+    <div class="remember">
+        <span class="label">✦ remember this — Lecture 7-8 &amp; 8 (Fixed income intro)</span>
+        <ul>
+            <li><strong>Every bond price = PV of remaining cash flows.</strong> The whole topic is one idea, applied with different yield conventions and cash flow structures.</li>
+            <li><strong>T-bill HPR:</strong> R = Par/Price − 1. <strong>BEY (Asked Yield):</strong> y = (365/n) · R. BEY is the holding-period return expressed as an APR with n-day compounding — it's a quoting convention, not the return you actually earn over n days.</li>
+            <li><strong>YTM</strong> = the single APR-with-semi-annual-compounding that makes PV of future cash flows = current price. P(0) = C·PVAF(YTM/2, N) + Par·PVIF(YTM/2, N). <span class="imp">Bond prices and yields move opposite.</span></li>
+            <li><strong>Coupon vs YTM rule</strong> (just after a coupon): Coupon = YTM → par; Coupon &lt; YTM → discount; Coupon &gt; YTM → premium.</li>
+            <li><strong>A coupon bond = a portfolio of zeros.</strong> The Treasury STRIPS program makes this physical. Each coupon date corresponds to one zero (ci-strip); the principal at maturity is another zero (np-strip).</li>
+            <li><strong>The yield curve</strong> plots the spot rate y<sub>T</sub> (= YTM on a zero) against maturity T. Normal = upward sloping; inverted = recession signal. Spot rates are the "right" discount rates for any future cash flow.</li>
+            <li><strong>YTM vs spot rates:</strong> for a zero, YTM = spot rate. For a coupon bond, YTM is a cash-flow-weighted blend of the spot rates at each coupon date — convenient summary, lossy in detail.</li>
+        </ul>
+    </div>
+
+    <h2 id="forward-rates">Lecture 8-9 - Forward rates &amp; the yield conversion triangle</h2>
+
+    <p>The single most important takeaway from this class: <strong>strip (spot) rates, forward rates, and bond yields (YTMs) are three views of the same underlying term structure</strong>. Each fully determines the other two by no-arbitrage. Master the conversions and you can answer most fixed-income exam questions on autopilot. Lose them and you'll be stuck in algebra forever.</p>
+
+    <h3>The conversion triangle</h3>
+
+    <p>The whole picture in one diagram:</p>
+
+    <svg viewBox="0 0 540 320" style="max-width: 100%; background: #fafafa; margin: 0.5em 0;">
+        <!-- Three nodes -->
+        <!-- Spot rates (top) -->
+        <ellipse cx="270" cy="55" rx="115" ry="35" fill="#fff" stroke="#ff3333" stroke-width="2"/>
+        <text x="270" y="50" text-anchor="middle" font-size="13" font-weight="bold" fill="#ff3333">Strip / spot rates</text>
+        <text x="270" y="68" text-anchor="middle" font-size="11" fill="#666">y₁, y₂, ..., y_T</text>
+
+        <!-- Forward rates (bottom left) -->
+        <ellipse cx="125" cy="240" rx="105" ry="35" fill="#fff" stroke="#444" stroke-width="2"/>
+        <text x="125" y="235" text-anchor="middle" font-size="13" font-weight="bold" fill="#444">Forward rates</text>
+        <text x="125" y="253" text-anchor="middle" font-size="11" fill="#666">f₁, f₂, ..., f_T</text>
+
+        <!-- Bond yields (bottom right) -->
+        <ellipse cx="415" cy="240" rx="105" ry="35" fill="#fff" stroke="#444" stroke-width="2"/>
+        <text x="415" y="235" text-anchor="middle" font-size="13" font-weight="bold" fill="#444">Bond yields (YTM)</text>
+        <text x="415" y="253" text-anchor="middle" font-size="11" fill="#666">YTM of coupon bonds</text>
+
+        <!-- Arrows -->
+        <!-- Spot <-> Forward -->
+        <line x1="215" y1="85" x2="160" y2="210" stroke="#ff3333" stroke-width="1.5" marker-end="url(#arrow)"/>
+        <line x1="170" y1="210" x2="225" y2="85" stroke="#ff3333" stroke-width="1.5" marker-end="url(#arrow)"/>
+        <text x="125" y="150" text-anchor="middle" font-size="10" fill="#ff3333" font-style="italic">no-arbitrage</text>
+        <text x="225" y="160" text-anchor="middle" font-size="10" fill="#ff3333" font-style="italic">geometric mean</text>
+
+        <!-- Spot <-> YTM -->
+        <line x1="325" y1="85" x2="380" y2="210" stroke="#ff3333" stroke-width="1.5" marker-end="url(#arrow)"/>
+        <line x1="370" y1="210" x2="315" y2="85" stroke="#ff3333" stroke-width="1.5" marker-end="url(#arrow)"/>
+        <text x="415" y="150" text-anchor="middle" font-size="10" fill="#ff3333" font-style="italic">price bond</text>
+        <text x="315" y="160" text-anchor="middle" font-size="10" fill="#ff3333" font-style="italic">bootstrap</text>
+
+        <!-- Forward <-> YTM (indirect via spot) -->
+        <line x1="230" y1="240" x2="310" y2="240" stroke="#888" stroke-width="1" stroke-dasharray="3 3"/>
+        <text x="270" y="232" text-anchor="middle" font-size="10" fill="#888" font-style="italic">via spot</text>
+
+        <defs>
+            <marker id="arrow" viewBox="0 -5 10 10" refX="8" refY="0" markerWidth="6" markerHeight="6" orient="auto">
+                <path d="M0,-5L10,0L0,5" fill="#ff3333"/>
+            </marker>
+        </defs>
+    </svg>
+
+    <p class="caption">Spot rates are the "atom" — every forward rate and every coupon-bond YTM can be derived from them. The hard direction is going <em>from</em> coupon yields back to spot rates: that's bootstrapping.</p>
+
+    <h3>Notation reminder</h3>
+
+    <ul class="bullets">
+        <li><strong>y<sub>T</sub></strong> — the T-year strip / spot rate. APR with semi-annual compounding. So a $1 zero-coupon claim T years out is worth 1 / (1 + y<sub>T</sub>/2)<sup>2T</sup> today.</li>
+        <li><strong>f<sub>t</sub></strong> — the 6-month forward rate starting at time t (years). APR with semi-annual compounding. Means: <em>rate locked in today for borrowing/lending from t to t + ½</em>.</li>
+        <li><strong>YTM</strong> — the single APR (semi-annual compounding) that, applied to all of a coupon bond's cash flows, recovers its market price.</li>
+    </ul>
+
+    <p>All three rates are quoted on the <strong>same</strong> APR-with-semi-annual-compounding scale, so they're directly comparable.</p>
+
+    <h3>Edge 1 — strip rates ↔ forward rates</h3>
+
+    <div class="formula-box">
+        <p><strong>Spot-forward no-arbitrage relationship</strong></p>
+        \[ \left(1 + \frac{y_T}{2}\right)^{2T} = \left(1 + \frac{y_t}{2}\right)^{2t} \cdot \prod_{s = t}^{T - 0.5} \left(1 + \frac{f_s}{2}\right) \]
+        <p>Most useful special case (one 6-month forward period, from t to t + ½):</p>
+        \[ \left(1 + \frac{y_{t + 0.5}}{2}\right)^{2(t + 0.5)} = \left(1 + \frac{y_t}{2}\right)^{2t} \cdot \left(1 + \frac{f_t}{2}\right) \]
+        <div class="formula-actions">
+            <button class="intuition-btn" onclick="toggleIntuition(this)">💡 intuition</button>
+            <button class="derive-btn" onclick="toggleDerivation(this)">▼ derive</button>
+        </div>
+        <div class="intuition">
+            <p><strong>Two ways to invest $1 from today to time T must give the same payoff. If they don't, free money.</strong></p>
+            <p>Strategy A: buy a T-year zero. End up with (1 + y<sub>T</sub>/2)<sup>2T</sup>.</p>
+            <p>Strategy B: buy a t-year zero AND lock in today, via a forward, the rate for the remaining (T − t) years. End up with (1 + y<sub>t</sub>/2)<sup>2t</sup> × (forward growth factor over T − t years).</p>
+            <p>If A &gt; B, borrow long-strategy-B and lend long-strategy-A. If B &gt; A, do the reverse. Either way, the gap is risk-free profit. So in equilibrium A = B — exactly the formula above.</p>
+            <p><strong>Punchline:</strong> forward rates are <em>not</em> someone's prediction of future rates. They're mechanically extracted from today's spot curve by no-arbitrage. They tell you what rate the market is pricing in for that future period — which may or may not equal expected future spot rates (next section, yield curve theories).</p>
+        </div>
+        <div class="derivation">
+            <p><strong>No-arbitrage construction.</strong> Start with $1 today.</p>
+            <p>Strategy A: invest in T-year zero. Lock in y<sub>T</sub>. At time T have:</p>
+            \[ V_A(T) = \left(1 + \frac{y_T}{2}\right)^{2T} \]
+            <p>Strategy B: invest in t-year zero (getting (1 + y<sub>t</sub>/2)<sup>2t</sup> at time t), then roll over via 6-month forward contracts entered today for each subsequent semi-annual period until T. Lock in f<sub>t</sub>, f<sub>t+0.5</sub>, ..., f<sub>T−0.5</sub>. At time T:</p>
+            \[ V_B(T) = \left(1 + \frac{y_t}{2}\right)^{2t} \cdot \prod_{s = t}^{T - 0.5} \left(1 + \frac{f_s}{2}\right) \]
+            <p>Both strategies use $1 today and are riskless (rates were all locked in today). By no-arbitrage, V<sub>A</sub>(T) = V<sub>B</sub>(T). Rearrange to get any forward rate from any pair of spot rates.</p>
+        </div>
+    </div>
+
+    <h3>Solving for the 6-month forward rate</h3>
+
+    <p>The single most common conversion — given two consecutive spot rates, extract the implied 6-month forward rate between them. Rearrange the special case above:</p>
+
+    <div class="formula-box">
+        <p><strong>6-month forward rate from two spot rates</strong></p>
+        \[ f_t = 2 \cdot \left[ \frac{(1 + y_{t + 0.5}/2)^{2(t + 0.5)}}{(1 + y_t/2)^{2t}} - 1 \right] \]
+        <div class="formula-actions">
+            <button class="intuition-btn" onclick="toggleIntuition(this)">💡 intuition</button>
+        </div>
+        <div class="intuition">
+            <p>The bracketed term is the <strong>per-period</strong> forward rate (the actual 6-month interest factor minus 1). Multiplying by 2 just converts it into an APR — Lynch's quoting convention.</p>
+            <p>Mnemonic: <em>"longer growth divided by shorter growth, minus 1, times 2."</em> If the long zero outgrows the short zero by 1.5% over the extra 6 months, then f<sub>t</sub> = 2 × 1.5% = 3% APR.</p>
+        </div>
+    </div>
+
+    <h3>Worked example — forward rate from two spot rates</h3>
+
+    <p>Suppose y<sub>1</sub> = 3.0% and y<sub>1.5</sub> = 3.4% (both APR, semi-annual compounding). What's the 6-month forward rate starting in 1 year, f<sub>1</sub>?</p>
+
+    <div class="formula">(1 + y_1.5/2)^3   =   (1 + 0.034/2)^3 = (1.017)^3      = 1.05187
+(1 + y_1/2)^2     =   (1 + 0.030/2)^2 = (1.015)^2      = 1.03022
+
+Per-period factor   = 1.05187 / 1.03022   = 1.02101
+Per-period rate     = 0.02101 → 2.101% over 6 months
+f_1 (APR)           = 2 × 2.101%          = 4.20%</div>
+
+    <p><strong>What this tells you.</strong> The market is implicitly pricing in a 4.20% (annualized) rate for the 6-month period starting 1 year from now. That's much higher than the current 1-year spot of 3.0% — typical of an upward-sloping curve, since long rates &gt; short rates implies forward rates &gt; spot rates of the same starting tenor.</p>
+
+    <h3>Edge 2 — forward rates → strip rates</h3>
+
+    <div class="formula-box">
+        <p><strong>Spot rate as a geometric mean of forwards</strong></p>
+        <p>Apply the no-arbitrage relation starting from t = 0 (and noting y<sub>0</sub> = 0 by convention, or equivalently, f<sub>0</sub> = y<sub>0.5</sub>):</p>
+        \[ \left(1 + \frac{y_T}{2}\right)^{2T} = \prod_{s = 0}^{T - 0.5} \left(1 + \frac{f_s}{2}\right) \]
+        \[ y_T = 2 \cdot \left[ \left(\prod_{s = 0}^{T - 0.5} \left(1 + \frac{f_s}{2}\right) \right)^{1/(2T)} - 1 \right] \]
+        <div class="formula-actions">
+            <button class="intuition-btn" onclick="toggleIntuition(this)">💡 intuition</button>
+        </div>
+        <div class="intuition">
+            <p><strong>Investing in a T-year zero is the same as rolling 6-month forwards from today to T.</strong> So the T-year spot rate is the geometric mean of all the 6-month forward rates spanning [0, T].</p>
+            <p>This is why the yield curve flattens / steepens: long spot rates are averages of forwards. If near-term forwards are high and far-term forwards are low, the long spot will be between — pulling the curve toward flat. The yield curve "smooths" the forward curve.</p>
+            <p>Mnemonic: <em>spot = geo-mean of forwards. Forwards = the "marginal" rate over each period; spot = the cumulative average rate from now to T.</em></p>
+        </div>
+    </div>
+
+    <h3>Edge 3 — strip rates → coupon-bond YTM (pricing, then solving)</h3>
+
+    <p>Two steps:</p>
+
+    <ol class="numbered">
+        <li><strong>Price the bond</strong> using the strip rates — each cash flow is discounted at its own spot rate. This is the no-arbitrage price.</li>
+        <li><strong>Solve for the YTM</strong> — the single rate that, applied uniformly, recovers that price.</li>
+    </ol>
+
+    <div class="formula-box">
+        <p><strong>Bond price from strip rates</strong></p>
+        \[ P(0) = \sum_{t = 1}^{N} \frac{C}{(1 + y_{t/2}/2)^t} + \frac{\text{Par}}{(1 + y_{T}/2)^{2T}} \]
+        <p>where N = number of coupon periods, T = N/2 = years to maturity, y<sub>t/2</sub> = spot rate for maturity t/2 years.</p>
+        <div class="formula-actions">
+            <button class="intuition-btn" onclick="toggleIntuition(this)">💡 intuition</button>
+        </div>
+        <div class="intuition">
+            <p><strong>A coupon bond is a portfolio of zeros</strong> (from the last lecture). Each coupon is a zero with maturity t/2 years; the principal is a zero with maturity T years. Price the bond as the sum of its zero components, each discounted at its own spot rate.</p>
+            <p>This is the "true" no-arbitrage price. The bond's quoted YTM is what you back out <em>after</em> you know the price — it's a summary statistic, not the discount rate that the market is actually using.</p>
+        </div>
+    </div>
+
+    <p>Once you have P(0), the YTM is the value y such that:</p>
+
+    <div class="formula">P(0) = C × PVAF(y/2, N) + Par × PVIF(y/2, N)</div>
+
+    <p>This is the same YTM equation from last lecture. There's no closed form for y — solve in Excel (<code>=RATE(...)</code> or Goal Seek) or by trial-and-error.</p>
+
+    <h3>Worked example — price a 2-year, 4% coupon bond from spot rates</h3>
+
+    <p>Suppose the term structure (APR, semi-annual compounding):</p>
+
+    <table class="matrix">
+        <thead><tr><th>Maturity</th><th>Spot rate y<sub>T</sub></th><th>Per-period rate y<sub>T</sub>/2</th></tr></thead>
+        <tbody>
+            <tr><td>0.5 yr</td><td>3.0%</td><td>1.50%</td></tr>
+            <tr><td>1.0 yr</td><td>3.4%</td><td>1.70%</td></tr>
+            <tr><td>1.5 yr</td><td>3.7%</td><td>1.85%</td></tr>
+            <tr><td>2.0 yr</td><td>4.0%</td><td>2.00%</td></tr>
+        </tbody>
+    </table>
+
+    <p>The bond: 4% coupon, semi-annual, par $100. Cash flows: $2 every 6 months for 2 years, plus $100 at maturity (so last cash flow is $102).</p>
+
+    <div class="formula">PV cash flow 1  =  2  / (1.0150)^1   =  2 / 1.0150  = 1.9704
+PV cash flow 2  =  2  / (1.0170)^2   =  2 / 1.0343  = 1.9337
+PV cash flow 3  =  2  / (1.0185)^3   =  2 / 1.0565  = 1.8930
+PV cash flow 4  =  102/ (1.0200)^4   =  102 / 1.0824 = 94.2333
+
+Price P(0) = 1.9704 + 1.9337 + 1.8930 + 94.2333 = 100.0304</div>
+
+    <p>Now solve for the YTM that produces P = 100.0304 with a single discount rate. Plug into Excel <code>=RATE(4, 2, -100.0304, 100) × 2</code> ≈ <strong>3.985%</strong>. So YTM ≈ 3.99% — close to but not exactly the 2-year spot rate (4.0%), because the earlier cash flows pull YTM slightly down toward the shorter spot rates.</p>
+
+    <details class="math-aside">
+        <summary>Why YTM lies between the spot rates</summary>
+        <p>YTM is a cash-flow-weighted blend of the spot rates. With most of the PV in the final principal payment, YTM is closest to y<sub>T</sub>. As coupon rate rises (more PV in earlier cash flows), YTM is pulled toward the shorter-end spot rates. For a zero (coupon = 0), all PV is in the principal → YTM exactly equals y<sub>T</sub>.</p>
+        <p>This is why YTMs from coupon bonds of different coupon rates but the same maturity differ slightly — different cash flow timing means different spot-rate weighting. Strip rates are clean; YTMs are messy summaries.</p>
+    </details>
+
+    <h3>Edge 4 — coupon-bond YTMs → strip rates (bootstrapping)</h3>
+
+    <p>The reverse direction. You observe prices (or equivalently YTMs) on a sequence of coupon bonds with increasing maturity. You want the spot rate at each maturity. Recursively:</p>
+
+    <ol class="numbered">
+        <li><strong>The shortest bond</strong> (say a 6-month T-bill or zero) directly gives y<sub>0.5</sub>: just back out from the price.</li>
+        <li><strong>For the 1-year bond:</strong> the price equals C/(1+y<sub>0.5</sub>/2)<sup>1</sup> + (C + Par)/(1+y<sub>1</sub>/2)<sup>2</sup>. You know everything except y<sub>1</sub>. Solve for it.</li>
+        <li><strong>For the 1.5-year bond:</strong> price = C/(1+y<sub>0.5</sub>/2) + C/(1+y<sub>1</sub>/2)<sup>2</sup> + (C+Par)/(1+y<sub>1.5</sub>/2)<sup>3</sup>. You know y<sub>0.5</sub> and y<sub>1</sub> from steps 1-2. Solve for y<sub>1.5</sub>.</li>
+        <li>Continue stepping out one maturity at a time.</li>
+    </ol>
+
+    <p><strong>This is "bootstrapping the zero curve."</strong> It's how dealers and analysts construct the spot curve in practice — they rarely see clean zero prices for every maturity, but coupon Treasuries cover the full range.</p>
+
+    <details class="math-aside">
+        <summary>Worked bootstrap example</summary>
+        <p>Suppose you observe:</p>
+        <ul class="bullets">
+            <li>6-month T-bill, price 98.5224 (per $100 par): y<sub>0.5</sub> = 2·(100/98.5224 − 1) = <strong>3.000%</strong>.</li>
+            <li>1-year 4% coupon bond, price 100.580: C = $2 every 6 months. Solve 100.580 = 2/(1.015) + 102/(1+y<sub>1</sub>/2)<sup>2</sup>. The first term is 1.9704; so 98.6096 = 102/(1+y<sub>1</sub>/2)<sup>2</sup>; (1+y<sub>1</sub>/2)<sup>2</sup> = 1.03439; y<sub>1</sub>/2 = 0.01708; <strong>y<sub>1</sub> = 3.416%</strong>.</li>
+            <li>Continue for 1.5-yr, 2-yr, ... each time using all previously-extracted spot rates.</li>
+        </ul>
+        <p>The recursion is mechanical but tedious. Excel + Goal Seek per row is the cleanest workflow.</p>
+    </details>
+
+    <h3>Yield-curve theories — why the curve has the shape it does</h3>
+
+    <p>Forward rates fall out of no-arbitrage. But why does the market price them where it does? Three competing stories:</p>
+
+    <table class="matrix">
+        <thead><tr><th>Theory</th><th>What forward rates equal</th><th>Implication for yield curve</th></tr></thead>
+        <tbody>
+            <tr>
+                <td><strong>Expectations hypothesis</strong></td>
+                <td>Expected future spot rates: f<sub>t</sub> = E[y<sub>t,0.5</sub>]</td>
+                <td>Curve slopes up iff market expects rates to rise. Inverted curve = expected rate cuts.</td>
+            </tr>
+            <tr>
+                <td><strong>Liquidity preference</strong></td>
+                <td>Expected future spot rates + a positive risk / term premium: f<sub>t</sub> = E[y<sub>t,0.5</sub>] + λ<sub>t</sub></td>
+                <td>Curve usually slopes up even when no rate change is expected, because investors demand compensation for holding long bonds (price-risk).</td>
+            </tr>
+            <tr>
+                <td><strong>Market segmentation</strong></td>
+                <td>No single relationship: each maturity priced by its own clientele (pension funds long, banks short)</td>
+                <td>Curve shape reflects supply/demand at each maturity. Less consensus today than the other two.</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <p><strong>What to remember:</strong> the modern empirical consensus is closest to <em>liquidity preference</em>. Forward rates are biased upward as predictors of future spot rates (the term premium is positive on average), so an upward-sloping curve <em>doesn't</em> reliably mean rates are expected to rise — most of the time it's just the term premium.</p>
+
+    <h3>Setup for next class — duration</h3>
+
+    <p>Now that bond prices are pinned down by spot rates, the natural next question is <strong>how does the price change when rates move?</strong> That's <em>duration</em> — a measure of price sensitivity. For a small parallel shift in the yield curve:</p>
+
+    <div class="formula">ΔP / P  ≈  − D_modified × Δy</div>
+
+    <p>Duration is the weighted-average time to receive a bond's cash flows, where weights are PV fractions. The bigger the duration, the more rate-sensitive the bond. Coming next class.</p>
+
+    <div class="remember">
+        <span class="label">✦ remember this — Lecture 8-9 (Forward rates &amp; conversion)</span>
+        <ul>
+            <li><strong>Strip rates, forward rates, and YTMs are three views of the same term structure.</strong> Given one, you can derive the others by no-arbitrage. This is the conversion triangle.</li>
+            <li><strong>Strip → forward (no-arb):</strong> (1+y<sub>T</sub>/2)<sup>2T</sup> = (1+y<sub>t</sub>/2)<sup>2t</sup> · (1+f<sub>t,T</sub>/2)<sup>2(T−t)</sup>. The 6-month forward special case: <span class="imp">f<sub>t</sub> = 2·[(1+y<sub>t+0.5</sub>/2)<sup>2(t+0.5)</sup> / (1+y<sub>t</sub>/2)<sup>2t</sup> − 1]</span>. Memorize the special case; it's the most-asked.</li>
+            <li><strong>Forward → strip:</strong> spot rate is the geometric mean of the 6-month forwards from 0 to T. Long spot rates "smooth out" the forward curve.</li>
+            <li><strong>Strip → bond YTM:</strong> price each cash flow at its own spot rate to get P(0); then solve for the single YTM that recovers P(0) with uniform discounting. YTM is a cash-flow-weighted blend of spot rates.</li>
+            <li><strong>Bond YTM → strip rates:</strong> bootstrap. Solve for y<sub>0.5</sub> first, then y<sub>1</sub> using y<sub>0.5</sub>, then y<sub>1.5</sub>, ... each maturity uses all the earlier spot rates already pinned down.</li>
+            <li><strong>Why YTM ≠ spot rate (for coupon bonds):</strong> YTM is a single-rate summary of a stream priced at different spot rates. For a zero (one cash flow), YTM = y<sub>T</sub> exactly.</li>
+            <li><strong>Yield-curve theories:</strong> expectations (forwards = expected spot), liquidity preference (forwards = expected spot + term premium), segmentation (each maturity has its own clientele). Empirical consensus: liquidity preference. Forwards over-predict future spots on average because of the term premium.</li>
+            <li><strong>Coming next:</strong> duration — how much does a bond's price move when yields shift? ΔP/P ≈ −D<sub>mod</sub> · Δy.</li>
         </ul>
     </div>
 
