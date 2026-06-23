@@ -261,6 +261,10 @@
         <li><a href="#bond-pricing">bond pricing &amp; forwards</a></li>
         <li><a href="#yield-curve-theories">yield curve theories</a></li>
         <li><a href="#duration">duration</a></li>
+        <li><a href="#options">derivatives &amp; options</a></li>
+        <li><a href="#forward-spot-parity">forward valuation</a></li>
+        <li><a href="#capital-budgeting">capital budgeting</a></li>
+        <li><a href="#market-efficiency">market efficiency</a></li>
         <li><a href="#integrated">integrated problems</a></li>
         <li><a href="#glossary">glossary</a></li>
     </ul>
@@ -332,7 +336,19 @@
             <dt>Liquidity preference</dt><dd>Yield-curve theory: strip illiquidity increases with maturity → forwards are upward-biased predictors of future spots. The empirical consensus. Upward curves more common than EH predicts.</dd>
             <dt>Preferred habitat</dt><dd>Yield-curve theory: investors care about interest-rate risk and have maturity preferences (pension funds long, banks short). EH fails; slope says little about expected spots.</dd>
             <dt>Duration (D)</dt><dd>Macaulay duration: cash-flow-weighted average maturity. D = Σ t·(C(t)d<sub>t</sub>(0)/P). For a zero, D = T; for a coupon bond, D &lt; T.</dd>
-            <dt>D<sub>mod</sub></dt><dd>Modified duration = D/(1+y/2). First-order sensitivity of bond price to yield: ΔP/P ≈ −D<sub>mod</sub>·Δy.</dd>
+            <dt>D<sub>mod</sub> (D*)</dt><dd>Modified duration = D/(1+y/2). First-order sensitivity of bond price to yield: ΔP/P ≈ −D<sub>mod</sub>·Δy.</dd>
+            <dt>Immunization</dt><dd>Building a bond portfolio to fund fixed liabilities. <em>Dedication</em> = exact cash-flow match. <em>Target-date</em> = match both present value (L=A) and duration (D<sup>L</sup>=D<sup>A</sup>), balancing reinvestment vs liquidation risk.</dd>
+            <dt>Reinvestment / liquidation risk</dt><dd>The two horizon risks. Reinvestment: cash flows arrive before horizon T (falling yields hurt). Liquidation: cash flows arrive after T (rising yields hurt).</dd>
+            <dt>Call / put</dt><dd>A call gives the right to <em>buy</em> at strike X; a put, the right to <em>sell</em> at X. Holder payoffs at T: max{S(T)−X,0} and max{X−S(T),0}.</dd>
+            <dt>X (strike)</dt><dd>Exercise price of an option (Lynch's notation; standard texts use K).</dd>
+            <dt>European / American</dt><dd>European options exercise only at expiry T; American any time up to T. C<sub>X,T</sub>(0)/P<sub>X,T</sub>(0) denote European prices; lowercase c/p denote American. American ≥ European.</dd>
+            <dt>Put-call parity</dt><dd>S(0) = C<sub>X,T</sub>(0) − P<sub>X,T</sub>(0) + X·d<sub>T</sub>(0). Links call, put, stock, and a discount bond by no-arbitrage.</dd>
+            <dt>Intrinsic / time value</dt><dd>Intrinsic value = no-arbitrage floor, max{S(0)−X·d<sub>T</sub>(0),0} for a call. Time value = price − intrinsic ≥ 0.</dd>
+            <dt>Protective put</dt><dd>Asset + long put: floors the position value at X (portfolio insurance). Equivalent by parity to a long call + a discount bond with face X.</dd>
+            <dt>Forward (buyer/seller)</dt><dd>Obligation to exchange cash for the asset at preset price F<sub>T</sub>(0) at T. Buyer payoff S(T)−F<sub>T</sub>(0); seller F<sub>T</sub>(0)−S(T); they sum to zero.</dd>
+            <dt>r′</dt><dd>Continuously compounded annual riskfree rate ($1 → e<sup>r′t</sup> in t years). Used in Black-Scholes; e<sup>−r′T</sup> = d<sub>T</sub>(0).</dd>
+            <dt>σ (volatility)</dt><dd>Volatility of the continuously compounded annual return on the underlying. The key Black-Scholes input — raises both call and put values.</dd>
+            <dt>Black-Scholes</dt><dd>Option-pricing model. Lynch covers it qualitatively: C(S(0)<sup>+</sup>, X<sup>−</sup>, σ<sup>+</sup>, r′<sup>+</sup>, T<sup>+</sup>), P(S(0)<sup>−</sup>, X<sup>+</sup>, σ<sup>+</sup>, r′<sup>−</sup>, T<sup>?</sup>). The stock's expected return never enters.</dd>
         </dl>
 
         <h4 class="gloss-h">Worked-example characters</h4>
@@ -344,7 +360,7 @@
     </details>
 
     <div class="takeaways" id="takeaways">
-        <h3>Key ideas so far (through Class 10, Mon Jun 22 — start of duration)</h3>
+        <h3>Key ideas so far (through Lecture 10 — options, up to the start of Black-Scholes)</h3>
         <p style="margin-top: 0; font-size: 0.9em; color: #666;">Refreshed after each lecture. Each lecture section also has its own "✦ remember this" callout at the end.</p>
         <ol>
             <li><strong>A dollar today is worth more than a dollar later.</strong> Every valuation question reduces to: discount future cash flows by the right rate and add them up. PV, FV, annuity, perpetuity — different shapes of the same idea. Compounding is the snowball; discounting is the snowball in reverse.</li>
@@ -383,9 +399,13 @@
             <li><strong>Expectations Hypothesis (EH):</strong> forward rate = expected future ½-year spot. Under EH, yield curve slope cleanly signals expected future rates: upward → market expects higher; downward → lower.</li>
             <li><strong>Liquidity preference (empirical consensus):</strong> longer strips need a maturity-increasing illiquidity premium → forwards are upward-biased predictors of future spots. Upward-sloping curves are common <em>regardless</em> of expectations. Downward-sloping still implies expected rate cuts.</li>
             <li><strong>Yield curve slope predicts GDP growth.</strong> Positive slope → low short rates → high investment → strong future growth. One of the best macro predictors.</li>
-            <li><strong>Duration (just starting):</strong> Macaulay D = cash-flow-weighted average maturity. Modified D<sub>mod</sub> = D/(1+y/2). First-order price approximation: ΔP/P ≈ −D<sub>mod</sub>·Δy. Zero duration = maturity exactly.</li>
-            <li><strong>Market efficiency is a warning.</strong> If U.S. equity prices are efficient w.r.t. public information, you can't beat the market on average using public info, risk-adjusted. This is the big warning the course returns to at the end.</li>
-            <li><strong>Option value is non-negative.</strong> A right (without obligation) to do something in the future must be worth ≥ 0 today. (Comes back in Lecture 10.)</li>
+            <li><strong>Duration.</strong> Macaulay D = Σ t·k(t), the PV-weighted average payment time. Zero bond: D = maturity; coupon bond: D &lt; maturity; higher coupon → shorter D. Modified D* = D/(1+y/2) is price sensitivity: <span class="imp">ΔP/P ≈ −D*·Δy</span>. Portfolio duration is value-weighted: D<sup>C</sup> = ω<sup>A</sup>D<sup>A</sup> + ω<sup>B</sup>D<sup>B</sup>.</li>
+            <li><strong>Immunization.</strong> Dedication = exact cash-flow match (no rebalancing). Target-date = match <em>both</em> value (L = A) and duration (D<sup>L</sup> = D<sup>A</sup>), neutralizing reinvestment vs liquidation risk; re-immunize as durations drift.</li>
+            <li><strong>Derivative payoffs (Lynch's X notation).</strong> Call holder max{S(T)−X, 0}; put holder max{X−S(T), 0}; writer = negative of holder. Forward buyer S(T)−F<sub>T</sub>(0); seller F<sub>T</sub>(0)−S(T). Derivatives are zero net supply.</li>
+            <li><strong>Put-call parity:</strong> <span class="imp">S(0) = C<sub>X,T</sub>(0) − P<sub>X,T</sub>(0) + X·d<sub>T</sub>(0)</span>. Always discount the strike (X·d<sub>T</sub>(0), never raw X).</li>
+            <li><strong>No-arbitrage option floors (intrinsic value):</strong> C ≥ max{S(0) − X·d<sub>T</sub>(0), 0}; P ≥ max{X·d<sub>T</sub>(0) − S(0), 0}. Price − intrinsic = time value ≥ 0. American ≥ European; non-dividend call is never exercised early (c = C); American put may be (p ≥ P, no closed form).</li>
+            <li><strong>Black-Scholes (qualitative — where the class stopped):</strong> C(S(0)<sup>+</sup>, X<sup>−</sup>, σ<sup>+</sup>, r′<sup>+</sup>, T<sup>+</sup>), P(S(0)<sup>−</sup>, X<sup>+</sup>, σ<sup>+</sup>, r′<sup>−</sup>, T<sup>?</sup>). r′ continuously compounded, σ = return volatility. <span class="imp">σ raises both calls and puts; the stock's expected return never enters.</span></li>
+            <li><strong>Market efficiency is a warning.</strong> If U.S. equity prices are efficient w.r.t. public information, you can't beat the market on average using public info, risk-adjusted. The big warning the course returns to at the end.</li>
         </ol>
     </div>
 
@@ -457,12 +477,28 @@
             <span class="desc">Expectations Hypothesis (three equivalent forms): forward = expected future ½-year spot. Yield curve slope → expected future spots → predicted GDP growth. Reasons EH fails: illiquidity, liquidity preference (the empirical consensus), interest rate risk / preferred habitat.</span>
         </li>
         <li>
-            <span class="num">L 9</span><a href="#duration" class="name">Duration (just started)</a>
-            <span class="desc">Macaulay duration as the cash-flow-weighted average maturity. Modified duration. First-order price approximation ΔP/P ≈ −D<sub>mod</sub>·Δy. More to come next class.</span>
+            <span class="num">L 9</span><a href="#duration" class="name">Duration &amp; bond portfolio management</a>
+            <span class="desc">Reinvestment vs liquidation risk. Macaulay duration D = Σ t·k(t) with the 3% Feb 12 worked example; comparison rules; modified duration and ΔP/P ≈ −D*·Δy; portfolio duration. Immunization: dedication vs target-date (Firm GF worked example).</span>
+        </li>
+        <li>
+            <span class="num">L 9-10</span><a href="#options" class="name">Derivatives: payoffs &amp; option valuation</a>
+            <span class="desc">Payoff building blocks; call/put payoffs in Lynch's X notation; forward buyer/seller payoffs; zero net supply; leverage/hedging/insurance motives. Put-call parity S(0) = C − P + X·d<sub>T</sub>(0). No-arbitrage floors (Dell example). American vs European (no early call exercise). Black-Scholes qualitative comparative statics — where the class stopped.</span>
+        </li>
+        <li>
+            <span class="num">L 10-11</span><a href="#forward-spot-parity" class="name">Forward &amp; futures valuation</a>
+            <span class="desc">Cash-and-carry: F₀ = S₀(1+r−q)<sup>T</sup>. Forward price vs forward value; contango vs backwardation; futures = daily-settled forwards. <em>Pre-lecture scaffolding.</em></span>
+        </li>
+        <li>
+            <span class="num">L 11</span><a href="#capital-budgeting" class="name">Valuation models &amp; capital budgeting</a>
+            <span class="desc">NPV decision rule with the SML discount rate r = R<sub>f</sub> + β(E[R<sub>M</sub>] − R<sub>f</sub>). IRR and its gotchas; Gordon DDM. <em>Pre-lecture scaffolding.</em></span>
+        </li>
+        <li>
+            <span class="num">L 11</span><a href="#market-efficiency" class="name">Market efficiency</a>
+            <span class="desc">EMH three forms (weak / semi-strong / strong) and what each rules out. The joint-hypothesis problem; anomalies as inefficiency vs missing risk factor. <em>Pre-lecture scaffolding.</em></span>
         </li>
     </ul>
 
-    <p style="font-size: 0.92em; color: #888;"><em>Through Class 10 (Mon Jun 22). L8 fully covered (bond pricing, forward rates, the conversion identity), L8-9 yield curve theories done. Just started duration at the end of class. Next class (Class 11, Wed Jun 24): finish duration, bond portfolio management, then derivatives intro.</em></p>
+    <p style="font-size: 0.92em; color: #888;"><em>Through Class 10 (Mon Jun 22): duration &amp; immunization (L9), derivative payoffs (L9-10), and option valuation up to the <em>start of Black-Scholes</em> (L10) are all done and written in Lynch's notation. The remaining forward-valuation / capital-budgeting / market-efficiency sections below are <strong>pre-lecture scaffolding</strong> in standard notation — the next class (Wed Jun 24) finishes Black-Scholes then teaches them, after which they'll be reconciled with Lynch's exact notation. The final (Mon Jun 29) is cumulative over all of it.</em></p>
 
     <h2 id="schedule">Class schedule</h2>
     <table>
@@ -479,8 +515,8 @@
             <tr><td>7</td><td>Wed Jun 10</td><td>Multifactor: ICAPM &amp; Fama-French (L7)</td><td></td></tr>
             <tr><td>8</td><td>Mon Jun 15</td><td><span class="imp">Midterm</span> (90 min) · Fixed income intro: T-bills, notes/bonds, YTM, STRIPS, yield curve first look</td><td></td></tr>
             <tr><td>9</td><td>Wed Jun 17</td><td>L8 bond pricing intro: discount factors, no-arbitrage pricing, bootstrapping</td><td>PS 2 · CQ 3</td></tr>
-            <tr><td>10</td><td>Mon Jun 22</td><td>Forward rates &amp; conversion identity · Yield curve theories (L8-9) · Start of duration (L9)</td><td>CQ 4</td></tr>
-            <tr><td>11</td><td>Wed Jun 24</td><td>Options valuation · Forwards valuation · Valuation models · Market efficiency</td><td></td></tr>
+            <tr><td>10</td><td>Mon Jun 22</td><td>Duration &amp; immunization (L9) · Derivative payoffs (L9-10) · Option valuation: parity, no-arb bounds, American/European, start of Black-Scholes (L10)</td><td>CQ 4</td></tr>
+            <tr><td>11</td><td>Wed Jun 24</td><td>Finish Black-Scholes · Forwards &amp; futures valuation (L10-11) · Valuation models &amp; capital budgeting (L11) · Market efficiency (L11)</td><td></td></tr>
             <tr><td>12</td><td>Mon Jun 29</td><td><span class="imp">Final exam</span></td><td></td></tr>
             <tr><td></td><td>Wed Jul 1</td><td></td><td>PS 3 · CQ 5</td></tr>
         </tbody>
@@ -3637,44 +3673,457 @@ So forward rates upward-biased:   f_{n,n+½}(0)  >  E[y_½(n)]</div>
         </ul>
     </div>
 
-    <h2 id="duration">Lecture 9 - Duration (where we left off)</h2>
+    <h2 id="duration">Lecture 9 - Duration &amp; bond portfolio management</h2>
 
-    <p>We started this just at the end of class. The setup question: <em>given the no-arbitrage pricing machinery, how sensitive is a bond's price to a shift in yields?</em></p>
+    <p>Once bond prices are pinned down by the term structure, the next question is risk: <em>how much does a bond's price move when yields shift, and how do you build a bond portfolio that survives those shifts?</em> An investor with a horizon T faces two opposing risks:</p>
 
-    <p>Intuition: a long bond has more future cash flows hanging on a discount factor with a big exponent. A small change in yield gets amplified through the exponent. Duration is the measure of that sensitivity.</p>
+    <ul class="bullets">
+        <li><strong>Reinvestment risk:</strong> if cash flows arrive <em>before</em> T, you don't know what yield you'll get when you reinvest them. Falling yields hurt.</li>
+        <li><strong>Liquidation risk:</strong> if cash flows arrive <em>after</em> T, you must sell at T at an unknown price. Rising yields hurt.</li>
+    </ul>
 
-    <h3>Macaulay duration — weighted-average time to cash flow</h3>
+    <p>Duration is the tool that quantifies this sensitivity — and immunization is the trick that balances the two risks.</p>
+
+    <h3>Macaulay duration — the cash-flow-weighted average maturity</h3>
 
     <div class="formula-box">
-        <p><strong>Macaulay duration</strong></p>
-        \[ D = \sum_{t} t \cdot w_t, \qquad w_t = \frac{\text{PV of cash flow at time } t}{\text{Price}} = \frac{C(t)\,d_t(0)}{P(0)} \]
+        <p><strong>Macaulay duration</strong> of a cash-flow stream with time-0 price P and YTM y (APR, semi-annual compounding)</p>
+        \[ D = \tfrac12\,k(\tfrac12) + 1\cdot k(1) + \tfrac32\,k(\tfrac32) + \cdots + N\,k(N), \qquad k(t) = \frac{1}{P}\cdot\frac{C(t)}{(1+y/2)^{2t}} \]
+        <p>The weight k(t) is the fraction of the bond's price contributed by the cash flow at time t. The weights sum to 1, so D is a weighted average of the payment times.</p>
         <div class="formula-actions">
             <button class="intuition-btn" onclick="toggleIntuition(this)">💡 intuition</button>
+            <button class="derive-btn" onclick="toggleDerivation(this)">▼ derive</button>
         </div>
         <div class="intuition">
-            <p><strong>Duration is the cash-flow-weighted average maturity of the bond.</strong> Each cash flow's time t is weighted by its share of the bond's PV. Long-dated cash flows count more if they carry more PV.</p>
-            <p>For a <strong>zero coupon bond</strong>, duration = maturity exactly (one cash flow, full weight at T). For a <strong>coupon bond</strong>, duration &lt; maturity (some weight is on earlier coupon dates).</p>
-            <p>Mnemonic: duration is the bond's "center of mass" in time.</p>
+            <p><strong>Duration is the bond's "center of mass" in time</strong> — the average date you get your money back, where each date is weighted by how much PV lands on it.</p>
+            <p>For a <strong>zero coupon bond</strong>, all the money arrives at maturity, so duration = maturity exactly. For a <strong>coupon bond</strong>, some cash arrives early (the coupons), pulling the center of mass forward: duration &lt; maturity.</p>
+            <p>This is more than a curiosity — duration turns out to be <em>exactly</em> the number that governs how sensitive the price is to yield changes (next box). The longer the duration, the more rate-sensitive the bond.</p>
+        </div>
+        <div class="derivation">
+            <p>Price is P = Σ C(t)/(1+y/2)<sup>2t</sup>. Differentiate with respect to y:</p>
+            \[ \frac{dP}{dy} = \sum_t -2t\cdot\frac{C(t)}{2(1+y/2)^{2t+1}} = -\frac{1}{1+y/2}\sum_t t\cdot\frac{C(t)}{(1+y/2)^{2t}} \]
+            <p>Divide by P and pull out the weights k(t) = [C(t)/(1+y/2)<sup>2t</sup>]/P:</p>
+            \[ \frac{1}{P}\frac{dP}{dy} = -\frac{1}{1+y/2}\sum_t t\,k(t) = -\frac{D}{1+y/2} \]
+            <p>So the weighted-average-time object D is precisely what controls price sensitivity. That's why duration is defined this way.</p>
         </div>
     </div>
+
+    <h3>Whiteboard example — duration of the 3% Feb 12 note</h3>
+
+    <p>2/15/11. The 3% Feb 12 note has price 97.1298 and YTM = 6% (APR, semi-annual). Two cash flows left: $1.50 at ½ year, $101.50 at 1 year (per $100 par). y/2 = 0.03.</p>
+
+    <table class="matrix">
+        <thead><tr><th>Time t</th><th>Cash flow C(t)</th><th>PV = C(t)/(1.03)<sup>2t</sup></th><th>Weight k(t)</th><th>t · k(t)</th></tr></thead>
+        <tbody>
+            <tr><td>½</td><td>1.50</td><td>1.50/1.03 = 1.4563</td><td>0.0150</td><td>0.0075</td></tr>
+            <tr><td>1</td><td>101.50</td><td>101.50/1.03² = 95.6735</td><td>0.9850</td><td>0.9850</td></tr>
+            <tr><td></td><td></td><td><strong>P = 97.1298</strong></td><td>1.0000</td><td><strong>D = 0.9925 yr</strong></td></tr>
+        </tbody>
+    </table>
+
+    <p>Macaulay duration D = ½(0.0150) + 1(0.9850) = <strong>0.9925 years</strong> — just under the 1-year maturity because a sliver of value (1.5%) arrives at the half-year coupon. Modified duration D* = 0.9925/(1.03) = <strong>0.9636</strong>.</p>
+
+    <h3>How duration behaves — the comparison rules</h3>
+
+    <table class="matrix">
+        <thead><tr><th>Situation</th><th>Effect on duration</th></tr></thead>
+        <tbody>
+            <tr><td>Zero coupon bond</td><td>D = maturity (exactly)</td></tr>
+            <tr><td>Any bond with cash flows before maturity</td><td>D &lt; maturity</td></tr>
+            <tr><td>Larger early payments relative to later (holding maturity &amp; YTM fixed)</td><td>shorter D</td></tr>
+            <tr><td>Higher coupon rate (same maturity &amp; YTM)</td><td>shorter D</td></tr>
+            <tr><td>Longer maturity (same coupon rate &amp; YTM)</td><td>longer D</td></tr>
+        </tbody>
+    </table>
 
     <h3>Modified duration — the price-sensitivity number</h3>
 
     <div class="formula-box">
         <p><strong>Modified duration and the first-order price approximation</strong></p>
-        \[ D_{\text{mod}} = \frac{D}{1 + y/2} \qquad \frac{\Delta P}{P} \approx - D_{\text{mod}} \cdot \Delta y \]
+        \[ D^* = \frac{D}{1 + y/2}, \qquad \frac{dP}{dy} = -P\,\frac{D}{1+y/2} = -P\,D^*, \qquad \Delta P \approx -P\,\frac{D}{1+y/2}\,\Delta y \]
         <div class="formula-actions">
             <button class="intuition-btn" onclick="toggleIntuition(this)">💡 intuition</button>
         </div>
         <div class="intuition">
-            <p><strong>Modified duration is "percent price drop per unit yield increase."</strong> If D<sub>mod</sub> = 5 and yields rise 10 bp (Δy = 0.001), the bond loses ~0.5%.</p>
-            <p><strong>Why the minus sign:</strong> yields up → price down. Always. (The most-fundamental fact in fixed income.)</p>
-            <p><strong>Why it's an approximation:</strong> first-order Taylor expansion of price around current yield. It misses the curvature in the price-yield relationship — captured by <em>convexity</em>, the second-order term. For small Δy the approximation is excellent; for large shocks you need convexity.</p>
-            <p><strong>Use cases that come next class:</strong> bond portfolio immunization (match duration of assets and liabilities), and rough hedging of interest-rate exposure.</p>
+            <p><strong>Modified duration is "percent price drop per unit yield increase."</strong> If D* = 6 and yields rise 10 bp (Δy = 0.001), the bond loses about 6 × 0.001 = 0.6%.</p>
+            <p><strong>Why the minus sign:</strong> yields up → price down. Always — the single most fundamental fact in fixed income.</p>
+            <p><strong>Why it's an approximation:</strong> it's the first-order (tangent-line) term. The true price-yield curve is <em>convex</em> — it bends above the tangent line — so duration slightly overstates the loss when yields rise and understates the gain when they fall. For small Δy the error is tiny; the second-order correction is <em>convexity</em>.</p>
         </div>
     </div>
 
-    <p><em>More on duration, convexity, immunization, and bond portfolio management coming next class.</em></p>
+    <p><strong>Convexity note:</strong> for coupon bonds and strips, price is always a <em>decreasing, convex</em> function of yield. Duration is the slope of that curve (scaled); convexity is its curvature.</p>
+
+    <h3>Duration of a portfolio</h3>
+
+    <div class="formula-box">
+        <p><strong>Portfolio duration</strong> (when the components share the same YTM)</p>
+        \[ D^C = \omega^{A,C}\,D^A + \omega^{B,C}\,D^B \]
+        <p>where ω<sup>A,C</sup>, ω<sup>B,C</sup> are the value-weights of assets A and B in portfolio C.</p>
+        <div class="formula-actions">
+            <button class="intuition-btn" onclick="toggleIntuition(this)">💡 intuition</button>
+        </div>
+        <div class="intuition">
+            <p>Duration is linear in value-weights — the portfolio's center of mass is the weighted average of its holdings' centers of mass. This is what makes immunization tractable: you can <em>dial</em> a portfolio's duration to any target by mixing a short-duration and a long-duration bond.</p>
+        </div>
+    </div>
+
+    <h3>Immunization — matching duration to a horizon</h3>
+
+    <p>Two ways to fund a stream of fixed liabilities with bonds:</p>
+
+    <ul class="bullets">
+        <li><strong>Dedication (cash-flow matching):</strong> hold bonds whose cash flows <em>exactly</em> match the outflows. No rebalancing ever needed — but often impractical to construct exactly.</li>
+        <li><strong>Target-date immunization:</strong> hold a portfolio with (1) the <em>same present value</em> as the liabilities and (2) the <em>same duration</em>. Then a small parallel shift in the (flat) yield curve changes the asset and liability values by the same amount — the funding stays intact. Requires re-immunizing over time as durations drift.</li>
+    </ul>
+
+    <div class="formula-box">
+        <p><strong>Target-date immunization conditions</strong></p>
+        \[ L = A \quad\text{(match value)}, \qquad D^L = D^A = \omega^{1,A}D^1 + (1-\omega^{1,A})D^2 \quad\text{(match duration)} \]
+        <div class="formula-actions">
+            <button class="intuition-btn" onclick="toggleIntuition(this)">💡 intuition</button>
+        </div>
+        <div class="intuition">
+            <p>Matching value alone isn't enough — if the portfolio's duration differs from the liability's, a yield shift moves the two sides by different amounts and a funding gap opens. Matching <em>both</em> value and duration makes the asset and liability move in lock-step to first order, neutralizing reinvestment risk against liquidation risk.</p>
+        </div>
+    </div>
+
+    <h3>Whiteboard example — immunizing Firm GF's liabilities</h3>
+
+    <p>Firm GF owes $5M in 1 year and $4M in 3 years. Yield curve is flat at 10% APR semi-annual. Fund it with 1-year and 4-year strips.</p>
+
+    <div class="formula">Value of liabilities:
+L = 5M/(1.05)^2 + 4M/(1.05)^6  =  4.5351M + 2.9849M  =  7.5200M
+
+Duration of liabilities (strips, so each cash flow's "duration" = its maturity):
+D^L = 1yr × (4.5351/7.5200) + 3yr × (2.9849/7.5200)  =  1.7938 years
+
+Match value:    A^1 + A^4 = 7.5200M
+Match duration: 1.7938 = ω^1·(1) + (1−ω^1)·(4)   →   ω^1 = 0.7354
+
+So  A^1 = 0.7354 × 7.5200M = 5.5302M  in 1-year strips
+    A^4 = 7.5200M − 5.5302M = 1.9898M  in 4-year strips</div>
+
+    <p>The portfolio holds $5.53M of 1-year strips and $1.99M of 4-year strips: same value (7.52M) and same duration (1.79 yr) as the liabilities, so a parallel yield shift leaves GF still able to make both payments.</p>
+
+    <div class="remember">
+        <span class="label">✦ remember this — Lecture 9 (Duration &amp; bond portfolio management)</span>
+        <ul>
+            <li><strong>Two horizon risks:</strong> reinvestment risk (cash flows before T, hurt by falling yields) vs liquidation risk (cash flows after T, hurt by rising yields). Duration balances them.</li>
+            <li><strong>Macaulay duration</strong> D = Σ t·k(t), the PV-weighted average payment time. <span class="imp">Zero: D = maturity. Coupon bond: D &lt; maturity.</span> Higher coupon → shorter D; longer maturity → longer D.</li>
+            <li><strong>Modified duration</strong> D* = D/(1+y/2) is the price sensitivity: <span class="imp">ΔP/P ≈ −D*·Δy</span>. Yields up → price down. Duration is the tangent; convexity is the curvature (price is a decreasing convex function of yield).</li>
+            <li><strong>Portfolio duration</strong> is the value-weighted average: D<sup>C</sup> = ω<sup>A</sup>D<sup>A</sup> + ω<sup>B</sup>D<sup>B</sup>. This lets you dial duration to a target.</li>
+            <li><strong>Immunization:</strong> dedication = exact cash-flow match (no rebalancing). Target-date = match <em>both</em> value (L = A) and duration (D<sup>L</sup> = D<sup>A</sup>); re-immunize as durations drift.</li>
+        </ul>
+    </div>
+
+    <h2 id="options">Lectures 9-10 - Derivatives: payoffs &amp; option valuation</h2>
+
+    <div class="callout">
+        <strong>Notation note.</strong> This section follows <em>Lynch's</em> conventions: <strong>X</strong> for the strike/exercise price (not K), <strong>S(T)</strong> for the underlying at expiry, and the <strong>discount factor d<sub>T</sub>(0)</strong> (price today of $1 at T) rather than (1+r)<sup>−T</sup>. Capital C<sub>X,T</sub>(0), P<sub>X,T</sub>(0) denote <em>European</em> call/put prices; lowercase c<sub>X,T</sub>(0), p<sub>X,T</sub>(0) denote <em>American</em>. Results assume a non-dividend-paying underlying unless stated.</p>
+    </div>
+
+    <h3>Payoff diagrams — the building blocks</h3>
+
+    <p>A payoff diagram plots the value of a position at time T as a function of S(T). Everything is built from four primitives:</p>
+
+    <ul class="bullets">
+        <li><strong>Long 1 unit of the asset:</strong> a 45° line through the origin (value = S(T)).</li>
+        <li><strong>Short 1 unit:</strong> a −45° line (value = −S(T)).</li>
+        <li><strong>Long a discount bond, face $F:</strong> a horizontal line at $F (pays F regardless of S(T)).</li>
+        <li><strong>Short a discount bond, face $F:</strong> a horizontal line at −$F.</li>
+    </ul>
+
+    <h3>Calls &amp; puts — definitions and payoffs</h3>
+
+    <p>A <strong>call</strong> gives its holder the right (not obligation) to <em>buy</em> the underlying at strike X; a <strong>put</strong>, the right to <em>sell</em> at X. <strong>European</strong> options exercise only at expiry T; <strong>American</strong>, any time up to T. The price paid for the option is a sunk cost and irrelevant to the exercise decision.</p>
+
+    <div class="formula-box">
+        <p><strong>Payoffs at expiration T</strong> (X = strike, S(T) = underlying at T)</p>
+        \[ \text{Call holder: } \max\{S(T) - X,\, 0\} \qquad \text{Put holder: } \max\{X - S(T),\, 0\} \]
+        <p>The writer's payoff is the negative of the holder's (options are zero-sum between the two parties).</p>
+        <div class="formula-actions">
+            <button class="intuition-btn" onclick="toggleIntuition(this)">💡 intuition</button>
+        </div>
+        <div class="intuition">
+            <p><strong>Call:</strong> if S(T) &gt; X you exercise — buy at X an asset worth S(T), netting S(T) − X. If S(T) ≤ X you walk away (payoff 0). You'd never pay X for something worth less.</p>
+            <p><strong>Put:</strong> if S(T) &lt; X you exercise — sell at X an asset worth S(T), netting X − S(T). If S(T) ≥ X you walk away.</p>
+            <p>Each payoff is piecewise-linear with a single kink at S(T) = X. Note holding a put is <em>not</em> the same as writing a call — they have different payoff shapes.</p>
+        </div>
+    </div>
+
+    <svg viewBox="0 0 520 220" style="max-width: 100%; background: #fafafa; margin: 0.5em 0;">
+        <!-- LONG CALL (left panel) -->
+        <text x="140" y="22" text-anchor="middle" font-size="12" fill="#333" font-weight="bold">Long call payoff</text>
+        <line x1="40" y1="170" x2="250" y2="170" stroke="#666"/>
+        <line x1="60" y1="180" x2="60" y2="35" stroke="#666"/>
+        <text x="250" y="185" text-anchor="end" font-size="10" fill="#888">S(T)</text>
+        <line x1="60" y1="170" x2="150" y2="170" stroke="#ff3333" stroke-width="2.5"/>
+        <line x1="150" y1="170" x2="235" y2="85" stroke="#ff3333" stroke-width="2.5"/>
+        <line x1="150" y1="170" x2="150" y2="180" stroke="#888" stroke-dasharray="3,3"/>
+        <text x="150" y="193" text-anchor="middle" font-size="10" fill="#888">X</text>
+        <text x="200" y="120" font-size="10" fill="#ff3333">slope +1</text>
+        <!-- LONG PUT (right panel) -->
+        <text x="390" y="22" text-anchor="middle" font-size="12" fill="#333" font-weight="bold">Long put payoff</text>
+        <line x1="290" y1="170" x2="500" y2="170" stroke="#666"/>
+        <line x1="310" y1="180" x2="310" y2="35" stroke="#666"/>
+        <text x="500" y="185" text-anchor="end" font-size="10" fill="#888">S(T)</text>
+        <line x1="310" y1="85" x2="400" y2="170" stroke="#ff3333" stroke-width="2.5"/>
+        <line x1="400" y1="170" x2="485" y2="170" stroke="#ff3333" stroke-width="2.5"/>
+        <line x1="400" y1="170" x2="400" y2="180" stroke="#888" stroke-dasharray="3,3"/>
+        <text x="400" y="193" text-anchor="middle" font-size="10" fill="#888">X</text>
+        <text x="320" y="120" font-size="10" fill="#ff3333">slope −1</text>
+    </svg>
+    <p class="caption">The two long positions. Writer (short) payoffs are these reflected through the horizontal axis. Profit diagrams shift each line by the premium so it crosses zero at the breakeven.</p>
+
+    <h3>Forward contract payoffs</h3>
+
+    <p>A <strong>forward</strong> is an agreement to exchange cash for the asset at a preset forward price F<sub>T</sub>(0) on settlement date T. No money changes hands at initiation. Unlike an option, both sides are <em>obligated</em>.</p>
+
+    <div class="formula-box">
+        <p><strong>Forward payoffs at settlement T</strong> (F<sub>T</sub>(0) = forward price set at time 0)</p>
+        \[ \text{Buyer (long): } S(T) - F_T(0) \qquad \text{Seller (short): } F_T(0) - S(T) \]
+        <div class="formula-actions">
+            <button class="intuition-btn" onclick="toggleIntuition(this)">💡 intuition</button>
+        </div>
+        <div class="intuition">
+            <p>The buyer locked in price F<sub>T</sub>(0); at T the asset is worth S(T), so the buyer gains S(T) − F<sub>T</sub>(0) (positive if the asset rose above the locked price, negative if it fell). The seller has the mirror payoff. <strong>The two sum to zero</strong> — forwards transfer risk, they don't create value.</p>
+            <p>The payoff diagram is a full 45° line (buyer) or −45° line (seller) crossing zero at S(T) = F<sub>T</sub>(0) — like a stock position but shifted, and with no premium paid up front.</p>
+        </div>
+    </div>
+
+    <h3>Zero net supply &amp; why people hold derivatives</h3>
+
+    <ul class="bullets">
+        <li><strong>Zero net supply.</strong> Stocks and bonds are in <em>positive</em> net supply (long + short positions sum to a positive number). Derivatives — forwards, futures, options — are in <em>zero</em> net supply: every long is matched by a short, so they sum to zero.</li>
+        <li><strong>Speculation (leverage).</strong> Options give leveraged exposure: a small premium controls a large notional. (Worked example below.)</li>
+        <li><strong>Hedging.</strong> Lock in a price to remove risk — e.g. a U.S. firm owing £10,000 in October buys £ forward today to kill its exchange-rate exposure.</li>
+        <li><strong>Risk management / portfolio insurance.</strong> Hold the asset + a long put to floor the position value at the strike. (See protective put below.)</li>
+    </ul>
+
+    <h3>Whiteboard example — leverage with call options</h3>
+
+    <p>XYZ trades at S(0) = $50. A 6-month European call with X = $50 costs C(0) = $5. The 6-month T-bill BEY is 10%. You have $5,000 and consider three strategies:</p>
+
+    <table class="matrix">
+        <thead><tr><th>S(T)</th><th>(1) 100 shares</th><th>(2) 1000 calls</th><th>(3) 100 calls + $4,500 in T-bills</th></tr></thead>
+        <tbody>
+            <tr><td>40</td><td>−20%</td><td><strong>−100%</strong></td><td>−5.5%</td></tr>
+            <tr><td>50</td><td>0%</td><td><strong>−100%</strong></td><td>−5.5%</td></tr>
+            <tr><td>60</td><td>+20%</td><td><strong>+100%</strong></td><td>+14.5%</td></tr>
+            <tr><td>70</td><td>+40%</td><td><strong>+300%</strong></td><td>+34.5%</td></tr>
+            <tr><td>80</td><td>+60%</td><td><strong>+500%</strong></td><td>+54.5%</td></tr>
+        </tbody>
+    </table>
+
+    <p><strong>Strategy (2) is pure leverage:</strong> below X = 50 you lose everything (−100%), but a modest 20% rise in the stock (50→60) turns into a +100% return. Magnified both ways. Strategy (3) (calls + bills) caps the downside near −5.5% while keeping most of the upside — a built-in floor.</p>
+
+    <h3>Moneyness, intrinsic value, time value</h3>
+    <ul class="bullets">
+        <li><span class="key">In / at / out of the money:</span> a call is ITM if S &gt; X, a put if S &lt; X; ATM if S = X.</li>
+        <li><span class="key">Intrinsic value</span> = the no-arbitrage floor (see below): max{S(0) − X·d<sub>T</sub>(0), 0} for a call.</li>
+        <li><span class="key">Time value</span> = option price − intrinsic value. Always ≥ 0 before expiry because the holder isn't forced to decide on exercise until T. Decays to 0 at expiration.</li>
+    </ul>
+
+    <h3>Put-call parity — the link between calls, puts, the stock, and a bond</h3>
+
+    <div class="formula-box">
+        <p><strong>Put-call parity</strong> (European, same X and T, no dividends — Lynch's form)</p>
+        \[ S(0) = C_{X,T}(0) - P_{X,T}(0) + X\,d_T(0) \]
+        <div class="formula-actions">
+            <button class="intuition-btn" onclick="toggleIntuition(this)">💡 intuition</button>
+            <button class="derive-btn" onclick="toggleDerivation(this)">▼ derive</button>
+        </div>
+        <div class="intuition">
+            <p><strong>Holding the stock is equivalent to: long a call, short a put (both struck at X), plus lending X·d<sub>T</sub>(0) (a discount bond with face X).</strong> Rearrange for whatever you need: C = S(0) − X·d<sub>T</sub>(0) + P, or P = C − S(0) + X·d<sub>T</sub>(0).</p>
+            <p>The one slip people make is forgetting the discount factor — always use <span class="imp">X·d<sub>T</sub>(0)</span>, the present value of the strike, not X itself.</p>
+        </div>
+        <div class="derivation">
+            <p>Compare two portfolios' payoffs at T:</p>
+            <p><strong>Portfolio A:</strong> long the stock. Payoff = S(T).</p>
+            <p><strong>Portfolio B:</strong> long a call, short a put, long a discount bond with face X. Payoff = max{S(T)−X,0} − max{X−S(T),0} + X.</p>
+            <ul class="bullets">
+                <li>If S(T) &gt; X: (S(T)−X) − 0 + X = S(T). ✓</li>
+                <li>If S(T) ≤ X: 0 − (X−S(T)) + X = S(T). ✓</li>
+            </ul>
+            <p>Same payoff in every state ⇒ by the law of one price, same cost today: S(0) = C<sub>X,T</sub>(0) − P<sub>X,T</sub>(0) + X·d<sub>T</sub>(0). ∎</p>
+        </div>
+    </div>
+
+    <h3>No-arbitrage bounds — the intrinsic-value floors</h3>
+
+    <div class="formula-box">
+        <p><strong>European call &amp; put floors</strong></p>
+        \[ C_{X,T}(0) \ge \max\{S(0) - X\,d_T(0),\, 0\} \qquad P_{X,T}(0) \ge \max\{X\,d_T(0) - S(0),\, 0\} \]
+        <div class="formula-actions">
+            <button class="intuition-btn" onclick="toggleIntuition(this)">💡 intuition</button>
+        </div>
+        <div class="intuition">
+            <p>Two floors combine. First, an option's payoff is never negative, so its value is ≥ 0. Second, no-arbitrage forces the call above S(0) − X·d<sub>T</sub>(0): a call lets you acquire the stock for X paid <em>later</em>, which beats buying it outright for the PV of that cost. The max of these two is the <strong>intrinsic value</strong>.</p>
+            <p>The gap between the option's actual price and its intrinsic value is the <strong>time value</strong> — positive because the holder retains the choice not to exercise until T.</p>
+        </div>
+    </div>
+
+    <p><strong>Whiteboard example (Dell, 4/13/05).</strong> Dell pays no dividend before the 5/21/05 expiry (38 days out). Riskfree rate 2.76% continuously compounded → d<sub>T</sub>(0) = e<sup>−0.0276·38/365</sup> = 0.9971. Dell stock S(0) = 36.91. For the X = 35 call:</p>
+    <div class="formula">Intrinsic value = max{S(0) − X·d_T(0), 0}
+               = max{36.91 − 35 × 0.9971, 0}
+               = max{2.01, 0}  =  2.01
+
+The call's ask price on the screen was 2.45 ≥ 2.01. ✓  (the 0.44 gap is time value)</div>
+
+    <h3>American vs European — when early exercise matters</h3>
+
+    <table class="matrix">
+        <thead><tr><th>Result</th><th>Why</th></tr></thead>
+        <tbody>
+            <tr><td><strong>c<sub>X,T</sub>(0) ≥ C<sub>X,T</sub>(0)</strong> and <strong>p<sub>X,T</sub>(0) ≥ P<sub>X,T</sub>(0)</strong></td><td>An American option has all the rights of a European one plus the right to exercise early, so it can't be worth less.</td></tr>
+            <tr><td><strong>American call on a non-dividend payer: never exercise early ⟹ c = C</strong></td><td>The floor from <em>not</em> exercising (S(0) − X·d<sub>T</sub>(0), with d<sub>T</sub>(0) &lt; 1) always beats exercising now (S(0) − X). Better to sell the option than exercise it. So the American call equals the European call — and Black-Scholes prices it too.</td></tr>
+            <tr><td><strong>American put: may exercise early ⟹ p ≥ P</strong></td><td>For S(0) small enough, the holder prefers to exercise immediately and collect X now rather than wait. No closed-form value exists; it's solved numerically.</td></tr>
+        </tbody>
+    </table>
+
+    <h3>Protective put / portfolio insurance</h3>
+
+    <p>Hold the asset + a long put struck at X: payoff = max{S(T), X} — a <strong>floor at X</strong> with unlimited upside. By put-call parity this is identical to holding a long call (strike X) plus a discount bond with face X. This is the standard way to insure a portfolio's downside.</p>
+
+    <h3>Black-Scholes — the beginning (where the class stopped)</h3>
+
+    <div class="callout">
+        Lynch introduces Black-Scholes <em>qualitatively</em> — the assumptions, the inputs, and how each input moves the price (the comparative statics). He does <strong>not</strong> derive or require the closed-form N(d₁)/N(d₂) expression. The class reached exactly this point.
+    </div>
+
+    <p><strong>Assumptions:</strong> (1) the yield curve is flat and constant; (2) the underlying's return is lognormal with constant volatility and pays no dividends; (3) continuous trading is possible; (4) no transaction costs, taxes, or other frictions.</p>
+
+    <p><strong>New notation:</strong> r′ is the <em>continuously compounded</em> annual riskfree rate ($1 grows to $e<sup>r′t</sup> in t years); σ is the volatility of the continuously compounded annual return on the underlying.</p>
+
+    <div class="formula-box">
+        <p><strong>Black-Scholes as a function (European options, no dividends)</strong></p>
+        \[ C_{X,T}(0) = C\big(\underset{+}{S(0)},\ \underset{-}{X},\ \underset{+}{\sigma},\ \underset{+}{r'},\ \underset{+}{T}\big) \qquad P_{X,T}(0) = P\big(\underset{-}{S(0)},\ \underset{+}{X},\ \underset{+}{\sigma},\ \underset{-}{r'},\ \underset{?}{T}\big) \]
+        <p>The signs show the direction each input moves the price.</p>
+        <div class="formula-actions">
+            <button class="intuition-btn" onclick="toggleIntuition(this)">💡 intuition</button>
+        </div>
+        <div class="intuition">
+            <p>You won't need the closed form — but you <em>must</em> know the comparative statics and the reasoning. The deep point, shared with all no-arbitrage option pricing: <span class="imp">the stock's expected return never enters.</span> Only volatility matters, because the option can be hedged with the underlying.</p>
+            <p><strong>Why σ raises both calls and puts:</strong> more volatility means more extreme S(T). The holder enjoys the bigger upside (call) or downside (put) but is protected from the wrong tail by the payoff's truncation at zero. More volatility = more valuable optionality, on both sides.</p>
+            <p><strong>Why T is ambiguous for puts:</strong> longer T shrinks the PV of receiving X (hurts the put), but also raises the volatility of S(T) (helps the put). The two effects fight; the net is unclear. For calls both effects point the same way (up), so calls rise in T.</p>
+        </div>
+    </div>
+
+    <p>Comparative statics in full (each input rising, holding others fixed):</p>
+    <table class="matrix">
+        <thead><tr><th>Input ↑</th><th>European call C<sub>X,T</sub>(0)</th><th>European put P<sub>X,T</sub>(0)</th><th>Channel</th></tr></thead>
+        <tbody>
+            <tr><td>S(0)</td><td>↑</td><td>↓</td><td>[S(0) − X·d<sub>T</sub>(0)] moves with S(0)</td></tr>
+            <tr><td>X</td><td>↓</td><td>↑</td><td>higher strike hurts the call, helps the put</td></tr>
+            <tr><td><strong>σ</strong></td><td><strong>↑</strong></td><td><strong>↑</strong></td><td>more volatility in S(T) → more optionality both ways</td></tr>
+            <tr><td>r′</td><td>↑</td><td>↓</td><td>higher r′ shrinks d<sub>T</sub>(0) → PV of strike falls</td></tr>
+            <tr><td>T</td><td>↑</td><td>?</td><td>call: PV(X)↓ and σ-effect↑ both help; put: the two fight</td></tr>
+        </tbody>
+    </table>
+
+    <details class="math-aside">
+        <summary>The actual closed form (beyond Lynch's scope — for the curious / final reference)</summary>
+        <p>Lynch only requires the comparative statics above. For completeness, the closed-form Black-Scholes price of a European call on a non-dividend stock is:</p>
+        \[ C_{X,T}(0) = S(0)\,N(d_1) - X e^{-r'T} N(d_2), \quad d_1 = \frac{\ln(S(0)/X) + (r' + \tfrac12\sigma^2)T}{\sigma\sqrt T}, \quad d_2 = d_1 - \sigma\sqrt T \]
+        <p>where N(·) is the cumulative standard normal. The put follows from put-call parity. N(d₁) is the call's "delta" (hedge ratio). Note e<sup>−r′T</sup> = d<sub>T</sub>(0) under continuous compounding, tying this back to Lynch's notation.</p>
+    </details>
+
+    <div class="remember">
+        <span class="label">✦ remember this — Lectures 9-10 (Derivatives &amp; options)</span>
+        <ul>
+            <li><strong>Payoffs (Lynch's X notation):</strong> call holder max{S(T)−X, 0}; put holder max{X−S(T), 0}; writer = negative of holder. Forward buyer S(T)−F<sub>T</sub>(0); seller F<sub>T</sub>(0)−S(T). Kink at X for options; full line for forwards.</li>
+            <li><strong>Derivatives are zero net supply</strong> (every long matched by a short). Motives: speculation/leverage, hedging, portfolio insurance.</li>
+            <li><strong>Put-call parity:</strong> <span class="imp">S(0) = C<sub>X,T</sub>(0) − P<sub>X,T</sub>(0) + X·d<sub>T</sub>(0)</span>. Use the discount factor on the strike, never raw X.</li>
+            <li><strong>No-arbitrage floors (intrinsic value):</strong> C ≥ max{S(0) − X·d<sub>T</sub>(0), 0}; P ≥ max{X·d<sub>T</sub>(0) − S(0), 0}. Price − intrinsic = time value ≥ 0.</li>
+            <li><strong>American ≥ European.</strong> Non-dividend call: never exercise early ⟹ c = C (Black-Scholes prices it). American put: may exercise early ⟹ p ≥ P, no closed form.</li>
+            <li><strong>Black-Scholes (qualitative):</strong> C(S(0)<sup>+</sup>, X<sup>−</sup>, σ<sup>+</sup>, r′<sup>+</sup>, T<sup>+</sup>), P(S(0)<sup>−</sup>, X<sup>+</sup>, σ<sup>+</sup>, r′<sup>−</sup>, T<sup>?</sup>). r′ is continuously compounded; σ is return volatility. <span class="imp">σ raises both calls and puts; the stock's expected return never enters.</span></li>
+        </ul>
+    </div>
+
+    <h2 id="forward-spot-parity">Lecture 10-11 - Forward &amp; futures valuation</h2>
+
+    <div class="callout">
+        <strong>Preview / pre-lecture scaffolding</strong> (taught Class 11). Standard cash-and-carry notation below; reconcile with Lynch's exact form after class.
+    </div>
+
+    <p>A forward locks in today a price F₀ to buy/sell an asset at time T. No premium changes hands; the payoff at expiry is linear: <strong>long forward → S<sub>T</sub> − F₀</strong>. The forward price is pinned by no-arbitrage, not by anyone's forecast of S<sub>T</sub>.</p>
+
+    <div class="formula-box">
+        <p><strong>Forward-spot parity (cash-and-carry)</strong></p>
+        \[ F_0 = S_0\,(1+r)^T \qquad\text{(with income yield } q\text{: } F_0 = S_0\,(1 + r - q)^T) \]
+        <div class="formula-actions">
+            <button class="intuition-btn" onclick="toggleIntuition(this)">💡 intuition</button>
+            <button class="derive-btn" onclick="toggleDerivation(this)">▼ derive</button>
+        </div>
+        <div class="intuition">
+            <p><strong>Buying forward and "buying-and-carrying" must cost the same.</strong> You could lock in delivery via a forward, or borrow S₀, buy the asset now, and hold it to T. Both leave you owning the asset at T, so the forward price equals the cost of carrying: today's price grown at the financing rate, minus any income the asset throws off while you hold it.</p>
+            <p><span class="imp">F₀ is not the expected future spot.</span> And a <em>new</em> forward is priced so its value is 0; an <em>existing</em> forward gains value (F<sub>t</sub> − F₀, discounted) as the spot moves. F &gt; S is <em>contango</em>; F &lt; S is <em>backwardation</em>.</p>
+        </div>
+        <div class="derivation">
+            <p>Strategy A: enter a long forward at F₀; pay nothing today, pay F₀ at T to receive the asset. Strategy B: borrow S₀ at rate r, buy the asset now, owe S₀(1+r)<sup>T</sup> at T (less any income q earned). Both deliver one unit of the asset at T. If F₀ ≠ S₀(1+r−q)<sup>T</sup>, short the dear leg and buy the cheap one for a riskless profit. So they must be equal. ∎</p>
+        </div>
+    </div>
+
+    <div class="remember">
+        <span class="label">✦ remember this — Lecture 10-11 (Forwards)</span>
+        <ul>
+            <li><strong>F₀ = S₀(1+r)<sup>T</sup></strong> (subtract carry/income: S₀(1+r−q)<sup>T</sup>). Set by arbitrage, not by expectations.</li>
+            <li><strong>New forward → value 0; existing forward → value (F<sub>t</sub> − F₀) discounted.</strong> Don't confuse forward <em>price</em> with forward <em>value</em>.</li>
+            <li><strong>Futures</strong> are forwards marked-to-market daily; forwards settle once at expiry.</li>
+        </ul>
+    </div>
+
+    <h2 id="capital-budgeting">Lecture 11 - Valuation models &amp; capital budgeting</h2>
+
+    <div class="callout">
+        <strong>Preview / pre-lecture scaffolding</strong> (taught Class 11). The NPV machinery is just the course's discounting engine pointed at real projects — and the discount rate comes straight from the SML you already know.
+    </div>
+
+    <div class="formula-box">
+        <p><strong>Net present value (decision rule: accept if NPV &gt; 0)</strong></p>
+        \[ NPV = CF_0 + \sum_{t=1}^{T} \frac{E[CF_t]}{(1+r)^t}, \qquad r = R_f + \beta\,(E[R_M] - R_f) \]
+        <div class="formula-actions">
+            <button class="intuition-btn" onclick="toggleIntuition(this)">💡 intuition</button>
+        </div>
+        <div class="intuition">
+            <p><strong>Discount expected cash flows at the risk-adjusted required return and add them up.</strong> The discount rate <span class="imp">is the SML return for the project's β — not R<sub>f</sub></span>. Using R<sub>f</sub> would overvalue a risky project. This is the same "PV of cash flows" idea from week one, now with a CAPM discount rate.</p>
+            <p><strong>IRR</strong> = the rate making NPV = 0; accept if IRR &gt; r. Gotchas: non-conventional cash flows can give multiple IRRs, and scale/timing differences can flip IRR rankings — when NPV and IRR disagree, trust NPV. The <strong>Gordon dividend-discount model</strong> P₀ = D₁/(r − g) is the same engine for a growing perpetuity of dividends.</p>
+        </div>
+    </div>
+
+    <div class="remember">
+        <span class="label">✦ remember this — Lecture 11 (Capital budgeting)</span>
+        <ul>
+            <li><strong>NPV &gt; 0 → accept.</strong> Discount E[CF] at <span class="imp">r = R<sub>f</sub> + β(E[R<sub>M</sub>] − R<sub>f</sub>)</span>, the SML rate.</li>
+            <li><strong>NPV vs IRR conflict → trust NPV.</strong> Watch for multiple IRRs with non-conventional cash flows.</li>
+            <li><strong>Gordon:</strong> P₀ = D₁/(r − g) for a constantly growing dividend (r &gt; g).</li>
+        </ul>
+    </div>
+
+    <h2 id="market-efficiency">Lecture 11 - Market efficiency</h2>
+
+    <div class="callout">
+        <strong>Preview / pre-lecture scaffolding</strong> (taught Class 11). Mostly conceptual — bank these as the easiest points on the final.
+    </div>
+
+    <p>The <strong>Efficient Market Hypothesis (EMH)</strong>: prices already reflect available information, so you can't systematically earn abnormal risk-adjusted returns. Three nested forms, by what "available information" means:</p>
+    <table class="matrix">
+        <thead><tr><th>Form</th><th>Info already in the price</th><th>What it kills</th></tr></thead>
+        <tbody>
+            <tr><td>Weak</td><td>past prices &amp; returns</td><td>technical analysis</td></tr>
+            <tr><td>Semi-strong</td><td>all <em>public</em> info (earnings, news)</td><td>fundamental analysis on public data</td></tr>
+            <tr><td>Strong</td><td>all info, incl. <em>private</em> / insider</td><td>even insider trading</td></tr>
+        </tbody>
+    </table>
+
+    <div class="remember">
+        <span class="label">✦ remember this — Lecture 11 (Market efficiency)</span>
+        <ul>
+            <li><strong>Match the anomaly to the form:</strong> beating the market on <em>past prices</em> → weak violated; on <em>public info</em> → semi-strong; on <em>private info</em> → strong.</li>
+            <li><strong>Joint-hypothesis problem:</strong> any efficiency test is a joint test of EMH <em>and</em> the asset-pricing model. A surviving anomaly (size, value, momentum) is either inefficiency <em>or</em> a missing risk factor — ties straight back to <a href="#perf-measures">CAPM's empirical failures</a>, Roll's critique, and <a href="#multifactor">Fama-French</a>.</li>
+            <li><strong>Implication:</strong> positive-NPV <em>financial</em> investments are rare in an efficient market; positive NPV lives in <em>real</em> projects with a genuine competitive edge.</li>
+        </ul>
+    </div>
 
     <h2 id="integrated">Integrated problems</h2>
 
