@@ -262,8 +262,8 @@
         <li><a href="#yield-curve-theories">yield curve theories</a></li>
         <li><a href="#duration">duration</a></li>
         <li><a href="#options">derivatives &amp; options</a></li>
-        <li><a href="#forward-spot-parity">forward valuation</a></li>
-        <li><a href="#capital-budgeting">capital budgeting</a></li>
+        <li><a href="#forward-spot-parity">forwards, futures &amp; swaps</a></li>
+        <li><a href="#capital-budgeting">valuation &amp; capital budgeting</a></li>
         <li><a href="#market-efficiency">market efficiency</a></li>
         <li><a href="#integrated">integrated problems</a></li>
         <li><a href="#glossary">glossary</a></li>
@@ -348,7 +348,21 @@
             <dt>Forward (buyer/seller)</dt><dd>Obligation to exchange cash for the asset at preset price F<sub>T</sub>(0) at T. Buyer payoff S(T)−F<sub>T</sub>(0); seller F<sub>T</sub>(0)−S(T); they sum to zero.</dd>
             <dt>r′</dt><dd>Continuously compounded annual riskfree rate ($1 → e<sup>r′t</sup> in t years). Used in Black-Scholes; e<sup>−r′T</sup> = d<sub>T</sub>(0).</dd>
             <dt>σ (volatility)</dt><dd>Volatility of the continuously compounded annual return on the underlying. The key Black-Scholes input — raises both call and put values.</dd>
-            <dt>Black-Scholes</dt><dd>Option-pricing model. Lynch covers it qualitatively: C(S(0)<sup>+</sup>, X<sup>−</sup>, σ<sup>+</sup>, r′<sup>+</sup>, T<sup>+</sup>), P(S(0)<sup>−</sup>, X<sup>+</sup>, σ<sup>+</sup>, r′<sup>−</sup>, T<sup>?</sup>). The stock's expected return never enters.</dd>
+            <dt>Black-Scholes</dt><dd>European-option pricing model: C<sub>X,T</sub>(0) = S(0)N(d₁) − Xe<sup>−r′T</sup>N(d₂). Signs C(S<sup>+</sup>, X<sup>−</sup>, σ<sup>+</sup>, r′<sup>+</sup>, T<sup>+</sup>), P(S<sup>−</sup>, X<sup>+</sup>, σ<sup>+</sup>, r′<sup>−</sup>, T<sup>?</sup>). The stock's expected return never enters.</dd>
+            <dt>Implied volatility</dt><dd>The σ that makes the Black-Scholes price equal the market price — the market's volatility forecast backed out of the option price.</dd>
+            <dt>Law of one price / synthetic asset</dt><dd>Two assets with identical cash flows must have the same price. The spine of the second half: replicate a contract with a synthetic built from the underlying + strips, then no-arbitrage pins its price. Used for put-call parity, option floors, forward-spot parity, covered interest parity, swap rates.</dd>
+            <dt>Forward-spot parity</dt><dd>F<sub>T</sub>(0) = S(0)/d<sub>T</sub>(0) = S(0)[1+y*<sub>T</sub>(0)]<sup>T</sup>; with carrying cost, F<sub>T</sub>(0) = [S(0)+C(τ)d<sub>τ</sub>(0)]/d<sub>T</sub>(0). The forward price is the future value of spot, not a forecast.</dd>
+            <dt>Carrying cost</dt><dd>Cost (storage, positive) or benefit (dividends, negative) of holding the underlying to settlement. Positive carry raises the forward price; negative carry lowers it.</dd>
+            <dt>Covered interest parity</dt><dd>Forward-spot parity for currencies: [1+y*$<sub>T</sub>]<sup>T</sup> = F<sup>$/£</sup><sub>T</sub>(0)·(1/S<sup>$/£</sup>(0))·[1+y*£<sub>T</sub>]<sup>T</sup>. The higher-yielding currency trades at a forward discount.</dd>
+            <dt>Futures</dt><dd>A forward marked-to-market daily. Spot-forward parity holds only approximately for futures.</dd>
+            <dt>Interest rate swap</dt><dd>Exchange of fixed for floating (LIBOR) interest on a notional that never changes hands. Fixed-rate payer = long a floating bond + short a fixed bond. The swap rate sets PV(fixed) = PV(floating) so the swap is worth 0 at inception.</dd>
+            <dt>Swap rate</dt><dd>The fixed rate in a swap, chosen so the fixed and floating legs have equal present value.</dd>
+            <dt>DCF / DDM</dt><dd>Discounted cash flow valuation: P₀ = Σ E[CF<sub>t</sub>]/(1+E[R])<sup>t</sup>, with E[R] from the SML. For equity the cash flows are dividends (dividend discount model).</dd>
+            <dt>Gordon (constant-growth DDM)</dt><dd>P₀ = E[D₁]/(E[R] − g), valid for E[R] &gt; g. Rearranged: E[R] = dividend yield + g.</dd>
+            <dt>NPV</dt><dd>Net present value of a project's incremental cash flows, discounted at the project's required return (business-line β). Accept if NPV &gt; 0; ignore sunk costs.</dd>
+            <dt>Plowback / ROE (g = b·ROE)</dt><dd>Growth = retention ratio b × return on equity. Reinvest (b &gt; 0) only when ROE exceeds the required return E[R].</dd>
+            <dt>Market efficiency (weak/semi-strong/strong)</dt><dd>Price is an unbiased estimate of value, reflecting past prices (weak), all public info (semi-strong), or all info incl. private (strong). U.S. markets ≈ semi-strong. Realized return = expected + mean-zero surprise.</dd>
+            <dt>Joint-hypothesis problem</dt><dd>Any test of market efficiency is simultaneously a test of the assumed asset-pricing model, so an anomaly is either inefficiency or a missing risk factor — the two can't be cleanly separated.</dd>
         </dl>
 
         <h4 class="gloss-h">Worked-example characters</h4>
@@ -360,7 +374,7 @@
     </details>
 
     <div class="takeaways" id="takeaways">
-        <h3>Key ideas so far (through Lecture 10 — options, up to the start of Black-Scholes)</h3>
+        <h3>Key ideas (full course — Lectures 1 through 11)</h3>
         <p style="margin-top: 0; font-size: 0.9em; color: #666;">Refreshed after each lecture. Each lecture section also has its own "✦ remember this" callout at the end.</p>
         <ol>
             <li><strong>A dollar today is worth more than a dollar later.</strong> Every valuation question reduces to: discount future cash flows by the right rate and add them up. PV, FV, annuity, perpetuity — different shapes of the same idea. Compounding is the snowball; discounting is the snowball in reverse.</li>
@@ -404,8 +418,12 @@
             <li><strong>Derivative payoffs (Lynch's X notation).</strong> Call holder max{S(T)−X, 0}; put holder max{X−S(T), 0}; writer = negative of holder. Forward buyer S(T)−F<sub>T</sub>(0); seller F<sub>T</sub>(0)−S(T). Derivatives are zero net supply.</li>
             <li><strong>Put-call parity:</strong> <span class="imp">S(0) = C<sub>X,T</sub>(0) − P<sub>X,T</sub>(0) + X·d<sub>T</sub>(0)</span>. Always discount the strike (X·d<sub>T</sub>(0), never raw X).</li>
             <li><strong>No-arbitrage option floors (intrinsic value):</strong> C ≥ max{S(0) − X·d<sub>T</sub>(0), 0}; P ≥ max{X·d<sub>T</sub>(0) − S(0), 0}. Price − intrinsic = time value ≥ 0. American ≥ European; non-dividend call is never exercised early (c = C); American put may be (p ≥ P, no closed form).</li>
-            <li><strong>Black-Scholes (qualitative — where the class stopped):</strong> C(S(0)<sup>+</sup>, X<sup>−</sup>, σ<sup>+</sup>, r′<sup>+</sup>, T<sup>+</sup>), P(S(0)<sup>−</sup>, X<sup>+</sup>, σ<sup>+</sup>, r′<sup>−</sup>, T<sup>?</sup>). r′ continuously compounded, σ = return volatility. <span class="imp">σ raises both calls and puts; the stock's expected return never enters.</span></li>
-            <li><strong>Market efficiency is a warning.</strong> If U.S. equity prices are efficient w.r.t. public information, you can't beat the market on average using public info, risk-adjusted. The big warning the course returns to at the end.</li>
+            <li><strong>Black-Scholes:</strong> C<sub>X,T</sub>(0) = S(0)N(d₁) − Xe<sup>−r′T</sup>N(d₂), e<sup>−r′T</sup> = d<sub>T</sub>(0). Signs C(S<sup>+</sup>, X<sup>−</sup>, σ<sup>+</sup>, r′<sup>+</sup>, T<sup>+</sup>), P(S<sup>−</sup>, X<sup>+</sup>, σ<sup>+</sup>, r′<sup>−</sup>, T<sup>?</sup>). <span class="imp">σ raises both call and put (payoff truncated at 0); the stock's expected return never enters.</span> Implied vol = the σ that matches the market price.</li>
+            <li><strong>The law of one price is the spine of the second half.</strong> Build a synthetic copy of a contract from things you can already price, line up cash flows in a Time-0/Time-T table, and no-arbitrage forces the contract to equal its synthetic. This one move gives put-call parity, the option floors, forward-spot parity, covered interest parity, and the swap rate.</li>
+            <li><strong>Forward-spot parity:</strong> <span class="imp">F<sub>T</sub>(0) = S(0)/d<sub>T</sub>(0) = S(0)[1+y*<sub>T</sub>(0)]<sup>T</sup></span>; with carry, F<sub>T</sub>(0) = [S(0)+C(τ)d<sub>τ</sub>(0)]/d<sub>T</sub>(0). The forward price is the FV of spot, not a forecast. <strong>Covered interest parity:</strong> the higher-yielding currency trades at a forward discount. Futures = daily-settled forwards.</li>
+            <li><strong>Swap = a portfolio of two bonds.</strong> Fixed-rate payer = long a floating bond + short a fixed bond. The swap rate is set so PV(fixed) = PV(floating), making the swap worth 0 at inception. Only the net difference changes hands → low credit risk; rates rise → fixed-rate payer wins.</li>
+            <li><strong>Valuation = PV of expected cash flows at the SML rate.</strong> DDM / Gordon: P₀ = E[D₁]/(E[R]−g), so E[R] = dividend yield + g. Capital budgeting: accept NPV &gt; 0, discounting incremental cash flows at the <em>project's</em> β (ignore sunk costs). Growth g = b·ROE; reinvest only when ROE &gt; E[R].</li>
+            <li><strong>Market efficiency is the closing warning.</strong> Price = unbiased estimate of value; realized = expected + mean-zero surprise. Three forms (weak/semi-strong/strong); U.S. markets ≈ semi-strong, so average mutual-fund α &lt; 0 and good performance doesn't persist. Autocorrelation ≠ inefficiency if expected returns vary; every efficiency test is jointly a test of the pricing model.</li>
         </ol>
     </div>
 
@@ -482,23 +500,23 @@
         </li>
         <li>
             <span class="num">L 9-10</span><a href="#options" class="name">Derivatives: payoffs &amp; option valuation</a>
-            <span class="desc">Payoff building blocks; call/put payoffs in Lynch's X notation; forward buyer/seller payoffs; zero net supply; leverage/hedging/insurance motives. Put-call parity S(0) = C − P + X·d<sub>T</sub>(0). No-arbitrage floors (Dell example). American vs European (no early call exercise). Black-Scholes qualitative comparative statics — where the class stopped.</span>
+            <span class="desc">Payoff building blocks; call/put payoffs in Lynch's X notation; forward buyer/seller payoffs; zero net supply; leverage/hedging/insurance motives. Put-call parity S(0) = C − P + X·d<sub>T</sub>(0) via arbitrage table. No-arbitrage floors (Dell example). American vs European (no early call exercise). Black-Scholes closed form + comparative statics, σ two-state intuition, implied vol.</span>
         </li>
         <li>
-            <span class="num">L 10-11</span><a href="#forward-spot-parity" class="name">Forward &amp; futures valuation</a>
-            <span class="desc">Cash-and-carry: F₀ = S₀(1+r−q)<sup>T</sup>. Forward price vs forward value; contango vs backwardation; futures = daily-settled forwards. <em>Pre-lecture scaffolding.</em></span>
+            <span class="num">L 10-11</span><a href="#forward-spot-parity" class="name">Forwards, futures &amp; swaps</a>
+            <span class="desc">Valuation by replication. Forward-spot parity F<sub>T</sub>(0) = S(0)/d<sub>T</sub>(0) via Time-0/Time-T arbitrage tables (gold); carrying costs (cotton); covered interest parity (£); the arbitrage when parity is violated. Futures = daily-settled forwards. Swaps as a portfolio of two bonds; swap rate sets value to zero.</span>
         </li>
         <li>
             <span class="num">L 11</span><a href="#capital-budgeting" class="name">Valuation models &amp; capital budgeting</a>
-            <span class="desc">NPV decision rule with the SML discount rate r = R<sub>f</sub> + β(E[R<sub>M</sub>] − R<sub>f</sub>). IRR and its gotchas; Gordon DDM. <em>Pre-lecture scaffolding.</em></span>
+            <span class="desc">Three approaches (DCF / relative / contingent-claim). DCF &amp; DDM with the SML discount rate; constant-growth Gordon (IBM example); NPV capital budgeting with the project's β (ZDF example, sunk costs ignored); g = b·ROE and optimal plowback; P/E relative valuation.</span>
         </li>
         <li>
             <span class="num">L 11</span><a href="#market-efficiency" class="name">Market efficiency</a>
-            <span class="desc">EMH three forms (weak / semi-strong / strong) and what each rules out. The joint-hypothesis problem; anomalies as inefficiency vs missing risk factor. <em>Pre-lecture scaffolding.</em></span>
+            <span class="desc">Price = unbiased estimate of value; realized = expected + mean-zero surprise. Autocorrelation ≠ inefficiency under time-varying expected returns. Skill vs luck. Three forms (weak/semi-strong/strong). U.S. markets ~semi-strong; mutual-fund α &lt; 0. Joint-hypothesis problem; data-mining.</span>
         </li>
     </ul>
 
-    <p style="font-size: 0.92em; color: #888;"><em>Through Class 10 (Mon Jun 22): duration &amp; immunization (L9), derivative payoffs (L9-10), and option valuation up to the <em>start of Black-Scholes</em> (L10) are all done and written in Lynch's notation. The remaining forward-valuation / capital-budgeting / market-efficiency sections below are <strong>pre-lecture scaffolding</strong> in standard notation — the next class (Wed Jun 24) finishes Black-Scholes then teaches them, after which they'll be reconciled with Lynch's exact notation. The final (Mon Jun 29) is cumulative over all of it.</em></p>
+    <p style="font-size: 0.92em; color: #888;"><em>Course complete (Lectures 1–11), all written in Lynch's notation. The second half centers on one idea — <strong>the law of one price</strong>: build a synthetic copy of any contract (bond, option, forward, swap) out of things you can already price, and no-arbitrage forces the contract to match its synthetic. The final (Mon Jun 29) is cumulative but weighted ~90% to the post-midterm material; only ~10% revisits the midterm topics.</em></p>
 
     <h2 id="schedule">Class schedule</h2>
     <table>
@@ -516,8 +534,8 @@
             <tr><td>8</td><td>Mon Jun 15</td><td><span class="imp">Midterm</span> (90 min) · Fixed income intro: T-bills, notes/bonds, YTM, STRIPS, yield curve first look</td><td></td></tr>
             <tr><td>9</td><td>Wed Jun 17</td><td>L8 bond pricing intro: discount factors, no-arbitrage pricing, bootstrapping</td><td>PS 2 · CQ 3</td></tr>
             <tr><td>10</td><td>Mon Jun 22</td><td>Duration &amp; immunization (L9) · Derivative payoffs (L9-10) · Option valuation: parity, no-arb bounds, American/European, start of Black-Scholes (L10)</td><td>CQ 4</td></tr>
-            <tr><td>11</td><td>Wed Jun 24</td><td>Finish Black-Scholes · Forwards &amp; futures valuation (L10-11) · Valuation models &amp; capital budgeting (L11) · Market efficiency (L11)</td><td></td></tr>
-            <tr><td>12</td><td>Mon Jun 29</td><td><span class="imp">Final exam</span></td><td></td></tr>
+            <tr><td>11</td><td>Wed Jun 24</td><td>Black-Scholes closed form (L10) · Forwards, futures &amp; swaps valuation (L10-11) · Valuation models &amp; capital budgeting (L11) · Market efficiency (L11)</td><td></td></tr>
+            <tr><td>12</td><td>Mon Jun 29</td><td><span class="imp">Final exam</span> — cumulative, ~90% post-midterm material</td><td></td></tr>
             <tr><td></td><td>Wed Jul 1</td><td></td><td>PS 3 · CQ 5</td></tr>
         </tbody>
     </table>
@@ -3985,48 +4003,57 @@ The call's ask price on the screen was 2.45 ≥ 2.01. ✓  (the 0.44 gap is time
 
     <p>Hold the asset + a long put struck at X: payoff = max{S(T), X} — a <strong>floor at X</strong> with unlimited upside. By put-call parity this is identical to holding a long call (strike X) plus a discount bond with face X. This is the standard way to insure a portfolio's downside.</p>
 
-    <h3>Black-Scholes — the beginning (where the class stopped)</h3>
+    <h3>Black-Scholes model</h3>
 
-    <div class="callout">
-        Lynch introduces Black-Scholes <em>qualitatively</em> — the assumptions, the inputs, and how each input moves the price (the comparative statics). He does <strong>not</strong> derive or require the closed-form N(d₁)/N(d₂) expression. The class reached exactly this point.
-    </div>
+    <p>The no-arbitrage bounds say where an option price <em>can't</em> be; Black-Scholes gives the exact price under stronger assumptions. <strong>Assumptions:</strong> (1) the yield curve is flat and constant (no interest-rate risk); (2) the underlying's return is lognormal with constant volatility and pays no dividends; (3) continuous trading is possible; (4) no transaction costs, taxes, or other frictions.</p>
 
-    <p><strong>Assumptions:</strong> (1) the yield curve is flat and constant; (2) the underlying's return is lognormal with constant volatility and pays no dividends; (3) continuous trading is possible; (4) no transaction costs, taxes, or other frictions.</p>
-
-    <p><strong>New notation:</strong> r′ is the <em>continuously compounded</em> annual riskfree rate ($1 grows to $e<sup>r′t</sup> in t years); σ is the volatility of the continuously compounded annual return on the underlying.</p>
+    <p><strong>New notation:</strong> r′ is the <em>continuously compounded</em> annual riskfree rate ($1 grows to $e<sup>r′t</sup> in t years, so d<sub>T</sub>(0) = e<sup>−r′T</sup>); σ is the volatility of the continuously compounded annual return on the underlying.</p>
 
     <div class="formula-box">
-        <p><strong>Black-Scholes as a function (European options, no dividends)</strong></p>
-        \[ C_{X,T}(0) = C\big(\underset{+}{S(0)},\ \underset{-}{X},\ \underset{+}{\sigma},\ \underset{+}{r'},\ \underset{+}{T}\big) \qquad P_{X,T}(0) = P\big(\underset{-}{S(0)},\ \underset{+}{X},\ \underset{+}{\sigma},\ \underset{-}{r'},\ \underset{?}{T}\big) \]
-        <p>The signs show the direction each input moves the price.</p>
+        <p><strong>Black-Scholes — European call on a non-dividend stock</strong></p>
+        \[ C_{X,T}(0) = S(0)\,N(d_1) - X\,e^{-r'T}\,N(d_2), \quad d_1 = \frac{\ln(S(0)/X) + (r' + \tfrac12\sigma^2)T}{\sigma\sqrt T}, \quad d_2 = d_1 - \sigma\sqrt T \]
+        <p>N(·) is the cumulative standard normal. The European put follows from put-call parity. Note e<sup>−r′T</sup> = d<sub>T</sub>(0), tying this to Lynch's discount-factor notation.</p>
         <div class="formula-actions">
             <button class="intuition-btn" onclick="toggleIntuition(this)">💡 intuition</button>
         </div>
         <div class="intuition">
-            <p>You won't need the closed form — but you <em>must</em> know the comparative statics and the reasoning. The deep point, shared with all no-arbitrage option pricing: <span class="imp">the stock's expected return never enters.</span> Only volatility matters, because the option can be hedged with the underlying.</p>
-            <p><strong>Why σ raises both calls and puts:</strong> more volatility means more extreme S(T). The holder enjoys the bigger upside (call) or downside (put) but is protected from the wrong tail by the payoff's truncation at zero. More volatility = more valuable optionality, on both sides.</p>
-            <p><strong>Why T is ambiguous for puts:</strong> longer T shrinks the PV of receiving X (hurts the put), but also raises the volatility of S(T) (helps the put). The two effects fight; the net is unclear. For calls both effects point the same way (up), so calls rise in T.</p>
+            <p>You won't reproduce d₁/d₂ under exam pressure, but you <em>must</em> know the five inputs and how each moves the price. The deep point, shared with all no-arbitrage option pricing: <span class="imp">the stock's expected return never enters.</span> Only volatility matters, because the option can be hedged with the underlying — so two people who disagree about the stock's expected return still agree on the option's price.</p>
+            <p>N(d₂) is (roughly) the risk-neutral probability the call finishes in the money; N(d₁) is the call's <strong>delta</strong> — the hedge ratio, how many shares replicate the call.</p>
         </div>
     </div>
 
-    <p>Comparative statics in full (each input rising, holding others fixed):</p>
+    <h3>Why each input moves the price the way it does</h3>
+
+    <div class="formula-box">
+        <p><strong>Comparative statics (the signs Lynch wants)</strong></p>
+        \[ C_{X,T}(0) = C\big(\underset{+}{S(0)},\ \underset{-}{X},\ \underset{+}{\sigma},\ \underset{+}{r'},\ \underset{+}{T}\big) \qquad P_{X,T}(0) = P\big(\underset{-}{S(0)},\ \underset{+}{X},\ \underset{+}{\sigma},\ \underset{-}{r'},\ \underset{?}{T}\big) \]
+        <div class="formula-actions">
+            <button class="intuition-btn" onclick="toggleIntuition(this)">💡 intuition</button>
+        </div>
+        <div class="intuition">
+            <p><strong>Why σ raises BOTH calls and puts</strong> — the truncation argument. More σ means more extreme S(T). The option payoff is <em>truncated at zero</em> on the bad side, so the holder gets the bigger favorable tail without bearing the bigger unfavorable tail. See the two-state table below: doubling the spread of S(T) (same E[S(T)] = 50) doubles both the call and put values from 5 to 15.</p>
+            <p><strong>Why r′ helps the call, hurts the put:</strong> higher r′ shrinks d<sub>T</sub>(0), so the PV of the strike X·d<sub>T</sub>(0) falls. The call pays X <em>later</em> (good when its PV is smaller); the put receives X later (bad).</p>
+            <p><strong>Why T is ambiguous for the put:</strong> longer T shrinks PV(X) received (hurts the put) but raises the volatility of S(T) (helps it). The two fight. For the call both point up (lower PV of X to pay, and more volatility), so calls unambiguously rise in T.</p>
+        </div>
+    </div>
+
+    <p>The σ effect, shown with two equally-likely states (same E[S(T)] = 50, strike X = 50):</p>
     <table class="matrix">
-        <thead><tr><th>Input ↑</th><th>European call C<sub>X,T</sub>(0)</th><th>European put P<sub>X,T</sub>(0)</th><th>Channel</th></tr></thead>
+        <thead><tr><th>Volatility</th><th>S(T) states</th><th>Call C(T) states</th><th>E[call payoff]</th><th>Put P(T) states</th><th>E[put payoff]</th></tr></thead>
         <tbody>
-            <tr><td>S(0)</td><td>↑</td><td>↓</td><td>[S(0) − X·d<sub>T</sub>(0)] moves with S(0)</td></tr>
-            <tr><td>X</td><td>↓</td><td>↑</td><td>higher strike hurts the call, helps the put</td></tr>
-            <tr><td><strong>σ</strong></td><td><strong>↑</strong></td><td><strong>↑</strong></td><td>more volatility in S(T) → more optionality both ways</td></tr>
-            <tr><td>r′</td><td>↑</td><td>↓</td><td>higher r′ shrinks d<sub>T</sub>(0) → PV of strike falls</td></tr>
-            <tr><td>T</td><td>↑</td><td>?</td><td>call: PV(X)↓ and σ-effect↑ both help; put: the two fight</td></tr>
+            <tr><td>σ[S(T)] = 10</td><td>40 or 60</td><td>0 or 10</td><td><strong>5</strong></td><td>10 or 0</td><td><strong>5</strong></td></tr>
+            <tr><td>σ[S(T)] = 30</td><td>20 or 80</td><td>0 or 30</td><td><strong>15</strong></td><td>30 or 0</td><td><strong>15</strong></td></tr>
         </tbody>
     </table>
+    <p class="caption">Same expected stock price, triple the volatility → triple the option value, for <em>both</em> the call and the put. The zero-truncation means only the favorable tail is kept.</p>
 
     <details class="math-aside">
-        <summary>The actual closed form (beyond Lynch's scope — for the curious / final reference)</summary>
-        <p>Lynch only requires the comparative statics above. For completeness, the closed-form Black-Scholes price of a European call on a non-dividend stock is:</p>
-        \[ C_{X,T}(0) = S(0)\,N(d_1) - X e^{-r'T} N(d_2), \quad d_1 = \frac{\ln(S(0)/X) + (r' + \tfrac12\sigma^2)T}{\sigma\sqrt T}, \quad d_2 = d_1 - \sigma\sqrt T \]
-        <p>where N(·) is the cumulative standard normal. The put follows from put-call parity. N(d₁) is the call's "delta" (hedge ratio). Note e<sup>−r′T</sup> = d<sub>T</sub>(0) under continuous compounding, tying this back to Lynch's notation.</p>
+        <summary>Why the expected return on the underlying does NOT affect the option price</summary>
+        <p>Take a stock that pays 0 or 30 for the call (states S(T) = 20 or 80, E[S(T)] = 50, price 40, so E[return] = 25%). Now imagine a more bullish stock with states 25 or 85 (E[S(T)] = 55, same σ = 30, same price 40, so a higher E[return] = 37.5%). The call now pays 0 or 35, E[payoff] = 17.5, E[call return] = 75% vs 50% before.</p>
+        <p>The call's <em>expected return</em> rose — but its <em>price today</em> (C(0) = 10 in both) did not, because the underlying's price S(0) = 40 is the same despite the higher expected return. <strong>Higher expected return on the stock ⟹ higher expected return on the call, but the same call price.</strong> Price is set by no-arbitrage replication, not by expectations.</p>
     </details>
+
+    <p><strong>Implied volatility.</strong> Four of the five inputs (S, X, r′, T) are directly observable; σ is not. The σ that makes the Black-Scholes price equal the market's actual option price is the <strong>implied volatility</strong> — the market's forecast of the underlying's volatility, backed out of the option price.</p>
 
     <div class="remember">
         <span class="label">✦ remember this — Lectures 9-10 (Derivatives &amp; options)</span>
@@ -4036,95 +4063,269 @@ The call's ask price on the screen was 2.45 ≥ 2.01. ✓  (the 0.44 gap is time
             <li><strong>Put-call parity:</strong> <span class="imp">S(0) = C<sub>X,T</sub>(0) − P<sub>X,T</sub>(0) + X·d<sub>T</sub>(0)</span>. Use the discount factor on the strike, never raw X.</li>
             <li><strong>No-arbitrage floors (intrinsic value):</strong> C ≥ max{S(0) − X·d<sub>T</sub>(0), 0}; P ≥ max{X·d<sub>T</sub>(0) − S(0), 0}. Price − intrinsic = time value ≥ 0.</li>
             <li><strong>American ≥ European.</strong> Non-dividend call: never exercise early ⟹ c = C (Black-Scholes prices it). American put: may exercise early ⟹ p ≥ P, no closed form.</li>
-            <li><strong>Black-Scholes (qualitative):</strong> C(S(0)<sup>+</sup>, X<sup>−</sup>, σ<sup>+</sup>, r′<sup>+</sup>, T<sup>+</sup>), P(S(0)<sup>−</sup>, X<sup>+</sup>, σ<sup>+</sup>, r′<sup>−</sup>, T<sup>?</sup>). r′ is continuously compounded; σ is return volatility. <span class="imp">σ raises both calls and puts; the stock's expected return never enters.</span></li>
+            <li><strong>Black-Scholes:</strong> C<sub>X,T</sub>(0) = S(0)N(d₁) − Xe<sup>−r′T</sup>N(d₂), with e<sup>−r′T</sup> = d<sub>T</sub>(0). Signs: C(S(0)<sup>+</sup>, X<sup>−</sup>, σ<sup>+</sup>, r′<sup>+</sup>, T<sup>+</sup>), P(S(0)<sup>−</sup>, X<sup>+</sup>, σ<sup>+</sup>, r′<sup>−</sup>, T<sup>?</sup>). <span class="imp">σ raises both call and put (zero-truncation); the stock's expected return never enters.</span> Non-div American call = European call, so BS prices it; no closed form for the American put. Implied vol = σ backed out of the market price.</li>
         </ul>
     </div>
 
-    <h2 id="forward-spot-parity">Lecture 10-11 - Forward &amp; futures valuation</h2>
+    <h2 id="forward-spot-parity">Lectures 10-11 - Forwards, futures &amp; swaps: valuation by replication</h2>
 
     <div class="callout">
-        <strong>Preview / pre-lecture scaffolding</strong> (taught Class 11). Standard cash-and-carry notation below; reconcile with Lynch's exact form after class.
+        <strong>The spine of the whole second half.</strong> Every valuation here uses one move: <em>build a synthetic copy of the contract out of stuff you can already price (the underlying + strips), lay out the cash flows in a Time-0 / Time-T table, and invoke the law of one price — the contract must cost the same as its synthetic.</em> Put-call parity, the option floors, forward prices, covered interest parity, and swap rates are all the same trick.
     </div>
 
-    <p>A forward locks in today a price F₀ to buy/sell an asset at time T. No premium changes hands; the payoff at expiry is linear: <strong>long forward → S<sub>T</sub> − F₀</strong>. The forward price is pinned by no-arbitrage, not by anyone's forecast of S<sub>T</sub>.</p>
+    <p>A <strong>forward</strong> obligates the buyer to pay the preset forward price F<sub>T</sub>(0) at settlement T and receive the asset. Payoff: buyer S(T) − F<sub>T</sub>(0), seller F<sub>T</sub>(0) − S(T). No money changes hands at initiation — which immediately pins down F<sub>T</sub>(0) by no-arbitrage.</p>
+
+    <h3>Forward-spot parity (no carrying costs)</h3>
+
+    <p>Replicate "buy the forward" with "buy the asset now + borrow." The two strategies have identical cash flows at T, so they must cost the same at time 0. Lynch's gold example (7/23, spot S(0) = 400, 1-yr strip price 80 per $100 face so d<sub>1</sub>(0) = 0.8):</p>
+
+    <table class="matrix">
+        <thead><tr><th>Strategy</th><th>Time 0</th><th>Time T (= 7/24)</th></tr></thead>
+        <tbody>
+            <tr><td>Buy forward on 1 oz gold</td><td>0</td><td>S(T) − F<sub>T</sub>(0)</td></tr>
+            <tr><td colspan="3"><em>synthetic forward:</em></td></tr>
+            <tr><td>Buy 1 oz gold, sell at T</td><td>−400</td><td>S(T)</td></tr>
+            <tr><td>Sell strips, face F<sub>T</sub>(0)</td><td>+F<sub>T</sub>(0)·0.8</td><td>−F<sub>T</sub>(0)</td></tr>
+            <tr><td><strong>Synthetic net</strong></td><td><strong>F<sub>T</sub>(0)·0.8 − 400</strong></td><td>S(T) − F<sub>T</sub>(0)</td></tr>
+        </tbody>
+    </table>
 
     <div class="formula-box">
-        <p><strong>Forward-spot parity (cash-and-carry)</strong></p>
-        \[ F_0 = S_0\,(1+r)^T \qquad\text{(with income yield } q\text{: } F_0 = S_0\,(1 + r - q)^T) \]
+        <p><strong>Forward-spot parity, no carry</strong></p>
+        \[ F_T(0) = \frac{S(0)}{d_T(0)} = S(0)\,[1 + y^*_T(0)]^T \]
         <div class="formula-actions">
             <button class="intuition-btn" onclick="toggleIntuition(this)">💡 intuition</button>
-            <button class="derive-btn" onclick="toggleDerivation(this)">▼ derive</button>
         </div>
         <div class="intuition">
-            <p><strong>Buying forward and "buying-and-carrying" must cost the same.</strong> You could lock in delivery via a forward, or borrow S₀, buy the asset now, and hold it to T. Both leave you owning the asset at T, so the forward price equals the cost of carrying: today's price grown at the financing rate, minus any income the asset throws off while you hold it.</p>
-            <p><span class="imp">F₀ is not the expected future spot.</span> And a <em>new</em> forward is priced so its value is 0; an <em>existing</em> forward gains value (F<sub>t</sub> − F₀, discounted) as the spot moves. F &gt; S is <em>contango</em>; F &lt; S is <em>backwardation</em>.</p>
-        </div>
-        <div class="derivation">
-            <p>Strategy A: enter a long forward at F₀; pay nothing today, pay F₀ at T to receive the asset. Strategy B: borrow S₀ at rate r, buy the asset now, owe S₀(1+r)<sup>T</sup> at T (less any income q earned). Both deliver one unit of the asset at T. If F₀ ≠ S₀(1+r−q)<sup>T</sup>, short the dear leg and buy the cheap one for a riskless profit. So they must be equal. ∎</p>
+            <p>The synthetic forward costs nothing at T-matching, so its time-0 cost must be zero too (the real forward costs nothing today): F<sub>T</sub>(0)·d<sub>1</sub>(0) − 400 = 0 ⟹ F<sub>T</sub>(0) = 400/0.8 = <strong>500</strong>.</p>
+            <p><strong>The forward price is just the future value of today's spot price</strong>, grown at the strip yield to the settlement date. It is <em>not</em> a forecast of S(T). The more distant the settlement, the higher the forward price (more compounding).</p>
         </div>
     </div>
 
+    <h3>With carrying costs</h3>
+
+    <div class="formula-box">
+        <p><strong>Forward-spot parity, general (carrying cost C(τ) paid at time τ)</strong></p>
+        \[ F_T(0) = \frac{S(0) + C(\tau)\,d_\tau(0)}{d_T(0)} \]
+        <div class="formula-actions">
+            <button class="intuition-btn" onclick="toggleIntuition(this)">💡 intuition</button>
+        </div>
+        <div class="intuition">
+            <p>Carrying the asset yourself may cost extra (storage for a commodity) or pay you (dividends on a stock index). Add the PV of any storage cost to the spot before growing it to T.</p>
+            <ul class="bullets">
+                <li><strong>Positive carry</strong> (storage) → <em>higher</em> forward price. Cotton example: S(0) = 71, storage 10 paid at ½-yr (d<sub>½</sub> = 0.9), d<sub>1</sub> = 0.8 → F = (71 + 10·0.9)/0.8 = <strong>100</strong>.</li>
+                <li><strong>Negative carry</strong> (a dividend-paying index) → <em>lower</em> forward price. The dividends you'd collect by holding the asset make the synthetic cheaper, so the forward is cheaper.</li>
+            </ul>
+        </div>
+    </div>
+
+    <h3>Arbitrage when forward-spot parity is violated</h3>
+
+    <p>If the gold forward trades at 520 but parity says 500, the forward is too dear — <strong>sell the forward, buy the synthetic</strong>:</p>
+
+    <table class="matrix">
+        <thead><tr><th>Strategy</th><th>Time 0</th><th>Time T</th></tr></thead>
+        <tbody>
+            <tr><td>Sell forward (deliver 1 oz at 520)</td><td>0</td><td>520 − S(T)</td></tr>
+            <tr><td>Buy 1 oz gold, sell at T</td><td>−400</td><td>S(T)</td></tr>
+            <tr><td>Sell strips, face 520</td><td>+520·0.8 = 416</td><td>−520</td></tr>
+            <tr><td><strong>Net</strong></td><td><strong>+16</strong></td><td><strong>0</strong></td></tr>
+        </tbody>
+    </table>
+
+    <p>$16 risk-free today, zero at T. Rule: <strong>forward too high → sell the forward, buy the underlying (and borrow); forward too low → buy the forward, short the underlying (and lend).</strong></p>
+
+    <h3>Covered interest parity (forwards on a currency)</h3>
+
+    <p>A forward to deliver £ in T years: the underlying is the foreign currency, and the "negative carry" is the foreign interest you'd earn holding £. Build a synthetic $-strip by buying £ today, investing at the £ rate, and locking in the forward exchange rate. Lynch's example (7/23: spot S<sup>$/£</sup>(0) = 1.60, 1-yr $ yield 25%, 1-yr £ yield 10%):</p>
+
+    <div class="formula-box">
+        <p><strong>Covered interest parity</strong></p>
+        \[ [1 + y^{*\$}_T(0)]^T = F^{\$/£}_T(0)\cdot\frac{1}{S^{\$/£}(0)}\cdot[1 + y^{*£}_T(0)]^T \quad\Leftrightarrow\quad \frac{[1+y^{*\$}_T(0)]^T}{[1+y^{*£}_T(0)]^T} = \frac{F^{\$/£}_T(0)}{S^{\$/£}(0)} \]
+        <div class="formula-actions">
+            <button class="intuition-btn" onclick="toggleIntuition(this)">💡 intuition</button>
+        </div>
+        <div class="intuition">
+            <p>Two ways to turn $1 into dollars in a year: (A) buy a 1-yr $-strip → 1.25; (B) convert to £ now, earn the £ rate, convert back at the locked forward rate. No-arbitrage forces them equal: F = 1.60·(1.25/1.10) = <strong>$1.8181/£</strong>.</p>
+            <p><strong>The higher-yielding currency trades at a forward discount.</strong> Here $ yields (25%) &gt; £ yields (10%), so you get more $ per £ in the future than today — the £ forward price (in $) is above spot. If the foreign currency yielded more than the dollar, its forward price would be below spot.</p>
+        </div>
+    </div>
+
+    <h3>Futures vs forwards</h3>
+    <ul class="bullets">
+        <li><strong>Futures</strong> are marked-to-market daily (gains/losses settle every day); <strong>forwards</strong> settle once, at expiry.</li>
+        <li>Because of daily settlement, the futures price need not exactly equal the forward price — but spot-forward parity holds <em>approximately</em> for futures.</li>
+    </ul>
+
+    <h3>Interest rate swaps (introduced in L7-8) — a synthetic bond swap</h3>
+
+    <p>An <strong>interest rate swap</strong> exchanges a stream of fixed-rate payments for a stream of floating-rate (LIBOR) payments on a notional principal. The notional itself never changes hands — only the interest streams.</p>
+
+    <ul class="bullets">
+        <li><strong>Fixed-rate payer</strong> ("bought the swap"): pays fixed, receives floating. Synthetically = <em>short a fixed-rate bond + long a floating-rate bond</em>.</li>
+        <li><strong>Floating-rate payer</strong> ("sold the swap"): pays floating, receives fixed. The mirror image.</li>
+        <li>The fixed rate is the <strong>swap rate</strong>.</li>
+    </ul>
+
+    <div class="formula-box">
+        <p><strong>The swap rate by no-arbitrage</strong></p>
+        <p style="margin:0.2em 0;"><em>At initiation the swap rate is set so that PV(fixed leg) = PV(floating leg). The value of the swap is then zero to both sides — which is why no money changes hands to enter it.</em></p>
+        <div class="formula-actions">
+            <button class="intuition-btn" onclick="toggleIntuition(this)">💡 intuition</button>
+        </div>
+        <div class="intuition">
+            <p>Same recipe as everything else in this section: a swap is a <em>portfolio of two bonds</em>. The fixed-rate payer is long a floating bond and short a fixed bond, both at the notional. Set the fixed coupon (the swap rate) so the two bonds have equal PV today → the swap is worth 0 at inception.</p>
+            <p><strong>After inception the swap gains or loses value as rates move.</strong> If rates rise, the fixed-rate payer wins (they locked in paying the old, lower fixed rate while receiving the higher floating). If rates fall, the floating-rate payer wins.</p>
+            <p><strong>Credit risk is small</strong> because only the <em>net difference</em> between the two legs changes hands each period — never the notional. If your counterparty defaults you lose the difference, not the whole principal.</p>
+        </div>
+    </div>
+
+    <p><strong>Example.</strong> Company A (an S&amp;L) agrees to pay Company B 10% fixed (semi-annual) on a $50M notional for 5 years; B pays A six-month LIBOR on the same notional. The floating rate resets every 6 months off the prevailing LIBOR. If LIBOR is 7% at a reset, A pays B 0.5·10%·50M = $2.5M and B pays A 0.5·7%·50M = $1.75M — only the $0.75M net actually moves. A (the fixed-rate payer) profits if rates rise above 10%.</p>
+
     <div class="remember">
-        <span class="label">✦ remember this — Lecture 10-11 (Forwards)</span>
+        <span class="label">✦ remember this — Lectures 10-11 (Forwards, futures &amp; swaps)</span>
         <ul>
-            <li><strong>F₀ = S₀(1+r)<sup>T</sup></strong> (subtract carry/income: S₀(1+r−q)<sup>T</sup>). Set by arbitrage, not by expectations.</li>
-            <li><strong>New forward → value 0; existing forward → value (F<sub>t</sub> − F₀) discounted.</strong> Don't confuse forward <em>price</em> with forward <em>value</em>.</li>
-            <li><strong>Futures</strong> are forwards marked-to-market daily; forwards settle once at expiry.</li>
+            <li><strong>The replication recipe:</strong> build a synthetic contract from the underlying + strips, match cash flows at T in a Time-0/Time-T table, set time-0 costs equal (law of one price). Solve for the unknown price.</li>
+            <li><strong>Forward-spot parity:</strong> <span class="imp">F<sub>T</sub>(0) = S(0)/d<sub>T</sub>(0) = S(0)[1+y*<sub>T</sub>(0)]<sup>T</sup></span>. With carry: F<sub>T</sub>(0) = [S(0) + C(τ)d<sub>τ</sub>(0)]/d<sub>T</sub>(0). Storage raises F; dividends lower it. The forward price is the FV of spot, not a forecast.</li>
+            <li><strong>Arbitrage rule:</strong> forward too high → sell forward + buy underlying; too low → buy forward + short underlying. (Gold 520 vs 500 → +16 risk-free.)</li>
+            <li><strong>Covered interest parity:</strong> [1+y*$<sub>T</sub>]<sup>T</sup> = F<sup>$/£</sup><sub>T</sub>(0)·(1/S<sup>$/£</sup>(0))·[1+y*£<sub>T</sub>]<sup>T</sup>. The higher-yielding currency trades at a forward discount. (£ example → $1.8181/£.)</li>
+            <li><strong>Futures</strong> = daily marked-to-market forwards; parity holds approximately.</li>
+            <li><strong>Swap = a portfolio of two bonds.</strong> Fixed-rate payer = long floating bond + short fixed bond. Swap rate set so PV(fixed) = PV(floating) → value 0 at inception. Only the net difference changes hands → low credit risk. Rates rise → fixed-rate payer wins.</li>
         </ul>
     </div>
 
     <h2 id="capital-budgeting">Lecture 11 - Valuation models &amp; capital budgeting</h2>
 
-    <div class="callout">
-        <strong>Preview / pre-lecture scaffolding</strong> (taught Class 11). The NPV machinery is just the course's discounting engine pointed at real projects — and the discount rate comes straight from the SML you already know.
-    </div>
+    <p>Valuation = figuring out what an asset is worth. Three approaches: <strong>discounted cash flow</strong> (PV of expected cash flows), <strong>relative valuation</strong> (comparable multiples like P/E), and <strong>contingent-claim valuation</strong> (option-pricing tools for assets with option features). The course's whole engine — discount expected cash flows at a risk-adjusted rate — is the DCF approach, and the rate comes straight from the CAPM SML.</p>
 
     <div class="formula-box">
-        <p><strong>Net present value (decision rule: accept if NPV &gt; 0)</strong></p>
-        \[ NPV = CF_0 + \sum_{t=1}^{T} \frac{E[CF_t]}{(1+r)^t}, \qquad r = R_f + \beta\,(E[R_M] - R_f) \]
+        <p><strong>General DCF / discounted dividend model</strong></p>
+        \[ P_0 = \sum_{t=1}^{\infty} \frac{E[CF_t]}{(1 + E[R])^t}, \qquad E[R] = R_f + \beta\,(E[R_M] - R_f) \]
+        <p>For equity, the cash flows are dividends (DDM): P<sub>0</sub> = Σ E[D<sub>t</sub>]/(1+E[R])<sup>t</sup>.</p>
         <div class="formula-actions">
             <button class="intuition-btn" onclick="toggleIntuition(this)">💡 intuition</button>
         </div>
         <div class="intuition">
-            <p><strong>Discount expected cash flows at the risk-adjusted required return and add them up.</strong> The discount rate <span class="imp">is the SML return for the project's β — not R<sub>f</sub></span>. Using R<sub>f</sub> would overvalue a risky project. This is the same "PV of cash flows" idea from week one, now with a CAPM discount rate.</p>
-            <p><strong>IRR</strong> = the rate making NPV = 0; accept if IRR &gt; r. Gotchas: non-conventional cash flows can give multiple IRRs, and scale/timing differences can flip IRR rankings — when NPV and IRR disagree, trust NPV. The <strong>Gordon dividend-discount model</strong> P₀ = D₁/(r − g) is the same engine for a growing perpetuity of dividends.</p>
+            <p><strong>Price today = PV of expected future cash flows, discounted at the required return for the asset's risk.</strong> The discount rate <span class="imp">is the SML return for the asset's β — not R<sub>f</sub></span>. The formula also shows why an asset-pricing model matters for valuation: a higher required return (riskier asset) means a lower price for the same cash flows.</p>
+        </div>
+    </div>
+
+    <div class="formula-box">
+        <p><strong>Constant-growth DDM (Gordon)</strong></p>
+        \[ P_0 = \frac{D_0(1+g)}{E[R] - g} = \frac{E[D_1]}{E[R] - g} \quad (\text{valid if } E[R] > g), \qquad E[R] = \frac{E[D_1]}{P_0} + g \]
+        <div class="formula-actions">
+            <button class="intuition-btn" onclick="toggleIntuition(this)">💡 intuition</button>
+        </div>
+        <div class="intuition">
+            <p>A growing perpetuity of dividends. Rearranged, <strong>required return = dividend yield + growth</strong> — the g term is the expected capital gain (E[P₁] = P₀(1+g)).</p>
+            <p><strong>IBM example (end of 2004).</strong> D₀ = $0.70, β = 1.01 → CAPM E[R] = 2.74% + 1.01·(11.88 − 2.74)% = 11.97%; analyst earnings growth g = 10.68%. Then P₀ = 0.70·(1.1068)/(0.1197 − 0.1068) = <strong>$59.99</strong> — versus IBM's actual price of $98.58. Taken at face value, the model calls IBM overvalued (a sell). In practice the result is hugely sensitive to g, which is the model's weakness.</p>
+        </div>
+    </div>
+
+    <h3>Capital budgeting — NPV with a CAPM discount rate</h3>
+
+    <div class="formula-box">
+        <p><strong>Net present value (accept if NPV &gt; 0)</strong></p>
+        \[ NPV_0 = CF_0 + \sum_{t=1}^{\infty} \frac{E[CF_t]}{(1+E[R])^t}, \qquad E[R] = R_f + \beta_{\text{project}}(E[R_M] - R_f) \]
+        <div class="formula-actions">
+            <button class="intuition-btn" onclick="toggleIntuition(this)">💡 intuition</button>
+        </div>
+        <div class="intuition">
+            <p>Discount the project's <em>incremental</em> expected cash flows at the required return <span class="imp">for the project's risk — use the β of the business line, not the firm's overall β</span>. Include only incremental cash flows; ignore sunk costs and already-committed overhead.</p>
+            <p><strong>ZDF example.</strong> A new widget line costs $20M today and returns $5M/yr for 10 years. The required return on assets for widget-makers is 15% (use this, not ZDF's 18% or its 20% equity return). Headquarters overhead is a sunk cost — ignore it. NPV = −20 + 5·PVAF(15%, 10) = −20 + 5·5.0187 = <strong>+$5.09M &gt; 0 → accept.</strong></p>
+        </div>
+    </div>
+
+    <details class="math-aside">
+        <summary>Investment opportunities: where growth g comes from (g = b·ROE)</summary>
+        <p>If a firm retains a fraction b of earnings (the <strong>plowback ratio</strong>) and earns ROE on book equity, then expected earnings, dividends, and book value all grow at:</p>
+        \[ g = b \cdot \text{ROE} \]
+        <p>Valuation becomes P₀ = E[E₁](1 − b)/(E[R] − b·ROE). <strong>Optimal plowback:</strong> if E[R] &gt; ROE, set b = 0 (don't reinvest — the firm destroys value reinvesting below its cost of capital); if E[R] &lt; ROE, more plowback raises the price; if E[R] = ROE, b doesn't matter. IBM: g = 10.68%, payout (1−b) = D₀/E₀ = 0.70/4.94 = 14.2% so b = 85.8%, ROE = g/b = 12.45% &gt; E[R] = 11.88% → P₀ rises in b.</p>
+    </details>
+
+    <h3>Relative valuation — the P/E multiple</h3>
+
+    <div class="formula-box">
+        <p><strong>P/E valuation</strong></p>
+        \[ \frac{P_0}{E[E_1]} = \frac{1 - b}{E[R] - g}, \qquad P_0 = E_0 \cdot (P/E)_{\text{comparables}} \]
+        <div class="formula-actions">
+            <button class="intuition-btn" onclick="toggleIntuition(this)">💡 intuition</button>
+        </div>
+        <div class="intuition">
+            <p>Value a firm by applying the average P/E of comparable firms to its earnings. <strong>Strength:</strong> simple and quick; works for non-traded firms. <strong>Weaknesses:</strong> "comparable" is subjective, and accounting earnings are distorted by inconsistent accounting across firms. To be truly comparable, firms need similar required return, payout, and growth.</p>
         </div>
     </div>
 
     <div class="remember">
-        <span class="label">✦ remember this — Lecture 11 (Capital budgeting)</span>
+        <span class="label">✦ remember this — Lecture 11 (Valuation &amp; capital budgeting)</span>
         <ul>
-            <li><strong>NPV &gt; 0 → accept.</strong> Discount E[CF] at <span class="imp">r = R<sub>f</sub> + β(E[R<sub>M</sub>] − R<sub>f</sub>)</span>, the SML rate.</li>
-            <li><strong>NPV vs IRR conflict → trust NPV.</strong> Watch for multiple IRRs with non-conventional cash flows.</li>
-            <li><strong>Gordon:</strong> P₀ = D₁/(r − g) for a constantly growing dividend (r &gt; g).</li>
+            <li><strong>Three approaches:</strong> DCF (PV of expected cash flows), relative (multiples), contingent-claim (option tools).</li>
+            <li><strong>DCF / DDM:</strong> P₀ = Σ E[CF<sub>t</sub>]/(1+E[R])<sup>t</sup>, discount rate from the <span class="imp">SML</span>. Higher required return → lower price.</li>
+            <li><strong>Gordon:</strong> P₀ = E[D₁]/(E[R] − g) (need E[R] &gt; g). Equivalently E[R] = dividend yield + g. Very sensitive to g.</li>
+            <li><strong>NPV &gt; 0 → accept.</strong> Discount <em>incremental</em> cash flows at the <span class="imp">project's</span> required return (business-line β, not firm β). Ignore sunk costs. (ZDF: NPV = +5.09M.)</li>
+            <li><strong>Growth:</strong> g = b·ROE. Reinvest (b &gt; 0) only when ROE &gt; E[R]; otherwise pay it out.</li>
+            <li><strong>P/E:</strong> P₀/E[E₁] = (1−b)/(E[R]−g); apply comparable multiples. Quick but comparables are subjective and earnings are noisy.</li>
         </ul>
     </div>
 
     <h2 id="market-efficiency">Lecture 11 - Market efficiency</h2>
 
-    <div class="callout">
-        <strong>Preview / pre-lecture scaffolding</strong> (taught Class 11). Mostly conceptual — bank these as the easiest points on the final.
+    <p>The course's closing warning. In an <strong>efficient market the price is an unbiased estimate of value</strong> — it already reflects available information, so you can't systematically earn abnormal risk-adjusted returns. Efficiency has two dimensions: <em>how much</em> information is in the price, and <em>how fast</em> new information gets incorporated.</p>
+
+    <div class="formula-box">
+        <p><strong>The efficiency identity</strong></p>
+        \[ \text{Realized return} = \text{Expected return} + \text{Unpredictable mean-zero surprise} \]
+        <div class="formula-actions">
+            <button class="intuition-btn" onclick="toggleIntuition(this)">💡 intuition</button>
+        </div>
+        <div class="intuition">
+            <p>In an efficient market the only thing that moves price away from its expected path is <em>genuinely new</em> information — a surprise that is, by definition, unforecastable and averages to zero. Even if news itself is correlated over time, the <em>surprises</em> aren't: the market already priced in the predictable part.</p>
+        </div>
     </div>
 
-    <p>The <strong>Efficient Market Hypothesis (EMH)</strong>: prices already reflect available information, so you can't systematically earn abnormal risk-adjusted returns. Three nested forms, by what "available information" means:</p>
+    <h3>Autocorrelation and efficiency — the subtle part</h3>
+    <ul class="bullets">
+        <li><strong>If expected returns are constant through time:</strong> efficiency ⟹ returns are <em>not</em> autocorrelated (you can't predict future returns from past returns). Autocorrelation would then signal inefficiency.</li>
+        <li><strong>If expected returns vary through time</strong> (with the business cycle): returns can be autocorrelated <em>and the market still efficient</em> — the predictability is in the time-varying expected return, not in mispricing. <span class="imp">So autocorrelated returns do NOT by themselves imply inefficiency.</span></li>
+    </ul>
+
+    <h3>Skill vs luck</h3>
+    <p>In an efficient market, a manager's expected abnormal performance (Jensen's α in a CAPM world) is <strong>zero</strong>. In any given period some managers post great returns purely by chance, so be skeptical of a short track record. <strong>The longer the run of good performance, the more likely it's skill and not luck.</strong></p>
+
+    <h3>The three forms (nested)</h3>
     <table class="matrix">
-        <thead><tr><th>Form</th><th>Info already in the price</th><th>What it kills</th></tr></thead>
+        <thead><tr><th>Form</th><th>Info already in price</th><th>Kills</th><th>Nesting</th></tr></thead>
         <tbody>
-            <tr><td>Weak</td><td>past prices &amp; returns</td><td>technical analysis</td></tr>
-            <tr><td>Semi-strong</td><td>all <em>public</em> info (earnings, news)</td><td>fundamental analysis on public data</td></tr>
-            <tr><td>Strong</td><td>all info, incl. <em>private</em> / insider</td><td>even insider trading</td></tr>
+            <tr><td><strong>Weak</strong></td><td>past prices &amp; returns</td><td>technical analysis</td><td>—</td></tr>
+            <tr><td><strong>Semi-strong</strong></td><td>all <em>public</em> info (earnings, news)</td><td>fundamental analysis on public data</td><td>⟹ also weak</td></tr>
+            <tr><td><strong>Strong</strong></td><td>all info, incl. <em>private</em>/insider</td><td>even insider trading (illegal anyway)</td><td>⟹ also semi-strong &amp; weak</td></tr>
         </tbody>
     </table>
+
+    <h3>How efficient are U.S. markets?</h3>
+    <ul class="bullets">
+        <li>Probably <strong>semi-strong efficient but not strong-form efficient.</strong> Rare semi-strong anomalies exist (e.g. the drift around S&amp;P 500 index additions/deletions), but it's generally very hard to beat the market using only public information.</li>
+        <li><strong>Mutual funds confirm it.</strong> Net of fees and trading costs, the average fund's α is <em>negative</em> (~−1.8%/yr; Carhart/Carpenter/Lynch/Musto 2002) — worse for high-turnover and high-expense funds. Bad performance persists (driven by costs); good performance does <em>not</em> persist (consistent with luck, not skill).</li>
+        <li><strong>Implication:</strong> to add value, a manager needs genuine non-public "smarts," not public-data screens.</li>
+    </ul>
+
+    <h3>Why testing efficiency is hard</h3>
+    <ul class="bullets">
+        <li><strong>Joint-hypothesis problem.</strong> Any test of efficiency is simultaneously a test of the assumed asset-pricing model. Value stocks plotting above the SML implies semi-strong inefficiency <em>if</em> CAPM is right — but in a multifactor world the extra return could just be compensation for a priced state-variable risk. You can never cleanly separate the two. Ties straight back to <a href="#perf-measures">CAPM's empirical failures</a> and <a href="#multifactor">Fama-French</a>.</li>
+        <li><strong>Data-mining.</strong> "Seek and thou shalt find" — even truly random data show patterns if you look hard enough. In-sample predictability need not survive out-of-sample.</li>
+    </ul>
 
     <div class="remember">
         <span class="label">✦ remember this — Lecture 11 (Market efficiency)</span>
         <ul>
-            <li><strong>Match the anomaly to the form:</strong> beating the market on <em>past prices</em> → weak violated; on <em>public info</em> → semi-strong; on <em>private info</em> → strong.</li>
-            <li><strong>Joint-hypothesis problem:</strong> any efficiency test is a joint test of EMH <em>and</em> the asset-pricing model. A surviving anomaly (size, value, momentum) is either inefficiency <em>or</em> a missing risk factor — ties straight back to <a href="#perf-measures">CAPM's empirical failures</a>, Roll's critique, and <a href="#multifactor">Fama-French</a>.</li>
-            <li><strong>Implication:</strong> positive-NPV <em>financial</em> investments are rare in an efficient market; positive NPV lives in <em>real</em> projects with a genuine competitive edge.</li>
+            <li><strong>Efficient price = unbiased estimate of value.</strong> Realized return = expected return + unpredictable mean-zero surprise.</li>
+            <li><strong>Autocorrelation ≠ inefficiency</strong> if expected returns vary through time. Only under <em>constant</em> expected returns does predictability imply inefficiency.</li>
+            <li><strong>Skill vs luck:</strong> expected α = 0 in an efficient market; long track records distinguish skill from chance.</li>
+            <li><strong>Three forms:</strong> weak (past prices → kills technicals), semi-strong (public info → kills fundamentals), strong (private info → kills insider trading). Strong ⟹ semi-strong ⟹ weak.</li>
+            <li><strong>U.S. markets:</strong> ~semi-strong, not strong. Average mutual-fund α &lt; 0; good performance doesn't persist (luck).</li>
+            <li><strong>Joint-hypothesis problem:</strong> every efficiency test is also a test of the pricing model — an anomaly is inefficiency <em>or</em> a missing risk factor. Plus data-mining: in-sample ≠ out-of-sample.</li>
         </ul>
     </div>
-
     <h2 id="integrated">Integrated problems</h2>
 
     <p>Each of these wires together multiple ideas - the kind of multi-step reasoning Lynch's exam tends to probe.</p>
