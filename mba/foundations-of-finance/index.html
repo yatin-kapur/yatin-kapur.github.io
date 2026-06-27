@@ -3158,6 +3158,23 @@ Individual asset weights:
 
     <p>The discount factor d<sub>T</sub>(0) is the most useful single object — it's the price tag of a $1 promise at time T. <strong>Every bond is a sum of d-weighted future cash flows.</strong></p>
 
+    <h3>Asked Yield, APR, and YTM — reading the quote</h3>
+
+    <p>For a note or bond, three of these are <strong>the same number</strong>: the WSJ <em>Asked Yield</em>, the <em>YTM</em>, and "<em>the APR</em>" are all the bond's yield to maturity quoted as an <strong>APR with semi-annual compounding</strong>. The yield is solved as a 6-month <em>periodic</em> rate, then doubled to quote it. The only genuinely different figure is the <strong>EAR</strong>, which adds the within-year compounding the APR convention ignores.</p>
+
+    <table class="matrix">
+        <thead><tr><th>Concept</th><th>What it is</th><th>Example: 6% note priced at par</th></tr></thead>
+        <tbody>
+            <tr><td><strong>YTM</strong></td><td>The IRR that prices the bond — a 6-month <em>periodic</em> rate underneath.</td><td>periodic = 3% per 6 months</td></tr>
+            <tr><td><strong>APR</strong></td><td>Quoting convention: APR = m × periodic rate (m = 2 for Treasuries). No compounding — just ×2.</td><td>2 × 3% = <strong>6.00%</strong></td></tr>
+            <tr><td><strong>Asked Yield</strong> (note/bond)</td><td>= YTM = the APR (semi-annual). So periodic rate = Asked Yield ÷ 2 — that's what you plug into the pricing formula.</td><td>6.00% (what the WSJ prints)</td></tr>
+            <tr><td><strong>Asked Yield</strong> (T-bill)</td><td>Exception — the <a href="#fixed-income">bond-equivalent yield</a>: HTM return annualized simply, y = (365/n)·R. No semi-annual compounding.</td><td>see the 37-day T-bill above</td></tr>
+            <tr><td><strong>EAR</strong></td><td>(1 + APR/2)<sup>2</sup> − 1 — the <em>true</em> compounded annual rate, always slightly above the APR.</td><td>(1.03)<sup>2</sup> − 1 = <strong>6.09%</strong></td></tr>
+        </tbody>
+    </table>
+
+    <p><strong>Takeaway:</strong> divide the Asked Yield by 2 to get the semi-annual rate that goes into the bond formula; reach for the EAR only when you need the true annual return (the ~0.09% gap here is the compounding the quote leaves out).</p>
+
     <h3>Lynch's running example — strip prices on 2/15/24</h3>
 
     <p>Three strips trading on 2/15/24:</p>
