@@ -261,6 +261,7 @@
         <li><a href="#bond-pricing">bond pricing &amp; forwards</a></li>
         <li><a href="#yield-curve-theories">yield curve theories</a></li>
         <li><a href="#duration">duration</a></li>
+        <li><a href="#fixed-income-map"><strong>★ no-arbitrage map</strong></a></li>
         <li><a href="#options">derivatives &amp; options</a></li>
         <li><a href="#forward-spot-parity">forwards, futures &amp; swaps</a></li>
         <li><a href="#capital-budgeting">valuation &amp; capital budgeting</a></li>
@@ -269,55 +270,25 @@
 
     <div class="takeaways" id="takeaways">
         <h3>Key ideas (full course — Lectures 1 through 11)</h3>
-        <p style="margin-top: 0; font-size: 0.9em; color: #666;">Refreshed after each lecture. Each lecture section also has its own "✦ remember this" callout at the end.</p>
+        <p style="margin-top: 0; font-size: 0.9em; color: #666;">The whole sweep in one screen — the spine is <span class="imp">law of one price → build a synthetic → no-arbitrage</span>.</p>
         <ol>
-            <li><strong>A dollar today is worth more than a dollar later.</strong> Every valuation question reduces to: discount future cash flows by the right rate and add them up. PV, FV, annuity, perpetuity — different shapes of the same idea. Compounding is the snowball; discounting is the snowball in reverse.</li>
-            <li><strong>APR ≠ EAR.</strong> APR is a quoting convention (the per-period rate times the number of compounding periods per year). EAR is the actual annual rate you earn or pay. Always convert to EAR before comparing rates with different compounding frequencies.</li>
-            <li><strong>Continuous compounding is the limit</strong> as you compound more and more often. Continuous rates <em>add</em> over time instead of compounding multiplicatively, which is why all of derivatives pricing uses them.</li>
-            <li><strong>Annuities and perpetuities collapse infinite sums into one formula</strong> via the geometric series. Annuity PVAF = (1 − (1+r)<sup>−N</sup>)/r; perpetuity = C/r; growing perpetuity = C/(r−g) when r &gt; g.</li>
-            <li><strong>Investors prefer more to less, and almost all are risk averse.</strong> Risk averse means: for a given expected return, prefer lower volatility; for a given volatility, prefer higher expected return. When one portfolio has higher E[R] AND higher σ, the call depends on the investor's risk-aversion level.</li>
-            <li><strong>Markets have structure.</strong> Limit orders provide liquidity (you sit on the book at a price); market orders demand immediacy (you cross the spread and pay the cost). Bid-ask spread is the price of immediacy and the profit of liquidity providers. Dealers manage inventory toward zero.</li>
-            <li><strong>The three ways to hold a stock — long, on margin, short</strong> — map to portfolio weights ω: in (0,1], &gt;1 with negative riskless weight, &lt;0 respectively. Percentage margin = Net Worth / Value of Stock; if it falls below maintenance margin, you get a margin call.</li>
-            <li><strong>The portfolio return formula</strong> R_p = Σ ω<sub>i</sub> R<sub>i</sub> handles long, levered, and short positions with the same equation — only the signs and magnitudes of weights change. Weights sum to 1.</li>
-            <li><strong>Risk = standard deviation (for now).</strong> A return distribution is summarized by E[R] (its center) and σ (its spread). Covariance and correlation describe how two assets move together — and that joint behavior is the whole point of diversification.</li>
-            <li><strong>Regression slope = covariance / variance.</strong> b = σ[Y,X] / σ²[X]. When we run R_stock on R_market in Lecture 5, this slope becomes <em>beta</em>, the central risk measure in CAPM.</li>
-            <li><strong>One risky + one riskless = a Capital Allocation Line</strong> in (σ, E[R]) space. Slope = (E[R<sub>i</sub>] − R<sub>f</sub>) / σ[R<sub>i</sub>] = reward per unit of risk. Between two risky assets, every risk-averse investor picks the one with the steeper CAL, regardless of their personal risk aversion.</li>
-            <li><strong>Two-fund separation (preview).</strong> Risk aversion determines <em>where</em> on the CAL you sit (more averse = closer to R<sub>f</sub>, less averse = further out / on margin). It does NOT determine <em>which</em> CAL — that's a universal choice. This is the seed of CAPM.</li>
-            <li><strong>With two risky assets, the portfolio possibility curve bows leftward as correlation drops.</strong> Lower ρ → more diversification benefit. At ρ = −1 you can construct a riskless portfolio. Min-variance portfolio: ω₁* = (σ₂² − σ<sub>1,2</sub>) / (σ₁² + σ₂² − 2σ<sub>1,2</sub>).</li>
-            <li><strong>Adding a riskless asset changes the efficient frontier from a curve to a straight line.</strong> The CAL through the tangency portfolio T dominates every point on the curved frontier except T itself.</li>
-            <li><strong>Tangency portfolio T:</strong> for 2 assets, closed form using excess returns and covariances. For N assets, w<sub>T</sub> = Σ⁻¹μ<sub>excess</sub> / (1<sup>T</sup>Σ⁻¹μ<sub>excess</sub>). Max Sharpe ratio: √(μ<sub>excess</sub><sup>T</sup>Σ⁻¹μ<sub>excess</sub>).</li>
-            <li><strong>For N assets, equal-weighted portfolio variance decomposes as σ²/N + (1 − 1/N) × avg covariance.</strong> First term → 0 (diversifiable / idiosyncratic risk). Second term → average covariance (systematic / undiversifiable risk). Even infinite diversification can't get below √ρ̄ × σ.</li>
-            <li><strong>Minimum variance frontier (MVF)</strong> is the leftmost boundary of achievable (σ, E[R]) — a hyperbola in (σ, μ) space, parabola in (σ², μ) space. Efficient frontier = upper half. Adding risky assets always shifts MVF left.</li>
-            <li><strong>Two-fund separation theorem:</strong> with N risky assets + R<sub>f</sub>, every risk-averse mean-variance investor holds the same tangency portfolio T, just in different mix with R<sub>f</sub>. The asset-selection problem and the risk-level problem fully decouple. <span class="imp">This is the engine of CAPM.</span></li>
-            <li><strong>No arbitrage / law of one price.</strong> Two assets with identical cash flows must have the same price. Any price difference (after taxes, liquidity, transaction costs) is an arbitrage opportunity, and well-functioning markets don't let those last.</li>
-            <li><strong>CAPM: in equilibrium, the tangency portfolio T = the market portfolio M.</strong> Every investor holds R<sub>f</sub> + M. The pricing equation is the SML: E[R<sub>i</sub>] = R<sub>f</sub> + β<sub>i,M</sub>·(E[R<sub>M</sub>] − R<sub>f</sub>). β<sub>i,M</sub> = σ[R<sub>i</sub>, R<sub>M</sub>] / σ²[R<sub>M</sub>] is the slope of regressing R<sub>i</sub> on R<sub>M</sub>.</li>
-            <li><strong>CML vs SML</strong>: every asset is on the SML; only assets with ρ[R<sub>i</sub>, R<sub>M</sub>] = 1 are <em>also</em> on the CML. Same β = same E[R] (SML rules), but inefficient assets (ρ &lt; 1) plot to the right of the CML — they carry idiosyncratic risk that doesn't get rewarded.</li>
-            <li><strong>Why beta and not σ?</strong> Everyone holds M. The piece of σ[R<sub>i</sub>] that's uncorrelated with M diversifies away in M. Only the correlated piece — captured by β — gets priced. σ²[R<sub>i</sub>] = β²<sub>i,M</sub>·σ²[R<sub>M</sub>] + σ²[e<sub>i</sub>] (systematic + idiosyncratic).</li>
-            <li><strong>Performance: Jensen's α vs Sharpe.</strong> Jensen's α<sub>i</sub> = E[r<sub>i</sub>] − β<sub>i,M</sub>·E[r<sub>M</sub>] — use when the asset is one of many in a CAPM-optimal portfolio (α &gt; 0 → underpriced). Sharpe = (E[R<sub>i</sub>] − R<sub>f</sub>) / σ[R<sub>i</sub>] — use when the asset is the investor's only risky holding. <em>They can disagree on rankings.</em></li>
-            <li><strong>CAPM fails empirically.</strong> Small-cap and value stocks earn persistent positive alpha. SML is too flat. Beta alone doesn't explain the cross-section.</li>
-            <li><strong>Multifactor extensions (post-midterm).</strong> ICAPM: investors care about state variables too, so M need not be tangency. Fama-French 3-factor (market + SMB + HML) is the empirical workhorse — explains the size and value premia.</li>
-            <li><strong>Bond pricing = PV of remaining cash flows.</strong> The unifying idea of all fixed income. T-bills: one cash flow, one discount. Coupon bonds: stream of coupons + par at maturity, each cash flow discounted at its own strip yield. The single-rate YTM is what you back out <em>after</em>, not the engine.</li>
-            <li><strong>Discount factor d<sub>T</sub>(0) = p<sub>T</sub>(0)/C = price of $1 paid for sure at time T.</strong> Most useful single object in L8 — every bond price is Σ d<sub>t</sub>·C(t). Recover the zero curve from coupon notes by <em>bootstrapping</em>, one maturity at a time.</li>
-            <li><strong>A coupon bond = a portfolio of zeros.</strong> Treasury STRIPS makes this physical; the law of one price makes it binding. Mispricing creates a clean arbitrage with strips.</li>
-            <li><strong>YTM of a coupon bond ≠ yield on a same-maturity zero</strong> unless the yield curve is flat. Upward-sloping curve → YTM(coupon) &lt; y<sub>T</sub>(0); higher coupon rate pulls YTM further from y<sub>T</sub>.</li>
-            <li><strong>Default risk</strong> wedges YTM above E[R]. Corporate YTMs &gt; equivalent Treasury YTMs for two reasons: (1) expected cash flow &lt; promised; (2) defaults correlate with bad market states, so β &gt; 0.</li>
-            <li><strong>Holding period return:</strong> HPR equals starting YTM only for the ½-year strip. For longer bonds, yields up during the period → HPR &lt; YTM<sub>start</sub>. This is the seed of duration.</li>
-            <li><strong>The conversion identity (most-tested fixed-income formula):</strong> (1+y<sub>t+α</sub>(0)/2)<sup>2(t+α)</sup> = (1+y<sub>t</sub>(0)/2)<sup>2t</sup>·(1+f<sub>t,t+α</sub>(0)/2)<sup>2α</sup>. Equivalently d<sub>t+α</sub>(0) = d<sub>t</sub>(0)·d<sub>t,t+α</sub>(0). Use the discount-factor shortcut for forwards: d<sub>t,t+α</sub>(0) = d<sub>t+α</sub>(0)/d<sub>t</sub>(0).</li>
-            <li><strong>FRA naming:</strong> "t × (t+α) FRA" with both in months. f<sub>½,1</sub>(0) is the 6×12 FRA; f<sub>5,7</sub>(0) is the 60×84.</li>
-            <li><strong>Expectations Hypothesis (EH):</strong> forward rate = expected future ½-year spot. Under EH, yield curve slope cleanly signals expected future rates: upward → market expects higher; downward → lower.</li>
-            <li><strong>Liquidity preference (empirical consensus):</strong> longer strips need a maturity-increasing illiquidity premium → forwards are upward-biased predictors of future spots. Upward-sloping curves are common <em>regardless</em> of expectations. Downward-sloping still implies expected rate cuts.</li>
-            <li><strong>Yield curve slope predicts GDP growth.</strong> Positive slope → low short rates → high investment → strong future growth. One of the best macro predictors.</li>
-            <li><strong>Duration.</strong> Macaulay D = Σ t·k(t), the PV-weighted average payment time. Zero bond: D = maturity; coupon bond: D &lt; maturity; higher coupon → shorter D. Modified D* = D/(1+y/2) is price sensitivity: <span class="imp">ΔP/P ≈ −D*·Δy</span>. Portfolio duration is value-weighted: D<sup>C</sup> = ω<sup>A</sup>D<sup>A</sup> + ω<sup>B</sup>D<sup>B</sup>.</li>
-            <li><strong>Immunization.</strong> Dedication = exact cash-flow match (no rebalancing). Target-date = match <em>both</em> value (L = A) and duration (D<sup>L</sup> = D<sup>A</sup>), neutralizing reinvestment vs liquidation risk; re-immunize as durations drift.</li>
-            <li><strong>Derivative payoffs (Lynch's X notation).</strong> Call holder max{S(T)−X, 0}; put holder max{X−S(T), 0}; writer = negative of holder. Forward buyer S(T)−F<sub>T</sub>(0); seller F<sub>T</sub>(0)−S(T). Derivatives are zero net supply.</li>
-            <li><strong>Put-call parity:</strong> <span class="imp">S(0) = C<sub>X,T</sub>(0) − P<sub>X,T</sub>(0) + X·d<sub>T</sub>(0)</span>. Always discount the strike (X·d<sub>T</sub>(0), never raw X).</li>
-            <li><strong>No-arbitrage option floors (intrinsic value):</strong> C ≥ max{S(0) − X·d<sub>T</sub>(0), 0}; P ≥ max{X·d<sub>T</sub>(0) − S(0), 0}. Price − intrinsic = time value ≥ 0. American ≥ European; non-dividend call is never exercised early (c = C); American put may be (p ≥ P, no closed form).</li>
-            <li><strong>Black-Scholes:</strong> C<sub>X,T</sub>(0) = S(0)N(d₁) − Xe<sup>−r′T</sup>N(d₂), e<sup>−r′T</sup> = d<sub>T</sub>(0). Signs C(S<sup>+</sup>, X<sup>−</sup>, σ<sup>+</sup>, r′<sup>+</sup>, T<sup>+</sup>), P(S<sup>−</sup>, X<sup>+</sup>, σ<sup>+</sup>, r′<sup>−</sup>, T<sup>?</sup>). <span class="imp">σ raises both call and put (payoff truncated at 0); the stock's expected return never enters.</span> Implied vol = the σ that matches the market price.</li>
-            <li><strong>The law of one price is the spine of the second half.</strong> Build a synthetic copy of a contract from things you can already price, line up cash flows in a Time-0/Time-T table, and no-arbitrage forces the contract to equal its synthetic. This one move gives put-call parity, the option floors, forward-spot parity, covered interest parity, and the swap rate.</li>
-            <li><strong>Forward-spot parity:</strong> <span class="imp">F<sub>T</sub>(0) = S(0)/d<sub>T</sub>(0) = S(0)[1+y*<sub>T</sub>(0)]<sup>T</sup></span>; with carry, F<sub>T</sub>(0) = [S(0)+C(τ)d<sub>τ</sub>(0)]/d<sub>T</sub>(0). The forward price is the FV of spot, not a forecast. <strong>Covered interest parity:</strong> the higher-yielding currency trades at a forward discount. Futures = daily-settled forwards.</li>
-            <li><strong>Swap = a portfolio of two bonds.</strong> Fixed-rate payer = long a floating bond + short a fixed bond. The swap rate is set so PV(fixed) = PV(floating), making the swap worth 0 at inception. Only the net difference changes hands → low credit risk; rates rise → fixed-rate payer wins.</li>
-            <li><strong>Valuation = PV of expected cash flows at the SML rate.</strong> DDM / Gordon: P₀ = E[D₁]/(E[R]−g), so E[R] = dividend yield + g. Capital budgeting: accept NPV &gt; 0, discounting incremental cash flows at the <em>project's</em> β (ignore sunk costs). Growth g = b·ROE; reinvest only when ROE &gt; E[R].</li>
-            <li><strong>Market efficiency is the closing warning.</strong> Price = unbiased estimate of value; realized = expected + mean-zero surprise. Three forms (weak/semi-strong/strong); U.S. markets ≈ semi-strong, so average mutual-fund α &lt; 0 and good performance doesn't persist. Autocorrelation ≠ inefficiency if expected returns vary; every efficiency test is jointly a test of the pricing model.</li>
+            <li><strong>Time value of money.</strong> Every valuation is just discounting future cash flows by the right rate and summing; convert APR→EAR before comparing; continuous rates add over time.</li>
+            <li><strong>Investors are risk-averse mean-variance optimizers.</strong> Summarize returns by E[R] and σ; covariance/correlation between assets is the entire engine of diversification.</li>
+            <li><strong>Diversification &amp; the frontier.</strong> Lower ρ bows the curve left; equal-weight variance → average covariance (systematic risk can't be diversified away). One risky + R<sub>f</sub> gives a CAL; pick the steepest.</li>
+            <li><strong>Two-fund separation.</strong> With N risky assets + R<sub>f</sub>, everyone holds the same tangency portfolio T, mixed with R<sub>f</sub> by risk aversion — the engine of CAPM.</li>
+            <li><strong>CAPM &amp; the SML.</strong> In equilibrium T = market M, so E[R<sub>i</sub>] = R<sub>f</sub> + β<sub>i,M</sub>(E[R<sub>M</sub>]−R<sub>f</sub>); only β (correlated risk) is priced, idiosyncratic risk diversifies away.</li>
+            <li><strong>Performance &amp; multifactor.</strong> Jensen's α for one-of-many holdings, Sharpe for a sole risky bet — they can disagree. CAPM is too flat empirically; Fama-French (market+SMB+HML) captures size and value.</li>
+            <li><strong>Bond price = PV of remaining cash flows.</strong> Discount each coupon and par at its own zero yield; the single-rate YTM is backed out <span class="imp">after</span>, not the engine.</li>
+            <li><strong>The discount factor d<sub>T</sub>(0) = price of $1 paid for sure at T.</strong> Every bond price is Σ d<sub>t</sub>·C(t); bootstrap the zero curve one maturity at a time. A coupon bond = a portfolio of zeros (STRIPS make it binding).</li>
+            <li><strong>Conversion triangle.</strong> d<sub>t+α</sub>(0) = d<sub>t</sub>(0)·d<sub>t,t+α</sub>(0), i.e. (1+y<sub>t+α</sub>(0)/2)<sup>2(t+α)</sup> = (1+y<sub>t</sub>(0)/2)<sup>2t</sup>(1+f<sub>t,t+α</sub>(0)/2)<sup>2α</sup>; forwards via d<sub>t,t+α</sub>(0) = d<sub>t+α</sub>(0)/d<sub>t</sub>(0).</li>
+            <li><strong>YTM ≠ zero yield &amp; default wedge.</strong> Coupon YTM = same-maturity zero only if the curve is flat (upward slope → YTM &lt; y<sub>T</sub>(0)); default risk pushes corporate YTM above E[R].</li>
+            <li><strong>Yield-curve theories.</strong> Expectations Hypothesis: forward = expected future spot. Liquidity preference (consensus): forwards are upward-biased by a maturity-rising premium, so upward curves are normal.</li>
+            <li><strong>Duration &amp; immunization.</strong> Macaulay D = PV-weighted payment time, modified D* gives ΔP/P ≈ <span class="imp">−D*·Δy</span>; immunize by matching both value and duration (L = A, D<sup>L</sup> = D<sup>A</sup>), re-immunizing as durations drift.</li>
+            <li><strong>Option payoffs.</strong> Call max{S(T)−X,0}, put max{X−S(T),0}, writer = negative; forward buyer S(T)−F<sub>T</sub>(0). Derivatives are zero net supply.</li>
+            <li><strong>Put-call parity &amp; no-arb floors.</strong> S(0) = C<sub>X,T</sub>(0) − P<sub>X,T</sub>(0) + X·d<sub>T</sub>(0); C ≥ max{S(0)−X·d<sub>T</sub>(0),0}, P ≥ max{X·d<sub>T</sub>(0)−S(0),0} — always discount the strike.</li>
+            <li><strong>Black-Scholes comparative statics.</strong> C = S(0)N(d₁) − Xe<sup>−r′T</sup>N(d₂). C(S<sup>+</sup>,X<sup>−</sup>,σ<sup>+</sup>,r′<sup>+</sup>,T<sup>+</sup>); <span class="imp">σ raises both call and put, and the stock's expected return never enters</span>.</li>
+            <li><strong>Forward-spot &amp; covered interest parity.</strong> F<sub>T</sub>(0) = S(0)/d<sub>T</sub>(0) — the FV of spot, not a forecast; the higher-yielding currency trades at a forward discount. A swap = a portfolio of two bonds, priced so it's worth 0 at inception.</li>
+            <li><strong>Valuation &amp; market efficiency.</strong> Gordon: P₀ = E[D₁]/(E[R]−g); accept NPV &gt; 0 at the project's β. Price ≈ unbiased value (U.S. ≈ semi-strong, so fund α &lt; 0); autocorrelation ≠ inefficiency when expected returns vary.</li>
         </ol>
     </div>
 
@@ -3742,6 +3713,97 @@ So  A^1 = 0.7354 × 7.5200M = 5.5302M  in 1-year strips
             <li><strong>Modified duration</strong> D* = D/(1+y/2) is the price sensitivity: <span class="imp">ΔP/P ≈ −D*·Δy</span>. Yields up → price down. Duration is the tangent; convexity is the curvature (price is a decreasing convex function of yield).</li>
             <li><strong>Portfolio duration</strong> is the value-weighted average: D<sup>C</sup> = ω<sup>A</sup>D<sup>A</sup> + ω<sup>B</sup>D<sup>B</sup>. This lets you dial duration to a target.</li>
             <li><strong>Immunization:</strong> dedication = exact cash-flow match (no rebalancing). Target-date = match <em>both</em> value (L = A) and duration (D<sup>L</sup> = D<sup>A</sup>); re-immunize as durations drift.</li>
+        </ul>
+    </div>
+
+    <h2 id="fixed-income-map">Fixed income &amp; forwards — the no-arbitrage map</h2>
+
+    <div class="takeaways" style="border-left-color: #ff3333;">
+        <p style="margin: 0;"><strong>One method prices everything in the first half of the course.</strong> <span class="imp">Law of one price → build a synthetic → no-arbitrage.</span> Lay each instrument's cash flows on the timeline below, replicate it from things you can already price (strips, the underlying asset), and force the two prices equal — any gap is a riskless arbitrage. Bonds, strips, corporates, forward rates, and forward contracts are all the same trick. Treat this as the capstone of the fixed-income half before we switch to options.</p>
+    </div>
+
+    <h3>The timeline — who pays what, when</h3>
+
+    <svg viewBox="0 0 580 300" style="max-width: 100%; background: #fafafa; margin: 0.6em 0;">
+        <!-- date guide lines -->
+        <line x1="120" y1="40" x2="120" y2="252" stroke="#e8e8e8" stroke-dasharray="3,3"/>
+        <line x1="210" y1="40" x2="210" y2="252" stroke="#e8e8e8" stroke-dasharray="3,3"/>
+        <line x1="300" y1="40" x2="300" y2="252" stroke="#e8e8e8" stroke-dasharray="3,3"/>
+        <line x1="390" y1="40" x2="390" y2="252" stroke="#e8e8e8" stroke-dasharray="3,3"/>
+        <line x1="480" y1="40" x2="480" y2="252" stroke="#e8e8e8" stroke-dasharray="3,3"/>
+
+        <!-- lane labels -->
+        <text x="10" y="78" font-size="10" font-weight="bold" fill="#333">Coupon bond</text>
+        <text x="10" y="150" font-size="10" font-weight="bold" fill="#333">Zero / strip</text>
+        <text x="10" y="206" font-size="10" font-weight="bold" fill="#333">Forward rate</text>
+
+        <!-- COUPON BOND: pay P at 0; receive C at ½,1,1½; C+100 at 2 -->
+        <line x1="120" y1="70" x2="120" y2="96" stroke="#888" stroke-width="2"/>
+        <polygon points="116,90 124,90 120,100" fill="#888"/>
+        <text x="120" y="113" text-anchor="middle" font-size="9" fill="#888">−P</text>
+        <line x1="210" y1="95" x2="210" y2="68" stroke="#ff3333" stroke-width="2"/>
+        <polygon points="206,74 214,74 210,64" fill="#ff3333"/>
+        <text x="210" y="58" text-anchor="middle" font-size="9" fill="#ff3333">C</text>
+        <line x1="300" y1="95" x2="300" y2="68" stroke="#ff3333" stroke-width="2"/>
+        <polygon points="296,74 304,74 300,64" fill="#ff3333"/>
+        <text x="300" y="58" text-anchor="middle" font-size="9" fill="#ff3333">C</text>
+        <line x1="390" y1="95" x2="390" y2="68" stroke="#ff3333" stroke-width="2"/>
+        <polygon points="386,74 394,74 390,64" fill="#ff3333"/>
+        <text x="390" y="58" text-anchor="middle" font-size="9" fill="#ff3333">C</text>
+        <line x1="480" y1="95" x2="480" y2="52" stroke="#ff3333" stroke-width="2.5"/>
+        <polygon points="475,58 485,58 480,47" fill="#ff3333"/>
+        <text x="480" y="42" text-anchor="middle" font-size="9" fill="#ff3333">C+100</text>
+
+        <!-- ZERO / STRIP: pay p at 0; receive 100 at 1½ -->
+        <line x1="120" y1="140" x2="120" y2="166" stroke="#888" stroke-width="2"/>
+        <polygon points="116,160 124,160 120,170" fill="#888"/>
+        <text x="120" y="183" text-anchor="middle" font-size="9" fill="#888">−p</text>
+        <line x1="390" y1="165" x2="390" y2="138" stroke="#ff3333" stroke-width="2.5"/>
+        <polygon points="385,144 395,144 390,133" fill="#ff3333"/>
+        <text x="390" y="128" text-anchor="middle" font-size="9" fill="#ff3333">100</text>
+
+        <!-- FORWARD RATE: bracket over ½ → 1, locked at time 0 -->
+        <path d="M210,200 v-9 h90 v9" fill="none" stroke="#ff3333" stroke-width="2"/>
+        <text x="255" y="222" text-anchor="middle" font-size="9" fill="#ff3333">lock the ½→1 rate today</text>
+
+        <!-- time axis -->
+        <line x1="105" y1="252" x2="500" y2="252" stroke="#666" stroke-width="1.5"/>
+        <line x1="120" y1="248" x2="120" y2="256" stroke="#666"/>
+        <line x1="210" y1="248" x2="210" y2="256" stroke="#666"/>
+        <line x1="300" y1="248" x2="300" y2="256" stroke="#666"/>
+        <line x1="390" y1="248" x2="390" y2="256" stroke="#666"/>
+        <line x1="480" y1="248" x2="480" y2="256" stroke="#666"/>
+        <text x="120" y="270" text-anchor="middle" font-size="10" fill="#666">0</text>
+        <text x="210" y="270" text-anchor="middle" font-size="10" fill="#666">½</text>
+        <text x="300" y="270" text-anchor="middle" font-size="10" fill="#666">1</text>
+        <text x="390" y="270" text-anchor="middle" font-size="10" fill="#666">1½</text>
+        <text x="480" y="270" text-anchor="middle" font-size="10" fill="#666">2 yrs</text>
+    </svg>
+    <p class="caption">Every fixed-income instrument is a pattern of dated cash flows. Price = each cash flow times the discount factor for its date, d<sub>t</sub>(0). A forward-rate agreement instead locks <em>today</em> the rate for a future sub-period (here ½→1).</p>
+
+    <h3>How each one is priced</h3>
+
+    <table class="matrix">
+        <thead><tr><th>Instrument</th><th>Cash flows</th><th>How it's priced (no-arbitrage)</th><th>Key relation</th></tr></thead>
+        <tbody>
+            <tr><td><strong>T-bill</strong></td><td>one payment (par) at T ≤ 1 yr</td><td>discount the single cash flow</td><td>Price = Par/(1+R); BEY y = (365/n)·R</td></tr>
+            <tr><td><strong>Zero / strip</strong></td><td>one payment (par) at T</td><td>discount at the zero yield</td><td>p<sub>T</sub>(0) = C·d<sub>T</sub>(0), &nbsp; d<sub>T</sub>(0) = 1/(1+y<sub>T</sub>(0)/2)<sup>2T</sup></td></tr>
+            <tr><td><strong>Coupon note / bond</strong></td><td>coupons + par</td><td>sum of zeros — each cash flow at its <em>own</em> discount factor</td><td><span class="imp">P(0) = Σ d<sub>t</sub>(0)·C(t)</span></td></tr>
+            <tr><td><strong>YTM</strong> (of a coupon bond)</td><td>—</td><td>the single rate that reprices it — a summary, backed out <em>after</em></td><td>= y<sub>T</sub>(0) only if the curve is flat; upward slope → YTM &lt; y<sub>T</sub>(0)</td></tr>
+            <tr><td><strong>Corporate bond</strong></td><td>promised coupons + par, default risk</td><td>discount <em>expected</em> CF; YTM uses the <em>promised</em> CF</td><td>YTM &gt; E[R]; corporate YTM &gt; Treasury YTM</td></tr>
+            <tr><td><strong>Forward rate (FRA)</strong></td><td>locks a rate for [t, t+α]</td><td>no-arb vs. rolling short zeros into the future period</td><td><span class="imp">d<sub>t+α</sub>(0) = d<sub>t</sub>(0)·d<sub>t,t+α</sub>(0)</span></td></tr>
+            <tr><td><strong>Forward contract</strong></td><td>swap cash for the asset at F<sub>T</sub>(0) at T</td><td>cash-and-carry: buy now, finance by shorting strips (<a href="#forward-spot-parity">forwards section</a>)</td><td>F<sub>T</sub>(0) = S(0)/d<sub>T</sub>(0)</td></tr>
+        </tbody>
+    </table>
+
+    <div class="remember">
+        <span class="label">✦ the no-arbitrage relations — all of fixed income on one card</span>
+        <ul>
+            <li><strong>Law of one price.</strong> Identical cash flows must carry identical prices — otherwise buy the cheap one, sell the dear one, and pocket the difference at zero risk.</li>
+            <li><strong>Bond = portfolio of strips:</strong> <span class="imp">P(0) = Σ d<sub>t</sub>(0)·C(t)</span>. If a coupon bond's price ≠ the sum of its strip values, strip it (or rebuild it from strips) for arbitrage.</li>
+            <li><strong>Conversion triangle:</strong> d<sub>t+α</sub>(0) = d<sub>t</sub>(0)·d<sub>t,t+α</sub>(0) ⟺ (1+y<sub>t+α</sub>(0)/2)<sup>2(t+α)</sup> = (1+y<sub>t</sub>(0)/2)<sup>2t</sup>(1+f<sub>t,t+α</sub>(0)/2)<sup>2α</sup>. Discount factors, spot rates, and forward rates are one object in three views.</li>
+            <li><strong>Forward contract:</strong> F<sub>T</sub>(0) = S(0)/d<sub>T</sub>(0) — the forward price is the financed cost of carrying the asset to T, <em>not</em> a forecast of S(T).</li>
+            <li><strong>Default wedge:</strong> a corporate bond promises the same cash flows as a Treasury but may not pay them, so it's cheaper → higher yield. On promised cash flows, YTM &gt; E[R] &gt; the Treasury yield.</li>
         </ul>
     </div>
 
