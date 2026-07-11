@@ -215,6 +215,7 @@
         <li><a href="#takeaways">key takeaways</a></li>
         <li><a href="#schedule">schedule</a></li>
         <li><a href="#four-statements">the four statements</a></li>
+        <li><a href="#formats">statement formats</a></li>
         <li><a href="#balance-sheet">balance sheet &amp; transactions</a></li>
         <li><a href="#income-statement">income statement &amp; accruals</a></li>
         <li><a href="#adjustments">adjusting entries &amp; closing</a></li>
@@ -496,6 +497,128 @@ E: NI = 224,130 − 210,630 = 13,500        A  = 173,850 + 361,240 = 535,090</di
         \[ E = \text{Paid-in Capital} + RE \qquad RE_{end} = RE_{beg} + NI - \text{Div} \qquad NI = \text{Rev} - \text{Exp} \]
         <p><span class="new">Everything is new.</span> One identity plus three definitions — chain them and any single missing number (SE, RE, NI, dividends) can be backed out from the others. <strong>Income statement so far:</strong> a single step, Revenues − Expenses = Net Income, feeding retained earnings through the roll-forward.</p>
     </div>
+
+    <h2 id="formats">Statement formats — what each sheet looks like <span style="font-size: 0.6em; color: #888; font-weight: 400;">· reference</span></h2>
+
+    <p>Every statement and worksheet "in good form," using numbers from the course's own problems. Formatting conventions the exam expects: a <strong>four-part heading</strong> (entity · statement title · date "At…" or period "For the … Ended…" · unit of measure), $ signs on the first amount of a group and on totals, single underline before a total, double underline under the final total, negatives in parentheses.</p>
+
+    <h3>General journal</h3>
+    <p>Chronological diary of entries. Debits first and flush left, credits below and indented — always.</p>
+    <div class="formula">GENERAL JOURNAL                                              Page 1
+Date     Account Titles and Explanation        Ref    Debit   Credit
+Dec 2    Cash                                  101   15,000
+             Notes Payable                     201           15,000
+         (borrowed from bank, 3-month note)
+Dec 5    Supplies                              140      300
+             Accounts Payable                  201              300
+         (purchased supplies on credit)</div>
+
+    <h3>Ledger account (T-account)</h3>
+    <p>One per account; the journal's amounts get <em>posted</em> here. Balance lands on the normal-balance side (World Wide Webster's cash):</p>
+    <div class="formula">            Cash (A)
+     Dr     |     Cr
+Beg      0  |
+(a) 10,000  |  20,000 (c)
+(b) 15,000  |     300 (f)
+            |     600 (g)
+            |   1,000 (h)
+End  3,100  |</div>
+
+    <h3>Trial balance</h3>
+    <p>All accounts, in statement order (assets → liabilities → equity → revenues → expenses), proving debits = credits:</p>
+    <div class="formula">WORLD WIDE WEBSTER
+Trial Balance
+At December 31
+
+                          Debit     Credit
+Cash                      3,100
+Supplies                    900
+Equipment                21,000
+Notes payable                       15,000
+Contributed capital                 10,000
+                         ------     ------
+Totals                   25,000     25,000</div>
+
+    <h3>Classified balance sheet</h3>
+    <p>Current before non-current (assets by liquidity, liabilities by maturity); equity split contributed vs. earned (Jaguar Plastics, solved in class):</p>
+    <div class="formula">JAGUAR PLASTICS COMPANY
+Balance Sheet
+At December 31
+
+ASSETS                             LIABILITIES
+Current assets:                    Current liabilities:
+  Cash               12,000          Accounts payable        15,000
+  Investments        13,000          Accrued liabilities      4,000
+  Accounts receivable 3,000          Notes payable           29,000
+  Inventory          20,000        Total current liabilities 48,000
+Total current assets 48,000        Long-term notes payable   63,000
+Notes receivable      6,000        Total liabilities        111,000
+Equipment            67,000        STOCKHOLDERS' EQUITY
+Factory building    114,000          Common stock            11,000
+Intangibles           8,000          Additional paid-in cap. 90,000
+                    -------          Retained earnings       31,000
+                                   Total stockholders' eq.  132,000
+                                                            -------
+Total assets        243,000        Total liabilities & SE   243,000</div>
+
+    <h3>Multi-step income statement</h3>
+    <p>The subtotals are the whole point — each isolates a cost layer (see the margins section). Chipotle 2023, from the textbook:</p>
+    <div class="formula">CHIPOTLE MEXICAN GRILL (adapted)
+Income Statement
+For the Year Ended December 31, 2023 (in millions)
+
+Restaurant sales revenue               9,872
+Total operating expenses              (8,314)
+                                      ------
+Income from operations                 1,558
+Other items:
+  Interest revenue                        67
+  Interest expense                        (4)
+                                      ------
+Income before income taxes             1,621
+Income tax expense                      (392)
+                                      ------
+Net income                             1,229
+                                      ======
+Earnings per share                    $44.59</div>
+
+    <h3>Statement of stockholders' equity</h3>
+    <p>One column per equity account, each rolled forward beginning → ending (Air &amp; Sea, from the Ch. 4 example):</p>
+    <div class="formula">AIR & SEA TRAVEL, INC.
+Statement of Stockholders' Equity
+For the Month Ended April 30, 20X7
+
+                        Common Stock    Retained Earnings
+Balance, April 1            20,000           11,250
+  Stock issuance                 —                —
+  Net income                     —            2,985
+  Dividends                      —           (3,200)
+                            ------           ------
+Balance, April 30           20,000           11,035</div>
+
+    <h3>Statement of cash flows</h3>
+    <p>Three sections, then tie the change back to the balance-sheet cash (Air &amp; Sea, from Class 1):</p>
+    <div class="formula">AIR & SEA TRAVEL, INC.
+Statement of Cash Flows
+For the Month Ended April 30, 20XX
+
+Cash flows from operating activities:
+  Collections from customers            6,500
+  Payments to suppliers & employees    (3,100)
+    Net cash from operating activities          3,400
+Cash flows from investing activities:
+  Acquisition of land                 (40,000)
+  Sale of land                         22,000
+    Net cash used in investing activities     (18,000)
+Cash flows from financing activities:
+  Issuance (sale) of stock             50,000
+  Payment of dividends                 (2,100)
+    Net cash from financing activities         47,900
+                                               ------
+Net increase in cash                           33,300
+Cash balance, April 1                               0
+                                               ------
+Cash balance, April 30                         33,300</div>
 
     <h2 id="balance-sheet">Balance sheet &amp; transaction analysis <span style="font-size: 0.6em; color: #888; font-weight: 400;">· Ch. 2 · Class 2 (Jul 6)</span></h2>
 
