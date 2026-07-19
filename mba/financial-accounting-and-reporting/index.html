@@ -219,10 +219,11 @@
         <li><a href="#balance-sheet">balance sheet &amp; transactions</a></li>
         <li><a href="#income-statement">income statement &amp; accruals</a></li>
         <li><a href="#adjustments">adjusting entries &amp; closing</a></li>
+        <li><a href="#cash-flows">statement of cash flows</a></li>
     </ul>
 
     <div class="takeaways" id="takeaways">
-        <h3>Key takeaways (through Class 4)</h3>
+        <h3>Key takeaways (through Class 5)</h3>
         <p style="margin-top: 0; font-size: 0.9em; color: #666;">The whole first month in one screen — the spine is <span class="imp">A = L + E → dual effect → accrual timing → adjust at period-end</span>.</p>
         <ol>
             <li><strong>The accounting equation always holds.</strong> Assets = Liabilities + Stockholders' Equity. Every transaction touches at least two accounts (dual effect), and the equation stays in balance after every one.</li>
@@ -236,7 +237,8 @@
             <li><strong>Contra accounts preserve history.</strong> Depreciation accumulates in Accumulated Depreciation (a credit-balance contra-asset) so the balance sheet shows both cost and net book value = cost − accumulated depreciation.</li>
             <li><strong>Temporary accounts close to retained earnings.</strong> Revenues, expenses, and dividends zero out at period-end so the next period starts fresh; balance sheet accounts carry forward.</li>
             <li><strong>Adjustments are where discretion lives.</strong> Estimates (useful lives, accruals) require judgment, managers know the target, and the distribution of analyst forecast errors shows firms "meet or just beat" — earnings quality is a management choice.</li>
-            <li><strong>Ratios so far:</strong> current ratio = current assets / current liabilities (liquidity cushion; too high can mean inefficiency); margins = any income statement line / net sales (gross, operating, net — each isolates one layer of cost, and <em>which layer leaks</em> is the diagnosis); EPS = net income / average shares outstanding.</li>
+            <li><strong>Ratios so far:</strong> current ratio = current assets / current liabilities (liquidity cushion; too high can mean inefficiency); margins = any income statement line / net sales (gross, operating, net — each isolates one layer of cost, and <em>which layer leaks</em> is the diagnosis); EPS = net income / average shares outstanding; quality of income = CFO / NI (how much profit is backed by cash).</li>
+            <li><strong>The cash flow statement is accrual accounting run in reverse.</strong> Indirect method: start from net income, add back noncash charges (depreciation), back out investing items (gains/losses), then undo every working-capital timing wedge — asset up, cash down; liability up, cash up. The three sections' <em>signs</em> tell a firm's life-cycle story (−/−/+ startup → +/−/− mature).</li>
         </ol>
     </div>
 
@@ -1027,6 +1029,183 @@ Balance sheet:     Current assets 39,350 (cash 12,090 + A/R 24,800 + supplies 2,
         \[ \underbrace{CA + (\text{Cost} - \text{AccDep}) + \cdots}_{\text{Assets}} = L + \text{Paid-in Capital} + RE_{beg} + \underbrace{\text{Rev}_{adj} - \text{Exp}_{adj}}_{\text{NI, only after adjustment}} - \text{Div} \]
         <p><span class="new">New:</span> assets can now carry <span class="new">contra-accounts</span> — PPE sits on the balance sheet net, at cost minus accumulated depreciation — and the period's revenue and expense totals only <em>mean anything</em> after the four adjustment types (prepaid, unearned, accrued expense, accrued revenue) have re-timed them into the right period, never touching Cash. At period-end the red term is <span class="new">closed</span>: Rev, Exp, and Div zero out into RE, the equation collapses back to A = L + PIC + RE, and the next period starts the expansion fresh. <strong>Income statement so far:</strong> gains a bottom-most line, <span class="new">EPS = (NI − preferred div) / avg. shares</span> — and a health warning: everything above that line runs through management's estimates, which is why the earnings-quality histogram spikes at "just beat."</p>
         <p style="font-size: 0.9em; color: #666; margin-bottom: 0.2em;"><em>Next up, per the syllabus: Ch. 12 splits the cash account itself into CFO + CFI + CFF; Ch. 6–8 add contra-accounts and valuation rules to receivables (allowance), inventory (FIFO/LIFO), and PPE; Ch. 9–11 do the same for the right-hand side.</em></p>
+    </div>
+
+    <h2 id="cash-flows">Statement of cash flows <span style="font-size: 0.6em; color: #888; font-weight: 400;">· Ch. 12 · Class 5 (Jul 15)</span></h2>
+
+    <p>The income statement tells you whether the products are economically viable; the cash flow statement tells you whether the same transactions actually <em>generate cash</em>. Three reasons it exists: cash confirms that reported profits are real (cash is hard to manipulate; accruals aren't), it shows <em>which part</em> of the business produces or consumes cash, and free cash flow is the raw input to valuation (DCF). Caveat from class: firms can still reclassify items <em>between</em> sections opportunistically.</p>
+
+    <table>
+        <tr><th>Section</th><th>Inflows</th><th>Outflows</th></tr>
+        <tr><td><strong>Operating (CFO)</strong> — day-to-day with customers, suppliers, employees</td><td>Collections from customers; interest &amp; dividends <em>received</em></td><td>Payments to suppliers and employees; interest <em>paid</em>; taxes</td></tr>
+        <tr><td><strong>Investing (CFI)</strong> — long-term assets &amp; investments</td><td>Selling PP&amp;E, intangibles, investments; disposals of businesses</td><td>Buying PP&amp;E, intangibles, investments</td></tr>
+        <tr><td><strong>Financing (CFF)</strong> — exchanges with funders</td><td>Issuing stock; reissuing treasury stock; borrowing</td><td>Dividends paid; buying treasury stock; repaying <em>principal</em></td></tr>
+    </table>
+
+    <div class="callout">
+        <strong>The three classification traps, one more time:</strong> interest <em>paid</em> is operating (US GAAP), while the loan <em>principal</em> is financing — one payment, two lines. Dividends <em>paid</em> are financing (a distribution, never an expense); dividends <em>received</em> are operating. And debt or stock issued for anything other than cash is a <em>noncash</em> transaction — excluded from all three sections, disclosed separately.
+    </div>
+
+    <h3>Reading the signs: the firm life cycle</h3>
+
+    <p>The three signs together are a diagnostic (Dickinson, <em>The Accounting Review</em> 2011 — cash-flow patterns as a life-cycle proxy). Class examples: Netflix (introduction/growth), Tesla and Facebook (growth), IBM (mature).</p>
+
+    <table class="matrix">
+        <tr><th></th><th>Introduction</th><th>Growth</th><th>Mature</th><th>Decline</th></tr>
+        <tr><td>CFO</td><td>−</td><td>+</td><td>+</td><td>−</td></tr>
+        <tr><td>CFI</td><td>−</td><td>−</td><td>−</td><td>+</td></tr>
+        <tr><td>CFF</td><td>+</td><td>+</td><td>−</td><td>+/−</td></tr>
+    </table>
+
+    <h3>Direct vs. indirect</h3>
+
+    <p>Both methods produce <strong>identical</strong> CFO, CFI, CFF, and Δcash — they differ only in how the operating section is <em>presented</em>. The <strong>direct method</strong> lists gross receipts and payments (collections from customers, cash paid to suppliers…) — easier to read, much harder to prepare, preferred by the FASB, used by almost nobody. The <strong>indirect method</strong> reconciles net income to CFO — harder intuition, easy preparation, used by ~99% of large US companies. Depreciation never appears on a direct-method statement at all (it isn't a cash flow). CVS's 10-K shows both at once — direct section plus the required indirect reconciliation ($15.9B CFO in 2020, either way).</p>
+
+    <div class="formula-box">
+        <p><strong>Indirect method — the template</strong></p>
+        <div class="formula">Net income
++ Depreciation / depletion / amortization
++ Loss (− Gain) on disposal of long-term assets
++ Decrease in operating asset      − Increase in operating asset
++ Increase in operating liability  − Decrease in operating liability
+= Net cash flow from operating activities</div>
+        <div class="formula-actions">
+            <button class="intuition-btn" onclick="toggleIntuition(this)">💡 intuition</button>
+            <button class="derive-btn" onclick="toggleDerivation(this)">▼ derive</button>
+        </div>
+        <div class="intuition">
+            <p>Net income counted things that weren't cash, and missed cash that wasn't income — the template just un-counts and re-counts. Depreciation reduced income but no one paid anybody (the cash left years ago, when the asset was bought, in investing) — add it back. A gain on selling equipment sits inside net income, but the <em>entire</em> sale proceeds are reported in investing — subtract the gain or you'd count it twice (add back losses for the same reason).</p>
+            <p>The working-capital rules are all one idea: an operating asset growing means cash got trapped on the balance sheet (receivables up = sales you didn't collect; inventory up = purchases you haven't sold) — subtract. An operating liability growing means someone else is floating you (payables up = expenses you haven't paid) — add. Memorize it as: <strong>asset up, cash down; liability up, cash up</strong>.</p>
+            <p>Class Q&amp;A: <em>why start from NI at all?</em> Precisely to display how income and cash differ — the reconciliation IS the information.</p>
+        </div>
+        <div class="derivation">
+            <p>From the balance sheet identity, cash is what's left after everything else:</p>
+            \[ \Delta \text{Cash} = \Delta L + \Delta SE - \Delta \text{Noncash Assets} \]
+            <p>Split ΔSE into net income and dividends, and split every other account by which activity drives it (operating, investing, financing). Group the operating pieces:</p>
+            \[ CFO = NI + \text{noncash charges} \pm \text{gains/losses} - \Delta \text{op. assets} + \Delta \text{op. liabilities} \]
+            <p>— which is the template. The indirect method isn't a trick; it's the accounting equation differenced over a year and sorted into three buckets. That's also why the statement can be <em>built</em> from two balance sheets plus the income statement.</p>
+        </div>
+    </div>
+
+    <p>The five build-up cases from class show exactly how each accrual drives a wedge between NI and CFO (first year, so beginning balances are zero):</p>
+
+    <table>
+        <tr><th>Case</th><th>New fact</th><th>NI</th><th>CFO</th><th>The wedge</th></tr>
+        <tr><td>1</td><td>All cash</td><td>60</td><td>60</td><td>none — NI = CFO</td></tr>
+        <tr><td>2</td><td>$20 of sales still in A/R</td><td>60</td><td>40</td><td>− ΔA/R</td></tr>
+        <tr><td>3</td><td>+ $35 depreciation</td><td>25</td><td>40</td><td>+ depreciation (CFO unchanged!)</td></tr>
+        <tr><td>4</td><td>+ $25 ending inventory</td><td>25</td><td>15</td><td>− ΔInventory</td></tr>
+        <tr><td>5</td><td>+ $15 unpaid A/P</td><td>25</td><td>30</td><td>+ ΔA/P</td></tr>
+    </table>
+
+    <h3>Direct-method amounts: everything is a T-account roll-forward</h3>
+
+    <p>Every "cash collected/paid" number comes from the same pattern — <strong>beginning + ins − outs = ending</strong>, solve for the unknown:</p>
+
+    <div class="formula">Collections:  Beg A/R + Sales − Collections = End A/R
+Purchases:    Beg Inventory + Purchases − COGS = End Inventory
+Payments:     Beg A/P + Purchases − Payments = End A/P
+Dividends:    Beg RE + NI − Dividends declared = End RE</div>
+
+    <p>Shortcut forms: cash from customers = Sales − ΔA/R; payments to suppliers = COGS + ΔInventory − ΔA/P; payments for an expense = expense + Δprepaid − Δpayable. Same machinery works for investing (Beg PP&amp;E + purchases − book value sold = End PP&amp;E; <strong>sale proceeds = book value sold + gain − loss</strong>) and financing.</p>
+
+    <div class="formula-box">
+        <p><strong>Free cash flow</strong></p>
+        \[ \text{FCF} = CFO - \text{CapEx} \qquad \text{(unlevered: } EBIT(1-t) + D\&A - \Delta WC - \text{CapEx)} \]
+        <div class="formula-actions">
+            <button class="intuition-btn" onclick="toggleIntuition(this)">💡 intuition</button>
+        </div>
+        <div class="intuition">
+            <p>The cash left over after the business has paid to keep itself running and growing — free to fund expansion, retire debt, or go back to shareholders. It's the number DCF valuation discounts (at WACC for the whole firm; subtract interest and debt retirement to value just the equity). Definitions vary — the textbook's version also subtracts dividends.</p>
+            <p>Why not just use EBITDA as "cash flow"? Buffett's answer from class: <em>"Does management think the tooth fairy pays for capital expenditures?"</em> EBITDA ignores the reinvestment a real business can't skip; FCF doesn't. The professor's mental image: cash flow is the tap the firm actually drinks from.</p>
+        </div>
+    </div>
+
+    <div class="problem">
+        <span class="qnum">practice · ch. 12</span>
+        <h3>Warm-up — classify and sign</h3>
+        <p>Category (O/I/F) and cash direction (+/−): dividends paid $6,000 · common stock issued $20,000 · collections from customers $190,000 · income taxes paid $10,000 · payments to suppliers $80,000 · equipment purchased $40,000 · payments to employees $70,000 · note payable repaid $30,000 · land sold $60,000.</p>
+        <button class="answer-btn" onclick="toggleAnswer(this)">Show solution</button>
+        <div class="answer">
+            <div class="formula">Dividends paid          F −        Payments to employees   O −
+Stock issued            F +        Note principal repaid   F −
+Collections             O +        Land sold               I +
+Income taxes paid       O −        Equipment purchased     I −
+Paid suppliers          O −</div>
+            <p>Nothing here is ambiguous once you ask <em>who the cash touched</em>: funders → F, long-term assets → I, the operating cycle → O.</p>
+        </div>
+    </div>
+
+    <div class="problem">
+        <span class="qnum">practice · ch. 12</span>
+        <h3>T-account drills — solve for the cash</h3>
+        <p>(1) Beg A/R $8,000, end A/R $14,000, credit sales $1,500,000 — cash collected? (2) Beg inventory $99,000, end $140,000, COGS $645,000 — purchases? (3) Beg A/P $39,000, end $41,000, credit purchases $686,000 — cash paid to suppliers?</p>
+        <button class="answer-btn" onclick="toggleAnswer(this)">Show solution</button>
+        <div class="answer">
+            <div class="formula">(1) 8,000 + 1,500,000 − x = 14,000   →  collected  1,494,000
+(2) 99,000 + x − 645,000 = 140,000   →  purchases    686,000
+(3) 39,000 + 686,000 − x = 41,000    →  paid         684,000</div>
+            <p>Note (2) feeds (3): purchases links the inventory and payable T-accounts — chains like this are how full statements get built.</p>
+        </div>
+    </div>
+
+    <div class="problem">
+        <span class="qnum">practice · ch. 12 · the big one</span>
+        <h3>Eco-Bag Company — full statement, both methods</h3>
+        <p>Balance sheet changes (thousands): cash 25→16, A/R 25→45, inventory 60→100, gross PP&amp;E 330→581, acc. depr. 110→101, A/P 6→74, wages payable 4→25, LT debt 5→125, SE 315→417. Income statement: sales 200, COGS 100, wages 36, depreciation 17, interest 4, taxes 20, NI 23. Also known: PP&amp;E bought for cash 287, LT debt issued 120, stock issued 98. Build the statement.</p>
+        <button class="answer-btn" onclick="toggleAnswer(this)">Show solution</button>
+        <div class="answer">
+            <h4>CFO — direct</h4>
+            <div class="formula">Collections           = 200 − ΔA/R 20            = 180
+Paid employees        = 36 − Δwages payable 21    = (15)
+Paid suppliers: purchases = COGS 100 + ΔInv 40 = 140
+                cash paid = 140 − ΔA/P 68         = (72)
+Interest (4), taxes (20) — payables at 0 both ends
+CFO                   = 180 − 15 − 72 − 4 − 20    =  69</div>
+            <h4>CFO — indirect (same 69)</h4>
+            <div class="formula">NI 23 + Depr 17 − ΔA/R (20) − ΔInv (40) + ΔA/P 68 + ΔWages pay. 21 = 69</div>
+            <h4>CFI — infer the hidden sale</h4>
+            <div class="formula">Gross PP&E:  330 + 287 − sold = 581  →  cost sold = 36
+Acc. depr.:  110 + 17 − removed = 101  →  removed = 26
+Net book value sold = 36 − 26 = 10; no gain/loss → proceeds = 10
+CFI = (287) + 10 = (277)</div>
+            <h4>CFF — infer dividends from equity</h4>
+            <div class="formula">SE: 315 + NI 23 + stock 98 − div = 417  →  dividends = 19
+CFF = 120 + 98 − 19 = 199</div>
+            <p>Tie-out: 69 − 277 + 199 = <strong>(9)</strong> = cash 25 → 16 ✓. The exam skills hiding in here: inferring a disposal from two PP&amp;E lines, and backing dividends out of the equity roll-forward.</p>
+        </div>
+    </div>
+
+    <div class="problem">
+        <span class="qnum">practice · ch. 12</span>
+        <h3>Siegfried &amp; Royce — indirect + direct</h3>
+        <p>IS: sales 12,500, COGS 7,300, depreciation 400, rent 250, admin 2,200, tax 940, NI 1,410. BS changes: A/R +270, inventory +80, prepaid rent +50, PP&amp;E +400 (purchase), acc. depr. +400, A/P −80, admin payables −50, taxes payable +100, note payable +500, common stock +500, RE +1,410. Build the statement both ways.</p>
+        <button class="answer-btn" onclick="toggleAnswer(this)">Show solution</button>
+        <div class="answer">
+            <div class="formula">Indirect: 1,410 + 400 − 270 − 80 − 50 − 80 − 50 + 100          = CFO 1,380
+Direct:   collections 12,230 − merch. 7,460 − rent 300
+          − admin 2,250 − taxes 840                             = CFO 1,380
+CFI: equipment (400)
+CFF: stock 500 + note 500 = 1,000   (ΔRE = NI → no dividends)
+Δcash = 1,380 − 400 + 1,000 = 1,980 ✓ (cash 1,300 → 3,280)</div>
+            <p>Two habits worth copying: check ΔRE against NI first — if they match, dividends are zero and you've saved a step; and every direct-method line is just expense ± the related balance-sheet change (rent 250 + prepaid increase 50 = 300 paid).</p>
+        </div>
+    </div>
+
+    <details class="textbook">
+        <summary>beyond the slides — what the textbook adds (ch. 12)</summary>
+        <p><strong>Cash means cash + cash equivalents</strong> — investments with <em>original maturity ≤ 3 months</em>, measured from when the holder bought it (a 3-year T-note purchased 3 months before maturity qualifies; one held from issuance never does). Moving money between cash and equivalents is not a cash flow at all.</p>
+        <p><strong>Account-tagging fine print (SmartBook bait):</strong> short-term investments are <em>investing</em>, not operating current assets. Three current liabilities are <em>financing</em>: dividends payable, short-term bank debt, current maturities of long-term debt. Retained earnings gets tagged <em>both</em> O (the net-income part) and F (the dividends part). Asset-sale proceeds go to investing at the full cash received regardless of gain or loss — the gain/loss only ever appears as the operating back-out.</p>
+        <p><strong>Two ratios:</strong> <em>quality of income</em> = CFO ÷ NI (National Beverage 1.15; Coca-Cola 1.08, PepsiCo 1.47) — four reasons it strays from 1.0: growth inflating receivables/inventory, seasonality, aggressive recognition, sloppy working-capital management. <em>Capital acquisitions ratio</em> = CFO ÷ cash paid for PP&amp;E (NBC 7.41 vs Pepsi 2.44) — how much of capex operations fund internally; compare only within an industry. W. T. Grant went bankrupt in 1975 with healthy net income and collapsing CFO — the divergence is the classic fraud/decline early warning.</p>
+        <p><strong>Required supplemental disclosures:</strong> significant noncash investing/financing transactions (buy a building with a seller mortgage, convert debt to stock) in a separate schedule, and — under the indirect method — cash paid for interest and for income taxes.</p>
+        <p><strong>Format trivia:</strong> the FASB <em>recommends</em> the direct method; ~99% of large US companies use indirect anyway (cost). Under IFRS, interest paid may go in financing and interest/dividends received in investing — GAAP fixes all three in operating (dividends paid excepted: financing).</p>
+    </details>
+
+    <div class="eq-state">
+        <span class="label">state of the equation · after ch. 12</span>
+        \[ \Delta \text{Cash} = \underbrace{NI + \text{noncash} \pm \text{wedges}}_{CFO} + CFI + CFF \qquad \text{because} \qquad \Delta \text{Cash} = \Delta L + \Delta SE - \Delta \text{Noncash Assets} \]
+        <p><span class="new">New:</span> nothing was added to the equation — it was <em>differenced</em>. Take A = L + E at two dates, subtract, solve for ΔCash, and sort every account's change into three buckets: that's the entire statement of cash flows. The <span class="new">indirect method</span> is the operating bucket rearranged to start from net income, which makes the NI-vs-cash gap — the accrual wedges from Ch. 3–4 — the visible headline. Every adjusting-entry concept now has a mirror image here: the accruals that moved income without cash get reversed out, one by one. <strong>Income statement so far:</strong> unchanged, but now auditable — quality of income (CFO/NI) asks whether the income statement's story is corroborated by the cash account, and <span class="new">free cash flow</span> (CFO − capex) is what's left for the owners of the story.</p>
+        <p style="font-size: 0.9em; color: #666; margin-bottom: 0.2em;"><em>Next, per the course roadmap: Ch. 6–8 refine the operating assets one at a time — receivables (allowance), inventory (FIFO/LIFO), and long-term assets (depreciation methods) — all Midterm II material.</em></p>
     </div>
 
     <p class="footer">last updated jul 2026 · <a href="../">mba</a> · <a href="/">home</a></p>
