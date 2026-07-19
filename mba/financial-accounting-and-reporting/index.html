@@ -83,6 +83,7 @@
 
         .formula-box { background: #f7f7f7; border-left: 3px solid #ff3333; padding: 0.8em 1.1em; margin: 0.9em 0; }
         .formula-box .katex-display { margin: 0.4em 0; }
+        .katex-display { overflow-x: auto; overflow-y: hidden; padding: 2px 0; }
         .formula-box p { margin: 0.4em 0; }
         .formula-actions { margin-top: 0.4em; display: flex; gap: 1.2em; flex-wrap: wrap; }
         .intuition-btn, .derive-btn { background: transparent; border: none; padding: 0.2em 0; cursor: pointer; font: inherit; font-size: 0.82em; }
@@ -209,7 +210,7 @@
 
     <p><strong>Exam structure:</strong> all exams cumulative, on paper. <strong>Next up: Midterm II, Mon Jul 27 (25%), covering Ch. 4, 6, 7, 8, 12</strong> — Zoom review session Sun Jul 26. Midterm I (Jul 13, diagnostic, 15%, Ch. 1–3) ran as announced: 70 points / ~45 minutes in three blocks (shorter 32 pts, longer 11 pts, application 27 pts), 80–90% from lectures, homework, and the posted sample papers. Expect the same shape for Midterm II. Take-home final/project (25%) covers everything. Homework via Connect (20%) + SmartBook readings (5%) + participation (10%).</p>
 
-    <p style="font-size: 0.92em; color: #666;"><em>Tip:</em> each formula on the page has a <strong>💡 intuition</strong> button beneath it that expands a plain-language explanation of what the formula means. Journal entries are shown in <code>Dr / Cr</code> blocks. Practice problems from class have show/hide solutions.</p>
+    <p style="font-size: 0.92em; color: #666;"><em>Tip:</em> each formula on the page has a <strong>💡 intuition</strong> button beneath it that expands a plain-language explanation of what the formula means. Journal entries are shown in <code>Dr / Cr</code> blocks. Each chapter section ends with a teal "state of the equation" box — reading just those, bottom to top, is the fastest full-course review.</p>
 
     <ul class="toc">
         <li><a href="#takeaways">key takeaways</a></li>
@@ -418,72 +419,6 @@
         <li><strong>An audit</strong>: examine the reports for GAAP compliance, examine the underlying transactions, express an opinion on the <em>fairness of presentation</em>. The annual report also carries management's report on internal control and the MD&amp;A.</li>
     </ul>
 
-    <div class="problem">
-        <span class="qnum">practice · ch. 1</span>
-        <h3>Painter Corporation — build both statements</h3>
-        <p>Organized January 1; month-end data: revenues $305,000; expenses (ex-tax) $189,000; income tax expense $35,000 (all unpaid at Jan 31); cash $65,150; customer receivables $44,700; inventory $94,500; supplier payables $25,950 (due February); common stock $62,400; no dividends. Prepare the January income statement and the January 31 balance sheet.</p>
-        <button class="answer-btn" onclick="toggleAnswer(this)">Show solution</button>
-        <div class="answer">
-            <h4>Income statement</h4>
-            <div class="formula">Revenues                    305,000
-Expenses (ex-tax)          (189,000)
-Pretax income               116,000
-Income tax expense          (35,000)
-Net income                   81,000</div>
-            <h4>Balance sheet at Jan 31</h4>
-            <div class="formula">Assets                          Liabilities & SE
-Cash            65,150          Payables to suppliers    25,950
-Receivables     44,700          Income taxes payable     35,000
-Inventory       94,500          Common stock             62,400
-                                Retained earnings        81,000
-Total          204,350          Total                   204,350</div>
-            <p>The two hooks: unpaid income tax becomes a liability (income taxes payable), and retained earnings = net income $81,000 since there were no dividends and it's year one. A = L + E checks: 204,350 = 60,950 + 143,400.</p>
-        </div>
-    </div>
-
-    <div class="problem">
-        <span class="qnum">practice · ch. 1</span>
-        <h3>Missing amounts from the two equations</h3>
-        <p>Fill the two blanks in each independent case (end of first full year):</p>
-        <table class="matrix">
-            <tr><th>Case</th><th>Revenue</th><th>Expenses</th><th>NI</th><th>Assets</th><th>Liabilities</th><th>SE</th></tr>
-            <tr><td>A</td><td>231,820</td><td>196,700</td><td>?</td><td>294,300</td><td>75,000</td><td>?</td></tr>
-            <tr><td>B</td><td>?</td><td>175,780</td><td>29,920</td><td>590,000</td><td>?</td><td>348,400</td></tr>
-            <tr><td>C</td><td>72,990</td><td>91,890</td><td>?</td><td>258,200</td><td>190,760</td><td>?</td></tr>
-            <tr><td>D</td><td>36,590</td><td>?</td><td>9,840</td><td>?</td><td>189,675</td><td>97,525</td></tr>
-            <tr><td>E</td><td>224,130</td><td>210,630</td><td>?</td><td>?</td><td>173,850</td><td>361,240</td></tr>
-        </table>
-        <button class="answer-btn" onclick="toggleAnswer(this)">Show solution</button>
-        <div class="answer">
-            <div class="formula">A: NI = 231,820 − 196,700 = 35,120        SE = 294,300 − 75,000  = 219,300
-B: Rev = 175,780 + 29,920 = 205,700       L  = 590,000 − 348,400 = 241,600
-C: NI = 72,990 − 91,890  = (18,900) loss  SE = 258,200 − 190,760 = 67,440
-D: Exp = 36,590 − 9,840  = 26,750         A  = 189,675 + 97,525  = 287,200
-E: NI = 224,130 − 210,630 = 13,500        A  = 173,850 + 361,240 = 535,090</div>
-            <p>Pure equation manipulation — Rev − Exp = NI and A = L + SE, nothing else. Case C is a net <em>loss</em>; SE can still be positive because of paid-in capital.</p>
-        </div>
-    </div>
-
-    <div class="problem">
-        <span class="qnum">practice · ch. 1</span>
-        <h3>Clint's Stonework — two-year SSE</h3>
-        <p>Organized Jan 1, 20X1. NI: $31,000 (20X1), $42,000 (20X2). Dividends: $14,200 (20X1), $18,700 (20X2). Common stock $100,000 both years. Prepare the statement of stockholders' equity for each year.</p>
-        <button class="answer-btn" onclick="toggleAnswer(this)">Show solution</button>
-        <div class="answer">
-            <div class="formula">                      Common Stock    Retained Earnings
-20X1  Beg              100,000              0
-      + NI                                31,000
-      − Dividends                        (14,200)
-      End              100,000            16,800
-
-20X2  Beg              100,000            16,800
-      + NI                                42,000
-      − Dividends                        (18,700)
-      End              100,000            40,100</div>
-            <p>The whole trick is that 20X2 <em>starts</em> from 20X1's ending balance — retained earnings is cumulative.</p>
-        </div>
-    </div>
-
     <details class="textbook">
         <summary>beyond the slides — what the textbook adds (ch. 1)</summary>
         <p><strong>Le-Nature's Inc.</strong> — the chapter's framing fraud. Reported $275M of sales; real sales were ~$32M, liabilities understated by $200M, new loans repaying old ones (a Ponzi). CEO got 20 years; the auditors paid $50M, Wachovia $80M. All three safeguards failed at once: no internal controls, duped auditors, a crony board. Those three safeguards — <strong>internal controls, independent auditors, board committee</strong> — are the testable list, and <strong>primary responsibility for the statements sits with management (CEO + CFO)</strong>, not the auditors.</p>
@@ -679,67 +614,6 @@ Cash balance, April 30                         33,300</div>
         </div>
     </div>
 
-    <div class="problem">
-        <span class="qnum">practice · ch. 2</span>
-        <h3>World Wide Webster — transactions to balance sheet</h3>
-        <p>Record each event, post to T-accounts, and build the balance sheet: (a) stockholder invests $10,000; (b) borrow $15,000 on a bank note; (c) buy a $15,000 truck and $5,000 of equipment for cash; (d) buy $300 of supplies on credit; (e) sign a contract for a $10,000 website; (f) pay off the $300 payable; (g) pay $600 cash for supplies; (h) buy $1,000 of equipment for cash.</p>
-        <button class="answer-btn" onclick="toggleAnswer(this)">Show solution</button>
-        <div class="answer">
-            <div class="formula">(a) Dr Cash 10,000            / Cr Contributed Capital 10,000
-(b) Dr Cash 15,000            / Cr Notes Payable 15,000
-(c) Dr Equipment 20,000       / Cr Cash 20,000
-(d) Dr Supplies 300           / Cr Accounts Payable 300
-(e) NO ENTRY — exchange of promises
-(f) Dr Accounts Payable 300   / Cr Cash 300
-(g) Dr Supplies 600           / Cr Cash 600
-(h) Dr Equipment 1,000        / Cr Cash 1,000</div>
-            <h4>Ending balances → balance sheet</h4>
-            <div class="formula">Cash 3,100 + Supplies 900 + Equipment 21,000 = 25,000
-Notes Payable 15,000 + Contributed Capital 10,000 = 25,000 ✓</div>
-            <p>Retained earnings is 0 — nothing here was an operating transaction. The $10,000 contract (e) never appears anywhere. Two class notes: in the classified version, the $15,000 note is a <em>current</em> liability — it's due in 3 months, and classification follows the due date, not the account name. And the equation-spreadsheet method is "theoretical but inefficient" — it works, but it doesn't scale, which is exactly why journal entries and T-accounts exist.</p>
-        </div>
-    </div>
-
-    <div class="problem">
-        <span class="qnum">practice · ch. 2 · P2-3</span>
-        <h3>Jaguar Plastics — the classic journal-entry set</h3>
-        <p>Record: (a) bought $10,000 short-term investments for cash; (b) lent $5,000 to a supplier on a two-year note; (c) bought $18,000 equipment, $5,000 cash + 1-year note for the rest; (d) hired a president at $85,000/year starting next Jan 1; (e) issued 2,000 shares of $0.50-par stock for $11,000 cash; (f) borrowed $9,000 from the bank, due in 3 months; (g) bought a $3,000 patent for cash; (h) built a $24,000 factory addition, $8,000 cash + 3-year note; (i) returned defective equipment for a $1,000 cash refund.</p>
-        <button class="answer-btn" onclick="toggleAnswer(this)">Show solution</button>
-        <div class="answer">
-            <div class="formula">(a) Dr Investments (ST) 10,000     / Cr Cash 10,000
-(b) Dr Notes Receivable (LT) 5,000 / Cr Cash 5,000
-(c) Dr Equipment 18,000            / Cr Cash 5,000
-                                     Cr Notes Payable (current) 13,000
-(d) NO ENTRY — exchange of promises
-(e) Dr Cash 11,000                 / Cr Common Stock 1,000  (2,000 × $0.50 par)
-                                     Cr Additional Paid-in Capital 10,000
-(f) Dr Cash 9,000                  / Cr Notes Payable (current) 9,000
-(g) Dr Intangibles 3,000           / Cr Cash 3,000
-(h) Dr Factory Building 24,000     / Cr Cash 8,000
-                                     Cr Notes Payable (noncurrent) 16,000
-(i) Dr Cash 1,000                  / Cr Equipment 1,000</div>
-            <p>The three exam favorites: (c)/(h) capitalize the <em>full</em> asset cost even when partly financed; (e) splits par from APIC; (d) is not a transaction. Cash-flow classification (P2-4): a, b, c, g, h, i are investing (only the cash portion for c and h); e and f are financing; d is no effect.</p>
-        </div>
-    </div>
-
-    <div class="problem">
-        <span class="qnum">practice · ch. 2 · P2-1</span>
-        <h3>Classify and give the normal balance</h3>
-        <p>For each account: current asset (CA), non-current asset (NCA), current liability (CL), non-current liability (NCL), or stockholders' equity (SE) — and debit or credit normal balance. Prepaid expenses · inventories · accounts receivable · long-term debt · cash · goodwill · accounts payable · income taxes payable · PP&amp;E · retained earnings · additional paid-in capital · short-term borrowings · accrued liabilities · common stock.</p>
-        <button class="answer-btn" onclick="toggleAnswer(this)">Show solution</button>
-        <div class="answer">
-            <div class="formula">Prepaid expenses      CA   Dr      Accounts payable        CL   Cr
-Inventories           CA   Dr      Income taxes payable    CL   Cr
-Accounts receivable   CA   Dr      Short-term borrowings   CL   Cr
-Cash                  CA   Dr      Accrued liabilities     CL   Cr
-Goodwill              NCA  Dr      Long-term debt          NCL  Cr
-PP&E                  NCA  Dr      Common stock            SE   Cr
-                                   Additional paid-in cap. SE   Cr
-                                   Retained earnings       SE   Cr</div>
-            <p>All assets: debit balance. All liabilities and equity: credit balance. Prepaid expenses are an <em>asset</em> (future benefit already paid for) — the most commonly missed one.</p>
-        </div>
-    </div>
-
     <details class="textbook">
         <summary>beyond the slides — what the textbook adds (ch. 2)</summary>
         <p><strong>Four assumptions/principles (the chapter's core additions):</strong> <em>separate entity</em> (the business's books exclude the owner's personal transactions — an owner borrowing for personal use = no entry); <em>going concern</em> (assume the business continues; if bankruptcy looms, assets get valued at liquidation instead); <em>monetary unit</em> (report in the national currency, with <em>no adjustment for inflation</em>); <em>historical cost</em> (record at cash-equivalent value on the transaction date, <em>including</em> the value of any noncash consideration like a trade-in).</p>
@@ -856,50 +730,6 @@ Receive $100 bill, unpaid:      Dr Insurance Expense 100 / Cr Insurance Payable 
 
     <p>Sales grew every year while all three margins fell — growth was bought with price cuts and heavier operating spend (the "Whole Paycheck" reputation was under attack from conventional grocers). Gross margin down ~1 point and operating margin down ~1 point stack into a net margin decline of nearly a quarter of its 2014 level. That's the read: <em>which layer</em> leaked tells you <em>what</em> management is fighting.</p>
 
-    <div class="problem">
-        <span class="qnum">practice · ch. 3 · E3-2</span>
-        <h3>Payson Sports — cash vs. accrual income</h3>
-        <p>During 20X5: (a) bought $250,000 of inventory, paying $90,000 cash, rest on account; (b) paid $180,300 of wages, with $3,700 more for 20X5 payable in January; (c) sold $750,000 of equipment — $500,000 cash, rest on account — with cost of goods sold $485,000; (d) paid $17,200 cash for utilities; (e) received $70,000 of customer deposits for January 20X6 orders; (f) received a $1,930 December utility bill, payable in January. Compute net income on a cash basis and an accrual basis.</p>
-        <button class="answer-btn" onclick="toggleAnswer(this)">Show solution</button>
-        <div class="answer">
-            <div class="formula">CASH BASIS                          ACCRUAL BASIS
-Cash sales           500,000        Sales to customers    750,000
-Customer deposits     70,000        Cost of sales        (485,000)
-Inventory purchases  (90,000)       Wages expense        (184,000)
-Wages paid          (180,300)       Utilities expense     (19,130)
-Utilities paid       (17,200)
-Net income           282,500        Net income             61,870</div>
-            <p>Same facts, a 4.5× difference. Cash basis counts unearned deposits as income and ignores $160,000 of unpaid inventory, $3,700 of owed wages, and the December utility bill. Accrual matches the $485,000 cost against the $750,000 of sales it produced. This is why GAAP requires accrual.</p>
-        </div>
-    </div>
-
-    <div class="problem">
-        <span class="qnum">practice · ch. 3 · E3-10</span>
-        <h3>Stacey's Piano Rebuilding — full cycle, unadjusted</h3>
-        <p>Beginning balances: cash $6,400, A/R $32,000, supplies $1,500, equipment $9,500, land $7,400, building $25,300; A/P $9,600, unearned fee revenue $3,840, LT note $48,500, common stock $1,600, APIC $7,000, RE $11,560. January events: (a) delivered 5 rebuilt pianos for $19,000 cash; (b) received a $600 deposit to rebuild a piano; (c) rented space to a bike shop, $850 rent received; (d) collected $7,200 on account; (e) received a $400 utility bill, payable in February; (f) ordered $960 of supplies; (g) paid $2,300 of accounts payable; (h) received a $920 tool from the major shareholder in exchange for 100 shares of $1-par stock; (i) paid $16,500 of January wages; (j) declared and paid a $2,200 dividend; (k) received and paid for the supplies in (f). Record entries and prepare the January statements.</p>
-        <button class="answer-btn" onclick="toggleAnswer(this)">Show solution</button>
-        <div class="answer">
-            <div class="formula">(a) Dr Cash 19,000    / Cr Rebuilding Fees Revenue 19,000
-(b) Dr Cash 600       / Cr Unearned Fee Revenue 600
-(c) Dr Cash 850       / Cr Rent Revenue 850
-(d) Dr Cash 7,200     / Cr Accounts Receivable 7,200     ← no revenue
-(e) Dr Utilities Expense 400 / Cr Accounts Payable 400
-(f) NO ENTRY — order only
-(g) Dr Accounts Payable 2,300 / Cr Cash 2,300
-(h) Dr Equipment 920  / Cr Common Stock 100, Cr APIC 820
-(i) Dr Wages Expense 16,500 / Cr Cash 16,500
-(j) Dr Retained Earnings 2,200 / Cr Cash 2,200
-(k) Dr Supplies 960   / Cr Cash 960</div>
-            <h4>Statements (unadjusted)</h4>
-            <div class="formula">Income statement:  Revenues 19,850 (19,000 + 850) − Expenses 16,900 = NI 2,950
-Balance sheet:     Current assets 39,350 (cash 12,090 + A/R 24,800 + supplies 2,460)
-                   + LT assets 43,120 = Total assets 82,470
-                   Liabilities 60,640 (A/P 7,700 + unearned 4,440 + note 48,500)
-                   + SE 21,830 = 82,470 ✓</div>
-            <p>Watch (b) vs. (a): the deposit is a liability, not revenue. (d) collecting receivables is not revenue. (h) is a non-cash stock issuance with a par/APIC split — per the class annotation, contributed capital = (shares × par) + APIC, where par is just an arbitrary assigned value and APIC is the gap between value received and par on issue day (920 = 100 × $1 + 820). Trial balance ties at $99,370.</p>
-        </div>
-    </div>
-
     <details class="textbook">
         <summary>beyond the slides — what the textbook adds (ch. 3)</summary>
         <p><strong>Time period assumption</strong> — the one new key term: a company's long life can be cut into artificial short periods (months, quarters, years) for reporting; it's <em>why</em> recognition timing matters at all. Public companies must file quarterly (interim) reports.</p>
@@ -978,42 +808,6 @@ Balance sheet:     Current assets 39,350 (cash 12,090 + A/R 24,800 + supplies 2,
     <h3>Quality of earnings</h3>
 
     <p>Adjustments are the soft underbelly of the income statement, for two reasons: managers <em>know</em> where performance stands relative to analyst forecasts before the books close, and many adjustments rest on estimates requiring judgment (useful lives, accrual amounts). The evidence: plot analyst forecast errors (actual EPS − forecast) across thousands of firms and the histogram spikes just <em>above</em> zero — lots of small beats, suspiciously few small misses. Companies "meet or just beat." Amazon's earnings history in class showed surprises from +60.5% to −8.4% against consensus. Read reported earnings knowing the discretion embedded in them.</p>
-
-    <div class="problem">
-        <span class="qnum">practice · ch. 4</span>
-        <h3>Air &amp; Sea Travel — the seven classic adjustments</h3>
-        <p>At April 30: (a) prepaid 3 months' rent Apr 1 at $1,000/month; (b) $700 of supplies bought Apr 2, $400 on hand at month-end; (c) $16,500 of furniture bought Apr 1, 5-year life, no residual; (d) $450 collected Apr 20 for ongoing service, one-third earned by month-end; (e) employee earns $1,900/month paid half on the 15th and half on the last day, but Apr 30 falls on a Saturday (paid May 2); (f) $540 of income taxes owed; (g) client hired Apr 15 at $500/month, first payment May 15. Record the adjusting entries.</p>
-        <button class="answer-btn" onclick="toggleAnswer(this)">Show solution</button>
-        <div class="answer">
-            <div class="formula">(a) Dr Rent Expense 1,000        / Cr Prepaid Rent 1,000
-(b) Dr Supplies Expense 300      / Cr Supplies 300          (700 − 400 on hand)
-(c) Dr Depreciation Expense 275  / Cr Accumulated Depr. 275 (16,500/5/12)
-(d) Dr Unearned Revenue 150      / Cr Service Revenue 150   (450 × 1/3)
-(e) Dr Salary Expense 950        / Cr Salary Payable 950
-(f) Dr Income Tax Expense 540    / Cr Income Tax Payable 540
-(g) Dr Accounts Receivable 250   / Cr Service Revenue 250   (500 × ½ month)</div>
-            <p>Not one entry touches Cash. Adjusted NI comes to $2,985 — without adjustments it would have shown $5,650, nearly double. Follow-ups are ordinary entries, and the professor's in-class framing for them is worth keeping: paying a previously accrued liability is <em>"no I/S, only B/S"</em> — the expense already happened. May 2: Dr Salary Payable 950 / Cr Cash 950. May 15: Dr Cash 500 / Cr A/R 250, Cr Service Revenue 250 (the accrued half-month collected, plus the second half-month newly earned in May — solved in class as an "extra" slide).</p>
-        </div>
-    </div>
-
-    <div class="problem">
-        <span class="qnum">practice · ch. 4</span>
-        <h3>Deanna's Decorators — year-end comprehensive</h3>
-        <p>First year ends Dec 31, 20X5. Record adjustments: (a) $1,800 supplies bought in September, $800 on hand; (b) $12,000 paid Nov 1 for six months' rent; (c) $6,000 paid Jun 1 for one year's insurance; (d) $40,000 of PPE bought Jan 1, year's depreciation $2,000; (e) $500 of gift certificates sold Dec 1, $400 redeemed; (f) $20,000 CD bought Jun 30 yielding 12% at one year; (g) $30,000 borrowed Jan 1 at 10%, principal and interest due Jun 30, 20X6; (h) income taxes of $26,110; (i) $750 dividend declared Dec 15, payable Jan 15.</p>
-        <button class="answer-btn" onclick="toggleAnswer(this)">Show solution</button>
-        <div class="answer">
-            <div class="formula">(a) Dr Supplies Expense 1,000     / Cr Supplies 1,000
-(b) Dr Rent Expense 4,000         / Cr Prepaid Rent 4,000       (2 of 6 months)
-(c) Dr Insurance Expense 3,500    / Cr Prepaid Insurance 3,500  (7 of 12 months)
-(d) Dr Depreciation Expense 2,000 / Cr Accumulated Depr. 2,000  (NBV 38,000)
-(e) Dr Unearned Revenue 400       / Cr Decorating Revenue 400
-(f) Dr Interest Receivable 1,200  / Cr Investment Income 1,200  (20,000×12%×6/12)
-(g) Dr Interest Expense 3,000     / Cr Interest Payable 3,000   (30,000×10%×12/12)
-(h) Dr Income Tax Expense 26,110  / Cr Income Taxes Payable 26,110
-(i) Dr Retained Earnings 750      / Cr Dividend Payable 750     (declared ≠ paid)</div>
-            <p>Result: NI $48,490 on revenues of $121,600; adjusted trial balance ties at $193,810. The bonus round — paying off the note Jun 30, 20X6: total interest for 18 months is $4,500, of which $3,000 was accrued in 20X5, so: Dr Note Payable 30,000, Dr Interest Payable 3,000, Dr Interest Expense 1,500 / Cr Cash 34,500. The interest expense splits across the two years it was incurred — matching, end to end.</p>
-        </div>
-    </div>
 
     <details class="textbook">
         <summary>beyond the slides — what the textbook adds (ch. 4)</summary>
@@ -1121,77 +915,6 @@ Dividends:    Beg RE + NI − Dividends declared = End RE</div>
         </div>
     </div>
 
-    <div class="problem">
-        <span class="qnum">practice · ch. 12</span>
-        <h3>Warm-up — classify and sign</h3>
-        <p>Category (O/I/F) and cash direction (+/−): dividends paid $6,000 · common stock issued $20,000 · collections from customers $190,000 · income taxes paid $10,000 · payments to suppliers $80,000 · equipment purchased $40,000 · payments to employees $70,000 · note payable repaid $30,000 · land sold $60,000.</p>
-        <button class="answer-btn" onclick="toggleAnswer(this)">Show solution</button>
-        <div class="answer">
-            <div class="formula">Dividends paid          F −        Payments to employees   O −
-Stock issued            F +        Note principal repaid   F −
-Collections             O +        Land sold               I +
-Income taxes paid       O −        Equipment purchased     I −
-Paid suppliers          O −</div>
-            <p>Nothing here is ambiguous once you ask <em>who the cash touched</em>: funders → F, long-term assets → I, the operating cycle → O.</p>
-        </div>
-    </div>
-
-    <div class="problem">
-        <span class="qnum">practice · ch. 12</span>
-        <h3>T-account drills — solve for the cash</h3>
-        <p>(1) Beg A/R $8,000, end A/R $14,000, credit sales $1,500,000 — cash collected? (2) Beg inventory $99,000, end $140,000, COGS $645,000 — purchases? (3) Beg A/P $39,000, end $41,000, credit purchases $686,000 — cash paid to suppliers?</p>
-        <button class="answer-btn" onclick="toggleAnswer(this)">Show solution</button>
-        <div class="answer">
-            <div class="formula">(1) 8,000 + 1,500,000 − x = 14,000   →  collected  1,494,000
-(2) 99,000 + x − 645,000 = 140,000   →  purchases    686,000
-(3) 39,000 + 686,000 − x = 41,000    →  paid         684,000</div>
-            <p>Note (2) feeds (3): purchases links the inventory and payable T-accounts — chains like this are how full statements get built.</p>
-        </div>
-    </div>
-
-    <div class="problem">
-        <span class="qnum">practice · ch. 12 · the big one</span>
-        <h3>Eco-Bag Company — full statement, both methods</h3>
-        <p>Balance sheet changes (thousands): cash 25→16, A/R 25→45, inventory 60→100, gross PP&amp;E 330→581, acc. depr. 110→101, A/P 6→74, wages payable 4→25, LT debt 5→125, SE 315→417. Income statement: sales 200, COGS 100, wages 36, depreciation 17, interest 4, taxes 20, NI 23. Also known: PP&amp;E bought for cash 287, LT debt issued 120, stock issued 98. Build the statement.</p>
-        <button class="answer-btn" onclick="toggleAnswer(this)">Show solution</button>
-        <div class="answer">
-            <h4>CFO — direct</h4>
-            <div class="formula">Collections           = 200 − ΔA/R 20            = 180
-Paid employees        = 36 − Δwages payable 21    = (15)
-Paid suppliers: purchases = COGS 100 + ΔInv 40 = 140
-                cash paid = 140 − ΔA/P 68         = (72)
-Interest (4), taxes (20) — payables at 0 both ends
-CFO                   = 180 − 15 − 72 − 4 − 20    =  69</div>
-            <h4>CFO — indirect (same 69)</h4>
-            <div class="formula">NI 23 + Depr 17 − ΔA/R (20) − ΔInv (40) + ΔA/P 68 + ΔWages pay. 21 = 69</div>
-            <h4>CFI — infer the hidden sale</h4>
-            <div class="formula">Gross PP&E:  330 + 287 − sold = 581  →  cost sold = 36
-Acc. depr.:  110 + 17 − removed = 101  →  removed = 26
-Net book value sold = 36 − 26 = 10; no gain/loss → proceeds = 10
-CFI = (287) + 10 = (277)</div>
-            <h4>CFF — infer dividends from equity</h4>
-            <div class="formula">SE: 315 + NI 23 + stock 98 − div = 417  →  dividends = 19
-CFF = 120 + 98 − 19 = 199</div>
-            <p>Tie-out: 69 − 277 + 199 = <strong>(9)</strong> = cash 25 → 16 ✓. The exam skills hiding in here: inferring a disposal from two PP&amp;E lines, and backing dividends out of the equity roll-forward.</p>
-        </div>
-    </div>
-
-    <div class="problem">
-        <span class="qnum">practice · ch. 12</span>
-        <h3>Siegfried &amp; Royce — indirect + direct</h3>
-        <p>IS: sales 12,500, COGS 7,300, depreciation 400, rent 250, admin 2,200, tax 940, NI 1,410. BS changes: A/R +270, inventory +80, prepaid rent +50, PP&amp;E +400 (purchase), acc. depr. +400, A/P −80, admin payables −50, taxes payable +100, note payable +500, common stock +500, RE +1,410. Build the statement both ways.</p>
-        <button class="answer-btn" onclick="toggleAnswer(this)">Show solution</button>
-        <div class="answer">
-            <div class="formula">Indirect: 1,410 + 400 − 270 − 80 − 50 − 80 − 50 + 100          = CFO 1,380
-Direct:   collections 12,230 − merch. 7,460 − rent 300
-          − admin 2,250 − taxes 840                             = CFO 1,380
-CFI: equipment (400)
-CFF: stock 500 + note 500 = 1,000   (ΔRE = NI → no dividends)
-Δcash = 1,380 − 400 + 1,000 = 1,980 ✓ (cash 1,300 → 3,280)</div>
-            <p>Two habits worth copying: check ΔRE against NI first — if they match, dividends are zero and you've saved a step; and every direct-method line is just expense ± the related balance-sheet change (rent 250 + prepaid increase 50 = 300 paid).</p>
-        </div>
-    </div>
-
     <details class="textbook">
         <summary>beyond the slides — what the textbook adds (ch. 12)</summary>
         <p><strong>Cash means cash + cash equivalents</strong> — investments with <em>original maturity ≤ 3 months</em>, measured from when the holder bought it (a 3-year T-note purchased 3 months before maturity qualifies; one held from issuance never does). Moving money between cash and equivalents is not a cash flow at all.</p>
@@ -1203,7 +926,8 @@ CFF: stock 500 + note 500 = 1,000   (ΔRE = NI → no dividends)
 
     <div class="eq-state">
         <span class="label">state of the equation · after ch. 12</span>
-        \[ \Delta \text{Cash} = \underbrace{NI + \text{noncash} \pm \text{wedges}}_{CFO} + CFI + CFF \qquad \text{because} \qquad \Delta \text{Cash} = \Delta L + \Delta SE - \Delta \text{Noncash Assets} \]
+        \[ \Delta \text{Cash} = \underbrace{NI + \text{noncash} \pm \text{wedges}}_{CFO} + CFI + CFF \]
+        \[ \text{because} \quad \Delta \text{Cash} = \Delta L + \Delta SE - \Delta \text{Noncash Assets} \]
         <p><span class="new">New:</span> nothing was added to the equation — it was <em>differenced</em>. Take A = L + E at two dates, subtract, solve for ΔCash, and sort every account's change into three buckets: that's the entire statement of cash flows. The <span class="new">indirect method</span> is the operating bucket rearranged to start from net income, which makes the NI-vs-cash gap — the accrual wedges from Ch. 3–4 — the visible headline. Every adjusting-entry concept now has a mirror image here: the accruals that moved income without cash get reversed out, one by one. <strong>Income statement so far:</strong> unchanged, but now auditable — quality of income (CFO/NI) asks whether the income statement's story is corroborated by the cash account, and <span class="new">free cash flow</span> (CFO − capex) is what's left for the owners of the story.</p>
         <p style="font-size: 0.9em; color: #666; margin-bottom: 0.2em;"><em>Next, per the course roadmap: Ch. 6–8 refine the operating assets one at a time — receivables (allowance), inventory (FIFO/LIFO), and long-term assets (depreciation methods) — all Midterm II material.</em></p>
     </div>
