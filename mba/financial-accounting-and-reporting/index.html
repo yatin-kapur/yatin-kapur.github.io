@@ -221,10 +221,11 @@
         <li><a href="#income-statement">income statement &amp; accruals</a></li>
         <li><a href="#adjustments">adjusting entries &amp; closing</a></li>
         <li><a href="#cash-flows">statement of cash flows</a></li>
+        <li><a href="#receivables">receivables &amp; bad debt</a></li>
     </ul>
 
     <div class="takeaways" id="takeaways">
-        <h3>Key takeaways (through Class 5)</h3>
+        <h3>Key takeaways (through Class 6)</h3>
         <p style="margin-top: 0; font-size: 0.9em; color: #666;">The whole first month in one screen — the spine is <span class="imp">A = L + E → dual effect → accrual timing → adjust at period-end</span>.</p>
         <ol>
             <li><strong>The accounting equation always holds.</strong> Assets = Liabilities + Stockholders' Equity. Every transaction touches at least two accounts (dual effect), and the equation stays in balance after every one.</li>
@@ -240,6 +241,7 @@
             <li><strong>Adjustments are where discretion lives.</strong> Estimates (useful lives, accruals) require judgment, managers know the target, and the distribution of analyst forecast errors shows firms "meet or just beat" — earnings quality is a management choice.</li>
             <li><strong>Ratios so far:</strong> current ratio = current assets / current liabilities (liquidity cushion; too high can mean inefficiency); margins = any income statement line / net sales (gross, operating, net — each isolates one layer of cost, and <em>which layer leaks</em> is the diagnosis); EPS = net income / average shares outstanding; quality of income = CFO / NI (how much profit is backed by cash).</li>
             <li><strong>The cash flow statement is accrual accounting run in reverse.</strong> Indirect method: start from net income, add back noncash charges (depreciation), back out investing items (gains/losses), then undo every working-capital timing wedge — asset up, cash down; liability up, cash up. The three sections' <em>signs</em> tell a firm's life-cycle story (−/−/+ startup → +/−/− mature).</li>
+            <li><strong>Assets get estimated down, through contra-accounts, in the period of the related sale.</strong> The allowance for doubtful accounts is accumulated depreciation's sibling: bad debt expense hits income when the <em>sale</em> is recorded (matching + conservatism), and the later write-off is a wash — no income effect, no net-receivables effect. Percentage-of-sales estimates the <em>expense</em> directly; aging estimates the <em>ending allowance</em> and plugs the expense.</li>
         </ol>
     </div>
 
@@ -930,6 +932,81 @@ Dividends:    Beg RE + NI − Dividends declared = End RE</div>
         \[ \text{because} \quad \Delta \text{Cash} = \Delta L + \Delta SE - \Delta \text{Noncash Assets} \]
         <p><span class="new">New:</span> nothing was added to the equation — it was <em>differenced</em>. Take A = L + E at two dates, subtract, solve for ΔCash, and sort every account's change into three buckets: that's the entire statement of cash flows. The <span class="new">indirect method</span> is the operating bucket rearranged to start from net income, which makes the NI-vs-cash gap — the accrual wedges from Ch. 3–4 — the visible headline. Every adjusting-entry concept now has a mirror image here: the accruals that moved income without cash get reversed out, one by one. <strong>Income statement so far:</strong> unchanged, but now auditable — quality of income (CFO/NI) asks whether the income statement's story is corroborated by the cash account, and <span class="new">free cash flow</span> (CFO − capex) is what's left for the owners of the story.</p>
         <p style="font-size: 0.9em; color: #666; margin-bottom: 0.2em;"><em>Next, per the course roadmap: Ch. 6–8 refine the operating assets one at a time — receivables (allowance), inventory (FIFO/LIFO), and long-term assets (depreciation methods) — all Midterm II material.</em></p>
+    </div>
+
+    <h2 id="receivables">Receivables &amp; bad debt <span style="font-size: 0.6em; color: #888; font-weight: 400;">· Ch. 6 · Class 6 (Jul 20)</span></h2>
+
+    <p>A receivable's face value is a hope, not a fact — some customers will refuse or be unable to pay, and cash discounts and returns shave more off. So at each balance-sheet date the question becomes: <em>how much of this will actually convert to cash?</em> Two principles force the answer to arrive early: <strong>conservatism</strong> (don't overstate assets) and <strong>matching</strong> (the cost of uncollectible sales belongs in the period of the sale — not years later when the customer finally goes broke). The lecture covered only the bad-debt machinery; net sales components and the bank reconciliation live in the textbook block below.</p>
+
+    <h3>The two accounts</h3>
+
+    <ul class="bullets">
+        <li><strong>Allowance for doubtful accounts</strong> — the manager's estimate of what will <em>not</em> be collected. A contra-asset with a normal <strong>credit</strong> balance, sitting under gross A/R exactly the way accumulated depreciation sits under PP&amp;E. Neither gross A/R nor the allowance ever appears on the income statement.</li>
+        <li><strong>Bad debt expense</strong> — the income-statement cost of uncollectibility, reported within SG&amp;A. It's how the allowance gets filled.</li>
+    </ul>
+
+    <div class="formula-box">
+        <p><strong>Net receivables and the allowance roll-forward</strong></p>
+        \[ \text{Net A/R} = \text{Gross A/R} - \text{Allowance} \qquad \text{Allowance}_{beg} + \text{BDE} - \text{Write-offs} = \text{Allowance}_{end} \]
+        <div class="formula-actions">
+            <button class="intuition-btn" onclick="toggleIntuition(this)">💡 intuition</button>
+        </div>
+        <div class="intuition">
+            <p>Net A/R is the number the balance sheet reports: management's honest guess at future cash. The allowance is a reservoir — bad debt expense pours estimate in; write-offs drain specific corpses out. The roll-forward identity is the workhorse of every exam problem: given any three pieces, solve for the fourth. In-class example (Target's card business): ending 430 + write-offs 414 − beginning 690 = <strong>bad debt expense 154</strong> — inferred purely from the T-account.</p>
+            <p>Real-world reservoir sizes vary wildly with the customer base: Ford's allowance ran 0.55% of gross finance receivables (car buyers with credit checks), Target's card business ~6.6% — jumping to 11.1% in the 2008 crisis — and hospital operator HCA's allowance approached 94% of its <em>uninsured-patient</em> receivables. Same machinery, different worlds.</p>
+        </div>
+    </div>
+
+    <h3>The four-event life cycle</h3>
+
+    <table>
+        <tr><th>When</th><th>Event</th><th>Entry</th><th>NI effect</th><th>Net A/R effect</th></tr>
+        <tr><td>Sale</td><td>Credit sale</td><td>Dr A/R / Cr Sales Revenue</td><td>↑</td><td>↑</td></tr>
+        <tr><td>Later</td><td>Collection</td><td>Dr Cash / Cr A/R</td><td>—</td><td>↓</td></tr>
+        <tr><td><strong>Period of sale</strong></td><td>Estimate (AJE)</td><td>Dr Bad Debt Expense / Cr Allowance</td><td><strong>↓</strong></td><td><strong>↓</strong></td></tr>
+        <tr><td>Yet later</td><td>Write-off</td><td>Dr Allowance / Cr A/R</td><td><strong>none</strong></td><td><strong>none</strong></td></tr>
+    </table>
+
+    <div class="callout">
+        <strong>The most-tested fact in the chapter, repeated three times in lecture:</strong> the income statement is hit when the <em>sale</em> is recorded, never at write-off. A write-off drops gross A/R and the allowance by the same amount — net receivables, total assets, and net income all unmoved. Same for a recovery (reinstate: Dr A/R / Cr Allowance, then collect: Dr Cash / Cr A/R) — the money goes <em>back into the reservoir</em> for the next deadbeat. Partial settlements combine the pieces: customer owing 15 pays 2 in final settlement → Dr Cash 2, Dr Allowance 13 / Cr A/R 15.
+    </div>
+
+    <h3>Three ways to size the estimate</h3>
+
+    <table>
+        <tr><th>Method</th><th>What it computes directly</th><th>The other number</th><th>Notes</th></tr>
+        <tr><td><strong>Specific account analysis</strong></td><td>Each doubtful customer individually</td><td>—</td><td>Most accurate, costly in time — a trade-off</td></tr>
+        <tr><td><strong>Percentage of credit sales</strong></td><td><strong>Bad debt expense</strong> = credit sales × rate</td><td>Ending allowance is whatever the roll-forward produces</td><td>Most common in the US; income-statement first</td></tr>
+        <tr><td><strong>Aging schedule</strong></td><td><strong>Ending allowance</strong> = Σ (age bucket × bucket rate)</td><td>BDE is the <em>plug</em>: needed ending − existing balance</td><td>Balance-sheet first; older buckets get harsher rates</td></tr>
+    </table>
+
+    <p>The class example, both methods on the same company: Stern &amp; Co. year one — credit sales 500,000 × 4% = <strong>BDE 20,000, directly</strong> (percentage method). Two years later, an aging schedule: 100,000×5% + 30,000×8% + 15,000×15% + 10,000×50% = required ending allowance <strong>14,650</strong>; with 7,000 already sitting in the account, <strong>BDE = the 7,650 plug</strong>. The flowchart to memorize: percentage → expense first, allowance follows; aging → allowance first, expense follows. And the standing critique from the slides: every method is ultimately a management estimate — "management ability and/or opportunism (?)" — which is where earnings quality enters.</p>
+
+    <div class="formula-box">
+        <p><strong>Receivables turnover &amp; days sales outstanding</strong></p>
+        \[ \text{A/R Turnover} = \frac{\text{Sales}}{\text{Average Net A/R}} \qquad \text{DSO} = \frac{365}{\text{Turnover}} \]
+        <div class="formula-actions">
+            <button class="intuition-btn" onclick="toggleIntuition(this)">💡 intuition</button>
+        </div>
+        <div class="intuition">
+            <p>How many times a year the receivables pool refills — and its inverse in days: how long a sale sits before becoming cash. Class example: sales 120,000 on average net A/R of 10,000 → turnover 12 → 30 days to collect. Falling turnover with growing sales = receivables piling up = the same early-warning wedge the cash flow statement exposes (an A/R increase is a CFO subtraction).</p>
+            <p>The comparability trap, via the class case: Target's fiscal-2007 DSO was <strong>42.3 days</strong> vs. Walmart's <strong>3.7</strong> — not because Target collected slowly, but because Target <em>owned its credit-card receivables</em> and Walmart's card was run by a bank. Know what's inside the numerator's counterpart before comparing. (Epilogue: after the 2008 crisis pushed its allowance from 6.6% to 11.1% of gross receivables, Target sold the whole $5.9B card book to TD Bank in 2012 — its balance sheet now has no A/R line at all.)</p>
+        </div>
+    </div>
+
+    <details class="textbook">
+        <summary>beyond the slides — what the textbook adds (ch. 6)</summary>
+        <p><strong>Net sales</strong> (skipped in lecture, SmartBook still asks): Net sales = sales revenue − <em>sales discounts</em> − <em>returns &amp; allowances</em> (both contra-revenues). Credit-card fees are <strong>not</strong> contra-revenue — they're SG&amp;A expense. A "2/10, n/30" discount means 2% off if paid in 10 days, net due in 30 — and forgoing it costs an implied <strong>37% annual rate</strong> (2/98 over 20 days, annualized), so customers should take it even on borrowed money. Trade discounts (off list price) are a different thing entirely — applied before anything is recorded.</p>
+        <p><strong>FOB terms:</strong> <em>shipping point</em> — title passes at shipment, buyer owns goods in transit, seller books revenue at shipment; <em>destination</em> — title passes on delivery, seller owns in-transit goods. Decides both revenue timing and whose inventory the truck contains.</p>
+        <p><strong>Bank reconciliation</strong> (also skipped in lecture): bank side gets timing items — + deposits in transit, − outstanding checks, ± bank errors; book side gets news from the statement — + interest earned and bank collections, − NSF checks and service charges, ± book errors. Both sides meet at true cash, which is what the balance sheet reports. <strong>Only book-side items get journal entries</strong>, and an NSF check becomes a receivable again (Dr A/R / Cr Cash). Internal control's spine: whoever handles cash never records it or reconciles the account.</p>
+        <p><strong>Fine print worth points:</strong> estimation misses are corrected <em>prospectively</em> — next period's expense, no restatement (Skechers added $10.2M of COVID-era BDE in one quarter). The percentage method applies its rate to <em>credit</em> sales only — cash sales can't go bad. Turnover uses net sales because net <em>credit</em> sales are rarely disclosed. And Monsanto's rebate games (parking $56M of rebates in SG&amp;A instead of against net sales) bought an $80M SEC penalty — misclassification <em>within</em> the income statement is still fraud.</p>
+    </details>
+
+    <div class="eq-state">
+        <span class="label">state of the equation · after ch. 6</span>
+        \[ A = \cdots + \underbrace{(\text{Gross A/R} - \text{Allowance})}_{\text{Net A/R, an estimate}} + \cdots = L + \text{PIC} + RE_{beg} + \text{Rev} - \text{Exp}_{\,\ni\, \text{BDE}} - \text{Div} \]
+        <p><span class="new">New:</span> a second asset now carries a <span class="new">valuation layer</span> — receivables join PP&amp;E in being reported through a contra-account, at management's estimate of future benefit rather than face value. The estimate flows through income <em>in the sale's period</em> (bad debt expense); the eventual write-off just relabels the loss inside the asset — a wash everywhere. This is the chapter where the balance sheet stops being a record of transactions and starts being a set of <span class="new">judgments</span> — which is exactly why the allowance ratio (allowance ÷ gross A/R) and receivables turnover are earnings-quality dials, not just liquidity stats. <strong>Income statement so far:</strong> gains a standing estimated expense inside SG&amp;A, sized by percentage-of-sales (expense-first) or aging (allowance-first).</p>
+        <p style="font-size: 0.9em; color: #666; margin-bottom: 0.2em;"><em>Next: Ch. 7 does the same to inventory (FIFO/LIFO, lower of cost or NRV), Ch. 8 to long-term assets — every operating asset gets its valuation rules before Midterm II (Jul 27).</em></p>
     </div>
 
     <p class="footer">last updated jul 2026 · <a href="../">mba</a> · <a href="/">home</a></p>
