@@ -208,7 +208,7 @@
 
     <p>Personal notes from Aleszczyk's Financial Accounting &amp; Reporting. Accounting as the "language of business," taken from the perspective of <em>external</em> users — investors, creditors, analysts — not preparers. The spine of the course: the four financial statements and how they articulate, double-entry mechanics (debits/credits, journal entries, T-accounts), accrual accounting and revenue recognition, then chapter-by-chapter through the balance sheet (receivables, inventory, PP&amp;E, liabilities, bonds, equity) and the statement of cash flows. Textbook: Libby/Libby/Hodge, <em>Financial Accounting</em>.</p>
 
-    <p><strong>Exam structure:</strong> all exams cumulative, on paper. <strong>Next up: Midterm II, Mon Jul 27 (25%), covering Ch. 4, 6, 7, 8, 12</strong> — Zoom review session Sun Jul 26. Midterm I (Jul 13, diagnostic, 15%, Ch. 1–3) ran as announced: 70 points / ~45 minutes in three blocks (shorter 32 pts, longer 11 pts, application 27 pts), 80–90% from lectures, homework, and the posted sample papers. Expect the same shape for Midterm II. Take-home final/project (25%) covers everything. Homework via Connect (20%) + SmartBook readings (5%) + participation (10%).</p>
+    <p><strong>Exam structure:</strong> all exams cumulative, on paper. <strong>Next up: Midterm II, Mon Jul 27 (25%), covering Ch. 4, 6, 7, 8, 12.</strong> Scope flags straight from the L8 slides: ROA, asset turnover, and fixed-asset turnover are annotated <em>"ignore for midterm 2"</em>; double-declining balance and IFRS revaluation are marked FYI. Optional review: <strong>Sun Jul 26, 7–8pm, Zoom (link on Brightspace)</strong> — questions only, no new material, not recorded. Midterm I (Jul 13, diagnostic, 15%, Ch. 1–3) ran as announced: 70 points / ~45 minutes in three blocks, 80–90% from lectures, homework, and sample papers — expect the same shape. Take-home final/project (25%) covers everything. Homework via Connect (20%) + SmartBook (5%) + participation (10%).</p>
 
     <p style="font-size: 0.92em; color: #666;"><em>Tip:</em> each formula on the page has a <strong>💡 intuition</strong> button beneath it that expands a plain-language explanation of what the formula means. Journal entries are shown in <code>Dr / Cr</code> blocks. Each chapter section ends with a teal "state of the equation" box — reading just those, bottom to top, is the fastest full-course review.</p>
 
@@ -222,10 +222,12 @@
         <li><a href="#adjustments">adjusting entries &amp; closing</a></li>
         <li><a href="#cash-flows">statement of cash flows</a></li>
         <li><a href="#receivables">receivables &amp; bad debt</a></li>
+        <li><a href="#inventory">inventory &amp; cogs</a></li>
+        <li><a href="#lt-assets">long-term assets</a></li>
     </ul>
 
     <div class="takeaways" id="takeaways">
-        <h3>Key takeaways (through Class 6)</h3>
+        <h3>Key takeaways (through Class 7)</h3>
         <p style="margin-top: 0; font-size: 0.9em; color: #666;">The whole first month in one screen — the spine is <span class="imp">A = L + E → dual effect → accrual timing → adjust at period-end</span>.</p>
         <ol>
             <li><strong>The accounting equation always holds.</strong> Assets = Liabilities + Stockholders' Equity. Every transaction touches at least two accounts (dual effect), and the equation stays in balance after every one.</li>
@@ -1007,6 +1009,113 @@ Dividends:    Beg RE + NI − Dividends declared = End RE</div>
         \[ A = \cdots + \underbrace{(\text{Gross A/R} - \text{Allowance})}_{\text{Net A/R, an estimate}} + \cdots = L + \text{PIC} + RE_{beg} + \text{Rev} - \text{Exp}_{\,\ni\, \text{BDE}} - \text{Div} \]
         <p><span class="new">New:</span> a second asset now carries a <span class="new">valuation layer</span> — receivables join PP&amp;E in being reported through a contra-account, at management's estimate of future benefit rather than face value. The estimate flows through income <em>in the sale's period</em> (bad debt expense); the eventual write-off just relabels the loss inside the asset — a wash everywhere. This is the chapter where the balance sheet stops being a record of transactions and starts being a set of <span class="new">judgments</span> — which is exactly why the allowance ratio (allowance ÷ gross A/R) and receivables turnover are earnings-quality dials, not just liquidity stats. <strong>Income statement so far:</strong> gains a standing estimated expense inside SG&amp;A, sized by percentage-of-sales (expense-first) or aging (allowance-first).</p>
         <p style="font-size: 0.9em; color: #666; margin-bottom: 0.2em;"><em>Next: Ch. 7 does the same to inventory (FIFO/LIFO, lower of cost or NRV), Ch. 8 to long-term assets — every operating asset gets its valuation rules before Midterm II (Jul 27).</em></p>
+    </div>
+
+    <h2 id="inventory">Inventory &amp; cost of goods sold <span style="font-size: 0.6em; color: #888; font-weight: 400;">· Ch. 7 · Class 7 (Jul 22)</span></h2>
+
+    <p>Every sale of goods is two entries — revenue at retail, and the one this chapter cares about: <code>Dr COGS / Cr Inventory</code> at cost. The core issue is <strong>allocation and valuation</strong>: of everything spent on goods, how much stays on the balance sheet as an asset (inventory) and how much goes to the income statement (COGS)? Merchandisers buy finished goods (Gap, American Eagle); manufacturers build them through three inventory accounts — raw materials → work in process (materials + direct labor + overhead) → finished goods (Microsoft's note splits its $2,181M exactly that way).</p>
+
+    <h3>What goes into inventory cost</h3>
+
+    <p><strong>Invoice price + freight-in + inspection + preparation − discounts and allowances.</strong> The class example: steel invoiced at $160,000 FOB shipping point, $10,000 freight (buyer's, so capitalized), $15,000 flaw allowance, 2% cash discount taken → 160,000 + 10,000 − 15,000 − 2,900 = <strong>$152,100</strong>. The trap inside: the 2% applies to the invoice <em>net of the allowance</em> (2% × 145,000), not the gross.</p>
+
+    <div class="formula-box">
+        <p><strong>The COGS identity</strong></p>
+        \[ \text{Beg. Inventory} + \text{Purchases} = \underbrace{\text{Goods Available}}_{\text{the pool}} = \text{End. Inventory} + \text{COGS} \]
+        <div class="formula-actions">
+            <button class="intuition-btn" onclick="toggleIntuition(this)">💡 intuition</button>
+        </div>
+        <div class="intuition">
+            <p>Everything that was ever in the store either is still there or was sold — the pool has exactly two exits. Given any three pieces, the fourth is a plug, and that's a whole genre of exam problem. The class fire-loss case (Liao Co.): inventory 65,000 + net purchases 185,000 + freight-in 20,000 = 270,000 available; sales of 200,000 at a 20% gross margin imply COGS = 160,000; so the merchandise destroyed = 270,000 − 160,000 = <strong>110,000</strong>. The gross-margin percentage is how you conjure COGS when no count exists.</p>
+        </div>
+    </div>
+
+    <h3>Four cost-flow methods, one dataset</h3>
+
+    <p>When identical units were bought at different prices, which cost leaves when one sells? Four GAAP answers, run in class on the same 25 units (Discount Computer: goods available $4,198; 17 sold, 8 left; purchases at $160→$162→$170→$176, i.e., rising prices):</p>
+
+    <table class="matrix">
+        <tr><th></th><th>Specific ID</th><th>Weighted Avg</th><th>FIFO</th><th>LIFO</th></tr>
+        <tr><td>COGS</td><td>2,888</td><td>2,854.64</td><td><strong>2,808</strong></td><td><strong>2,912</strong></td></tr>
+        <tr><td>Ending inventory</td><td>1,310</td><td>1,343.36</td><td><strong>1,390</strong></td><td><strong>1,286</strong></td></tr>
+        <tr><td>Gross profit (on 5,000 sales)</td><td>2,112</td><td>2,145</td><td><strong>2,192</strong></td><td><strong>2,088</strong></td></tr>
+    </table>
+
+    <p>Note the professor's red annotation: the FIFO–LIFO gap is <strong>$104 in COGS and $104 in ending inventory</strong> — always equal and opposite, because the pool identity forces it. The rule to memorize for <strong>rising prices</strong>: FIFO → lowest COGS, highest income and ending inventory (recent costs stay on the shelf); LIFO → the mirror image, and therefore <strong>lowest taxes</strong>. Weighted average (available ÷ units = $167.92/unit here) smooths between them. Falling prices flip everything.</p>
+
+    <ul class="bullets">
+        <li><strong>The four NOTES from class:</strong> (1) the US <em>LIFO conformity rule</em> — same method for tax and books, which is exactly why profitable US firms choose LIFO (lower taxable income); (2) LIFO balance-sheet values go stale, so firms must disclose FIFO/current values; (3) <strong>IFRS bans LIFO</strong>; (4) different methods are allowed for different inventory types.</li>
+        <li><strong>LIFO reserve</strong> = FIFO inventory − LIFO inventory, disclosed in footnotes. Exxon 2019: LIFO book value $14.0B + reserve $9.7B → <strong>$23.7B at FIFO</strong> — decades of cheap oil-cost layers hiding 70% of the value. Caterpillar's equivalent: ~$2.1B.</li>
+    </ul>
+
+    <h3>Write-downs: lower of cost or market</h3>
+
+    <p>Damaged or unwanted inventory gets written down to market — <strong>item by item, and only down, never up</strong> ("what if the value recovers? Oh well…"). The class example (Amanda Corp.): three items costing 35,000 total, only the one with market below cost gets touched → <code>Dr COGS 400 / Cr Inventory 400</code>, carrying value 34,600, which becomes the new permanent cost basis under GAAP (IFRS allows reversals via an allowance). Estée Lauder's 10-K shows the industrial version: an obsolescence reserve driven by age and forecast sales.</p>
+
+    <div class="formula-box">
+        <p><strong>Inventory turnover</strong></p>
+        \[ \text{Inventory Turnover} = \frac{\text{COGS}}{\text{Average Inventory}} \qquad \text{Days to Sell} = \frac{365}{\text{Turnover}} \]
+        <div class="formula-actions">
+            <button class="intuition-btn" onclick="toggleIntuition(this)">💡 intuition</button>
+        </div>
+        <div class="intuition">
+            <p>How fast the shelf clears. Note the numerator is <strong>COGS, not sales</strong> — inventory is carried at cost, so the comparison must be cost-to-cost (receivables turnover uses sales because A/R is carried at selling price; that asymmetry is a favorite MC distractor). Higher is generally better — less cash tied up, less storage and obsolescence risk — but too high courts stockouts. Holding inventory is a genuine trade-off: meeting demand and smoothing production versus holding cost, theft, obsolescence, and trapped cash flow.</p>
+        </div>
+    </div>
+
+    <div class="eq-state">
+        <span class="label">state of the equation · after ch. 7</span>
+        \[ \text{BI} + \text{Purchases} - \text{EI}_{\text{(FIFO? LIFO? avg?)}} = \text{COGS} \]
+        <p><span class="new">New:</span> inventory's balance-sheet value is now a <span class="new">cost-flow assumption</span> — the same physical goods produce four different asset values and four different incomes, legally. The pool identity welds the choice to the income statement: every dollar assigned to ending inventory is a dollar <em>not</em> in COGS, which is why the FIFO–LIFO gap shows up twice, once on each statement. Add LCM's <span class="new">one-way conservatism</span> (write down, never up) and inventory joins receivables as an estimated asset — except here management picks the <em>method</em>, not just the number, and the tax bill moves with it.</p>
+    </div>
+
+    <h2 id="lt-assets">Long-term assets <span style="font-size: 0.6em; color: #888; font-weight: 400;">· Ch. 8 · Class 7 (Jul 22)</span></h2>
+
+    <div class="callout">
+        <strong>Midterm II scope, straight from the slides:</strong> ROA, asset turnover, and fixed-asset turnover are marked <em>"ignore for midterm 2."</em> Double-declining balance and IFRS revaluation are FYI-only. What's squarely in: capitalization, straight-line and units-of-production depreciation, changes in estimates, disposals, intangibles/goodwill, impairment.
+    </div>
+
+    <p>The framework slide for every long-lived asset: <strong>acquire → measure over time → change → dispose</strong>. Tangibles depreciate (except land — never), natural resources deplete, definite-life intangibles amortize, and indefinite-life intangibles (trademarks, goodwill) sit untouched but get impairment-tested annually. One rule towers over the section: <strong>only purchased intangibles go on the balance sheet</strong> — internally developed R&amp;D, brands, and training are expensed immediately, which is why Starbucks' most valuable asset, its brand, appears nowhere on its $14.4B balance sheet.</p>
+
+    <h3>Acquisition: what gets capitalized</h3>
+
+    <p><strong>Acquisition cost = purchase price + everything needed to make the asset ready for its intended use</strong> — sales tax, freight, legal fees, installation, pre-use repairs — but <em>not</em> financing charges. The in-class problem (IRS computer equipment): invoice 400,000 − 2% discount 8,000 + freight 4,400 + installation 8,000 + pre-use repairs 9,000 = <strong>413,400</strong>. Deliberately excluded: the seller's commission, the purchasing manager's salary, and repairs <em>after</em> the asset entered service (those are expenses). Capitalize vs. expense in one line: extends life or capacity beyond a year → capitalize (roof replacement); keeps it running → expense (worn part, routine repair). WorldCom's $11B fraud was this one line item done backwards, and it bought Ebbers 25 years and the world Sarbanes-Oxley.</p>
+
+    <h3>Depreciation: allocating the cost</h3>
+
+    <div class="formula-box">
+        <p><strong>The two examinable methods</strong> (DDB is FYI)</p>
+        \[ \text{SL: } \frac{\text{Cost} - \text{Residual}}{\text{Useful Life}} \text{ per year} \qquad \text{UoP: } \frac{\text{Cost} - \text{Residual}}{\text{Total Est. Production}} \times \text{Actual Production} \]
+        <div class="formula-actions">
+            <button class="intuition-btn" onclick="toggleIntuition(this)">💡 intuition</button>
+        </div>
+        <div class="intuition">
+            <p>Depreciation is cost allocation, not valuation — spreading (cost − salvage) over the periods the asset earns revenue. Straight-line fits assets that produce evenly through time; units-of-production fits assets that wear out by <em>use</em> (the class machine: $90,000 depreciable ÷ 5,000 units = $18/unit, so a 1,300-unit year costs $23,400). Both land on the same ending NBV = residual value; they just travel differently.</p>
+            <p>Three inputs, only one fact: cost is known; useful life and salvage are <em>estimates</em> — which makes depreciation a lever. Singapore Airlines stretched aircraft lives from 10 to 15 years in 2001 and saved <strong>$265M of expense per year</strong>, flattering a bad year's income entirely legally (disclosed in the notes). A fully depreciated asset that's still working just sits at its residual value — no more expense, no removal, foresight isn't perfect.</p>
+        </div>
+    </div>
+
+    <p><strong>Changes in estimates are prospective</strong> — no restatement; the new facts apply to the book value going forward. The F-22 class example, three steps: (1) NBV after 3.5 years = 171M − 3.5 × 28.8M = 70.2M; (2) add the 16.7M capital improvement → new basis 86.9M; (3) depreciate (86.9 − new salvage 28) over the <em>remaining</em> life of 2.5 years → <strong>23.56M/year</strong>. Basis, then salvage, then remaining life — in that order, every time.</p>
+
+    <h3>Disposal: settle up with reality</h3>
+
+    <p>First bring depreciation up to the disposal date, then remove <em>both</em> the asset (at original cost) and its accumulated depreciation, and let the plug be the answer: <strong>gain or loss = proceeds − net book value</strong>. The class triple (hotel furniture, cost 3,000,000, accumulated 2,750,000, NBV 250,000): sold at 250,000 → no gain/loss; at 800,000 → gain 550,000; at 200,000 → loss 50,000. Ch. 12 echo: the full proceeds land in investing, and the gain/loss gets backed out of operating.</p>
+
+    <h3>Intangibles, goodwill, impairment</h3>
+
+    <ul class="bullets">
+        <li><strong>Goodwill</strong> exists only from buying a company: purchase price − fair value of net assets acquired ($100M paid for $80M of net assets → $20M goodwill). It's a residual, never amortized, impairment-tested annually — and it was the single biggest asset in Starbucks' acquisition example ($815.6M of $1,886.8M).</li>
+        <li><strong>Definite-life intangibles</strong> (patents, copyrights, licenses) amortize straight-line over the <em>shorter</em> of economic and legal life — with no accumulated-amortization account; credit the asset directly. Leasehold improvements amortize over the shorter of their life and the lease term.</li>
+        <li><strong>Impairment</strong> is a two-step: test — is NBV &gt; <em>undiscounted</em> future cash flows? — and if so, measure: loss = NBV − fair value (Dr Impairment Loss / Cr Accumulated Depreciation). Goodwill now gets a one-step carrying-vs-fair-value test. Sears wrote its trade name down three years running ($381M, then $72M more) and filed Chapter 11 in 2018 — impairments are often the smoke before the fire.</li>
+    </ul>
+
+    <p>Two derived metrics from the PepsiCo breakout worth knowing (they're inference skills, not banned ratios): <strong>average depreciable life ≈ gross depreciable assets ÷ annual depreciation expense</strong> (PepsiCo: ~15.6 years) and <strong>percent depreciated = accumulated depreciation ÷ gross depreciable assets</strong> (~61% — an aging asset base). Both exclude land and construction in progress, which don't depreciate.</p>
+
+    <div class="eq-state">
+        <span class="label">state of the equation · after ch. 8</span>
+        \[ \text{PP\&E}_{net} = \underbrace{\text{Capitalized cost}}_{\text{ready-for-use}} - \underbrace{\text{Acc. Depr.}}_{\text{life, salvage: estimates}} \qquad \text{Gain/Loss on disposal} = \text{Proceeds} - \text{NBV} \]
+        <p><span class="new">New:</span> the operating-asset tour is complete — receivables (allowance), inventory (cost-flow assumption), and now long-term assets, where the judgment calls stack three deep: <span class="new">what to capitalize</span> (the WorldCom line), <span class="new">how fast to allocate</span> (life and salvage estimates — the Singapore Airlines lever), and <span class="new">when to admit impairment</span> (the Sears smoke alarm). Intangibles add the sharpest asymmetry in GAAP: identical brands are a balance-sheet asset if bought and an expense if built. Every asset now reaches the statement through an estimate — which is precisely what Midterm II tests, and what quality-of-earnings analysis interrogates.</p>
+        <p style="font-size: 0.9em; color: #666; margin-bottom: 0.2em;"><em>After Midterm II (Jul 27): the right-hand side's turn — Ch. 9 liabilities, Ch. 10 bonds, Ch. 11 equity.</em></p>
     </div>
 
     <p class="footer">last updated jul 2026 · <a href="../">mba</a> · <a href="/">home</a></p>
