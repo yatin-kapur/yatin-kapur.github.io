@@ -225,6 +225,7 @@
         <li><a href="#inventory">inventory &amp; cogs</a></li>
         <li><a href="#lt-assets">long-term assets</a></li>
         <li><a href="#liabilities">liabilities &amp; time value of money</a></li>
+        <li><a href="#bonds">bonds &amp; long-term debt</a></li>
     </ul>
 
     <div class="takeaways" id="takeaways">
@@ -1213,7 +1214,69 @@ Each Dec 31:   Dr Depreciation Exp 8,290    / Cr Accumulated Depr 8,290     (24,
         <p><span class="new">New:</span> the right side of the equation gets its measurement rule — obligations due within a year sit at face value, but every long-term promise enters the books <span class="new">discounted</span>: the financed vehicle is a $24,869 liability, not $30,000, and the gap unwinds into interest expense over time. Liabilities also gained a probability layer — the contingency grid decides whether an obligation is <span class="new">recorded, footnoted, or ignored</span> — and estimated liabilities like warranties join the allowance and depreciation as management judgment inside the numbers (the Dell restatement is this chapter's WorldCom). <strong>Income statement so far:</strong> gains warranty expense at the moment of sale, and interest expense that is now a <em>declining schedule</em> tied to a loan balance rather than a flat accrual.</p>
     </div>
 
-    <p class="footer">last updated jul 2026 · <a href="../">mba</a> · <a href="/">home</a></p>
+    <h2 id="bonds">Bonds &amp; long-term debt <span style="font-size: 0.6em; color: #888; font-weight: 400;">· Ch. 10 · Classes 9–10 (Jul 29–Aug 3)</span></h2>
+
+    <p>Why debt at all? The <strong>pecking order</strong> (Myers &amp; Majluf): firms prefer internal cash, then debt, then — last — issuing equity, because the cost of capital rises with information asymmetry. Even cash-rich Apple carries ~$100B of term debt. A <strong>bond</strong> is a loan in security form: the <strong>issuer</strong> borrows from many <strong>bondholders</strong> at once, usually via underwriters who buy the whole issue and resell it. The vocabulary splits into what's printed <em>on the bond</em> — <strong>face value</strong> (principal), <strong>coupon rate</strong> (r), maturity — and what the <em>market</em> decides: <strong>price</strong> and <strong>market rate / yield</strong> (m). Quote convention: a $1,000 bond "at 102" sells for $1,020.</p>
+
+    <div class="callout">
+        <strong>The professor's biggest emphasis:</strong> the coupon rate is <em>not</em> an interest rate. It only sizes the periodic <em>cash</em> payment — use it once to compute the coupon, then "throw it away." The <strong>market rate at issuance</strong> does everything else: prices the bond and drives interest <em>expense</em> every period. Rate changes after issuance never touch interest expense. This is accrual accounting again: expense accrues independent of the cash outflow.</div>
+
+    <div class="formula-box">
+        <p><strong>Bond price = two present values</strong> (always at the market rate)</p>
+        \[ \text{Price} = \underbrace{\frac{\text{Face}}{(1+m)^n}}_{\text{principal at maturity}} + \underbrace{\text{Coupon} \times \text{PVA}(n, m)}_{\text{annuity of coupons}} \]
+        <div class="formula-actions">
+            <button class="intuition-btn" onclick="toggleIntuition(this)">💡 intuition</button>
+        </div>
+        <div class="intuition">
+            <p>A bond is just the Ch. 9 toolkit applied twice: one lump sum plus one annuity, both discounted at what the market demands (m), never at what the paper promises (r). Semiannual coupons — the norm — mean n = years × 2 and rate = m ÷ 2. The class example: 10-year, $1,000 face, 12% coupon paid semiannually, market at 10% → PV of face = 1,000 × 0.3769 = $376.90, plus coupons of $60 × 12.4622 = $747.73 → price <strong>$1,124.63</strong>. It sells above face precisely because the coupon pays more than the market requires.</p>
+            <p>That's the whole premium/discount story in one table: same bond, market at 10% → $1,125 (premium); at 12% → $1,000 (par); at 14% → $894 (discount). Price &gt; face when r &gt; m, &lt; face when r &lt; m. And the key takeaway slide: <strong>discounts and premiums are an accounting response to market rates, not a verdict on the issuer's creditworthiness</strong> — they're just different contractual timings of when the interest gets paid in cash.</p>
+        </div>
+    </div>
+
+    <h3>Issuance entries: the plug is a (contra-)account</h3>
+
+    <p>Bonds Payable is always credited at <strong>face</strong>; the gap between face and proceeds lands in its own account. The GM class pair ($100,000, 5-year, 9% coupon semiannual):</p>
+
+    <div class="formula">Market 12% → price $88,960 (discount):        Market 7% → price $108,317 (premium):
+Dr Cash                       88,960          Dr Cash                      108,317
+Dr Discount on Bonds Payable  11,040                Cr Premium on Bonds Payable   8,317
+      Cr Bonds Payable            100,000           Cr Bonds Payable            100,000</div>
+
+    <p>Each period after: <strong>interest expense = beginning book value × market rate per period</strong> (the effective-interest method), cash coupon = face × r per period, and the difference amortizes the discount/premium so book value walks toward face by maturity. On the balance sheet the bond sits at <strong>face − discount</strong> (or + premium) — the same "net of a valuation account" pattern as A/R and PP&amp;E.</p>
+
+    <h3>Zero-coupon bonds</h3>
+
+    <p>No coupons at all → the price is just the PV of the principal, so zeros always issue at a <strong>deep discount</strong>. Class example: GM's 10-year, $20M face zero at 10% annual → proceeds 20,000,000 × 0.3855 = <strong>$7,710,000</strong> (<code>Dr Cash 7,710,000, Dr Discount 12,290,000 / Cr Bonds Payable 20,000,000</code>). Interest expense each year = 10% × book value ($771,000 in year 1, $848,100 in year 2 as the balance grows) — no cash until the $20M at maturity. Watch the periods: annual compounding here, <em>not</em> semiannual, because there's no semiannual coupon forcing the split. (The straight-line-vs-effective tax comparison from the 1985 Treasury rule is FYI.)</p>
+
+    <h3>Credit ratings &amp; default risk</h3>
+
+    <p><strong>Default</strong> = missing a promised payment, and size doesn't protect you: Neiman Marcus, with $6B+ of assets, defaulted on a <strong>$5.7M coupon</strong> in 2020 and went through bankruptcy. Rating agencies (S&amp;P/Moody's/Fitch) grade default risk: <strong>investment grade</strong> runs AAA → BBB (Moody's: Aaa → Baa), <strong>speculative</strong> runs BB → C, and D means default. Lower rating → higher yield demanded, with the BBB–AAA spread blowing out in recessions. Subtlety worth knowing: agencies <strong>rewrite the GAAP statements before rating</strong> — adding back leases, netting cash against debt — and the Kraft (2015) study shows they adjust nearly every firm's debt <em>up</em> and income <em>down</em> (3M: reported metrics said Aa1, adjusted said Aa2).</p>
+
+    <h3>Covenants — and the games around them</h3>
+
+    <p><strong>Debt covenants</strong> are the contract's teeth: they can require actions (audited statements, insurance), restrict actions (M&amp;A, dividends, new debt), or mandate financial conditions (max leverage, min current ratio). "EBITDA" in a credit agreement is a heavily negotiated defined term with pages of add-backs. The live example: Campbell Soup's debt-to-EBITDA covenant stepped down to <strong>5.75x by April 2020</strong> — and in June 2019 they sat at <strong>5.95x</strong>, above the line. Managers near thresholds manage the numbers: reclassify debt, keep it off balance sheet, or — the professor's own research (Aleszczyk 2019) — <strong>repay short-term bonds just before quarter-end</strong> and reborrow after; the data shows bond counts dipping to a minimum exactly at the reporting date.</p>
+
+    <div class="formula-box">
+        <p><strong>The credit-analysis ratio kit</strong></p>
+        \[ \frac{\text{Total Liabilities}}{\text{Equity}} \quad \frac{\text{Total Liabilities}}{\text{Assets}} \quad \underbrace{\frac{\text{EBIT or EBITDA}}{\text{Interest Expense}}}_{\text{interest coverage}} \quad \frac{\text{Total Debt}}{\text{EBITDA}} \]
+        <div class="formula-actions">
+            <button class="intuition-btn" onclick="toggleIntuition(this)">💡 intuition</button>
+        </div>
+        <div class="intuition">
+            <p>Two <em>policy</em> ratios (how much of the firm creditors fund — "total liabilities" can be narrowed to just ST + LT debt) and two <em>strength</em> ratios (can the cash flows service it). EBITDA = EBIT + D&amp;A, with D&amp;A pulled from the cash flow statement. The in-class Campbell's workout (FY2025): debt/equity 2.82x, debt/assets 73.8% — creditors fund three-quarters of the company; coverage = 1,558/345 = 4.52x, debt/EBITDA = 6,857/1,558 = 4.40x. The FY24→FY25 move is the exam-worthy subtlety: debt-to-EBITDA <em>improved</em> (debt fell, EBITDA rose) while coverage <em>worsened</em> — interest expense jumped 39% on acquisition debt. Two strength ratios, opposite verdicts, same year.</p>
+        </div>
+    </div>
+
+    <p><strong>Early retirement (FYI):</strong> when a company calls its bonds, gain/loss = book value − cash paid — the disposal logic from Ch. 8 transplanted to the liability side. The Amazon example: bonds carried at $101,886 bought back at their market value of $98,167 (rates had risen to 12%, sinking the price) → <code>Dr Bonds Payable 100,000, Dr Premium 1,886 / Cr Cash 98,167, Cr Gain 3,719</code>. Rising rates hand issuers repurchase gains.</p>
+
+    <div class="eq-state">
+        <span class="label">state of the equation · after ch. 10</span>
+        \[ \text{Bond}_{\text{B/S}} = \text{Face} \pm \text{Premium/Discount} \qquad \text{Int. Exp.} = BV_{beg} \times m \neq \text{Coupon} = \text{Face} \times r \]
+        <p><span class="new">New:</span> long-term debt gets the full valuation treatment — a bond enters the books at its <span class="new">market-priced PV</span>, sits at face net of a premium/discount account, and unwinds via the <span class="new">effective-interest method</span>, which finally splits "interest" into two independent numbers: cash paid (coupon, fixed by contract) and expense (market rate × book value, fixed at issuance forever). The right side now mirrors the left's big lesson: recorded values are frozen at issuance-date market conditions, which is why rate moves create retirement gains/losses and why rating agencies re-derive the numbers before trusting them. <strong>Income statement so far:</strong> interest expense is now a schedule that can exceed or trail the cash coupon — the last wedge between income and cash flow this course adds.</p>
+        <p style="font-size: 0.9em; color: #666; margin-bottom: 0.2em;"><em>One chapter left: Ch. 11 equity (Aug 5), then the cumulative take-home final.</em></p>
+    </div>
+
+    <p class="footer">last updated aug 2026 · <a href="../">mba</a> · <a href="/">home</a></p>
 </section>
 
 </body>
