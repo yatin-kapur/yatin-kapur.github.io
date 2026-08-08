@@ -226,6 +226,7 @@
         <li><a href="#lt-assets">long-term assets</a></li>
         <li><a href="#liabilities">liabilities &amp; time value of money</a></li>
         <li><a href="#bonds">bonds &amp; long-term debt</a></li>
+        <li><a href="#equity">stockholders' equity</a></li>
     </ul>
 
     <div class="takeaways" id="takeaways">
@@ -1274,6 +1275,75 @@ Dr Discount on Bonds Payable  11,040                Cr Premium on Bonds Payable 
         \[ \text{Bond}_{\text{B/S}} = \text{Face} \pm \text{Premium/Discount} \qquad \text{Int. Exp.} = BV_{beg} \times m \neq \text{Coupon} = \text{Face} \times r \]
         <p><span class="new">New:</span> long-term debt gets the full valuation treatment — a bond enters the books at its <span class="new">market-priced PV</span>, sits at face net of a premium/discount account, and unwinds via the <span class="new">effective-interest method</span>, which finally splits "interest" into two independent numbers: cash paid (coupon, fixed by contract) and expense (market rate × book value, fixed at issuance forever). The right side now mirrors the left's big lesson: recorded values are frozen at issuance-date market conditions, which is why rate moves create retirement gains/losses and why rating agencies re-derive the numbers before trusting them. <strong>Income statement so far:</strong> interest expense is now a schedule that can exceed or trail the cash coupon — the last wedge between income and cash flow this course adds.</p>
         <p style="font-size: 0.9em; color: #666; margin-bottom: 0.2em;"><em>One chapter left: Ch. 11 equity (Aug 5), then the cumulative take-home final.</em></p>
+    </div>
+
+    <h2 id="equity">Stockholders' equity <span style="font-size: 0.6em; color: #888; font-weight: 400;">· Ch. 11 · Class 11 (Aug 5)</span></h2>
+
+    <div class="callout">
+        <strong>Final-exam scope, straight from the slides' red ink:</strong> Basic EPS is <em>"in the final"</em>; diluted EPS is <em>"ignore for final."</em> Stock splits are <em>"relevant"</em>; small stock dividends <em>"meh"</em>, large ones <em>"okay"</em>; stock options <em>"ignore"</em> (FYI), OCI FYI. Last class (Aug 12): no new chapters — hands-on exercises + Capital IQ, bring a laptop.</div>
+
+    <p>The last stop: the residual claim itself. E = A − L, and the section's anatomy is <strong>contributed capital</strong> (common stock at par + APIC, plus preferred stock) + <strong>retained earnings</strong> − <strong>treasury stock</strong> (contra) ± accumulated OCI. Versus debt: stockholders vote, dividends are optional and <em>never</em> an expense (no tax deduction — interest gets one), and there's no fixed claim. Par value is a legal fiction — Uber IPO'd 180M shares at $45 with a par of <strong>$0.00001</strong>: <code>Dr Cash 8.1B / Cr Common Stock 1,800 (!), Cr APIC 8,099,998,200</code>. APIC is always the plug; par is "the Common Stock account on the balance sheet," nothing more.</p>
+
+    <h3>Preferred stock &amp; the dividend waterfall</h3>
+
+    <p>Preferred = debt costume, equity law: a stated dividend (<strong>rate × par</strong>), priority over common, usually no vote — but nothing is owed until <em>declared</em>. <strong>Cumulative</strong> preferred accrues skipped dividends as <em>arrears</em> that must be cleared before common sees a cent (arrears are a footnote, not a liability). The class allocation table (7% × $10 par × 10,000 = $7,000/yr preference): a $10,000 dividend after a $2,000 arrears year splits 9,000 preferred / 1,000 common; a skipped year rolls forward in full. Non-cumulative skips vanish forever.</p>
+
+    <h3>Share counts &amp; treasury stock</h3>
+
+    <p><strong>Authorized ≥ issued ≥ outstanding</strong>; outstanding = issued − treasury. Treasury stock is a <strong>contra-equity debit at cost</strong> — a company cannot own itself and call it an asset. Amazon's balance sheet made it concrete: 23M treasury shares carried at $1.837B = <strong>$79.87/share</strong> bought back years ago, frozen at historical cost while the stock traded at thousands. The three commandments from the slides: no journal entry when your stock trades in the market; <strong>a company never records gains or losses on its own stock</strong> — reissue differences hit APIC (Dr APIC if reissued below cost; RE only if APIC runs dry); and buybacks never touch Common Stock, APIC, or RE. The Strait Corp drill: buy 1,000 at $16, resell 500 at $30 → Cr APIC 7,000; resell 500 at $15 → Dr APIC 500.</p>
+
+    <p>Why buy back? Return capital, support the price, fund comp plans, block takeovers — and reason #6 from the slide, <strong>"artificially inflate EPS."</strong> The IBM breakout proved it: FY2017 EPS was $6.16 with the year's 28M-share repurchase, $6.07 without. Same income, better ratio. (Buybacks have eaten about half of S&amp;P 500 free cash flow since 2010.)</p>
+
+    <div class="formula-box">
+        <p><strong>Basic EPS</strong> (in the final — diluted is not)</p>
+        \[ \text{Basic EPS} = \frac{\text{Net Income} - \text{Preferred Dividends}}{\text{Weighted-avg common shares outstanding}} \]
+        <div class="formula-actions">
+            <button class="intuition-btn" onclick="toggleIntuition(this)">💡 intuition</button>
+        </div>
+        <div class="intuition">
+            <p>Income earned <em>for common</em> per common share — so preferred dividends come out of the numerator, and the denominator is <strong>time-weighted</strong>: shares count for the fraction of the year they were outstanding. The Hanson example: NI 443 − 12 preferred = 431; shares 213M for half the year, 196M for a quarter (after a 17M buyback), 199M for the last quarter (3M reissued) → 0.5×213 + 0.25×196 + 0.25×199 = 205.25M → EPS <strong>$2.10</strong>. Buybacks mid-year shrink the average immediately — that's the EPS-inflation lever in the formula.</p>
+        </div>
+    </div>
+
+    <h3>Dividends: three dates, one entry that matters</h3>
+
+    <div class="formula">Declaration date:  Dr Retained Earnings   50,000     ← liability born here
+                      Cr Dividends Payable      50,000
+Record date:       no entry (who gets paid)
+Payment date:      Dr Dividends Payable   50,000
+                      Cr Cash                   50,000</div>
+
+    <p>The Jones Corp detail that's pure exam bait: the $0.50 dividend applies to <strong>outstanding</strong> shares only (100,000, not the 120,000 issued) — treasury shares don't pay dividends to yourself. Legal guardrails: dividends generally can't drive retained earnings negative or equity below paid-in capital. Color from class: the Dividend Aristocrats (69 firms with 25+ straight years of increases, Consumer Staples-heavy), and PepsiCo's note — quarterly dividends since 1965, declared Feb/May/Jul/Nov, paid ~quarter-end; ~$7.9B of dividends + $1B of buybacks planned for 2026.</p>
+
+    <h3>Stock dividends vs. stock splits</h3>
+
+    <table class="matrix">
+        <tr><th></th><th>Stock dividend</th><th>Stock split</th></tr>
+        <tr><td>Par per share</td><td>unchanged</td><td><strong>decreases</strong></td></tr>
+        <tr><td>Total par (CS account)</td><td><strong>increases</strong></td><td>unchanged</td></tr>
+        <tr><td>Retained earnings</td><td><strong>decreases</strong> (reclassified to contributed)</td><td>unchanged</td></tr>
+        <tr><td>Market price/share</td><td>↓ proportionately</td><td>↓ proportionately</td></tr>
+        <tr><td>Journal entry?</td><td>yes (small: at market; large: at par)</td><td><strong>none — "just a memo"</strong></td></tr>
+    </table>
+
+    <p>Neither creates value — ownership percentages don't move; the pizza is cut into more slices. Splits exist to manage the <em>investor base</em> via price: Microsoft split nine times (100 shares in 1987 → 28,800 today), Visa went 4-for-1 at $267.60 → $66.90, while Berkshire Class A never split and trades near $800,000. The Jennings drill: 10% stock dividend at market ($30) → Dr RE 450,000 / Cr CS 15,000 + APIC 435,000; 100% stock dividend at par → Dr RE 165,000 / Cr CS 165,000; 2-for-1 split → no entry, 660,000 shares at $0.50 par.</p>
+
+    <div class="formula-box">
+        <p><strong>The payout ratio kit</strong></p>
+        \[ \text{Payout} = \frac{\text{Div} + \text{Repurchases}}{\text{NI}} \qquad \text{Div. Yield} = \frac{\text{DPS}}{\text{Price}_{beg}} \qquad \text{ROE} = \frac{\text{NI}}{\text{Avg Equity}} \]
+        <div class="formula-actions">
+            <button class="intuition-btn" onclick="toggleIntuition(this)">💡 intuition</button>
+        </div>
+        <div class="intuition">
+            <p>Year-end, managers face one fork: return net income to shareholders or retain it (retention ratio = 1 − payout). Dividend yield is the cash half of a stock's return (price change is the other) — and the red-ink detail: divide by the <strong>beginning-of-period</strong> price (Apple 2019: $3 ÷ ~$150 ≈ 2%; by 2026, $1.08 ÷ $300 ≈ 0.3% — growth repriced the yield away). ROE is the accounting bottom line of the whole course: how efficiently the residual claim turns equity into earnings.</p>
+        </div>
+    </div>
+
+    <div class="eq-state">
+        <span class="label">state of the equation · after ch. 11 — course complete</span>
+        \[ E = \underbrace{\text{CS}_{par} + \text{APIC} + \text{Pref}}_{\text{contributed}} + \underbrace{\text{RE}}_{\text{earned}} - \underbrace{\text{TS}}_{\text{at cost}} \pm \text{AOCI} \]
+        <p><span class="new">New — and final:</span> the residual claim gets its own anatomy, and the last accounts fall into place: par is a legal label with APIC as the plug, treasury stock is negative equity frozen at cost (never a gain or loss on your own shares), and retained earnings is revealed as the grand junction of the entire course — credited by closing entries (Ch. 4), debited by dividends declared (a liability at <em>declaration</em>), and reclassified by stock dividends. Every chapter's ending flowed here. The equation that started as A = L + E three columns wide now has a fully-articulated interior on all three fronts — assets at estimated values, liabilities at present values, equity as whatever's left, which was the definition all along.</p>
+        <p style="font-size: 0.9em; color: #666; margin-bottom: 0.2em;"><em>That's the course. Last class Aug 12: Capital IQ hands-on, no new chapters. Then the cumulative take-home final.</em></p>
     </div>
 
     <p class="footer">last updated aug 2026 · <a href="../">mba</a> · <a href="/">home</a></p>
